@@ -21,12 +21,73 @@
  */
 
 /**
- * @class
- * @param {Number} 
+ * @class A associative container whose key is b9.ID.
+ * @param {Number} hash_size The number of hash lists.
  */
 b9.IDMap = function(hash_size)
 {
+    this.last_item = null;
+    this.hash_size = hash_size;
+    this.data_num = 0;
 
+    ckList<MapItem> m_order_list;
+    ckList<MapItem>* m_hash_list;
+};
+
+/**
+ * @param {b9.ID} id An ID.
+ * @returns {Object} The object which is associated with an ID.
+ */
+b9.IDMap.find = function(id)
+{
+    if (!m_hash_list)
+    {
+        ckThrow(ExceptionNotInitialized);
+    }
+
+    if (m_last_item1 && m_last_item1->key == key)
+    {
+        return &m_last_item1->data;
+    }
+    else if (m_last_item2 && m_last_item2->key == key)
+    {
+        MapItem* item = m_last_item1;
+        m_last_item1 = m_last_item2;
+        m_last_item2 = item;
+
+        return &m_last_item1->data;
+    }
+    else if (m_last_item3 && m_last_item3->key == key)
+    {
+        MapItem* item = m_last_item1;
+        m_last_item1 = m_last_item3;
+        m_last_item3 = m_last_item2;
+        m_last_item2 = item;
+
+        return &m_last_item1->data;
+    }
+    else
+    {
+        s32 index = key % m_hash_size;
+        ckList<MapItem>* hash_list = &m_hash_list[(index < 0) ? -index : index];
+
+        for (typename ckList<MapItem>::Item* item = hash_list->getFirstN(); item; item = item->getNextN())
+        {
+            if (item->getSelf()->key == key)
+            {
+                m_last_item3 = m_last_item2;
+                m_last_item2 = m_last_item1;
+                m_last_item1 = item->getSelf();
+
+                hash_list->addFirst(item);
+
+                return &m_last_item1->data;
+            }
+        }
+
+        return NULL;
+    }
+};
 
 
 /*!
@@ -49,9 +110,6 @@ public:
     ckMap()
     {
         m_hash_list = NULL;
-        m_last_item1 = m_last_item2 = m_last_item3 = NULL;
-        m_hash_size = 0;
-        m_data_num = 0;
     }
 
     /*!
@@ -133,53 +191,6 @@ public:
     */
     D* getN(K key)
     {
-        if (!m_hash_list)
-        {
-            ckThrow(ExceptionNotInitialized);
-        }
-
-        if (m_last_item1 && m_last_item1->key == key)
-        {
-            return &m_last_item1->data;
-        }
-        else if (m_last_item2 && m_last_item2->key == key)
-        {
-            MapItem* item = m_last_item1;
-            m_last_item1 = m_last_item2;
-            m_last_item2 = item;
-
-            return &m_last_item1->data;
-        }
-        else if (m_last_item3 && m_last_item3->key == key)
-        {
-            MapItem* item = m_last_item1;
-            m_last_item1 = m_last_item3;
-            m_last_item3 = m_last_item2;
-            m_last_item2 = item;
-
-            return &m_last_item1->data;
-        }
-        else
-        {
-            s32 index = key % m_hash_size;
-            ckList<MapItem>* hash_list = &m_hash_list[(index < 0) ? -index : index];
-
-            for (typename ckList<MapItem>::Item* item = hash_list->getFirstN(); item; item = item->getNextN())
-            {
-                if (item->getSelf()->key == key)
-                {
-                    m_last_item3 = m_last_item2;
-                    m_last_item2 = m_last_item1;
-                    m_last_item1 = item->getSelf();
-
-                    hash_list->addFirst(item);
-
-                    return &m_last_item1->data;
-                }
-            }
-
-            return NULL;
-        }
     }
 
     /*!
@@ -453,11 +464,4 @@ private:
     ckMap(const ckMap<K, D>&) {}
     void operator=(const ckMap<K, D>&) {}
 
-    ckList<MapItem> m_order_list;
-    ckList<MapItem>* m_hash_list;
-    MapItem* m_last_item1;
-    MapItem* m_last_item2;
-    MapItem* m_last_item3;
-    u16 m_hash_size;
-    u16 m_data_num;
 };

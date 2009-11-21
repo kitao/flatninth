@@ -54,7 +54,34 @@ b9.include = function(filename)
     eval(xhr.responseText);
 };
 
-b9.include("flatninth/id.js");
-b9.include("flatninth/list.js");
-b9.include("flatninth/tree.js");
-b9.include("flatninth/vector2.js");
+/** @private */
+b9.getFlatninthDir = function()
+{
+    var script = document.getElementsByTagName("script");
+    var name = "flatninth.js";
+
+    for (var i = 0; i < script.length; i++)
+    {
+        var src = script[i].src;
+        var dir_length = src.length - name.length;
+
+        if (src.substring(dir_length) == name)
+        {
+            return src.substring(0, dir_length)
+        }
+    }
+
+    return "";
+};
+
+/** @private */
+b9.src_dir = b9.getFlatninthDir() + "flatninth/";
+
+b9.include(b9.src_dir + "debug.js");
+b9.include(b9.src_dir + "id.js");
+//b9.include(b9.src_dir + "flatninth/list.js");
+//b9.include(b9.src_dir + "flatninth/tree.js");
+//b9.include(b9.src_dir + "flatninth/idmap.js");
+//b9.include(b9.src_dir + "flatninth/vector2.js");
+
+alert("complete include");
