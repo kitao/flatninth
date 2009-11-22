@@ -62,7 +62,7 @@ b9.getScriptDir = function(filename)
 {
     var script = document.getElementsByTagName("script");
 
-    for (var i = 0; i < script.length; i++)
+    for (var i in script)
     {
         var src = script[i].src;
         var dir_length = src.length - filename.length;

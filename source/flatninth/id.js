@@ -31,11 +31,9 @@ b9.ID = function(seed)
 
     if (seed)
     {
-        var i;
-
         this._value = 0;
 
-        for (i = 0; i < seed.length; i++)
+        for (var i in seed)
         {
             this._value = this._value * 37 + seed.charCodeAt(i);
         }
