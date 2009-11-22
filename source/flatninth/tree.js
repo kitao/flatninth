@@ -55,7 +55,7 @@ b9.Tree.prototype.getSelf = function()
  * Returns the previous item.
  * @returns {b9.Tree} The previous item.
  */
-b9.Treeprototype.getPrevAll = function()
+b9.Tree.prototype.getPrevAll = function()
 {
     return this._prev;
 };
