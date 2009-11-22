@@ -85,5 +85,3 @@ b9.include(b9._src_dir + "flatninth/list.js");
 b9.include(b9._src_dir + "flatninth/tree.js");
 //b9.include(b9._src_dir + "flatninth/idmap.js");
 //b9.include(b9._src_dir + "flatninth/vector2.js");
-
-alert("complete include");

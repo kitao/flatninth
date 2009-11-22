@@ -43,6 +43,7 @@ b9.Tree = function(self)
 };
 
 /**
+ * Returns the stored object.
  * @returns {b9.Tree} The stored object.
  */
 b9.Tree.prototype.getSelf = function()
@@ -51,6 +52,7 @@ b9.Tree.prototype.getSelf = function()
 };
 
 /**
+ * Returns the previous item.
  * @returns {b9.Tree} The previous item.
  */
 b9.Treeprototype.getPrevAll = function()
@@ -59,6 +61,7 @@ b9.Treeprototype.getPrevAll = function()
 };
 
 /**
+ * Returns the next item.
  * @returns {b9.Tree} The next item.
  */
 b9.Tree.prototype.getNextAll = function()
@@ -67,6 +70,7 @@ b9.Tree.prototype.getNextAll = function()
 };
 
 /**
+ * Returns the parent.
  * @returns {b9.Tree} The parent.
  */
 b9.Tree.prototype.getParent = function()
@@ -75,6 +79,7 @@ b9.Tree.prototype.getParent = function()
 };
 
 /**
+ * Returns the previous sibling.
  * @returns {b9.Tree} The previous sibling.
  */
 b9.Tree.prototype.getPrevSibling = function()
@@ -95,6 +100,7 @@ b9.Tree.prototype.getPrevSibling = function()
 };
 
 /**
+ * Returns the next sibling.
  * @returns {b9.Tree} The next sibling.
  */
 b9.Tree.prototype.getNextSibling = function()
@@ -113,6 +119,7 @@ b9.Tree.prototype.getNextSibling = function()
 };
 
 /**
+ * Returns the first child.
  * @returns {b9.Tree} The first child.
  */
 b9.Tree.prototype.getFirstChild = function()
@@ -121,6 +128,7 @@ b9.Tree.prototype.getFirstChild = function()
 };
 
 /**
+ * Returns the last child.
  * @returns {b9.Tree} The last child.
  */
 b9.Tree.prototype.getLastChild = function()
@@ -129,6 +137,7 @@ b9.Tree.prototype.getLastChild = function()
 };
 
 /**
+ * Returns the last descendant.
  * @returns {b9.Tree} The last descendant.
  */
 b9.Tree.prototype.getLastDescendant = function()

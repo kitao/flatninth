@@ -20,18 +20,34 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @class Provides debugging functions.
+ */
+b9.Debug = {};
+
+/**
+ * Prints a trace log.
+ * @param {String} msg a trace message.
+ */
+b9.Debug.trace = function(msg)
 {
-    var id1 = new b9.ID("abc");
-    var id2 = new b9.ID("abc");
-    var id3 = new b9.ID("def");
+    console.log(msg);
+};
 
-    b9.assert(id1.isEqual(id2));
-    b9.assert(!id2.isEqual(id3));
-}
-
+/**
+ * Assertion.
+ * @param {String} test_str A test expression.
+ * @param {Object} this_obj An object of a test expression.
+ */
+b9.Debug.assert = function(test_str, this_obj)
 {
-    var id1 = new b9.ID();
-    var id2 = new b9.ID();
+    var func = new Function("return (" + test_str + ");");
 
-    b9.assert(!id1.isEqual(id2));
-}
+    if (!func.apply(this_obj))
+    {
+        var msg = "assertion failed: " + test_str;
+
+        b9.Debug.trace(msg);
+        throw new Error(msg);
+    }
+};

@@ -39,6 +39,7 @@ b9.List = function()
 };
 
 /**
+ * Returns the number of the items.
  * @returns {Number} The number of the items.
  */
 b9.List.prototype.getItemNum = function()
@@ -47,6 +48,7 @@ b9.List.prototype.getItemNum = function()
 };
 
 /**
+ * Returns the first item.
  * @returns {b9.ListItem} The first item.
  */
 b9.List.prototype.getFirstItem = function()
@@ -55,6 +57,7 @@ b9.List.prototype.getFirstItem = function()
 };
 
 /**
+ * Returns the last item.
  * @returns {b9.ListItem} The last item.
  */
 b9.List.prototype.getLastItem = function()
@@ -174,6 +177,7 @@ b9.ListItem = function(self)
 };
 
 /**
+ * Returns the stored object.
  * @returns {b9.ListItem} The stored object.
  */
 b9.ListItem.prototype.getSelf = function()
@@ -182,6 +186,7 @@ b9.ListItem.prototype.getSelf = function()
 };
 
 /**
+ * Returns the list.
  * @returns {b9.List} The list.
  */
 b9.ListItem.prototype.getList = function()
@@ -190,6 +195,7 @@ b9.ListItem.prototype.getList = function()
 };
 
 /**
+ * Returns the previous item.
  * @returns {b9.ListItem} The previous item.
  */
 b9.ListItem.prototype.getPrev = function()
@@ -198,6 +204,7 @@ b9.ListItem.prototype.getPrev = function()
 };
 
 /**
+ * Returns the next item.
  * @returns {b9.ListItem} The next item.
  */
 b9.ListItem.prototype.getNext = function()

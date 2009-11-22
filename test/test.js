@@ -20,16 +20,11 @@
  * THE SOFTWARE.
  */
 
-b9.assert = function (test)
-{
-    if (!test)
-    {
-        alert("assertion failed");
-    }
-};
 
 
 b9.include("id_test.js");
+b9.include("list_test.js");
+b9.include("tree_test.js");
 
 
 alert("complete test");

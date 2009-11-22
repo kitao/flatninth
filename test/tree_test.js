@@ -22,5 +22,3 @@
 
 {
 }
-
-alert("tree_test");

@@ -22,5 +22,3 @@
 
 {
 }
-
-alert("list_test");

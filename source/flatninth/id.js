@@ -57,7 +57,6 @@ b9.ID.prototype.isEqual = function(id)
 };
 
 /**
- * @static
  * {b9.ID} The invalid ID.
  */
 b9.ID.INVALID = new b9.ID();
