@@ -22,28 +22,30 @@
 
 /**
  * @class An ID based on a string.
- * @param {String} seed A seed of the ID. When not specified, generate the unique ID automatically.
+ * @param {String} seed A seed of an ID. When not specified, generate the unique ID automatically.
  */
 b9.ID = function(seed)
 {
     /** private */
-    this.value = undefined;
+    this._value = undefined;
 
     if (seed)
     {
-        this.value = 0;
+        var i;
 
-        for (var i = 0; i < seed.length; i++)
+        this._value = 0;
+
+        for (i = 0; i < seed.length; i++)
         {
-            this.value = this.value * 37 + seed.charCodeAt(i);
+            this._value = this._value * 37 + seed.charCodeAt(i);
         }
 
-        this.value = -this.value;
+        this._value = -this._value;
     }
     else
     {
-        this.value = b9.ID.cur_value;
-        b9.ID.cur_value++;
+        this._value = b9.ID._cur_value;
+        b9.ID._cur_value++;
     }
 };
 
@@ -53,15 +55,14 @@ b9.ID = function(seed)
  */
 b9.ID.prototype.isEqual = function(id)
 {
-    return (this.value == id.value)
+    return (this._value == id._value);
 };
 
 /**
+ * @static
  * {b9.ID} The invalid ID.
  */
 b9.ID.INVALID = new b9.ID();
 
 /** @private */
-b9.ID.cur_value = 0;
-
-b9.Debug.trace("end id.js");
+b9.ID._cur_value = 0;

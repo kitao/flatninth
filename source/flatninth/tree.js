@@ -21,25 +21,25 @@
  */
 
 /**
- * @class A tree container which can have a parent and children.
+ * @class A tree container.
  * @param {Object} self An object to be stored.
  */
 b9.Tree = function(self)
 {
     /** @private */
-    this.self = self;
+    this._self = self;
 
     /** @private */
-    this.parent = null;
+    this._parent = null;
 
     /** @private */
-    this.last_child = null;
+    this._last_child = null;
 
     /** @private */
-    this.prev = null;
+    this._prev = null;
 
     /** @private */
-    this.next = null;
+    this._next = null;
 };
 
 /**
@@ -47,7 +47,7 @@ b9.Tree = function(self)
  */
 b9.Tree.prototype.getSelf = function()
 {
-    return this.self;
+    return this._self;
 };
 
 /**
@@ -55,7 +55,7 @@ b9.Tree.prototype.getSelf = function()
  */
 b9.Treeprototype.getPrevAll = function()
 {
-    return this.prev;
+    return this._prev;
 };
 
 /**
@@ -63,7 +63,7 @@ b9.Treeprototype.getPrevAll = function()
  */
 b9.Tree.prototype.getNextAll = function()
 {
-    return this.next;
+    return this._next;
 };
 
 /**
@@ -71,7 +71,7 @@ b9.Tree.prototype.getNextAll = function()
  */
 b9.Tree.prototype.getParent = function()
 {
-    return this.parent;
+    return this._parent;
 };
 
 /**
@@ -79,13 +79,13 @@ b9.Tree.prototype.getParent = function()
  */
 b9.Tree.prototype.getPrevSibling = function()
 {
-    if (this.parent && this.prev != this.parent)
+    if (this._parent && this._prev !== this._parent)
     {
-        var.prev = this.prev;
+        var prev = this._prev;
 
-        while (prev.parent != this.parent)
+        while (prev._parent !== this._parent)
         {
-            prev = prev.parent;
+            prev = prev._parent;
         }
 
         return prev;
@@ -99,11 +99,11 @@ b9.Tree.prototype.getPrevSibling = function()
  */
 b9.Tree.prototype.getNextSibling = function()
 {
-    if (this.parent)
+    if (this._parent)
     {
-        var next = this.getLastDescendant().next;
+        var next = this.getLastDescendant()._next;
 
-        if (next && next.parent == this.parent)
+        if (next && next._parent === this._parent)
         {
             return next;
         }
@@ -117,7 +117,7 @@ b9.Tree.prototype.getNextSibling = function()
  */
 b9.Tree.prototype.getFirstChild = function()
 {
-    return this.last_child ? this.next : null;
+    return this._last_child ? this._next : null;
 };
 
 /**
@@ -125,7 +125,7 @@ b9.Tree.prototype.getFirstChild = function()
  */
 b9.Tree.prototype.getLastChild = function()
 {
-    return this.last_child;
+    return this._last_child;
 };
 
 /**
@@ -135,17 +135,17 @@ b9.Tree.prototype.getLastDescendant = function()
 {
     var desc = this;
 
-    while (desc.last_child)
+    while (desc._last_child)
     {
-        desc = desc.last_child;
+        desc = desc._last_child;
     }
 
     return desc;
 };
 
 /**
- * Adds an item as the first child.
- * @param {b9.Tree} child An item.
+ * Adds a child as the first child.
+ * @param {b9.Tree} child A child.
  */
 b9.Tree.prototype.addChildFirst = function(child)
 {
@@ -153,26 +153,26 @@ b9.Tree.prototype.addChildFirst = function(child)
 
     var child_desc = child.getLastDescendant();
 
-    child.parent = this;
-    child.prev = this;
-    child_desc.next = this.next;
+    child._parent = this;
+    child._prev = this;
+    child_desc._next = this._next;
 
-    child.prev.next = child;
+    child._prev._next = child;
 
-    if (child_desc.next)
+    if (child_desc._next)
     {
-        child_desc.next.prev = child_desc;
+        child_desc._next._prev = child_desc;
     }
 
-    if (!this.last_child)
+    if (!this._last_child)
     {
-        this.last_child = child;
+        this._last_child = child;
     }
 };
 
 /**
- * Adds an item as the last child.
- * @param {b9.Tree} child An item.
+ * Adds a child as the last child.
+ * @param {b9.Tree} child A child.
  */
 b9.Tree.prototype.addChildLast = function(child)
 {
@@ -181,70 +181,70 @@ b9.Tree.prototype.addChildLast = function(child)
     var desc = getLastDescendant();
     var child_desc = child.getLastDescendant();
 
-    child.parent = this;
-    child.prev = desc;
-    child_desc.next = desc.next;
+    child._parent = this;
+    child._prev = desc;
+    child_desc._next = desc._next;
 
-    child.prev.next = child;
+    child._prev._next = child;
 
-    if (child_desc.next)
+    if (child_desc._next)
     {
-        child_desc.next.prev = child_desc;
+        child_desc._next._prev = child_desc;
     }
 
-    this.last_child = child;
+    this._last_child = child;
 };
 
 /**
- * Inserts an item before the specified child.
- * @param {b9.Tree} child An item.
+ * Inserts a child before the specified child.
+ * @param {b9.Tree} child A child.
  * @param {b9.Tree} next_child The next child.
  */
 b9.Tree.prototype.addChildBefore = function(child, next_child)
 {
-    if (next_child.parent == this)
+    if (next_child._parent === this)
     {
         this.removeChild(child);
 
         var child_desc = child.getLastDescendant();
 
-        child.parent = this;
-        child.prev = next_child.prev;
-        child_desc.next = next_child;
+        child._parent = this;
+        child._prev = next_child._prev;
+        child_desc._next = next_child;
 
-        child.prev.next = child;
-        child_desc.next.prev = child_desc;
+        child._prev._next = child;
+        child_desc._next._prev = child_desc;
     }
 };
 
 /**
- * Inserts an item before the specified child.
- * @param {b9.Tree} child An item.
+ * Inserts a chlid after the specified child.
+ * @param {b9.Tree} child A child.
  * @param {b9.Tree} prev_child The previous child.
  */
 b9.Tree.prototype.addChildAfter = function(child, prev_child)
 {
-    if (prev_child.parent == this)
+    if (prev_child.parent === this)
     {
         this.removeChild(child);
 
-        var tree_desc = tree->getLastDescendant();
         var child_desc = child.getLastDescendant();
+        var prev_child_desc = prev_child.getLastDescendant();
 
-        m_parent = tree->m_parent;
-        m_prev = tree_desc;
-        this_desc->m_next = tree_desc->m_next;
+        child._parent = this;
+        child._prev = prev_child_desc;
+        child_desc._next = prev_child_desc._next;
 
-        m_prev->m_next = this;
+        child._prev._next = child;
 
-        if (this_desc->m_next)
+        if (child_desc._next)
         {
-            this_desc->m_next->m_prev = this_desc;
+            child_desc._next._prev = child_desc;
         }
 
-        if (m_parent->m_last_child == tree)
+        if (this._last_child === prev_child)
         {
-            m_parent->m_last_child = this;
+            this._last_child = child;
         }
     }
 };
@@ -255,25 +255,25 @@ b9.Tree.prototype.addChildAfter = function(child, prev_child)
  */
 b9.Tree.prototype.removeChild = function(child)
 {
-    if (child.parent == this)
+    if (child.parent === this)
     {
         var child_desc = child.getLastDescendant();
 
-        if (this.last_child == child)
+        if (this._last_child === child)
         {
-            this.last_child = child.getPrevSibling();
+            this._last_child = child.getPrevSibling();
         }
 
-        child.prev.next = child_desc.next;
+        child._prev._next = child_desc._next;
 
-        if (child_desc.next)
+        if (child_desc._next)
         {
-            child_desc.next.prev = child.prev;
+            child_desc._next._prev = child._prev;
         }
 
-        child.parent = null;
-        child.prev = null;
-        child_desc.next = NULL;
+        child._parent = null;
+        child._prev = null;
+        child_desc._next = NULL;
     }
 };
 
@@ -282,8 +282,8 @@ b9.Tree.prototype.removeChild = function(child)
  */
 b9.Tree.prototype.clear = function()
 {
-    while (this.last_child)
+    while (this._last_child)
     {
-        removeChild(this.last_child);
+        removeChild(this._last_child);
     }
 };

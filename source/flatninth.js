@@ -26,8 +26,8 @@
 var b9 = {};
 
 /**
- * Includes a JavaScript file.
- * @param {String} filename The name of a JavaScript file.
+ * Includes a script file.
+ * @param {String} filename The name of a script file.
  */
 b9.include = function(filename)
 {
@@ -54,20 +54,22 @@ b9.include = function(filename)
     eval(xhr.responseText);
 };
 
-/** @private */
-b9.getFlatninthDir = function()
+/**
+ * @param {String} filename The name of a script file.
+ * @returns {String} The name of the directory of a script.
+ */
+b9.getScriptDir = function(filename)
 {
     var script = document.getElementsByTagName("script");
-    var name = "flatninth.js";
 
     for (var i = 0; i < script.length; i++)
     {
         var src = script[i].src;
-        var dir_length = src.length - name.length;
+        var dir_length = src.length - filename.length;
 
-        if (src.substring(dir_length) == name)
+        if (src.substring(dir_length) == filename)
         {
-            return src.substring(0, dir_length)
+            return src.substring(0, dir_length);
         }
     }
 
@@ -75,13 +77,13 @@ b9.getFlatninthDir = function()
 };
 
 /** @private */
-b9.src_dir = b9.getFlatninthDir() + "flatninth/";
+b9._src_dir = b9.getScriptDir("flatninth.js") + "flatninth/";
 
-b9.include(b9.src_dir + "debug.js");
-b9.include(b9.src_dir + "id.js");
-//b9.include(b9.src_dir + "flatninth/list.js");
-//b9.include(b9.src_dir + "flatninth/tree.js");
-//b9.include(b9.src_dir + "flatninth/idmap.js");
-//b9.include(b9.src_dir + "flatninth/vector2.js");
+b9.include(b9._src_dir + "debug.js");
+b9.include(b9._src_dir + "id.js");
+b9.include(b9._src_dir + "flatninth/list.js");
+b9.include(b9._src_dir + "flatninth/tree.js");
+//b9.include(b9._src_dir + "flatninth/idmap.js");
+//b9.include(b9._src_dir + "flatninth/vector2.js");
 
 alert("complete include");

@@ -20,75 +20,64 @@
  * THE SOFTWARE.
  */
 
-
 /**
  * @class A list container.
  */
 b9.List = function()
 {
     /** @private */
-    this.start = new b9.ListItem(null);
+    this._start = new b9.ListItem(null);
 
     /** @private */
-    this.end = new b9.ListItem(null);
+    this._end = new b9.ListItem(null);
 
     /** @private */
-    this.item_num = 0;
+    this._item_num = 0;
 
-    this.start.next = this.end;
-    this.end.prev = this.start;
+    this._start._next = this._end;
+    this._end._prev = this._start;
 };
 
 /**
  * @returns {Number} The number of the items.
  */
-b9.List.prototype.getItemNum()
+b9.List.prototype.getItemNum = function()
 {
-    return this.item_num;
+    return this._item_num;
 };
 
 /**
  * @returns {b9.ListItem} The first item.
  */
-b9.List.prototype.getFirstItem()
+b9.List.prototype.getFirstItem = function()
 {
-    return (this.start.next != this.end) ? this.start.next : null;
+    return (this._start._next !== this._end) ? this._start._next : null;
 };
 
 /**
  * @returns {b9.ListItem} The last item.
  */
-b9.List.prototype.getLastItem()
+b9.List.prototype.getLastItem = function()
 {
-    return (this.end.prev != this.start) ? this.end.prev : null;
+    return (this._end._prev !== this._start) ? this._end._prev : null;
 };
 
 /**
  * Adds an item as the first item.
  * @param {b9.ListItem} item An item.
  */
-b9.List.prototype.addItemFirst(item)
+b9.List.prototype.addItemFirst = function(item)
 {
-    if (!item)
-    {
-        ckThrow(ExceptionInvalidArgument);
-    }
-
-    item->joinAfter(&m_start);
+    this.addItemAfter(this._start);
 };
 
 /**
  * Adds an item as the last item.
  * @param {b9.ListItem} item An item.
  */
-b9.List.prototype.addItemLast(item)
+b9.List.prototype.addItemLast = function(item)
 {
-    if (!item)
-    {
-        ckThrow(ExceptionInvalidArgument);
-    }
-
-    item->joinBefore(&m_end);
+    this.addItemBefore(this._end);
 };
 
 /**
@@ -96,23 +85,21 @@ b9.List.prototype.addItemLast(item)
  * @param {b9.ListItem} item An item.
  * @param {b9.ListItem} next_item The next item.
  */
-b9.List.prototype.addItemBefore(item, next_item)
+b9.List.prototype.addItemBefore = function(item, next_item)
 {
-    if (!item || item == this || !item->hasList())
+    if (next_item._list === this)
     {
-        ckThrow(ExceptionInvalidArgument);
+        this.removeItem(item);
+
+        item._list = this;
+        item._prev = next_item._prev;
+        item._next = next_item;
+
+        item._prev._next = item;
+        item._next._prev = item;
+
+        this._item_num++;
     }
-
-    leave();
-
-    m_list = item->m_list;
-
-    m_prev = item->m_prev;
-    m_next = item;
-
-    m_prev->m_next = m_next->m_prev = this;
-
-    m_list->m_item_num++;
 };
 
 /**
@@ -120,56 +107,55 @@ b9.List.prototype.addItemBefore(item, next_item)
  * @param {b9.ListItem} item An item.
  * @param {b9.ListItem} prev_item The previous item.
  */
-b9.List.prototype.addItemAfter(item, prev_item)
+b9.List.prototype.addItemAfter = function(item, prev_item)
 {
-    if (!item || item == this || !item->hasList())
+    if (next_item._list === this)
     {
-        ckThrow(ExceptionInvalidArgument);
+        this.removeItem(item);
+
+        item._list = this;
+        item._prev = prev_item;
+        item._next = prev_item._next;
+
+        item._prev._next = item;
+        item._next._prev = item;
+
+        this._item_num++;
     }
-
-    leave();
-
-    m_list = item->m_list;
-
-    m_prev = item;
-    m_next = item->m_next;
-
-    m_prev->m_next = m_next->m_prev = this;
-
-    m_list->m_item_num++;
 };
 
 /**
  * Removes an item.
  * @param {be.ListItem} item An item.
  */
-b9.List.prototype.removeItem(item)
+b9.List.prototype.removeItem = function(item)
 {
-    if (m_prev && m_next)
+    if (item._list === this)
     {
-        m_list->m_item_num--;
+        this._item_num--;
 
-        m_prev->m_next = m_next;
-        m_next->m_prev = m_prev;
+        item._prev._next = item._next;
+        item._next._prev = item._prev;
 
-        m_list = NULL;
-        m_prev = m_next = NULL;
+        item._list = null;
+        item._prev = null;
+        item._next = null;
     }
 };
 
 /**
  * Removes the all items.
  */
-b9.List.prototype.clear()
+b9.List.prototype.clear = function()
 {
-    while (hasItem())
+    while (this._item_num > 0)
     {
-        getFirstN()->leave();
+        this.removeItem(this.getFirstItem());
     }
 };
 
 /**
- * @class An item stored in b9.List.
+ * @class An item of b9.List.
  * @param {Object} self An object to be stored.
  */
 b9.ListItem = function(self)
@@ -190,7 +176,7 @@ b9.ListItem = function(self)
 /**
  * @returns {b9.ListItem} The stored object.
  */
-b9.ListItem.prototype.getSelf()
+b9.ListItem.prototype.getSelf = function()
 {
     return this._self;
 };
@@ -198,7 +184,7 @@ b9.ListItem.prototype.getSelf()
 /**
  * @returns {b9.List} The list.
  */
-b9.ListItem.prototype.getList()
+b9.ListItem.prototype.getList = function()
 {
     return this._list;
 };
@@ -206,7 +192,7 @@ b9.ListItem.prototype.getList()
 /**
  * @returns {b9.ListItem} The previous item.
  */
-b9.ListItem.prototype.getPrev()
+b9.ListItem.prototype.getPrev = function()
 {
     return this._prev;
 };
@@ -214,7 +200,7 @@ b9.ListItem.prototype.getPrev()
 /**
  * @returns {b9.ListItem} The next item.
  */
-b9.ListItem.prototype.getNext()
+b9.ListItem.prototype.getNext = function()
 {
     return this._next;
 };
