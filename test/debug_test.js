@@ -20,35 +20,6 @@
  * THE SOFTWARE.
  */
 
-/**
- * @class Provides debugging functions.
- */
-b9.Debug = {};
-
-/**
- * Prints a trace log.
- * @param {String} msg a trace message.
- */
-b9.Debug.trace = function(msg)
-{
-    console.log(msg);
-};
-
-/**
- * Assertion.
- * @param {String} test_str A test expression.
- * @param {Object} this_obj An object of a test expression.
- */
-b9.Debug.assert = function(test_str, this_obj)
-{
-    var func = new Function("return (" + test_str + ");");
-
-    if (!func.apply(this_obj))
-    {
-        var msg = "assertion failed: " + test_str;
-
-        b9.Debug.trace(msg);
-        alert(msg);
-        throw new Error(msg);
-    }
-};
+asert("aaaaa");
+b9.Debug.trace("trace");
+alert("trace");
