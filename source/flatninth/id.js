@@ -59,7 +59,7 @@ b9.ID.prototype.isEqual = function(id)
 /**
  * {b9.ID} The invalid ID.
  */
-b9.ID.INVALID = new b9.ID();
+b9.ID.ZERO = new b9.ID();
 
 /** @private */
 b9.ID._cur_value = 0;
