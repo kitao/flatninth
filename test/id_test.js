@@ -39,6 +39,7 @@
 {
     var id1 = new b9.ID();
 
+    b9.Debug.assert(b9.ID.ZERO.isEqual(b9.ID.ZERO));
     b9.Debug.assert(!id1.isEqual(b9.ID.ZERO));
 }
 
