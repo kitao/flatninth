@@ -20,6 +20,12 @@
  * THE SOFTWARE.
  */
 
-asert("aaaaa");
-b9.Debug.trace("trace");
-alert("trace");
+{
+    b9.Debug.trace("this is Flatninth trace log");
+}
+
+{
+    b9.Debug.assert(true);
+}
+
+b9.Debug.trace("debug_test complete");
