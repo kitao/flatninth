@@ -49,7 +49,7 @@ b9.include = function(filename)
         }
     }
 
-    xhr.open("GET",filename,false);
+    xhr.open("GET", filename, false);
     xhr.send("");
     eval(xhr.responseText);
 };

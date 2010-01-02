@@ -63,7 +63,7 @@ b9.ListItem.prototype.getList = function()
  */
 b9.ListItem.prototype.getPrev = function()
 {
-    return this._prev;
+    return (this._list && this._prev === this._list._start) ? null : this._prev;
 };
 
 /**
@@ -72,7 +72,7 @@ b9.ListItem.prototype.getPrev = function()
  */
 b9.ListItem.prototype.getNext = function()
 {
-    return this._next;
+    return (this._list && this._next === this._list._end) ? null : this._next;
 };
 
 /**
@@ -91,6 +91,7 @@ b9.List = function()
 
     this._start._next = this._end;
     this._end._prev = this._start;
+    this._start._list = this._end._list = this;
 };
 
 /**
@@ -108,7 +109,7 @@ b9.List.prototype.getItemNum = function()
  */
 b9.List.prototype.getFirstItem = function()
 {
-    return (this._start._next !== this._end) ? this._start._next : null;
+    return (this._item_num > 0) ? this._start._next : null;
 };
 
 /**
@@ -117,7 +118,7 @@ b9.List.prototype.getFirstItem = function()
  */
 b9.List.prototype.getLastItem = function()
 {
-    return (this._end._prev !== this._start) ? this._end._prev : null;
+    return (this._item_num > 0) ? this._end._prev : null;
 };
 
 /**
@@ -126,7 +127,7 @@ b9.List.prototype.getLastItem = function()
  */
 b9.List.prototype.addItemFirst = function(item)
 {
-    this.addItemAfter(this._start);
+    this.addItemAfter(item, this._start);
 };
 
 /**
@@ -135,7 +136,7 @@ b9.List.prototype.addItemFirst = function(item)
  */
 b9.List.prototype.addItemLast = function(item)
 {
-    this.addItemBefore(this._end);
+    this.addItemBefore(item, this._end);
 };
 
 /**
@@ -167,7 +168,7 @@ b9.List.prototype.addItemBefore = function(item, next_item)
  */
 b9.List.prototype.addItemAfter = function(item, prev_item)
 {
-    if (next_item._list === this)
+    if (prev_item._list === this)
     {
         this.removeItem(item);
 
