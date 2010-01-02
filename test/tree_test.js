@@ -22,3 +22,5 @@
 
 {
 }
+
+b9.Debug.trace("tree_test complete");
