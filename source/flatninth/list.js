@@ -21,6 +21,61 @@
  */
 
 /**
+ * @class An item of b9.List.
+ * @param {Object} self An object to be stored.
+ */
+b9.ListItem = function(self)
+{
+    /** @private */
+    this._self = self;
+
+    /** @private */
+    this._list = null;
+
+    /** @private */
+    this._prev = null;
+
+    /** @private */
+    this._next = null;
+};
+
+/**
+ * Returns the stored object.
+ * @returns {b9.ListItem} The stored object.
+ */
+b9.ListItem.prototype.getSelf = function()
+{
+    return this._self;
+};
+
+/**
+ * Returns the list.
+ * @returns {b9.List} The list.
+ */
+b9.ListItem.prototype.getList = function()
+{
+    return this._list;
+};
+
+/**
+ * Returns the previous item.
+ * @returns {b9.ListItem} The previous item.
+ */
+b9.ListItem.prototype.getPrev = function()
+{
+    return this._prev;
+};
+
+/**
+ * Returns the next item.
+ * @returns {b9.ListItem} The next item.
+ */
+b9.ListItem.prototype.getNext = function()
+{
+    return this._next;
+};
+
+/**
  * @class A list container.
  */
 b9.List = function()
@@ -36,7 +91,7 @@ b9.List = function()
 
     this._start._next = this._end;
     this._end._prev = this._start;
-};
+
 
 /**
  * Returns the number of the items.
@@ -155,59 +210,4 @@ b9.List.prototype.clear = function()
     {
         this.removeItem(this.getFirstItem());
     }
-};
-
-/**
- * @class An item of b9.List.
- * @param {Object} self An object to be stored.
- */
-b9.ListItem = function(self)
-{
-    /** @private */
-    this._self = self;
-
-    /** @private */
-    this._list = null;
-
-    /** @private */
-    this._prev = null;
-
-    /** @private */
-    this._next = null;
-};
-
-/**
- * Returns the stored object.
- * @returns {b9.ListItem} The stored object.
- */
-b9.ListItem.prototype.getSelf = function()
-{
-    return this._self;
-};
-
-/**
- * Returns the list.
- * @returns {b9.List} The list.
- */
-b9.ListItem.prototype.getList = function()
-{
-    return this._list;
-};
-
-/**
- * Returns the previous item.
- * @returns {b9.ListItem} The previous item.
- */
-b9.ListItem.prototype.getPrev = function()
-{
-    return this._prev;
-};
-
-/**
- * Returns the next item.
- * @returns {b9.ListItem} The next item.
- */
-b9.ListItem.prototype.getNext = function()
-{
-    return this._next;
 };
