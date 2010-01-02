@@ -36,16 +36,13 @@ b9.Debug.trace = function(msg)
 
 /**
  * Assertion.
- * @param {String} test_str A test expression.
- * @param {Object} this_obj An object of a test expression.
+ * @param {Boolean} exp A test expression.
  */
-b9.Debug.assert = function(test_str, this_obj)
+b9.Debug.assert = function(exp)
 {
-    var func = new Function("return (" + test_str + ");");
-
-    if (!func.apply(this_obj))
+    if (!exp)
     {
-        var msg = "assertion failed: " + test_str;
+        var msg = "assertion failed"
 
         b9.Debug.trace(msg);
         alert(msg);
