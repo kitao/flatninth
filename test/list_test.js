@@ -21,4 +21,115 @@
  */
 
 {
+    var list = new b9.List();
+
+    b9.Debug.assert(list.getItemNum() === 0);
+    b9.Debug.assert(!list.getFirstItem());
+    b9.Debug.assert(!list.getLastItem());
 }
+
+{
+    var obj = new Object();
+    var item = new b9.ListItem(obj);
+
+    b9.Debug.assert(item.getSelf() === obj);
+    b9.Debug.assert(!item.getList());
+    b9.Debug.assert(!item.getPrev());
+    b9.Debug.assert(!item.getNext());
+}
+
+{
+    var obj1 = new Object();
+    var obj2 = new Object();
+    var item1 = new b9.ListItem(obj1);
+    var item2 = new b9.ListItem(obj2);
+    var list = new b9.List();
+
+    list.addItemFirst(item1);
+
+    b9.Debug.assert(list.getItemNum() === 1);
+    b9.Debug.assert(list.getFirstItem() === item1);
+    b9.Debug.assert(list.getLastItem() === item1);
+
+    list.addItemLast(item2);
+
+    b9.Debug.assert(list.getItemNum() === 2);
+    b9.Debug.assert(list.getFirstItem() === item1);
+    b9.Debug.assert(list.getLastItem() === item2);
+
+    b9.Debug.assert(item1.getSelf() === obj1);
+    b9.Debug.assert(item1.getList() === list);
+    b9.Debug.assert(!item1.getPrev());
+    b9.Debug.assert(item1.getNext() === item2);
+
+    b9.Debug.assert(item2.getSelf() === obj2);
+    b9.Debug.assert(item2.getList() === list);
+    b9.Debug.assert(item2.getPrev() === item1);
+    b9.Debug.assert(!item2.getNext());
+
+    list.removeItem(item1);
+
+    b9.Debug.assert(list.getItemNum() === 1);
+    b9.Debug.assert(list.getFirstItem() === item2);
+    b9.Debug.assert(list.getLastItem() === item2);
+
+    b9.Debug.assert(item1.getSelf() === obj1);
+    b9.Debug.assert(!item1.getList());
+    b9.Debug.assert(!item1.getPrev());
+    b9.Debug.assert(!item1.getNext());
+
+    b9.Debug.assert(item2.getSelf() === obj2);
+    b9.Debug.assert(item2.getList() === list);
+    b9.Debug.assert(!item2.getPrev());
+    b9.Debug.assert(!item2.getNext());
+
+    list.addItemAfter(item1, item2);
+
+    b9.Debug.assert(list.getItemNum() === 2);
+    b9.Debug.assert(list.getFirstItem() === item2);
+    b9.Debug.assert(list.getLastItem() === item1);
+
+    b9.Debug.assert(item1.getSelf() === obj1);
+    b9.Debug.assert(item1.getList() === list);
+    b9.Debug.assert(item1.getPrev() === item2);
+    b9.Debug.assert(!item1.getNext());
+
+    b9.Debug.assert(item2.getSelf() === obj2);
+    b9.Debug.assert(item2.getList() === list);
+    b9.Debug.assert(!item2.getPrev());
+    b9.Debug.assert(item2.getNext() === item1);
+
+    list.addItemBefore(item1, item2);
+
+    b9.Debug.assert(list.getItemNum() === 2);
+    b9.Debug.assert(list.getFirstItem() === item1);
+    b9.Debug.assert(list.getLastItem() === item2);
+
+    b9.Debug.assert(item1.getSelf() === obj1);
+    b9.Debug.assert(item1.getList() === list);
+    b9.Debug.assert(!item1.getPrev());
+    b9.Debug.assert(item1.getNext() === item2);
+
+    b9.Debug.assert(item2.getSelf() === obj2);
+    b9.Debug.assert(item2.getList() === list);
+    b9.Debug.assert(item2.getPrev() === item1);
+    b9.Debug.assert(!item2.getNext());
+
+    list.clear();
+
+    b9.Debug.assert(list.getItemNum() === 0);
+    b9.Debug.assert(!list.getFirstItem());
+    b9.Debug.assert(!list.getLastItem());
+
+    b9.Debug.assert(item1.getSelf() === obj1);
+    b9.Debug.assert(!item1.getList());
+    b9.Debug.assert(!item1.getPrev());
+    b9.Debug.assert(!item1.getNext());
+
+    b9.Debug.assert(item2.getSelf() === obj2);
+    b9.Debug.assert(!item2.getList());
+    b9.Debug.assert(!item2.getPrev());
+    b9.Debug.assert(!item2.getNext());
+}
+
+b9.Debug.trace("list_test complete");
