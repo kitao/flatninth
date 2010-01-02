@@ -25,13 +25,21 @@
     var id2 = new b9.ID("abc");
     var id3 = new b9.ID("def");
 
-    b9.assert(id1.isEqual(id2));
-    b9.assert(!id2.isEqual(id3));
+    b9.Debug.assert(id1.isEqual(id2));
+    b9.Debug.assert(!id2.isEqual(id3));
 }
 
 {
     var id1 = new b9.ID();
     var id2 = new b9.ID();
 
-    b9.assert(!id1.isEqual(id2));
+    b9.Debug.assert(!id1.isEqual(id2));
 }
+
+{
+    var id1 = new b9.ID();
+
+    b9.Debug.assert(!id1.isEqual(b9.ID.ZERO));
+}
+
+b9.Debug.trace("id_test complete");
