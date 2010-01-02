@@ -91,7 +91,7 @@ b9.List = function()
 
     this._start._next = this._end;
     this._end._prev = this._start;
-
+};
 
 /**
  * Returns the number of the items.
