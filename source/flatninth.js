@@ -81,7 +81,7 @@ b9._src_dir = b9.getScriptDir("flatninth.js") + "flatninth/";
 
 b9.include(b9._src_dir + "debug.js");
 b9.include(b9._src_dir + "id.js");
-b9.include(b9._src_dir + "flatninth/list.js");
-b9.include(b9._src_dir + "flatninth/tree.js");
+b9.include(b9._src_dir + "list.js");
+b9.include(b9._src_dir + "tree.js");
 //b9.include(b9._src_dir + "flatninth/idmap.js");
 //b9.include(b9._src_dir + "flatninth/vector2.js");
