@@ -21,6 +21,18 @@
  */
 
 {
+    var obj = new Object();
+    var tree = new b9.Tree(obj);
+
+    b9.Debug.assert(tree.getSelf() === obj);
+    b9.Debug.assert(!tree.getPrevAll());
+    b9.Debug.assert(!tree.getNextAll());
+    b9.Debug.assert(!tree.getParent());
+    b9.Debug.assert(!tree.getPrevSibling());
+    b9.Debug.assert(!tree.getNextSibling());
+    b9.Debug.assert(!tree.getFirstChild());
+    b9.Debug.assert(!tree.getLastChild());
+    b9.Debug.assert(tree.getLastDescendant() === tree);
 }
 
 b9.Debug.trace("tree_test complete");

@@ -23,7 +23,7 @@
 b9.include("debug_test.js");
 b9.include("id_test.js");
 b9.include("list_test.js");
-//b9.include("tree_test.js");
+b9.include("tree_test.js");
 
 alert("complete test");
 
