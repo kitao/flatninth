@@ -39,7 +39,7 @@ all: $(TARGET)
 
 clean:
 	rm -f $(TARGET)
-	rm -rf $(REFERENCE_DIR)
+	rm -rf $(REF_DIR)
 
 reference:
 	java -jar $(JSDOC_DIR)/jsrun.jar $(JSDOC_DIR)/app/run.js -a -r -t=$(JSDOC_DIR)/templates/jsdoc -d=$(REF_DIR) $(SRC_DIR)
