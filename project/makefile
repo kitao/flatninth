@@ -20,9 +20,29 @@
 # THE SOFTWARE.
 #
 
-set jsdoc_dir=C:\jsdoc-toolkit
-set source_dir=source
-set reference_dir=doc\reference
 
-rmdir /s /q %reference_dir%
-java -jar %jsdoc_dir%\jsrun.jar %jsdoc_dir%\app\run.js -a -r -t=%jsdoc_dir%\templates\jsdoc -d=%reference_dir% %source_dir%
+BASE_DIR    = ..
+
+CLOSURE_DIR = $(BASE_DIR)/tool/closure
+JSDOC_DIR   = $(BASE_DIR)/tool/jsdoc-toolkit
+
+SRC_DIR     = $(BASE_DIR)/source
+REF_DIR     = $(BASE_DIR)/doc/reference
+
+SRCS        = $(shell find $(SOURCE_DIR) -name "*.js")
+TARGET      = $(BASE_DIR)/flatninth.js
+
+
+.PHONY: all clean reference
+
+all: $(TARGET)
+
+clean:
+	rm $(TARGET)
+	rm -rf $(REFERENCE_DIR)
+
+reference:
+	java -jar $(JSDOC_DIR)/jsrun.jar $(JSDOC_DIR)/app/run.js -a -r -t=$(JSDOC_DIR)/templates/jsdoc -d=$(REF_DIR) $(SRC_DIR)
+
+$(TARGET): $(SRCS)
+	java -jar compiler.jar --js $(SRCS) --js_output_file $(TARGET)
