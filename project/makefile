@@ -29,7 +29,7 @@ JSDOC_DIR   = $(BASE_DIR)/tool/jsdoc-toolkit
 SRC_DIR     = $(BASE_DIR)/source
 REF_DIR     = $(BASE_DIR)/doc/reference
 
-SRCS        = $(shell find $(SOURCE_DIR) -name "*.js")
+SRCS        = $(shell find $(SRC_DIR) -name "*.js")
 TARGET      = $(BASE_DIR)/flatninth.js
 
 
@@ -38,11 +38,11 @@ TARGET      = $(BASE_DIR)/flatninth.js
 all: $(TARGET)
 
 clean:
-	rm $(TARGET)
+	rm -f $(TARGET)
 	rm -rf $(REFERENCE_DIR)
 
 reference:
 	java -jar $(JSDOC_DIR)/jsrun.jar $(JSDOC_DIR)/app/run.js -a -r -t=$(JSDOC_DIR)/templates/jsdoc -d=$(REF_DIR) $(SRC_DIR)
 
 $(TARGET): $(SRCS)
-	java -jar compiler.jar --js $(SRCS) --js_output_file $(TARGET)
+	java -jar $(CLOSURE_DIR)/compiler.jar $(addprefix --js , $(SRCS)) --js_output_file $(TARGET)
