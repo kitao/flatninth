@@ -30,7 +30,11 @@ JSDOC_DIR   = $(BASE_DIR)/tool/jsdoc-toolkit
 SRC_DIR     = $(BASE_DIR)/source
 REF_DIR     = $(BASE_DIR)/doc/reference
 
-SRCS        = $(shell find $(SRC_DIR) -name "*.js")
+SRC1        = flatninth.js
+SRC2        = $(addprefix math/, vector2.js vector3.js)
+SRC3        = $(addprefix general/, id.js)
+
+SRCS        = $(addprefix $(SRC_DIR)/, $(SRC1) $(SRC2) $(SRC3))
 TARGET      = $(BASE_DIR)/flatninth.js
 
 
