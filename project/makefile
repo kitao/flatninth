@@ -23,6 +23,7 @@
 
 BASE_DIR    = ..
 
+JSLINT_DIR  = $(BASE_DIR)/tool/jslint4java
 CLOSURE_DIR = $(BASE_DIR)/tool/closure
 JSDOC_DIR   = $(BASE_DIR)/tool/jsdoc-toolkit
 
@@ -45,4 +46,5 @@ reference:
 	java -jar $(JSDOC_DIR)/jsrun.jar $(JSDOC_DIR)/app/run.js -a -r -t=$(JSDOC_DIR)/templates/jsdoc -d=$(REF_DIR) $(SRC_DIR)
 
 $(TARGET): $(SRCS)
+	java -jar $(JSLINT_DIR)/jslint4java.jar $(SRCS)
 	java -jar $(CLOSURE_DIR)/compiler.jar $(addprefix --js , $(SRCS)) --js_output_file $(TARGET)
