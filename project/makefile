@@ -28,23 +28,28 @@ CLOSURE_DIR = $(BASE_DIR)/tool/closure
 JSDOC_DIR   = $(BASE_DIR)/tool/jsdoc-toolkit
 
 SRC_DIR     = $(BASE_DIR)/source
+TEST_DIR    = $(BASE_DIR)/test
 REF_DIR     = $(BASE_DIR)/doc/reference
 
 SRC1        = flatninth.js
-SRC2        = $(addprefix math/, vector2.js vector3.js)
-SRC3        = $(addprefix general/, id.js)
+SRC2        = $(addprefix math/, math.js vector2.js)
+#SRC3        = $(addprefix general/, id.js)
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC1) $(SRC2) $(SRC3))
+TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
 TARGET      = $(BASE_DIR)/flatninth.js
 
 
-.PHONY: all clean reference
+.PHONY: all clean test reference
 
 all: $(TARGET)
 
 clean:
 	rm -f $(TARGET)
 	rm -rf $(REF_DIR)
+
+test:
+	java -jar $(JSLINT_DIR)/jslint4java.jar $(TEST_SRCS)
 
 reference:
 	java -jar $(JSDOC_DIR)/jsrun.jar $(JSDOC_DIR)/app/run.js -a -r -t=$(JSDOC_DIR)/templates/jsdoc -d=$(REF_DIR) $(SRC_DIR)
