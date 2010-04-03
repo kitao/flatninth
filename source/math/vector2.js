@@ -25,19 +25,96 @@
  * @param {Number} x The x-coordinate. Possible not to specify.
  * @param {Number} y The y-coordinate. Possible not to specify.
  */
-b9.Vector2 = function(x, y)
-{
-    this.x = x ? x : 0;
-    this.y = y ? y : 0;
-}
+b9.Vector2 = function() {
+    if (arguments === 2) {
+        this.x = arguments[0];
+        this.y = arguments[1];
+    } else if (arguments === 1) {
+        this.x = arguments[0].x;
+        this.y = arguments[0].y;
+    } else {
+        this.x = 0.0;
+        this.y = 0.0;
+    }
+};
 
 /**
  * Sets the coordinates.
  * @param {Number} x The x-coordinate.
  * @param {Number} y The y-coordinate.
  */
-b9.Vector2.prototype.set = function(x, y)
+b9.Vector2.prototype.set = function()
 {
-    this.x = x;
-    this.y = y;
-}
+    if (arguments === 2) {
+        this.x = arguments[0];
+        this.y = arguments[1];
+    } else if (arguments === 1) {
+        this.x = arguments[0].x;
+        this.y = arguments[0].y;
+    }
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.neg = function() {
+    this.x = -this.x;
+    this.y = -this.y;
+};
+
+/**
+ *
+ * @param {b9.Vector2} vec2
+ */
+b9.Vector2.prototype.add = function(vec2) {
+    this.x += vec2.x;
+    this.y += vec2.y;
+};
+
+/**
+ *
+ * @param {b9.Vector2} vec2
+ */
+b9.Vector2.prototype.sub = function(vec2) {
+    this.x -= vec2.x;
+    this.y -= vec2.y;
+};
+
+/**
+ *
+ * @param {Number} s
+ */
+b9.Vector2.prototype.mul = function(s) {
+    this.x *= s;
+    this.y *= s;
+};
+
+/**
+ * @param {Number} s
+ */
+b9.Vector2.prototype.div = function(s) {
+    var inv_s = 1.0 / s;
+    this.x *= inv_s;
+    this.y *= inv_s;
+};
+
+/**
+ *
+ */
+//b9.Vector2.prototype.sqLength() {
+//    return this.x * this.x + this.y * this.y;
+//};
+
+/**
+ *
+ */
+//b9.Vector2.prototype.length() {
+//    return b9.Math.sqrt(this.x * this.x + this.y * this.y);
+//};
+
+/**
+ *
+ */
+//b9.Vector2.prototype.normalize() {
+//    var len = this.length();
+//};

@@ -20,7 +20,8 @@
  * THE SOFTWARE.
  */
 
-/**
- * @namespace Flatninth package.
- */
-var b9 = {};
+b9.Math = {};
+
+b9.Math.sqrt = function(s) {
+    return Math.sqrt(s);
+};
