@@ -20,8 +20,6 @@
  * THE SOFTWARE.
  */
 
-
-
 function testMath() {
     assertEquals(b9.Math.sqrt(100.0), 10.0);
 }
