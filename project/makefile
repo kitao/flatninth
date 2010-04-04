@@ -32,7 +32,7 @@ TEST_DIR    = $(BASE_DIR)/test
 REF_DIR     = $(BASE_DIR)/doc/reference
 
 SRC1        = flatninth.js
-SRC2        = $(addprefix math/, math.js vector2.js)
+SRC2        = $(addprefix math/, math.js vector2d.js)
 #SRC3        = $(addprefix general/, id.js)
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC1) $(SRC2) $(SRC3))
