@@ -206,7 +206,7 @@ b9.Vector2D.prototype.interp = function(aim, ratio) {
 /**
  *
  */
-b9.Vector2D.prototype.toLocalOf = function(mat) {
+b9.Vector2D.prototype.toLocal = function(mat) {
     /*
     ckVec vec = *this - mat.trans;
 
@@ -220,7 +220,7 @@ b9.Vector2D.prototype.toLocalOf = function(mat) {
 /**
  *
  */
-b9.Vector2D.prototype.toGlobalFrom = function(mat) {
+b9.Vector2D.prototype.toGlobal= function(mat) {
     /*
     return mat.x_axis * x + mat.y_axis * y + mat.z_axis * z + mat.trans;
     */
@@ -229,7 +229,7 @@ b9.Vector2D.prototype.toGlobalFrom = function(mat) {
 /**
  *
  */
-b9.Vector2D.prototype.toLocalOf_noTrans = function(mat) {
+b9.Vector2D.prototype.toLocal_noTrans = function(mat) {
     /*
     return ckVec( //
         dot(mat.x_axis) / mat.x_axis.sqLength(), //
@@ -241,7 +241,7 @@ b9.Vector2D.prototype.toLocalOf_noTrans = function(mat) {
 /**
  *
  */
-b9.Vector2D.prototype.toGlobalFrom_noTrans = function(mat) {
+b9.Vector2D.prototype.toGlobal_noTrans = function(mat) {
     /*
     return mat.x_axis * x + mat.y_axis * y + mat.z_axis * z;
     */
