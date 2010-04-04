@@ -26,17 +26,29 @@
  * @param {Number} y The y-coordinate. Possible not to specify.
  */
 b9.Vector2 = function() {
+    /** hoge */
+    this.x = 0.0;
+
+    /** hoge */
+    this.y = 0.0;
+
     if (arguments === 2) {
         this.x = arguments[0];
         this.y = arguments[1];
     } else if (arguments === 1) {
         this.x = arguments[0].x;
         this.y = arguments[0].y;
-    } else {
-        this.x = 0.0;
-        this.y = 0.0;
     }
 };
+
+/** private */
+b9.Vector2._s1 = 0.0;
+
+/** private */
+b9.Vector2._s2 = 0.0;
+
+/** private */
+b9.Vector2._v1 = Vector2();
 
 /**
  * Sets the coordinates.
@@ -66,18 +78,18 @@ b9.Vector2.prototype.neg = function() {
  *
  * @param {b9.Vector2} vec2
  */
-b9.Vector2.prototype.add = function(vec2) {
-    this.x += vec2.x;
-    this.y += vec2.y;
+b9.Vector2.prototype.add = function(vec) {
+    this.x += vec.x;
+    this.y += vec.y;
 };
 
 /**
  *
  * @param {b9.Vector2} vec2
  */
-b9.Vector2.prototype.sub = function(vec2) {
-    this.x -= vec2.x;
-    this.y -= vec2.y;
+b9.Vector2.prototype.sub = function(vec) {
+    this.x -= vec.x;
+    this.y -= vec.y;
 };
 
 /**
@@ -93,28 +105,144 @@ b9.Vector2.prototype.mul = function(s) {
  * @param {Number} s
  */
 b9.Vector2.prototype.div = function(s) {
-    var inv_s = 1.0 / s;
-    this.x *= inv_s;
-    this.y *= inv_s;
+    this._s1 = 1.0 / s;
+    this.x *= this._s1;
+    this.y *= this._s1;
 };
 
 /**
  *
  */
-//b9.Vector2.prototype.sqLength() {
-//    return this.x * this.x + this.y * this.y;
-//};
+b9.Vector2.prototype.mag = function() {
+    return b9.Math.sqrt(this.x * this.x + this.y * this.y);
+};
 
 /**
  *
  */
-//b9.Vector2.prototype.length() {
-//    return b9.Math.sqrt(this.x * this.x + this.y * this.y);
-//};
+b9.Vector2.prototype.sqMag = function() {
+    return this.x * this.x + this.y * this.y;
+};
 
 /**
  *
  */
-//b9.Vector2.prototype.normalize() {
-//    var len = this.length();
-//};
+b9.Vector2.prototype.dist = function(vec) {
+    Vector2._v1.set(this);
+    Vector2._v1.sub(vec);
+    return Vector2._v1.mag();
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.sqDist = function(vec) {
+    Vector2._v1.set(this);
+    Vector2._v1.sub(vec);
+    return Vector2._v1.sqMag();
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.dot = function(vec) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.rotate = function(deg) {
+    Vector2._s1 = b9.Math.sin(deg);
+    Vector2._s2 = b9.Math.cos(deg);
+
+    Vector2._v1.x = x * Vector2._s2 - y * Vector2._s1;
+    Vector2._v1.y = y * Vector2._s2 + x * Vector2._s1;
+
+    this.set(Vector2._v1);
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.rotate_int = function(deg) {
+    Vector2._s1 = b9.Math.sin_int(deg);
+    Vector2._s2 = b9.Math.cos_int(deg);
+
+    Vector2._v1.x = x * Vector2._s2 - y * Vector2._s1;
+    Vector2._v1.y = y * Vector2._s2 + x * Vector2._s1;
+
+    this.set(Vector2._v1);
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.normalize = function() {
+    Vector2._s1 = this.mag();
+    this.div(Vector2._s1);
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.interp = function(aim, ratio) {
+    /*
+    if (ratio < ckMath::EPSILON)
+    {
+        return *this;
+    }
+    else if (ratio > 1.0f - ckMath::EPSILON)
+    {
+        return to;
+    }
+    else
+    {
+        return *this * (1.0f - ratio) + to * ratio;
+    }
+    */
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.toLocalOf = function(mat) {
+    /*
+    ckVec vec = *this - mat.trans;
+
+    return ckVec( //
+        vec.dot(mat.x_axis) / mat.x_axis.sqLength(), //
+        vec.dot(mat.y_axis) / mat.y_axis.sqLength(), //
+        vec.dot(mat.z_axis) / mat.z_axis.sqLength());
+    */
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.toGlobalFrom = function(mat) {
+    /*
+    return mat.x_axis * x + mat.y_axis * y + mat.z_axis * z + mat.trans;
+    */
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.toLocalOf_noTrans = function(mat) {
+    /*
+    return ckVec( //
+        dot(mat.x_axis) / mat.x_axis.sqLength(), //
+        dot(mat.y_axis) / mat.y_axis.sqLength(), //
+        dot(mat.z_axis) / mat.z_axis.sqLength());
+    */
+};
+
+/**
+ *
+ */
+b9.Vector2.prototype.toGlobalFrom_noTrans = function(mat) {
+    /*
+    return mat.x_axis * x + mat.y_axis * y + mat.z_axis * z;
+    */
+};
