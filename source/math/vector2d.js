@@ -113,14 +113,14 @@ b9.Vector2D.prototype.div = function(s) {
 /**
  *
  */
-b9.Vector2D.prototype.mag = function() {
+b9.Vector2D.prototype.norm = function() {
     return b9.Math.sqrt(this.x * this.x + this.y * this.y);
 };
 
 /**
  *
  */
-b9.Vector2D.prototype.sqMag = function() {
+b9.Vector2D.prototype.sqNorm = function() {
     return this.x * this.x + this.y * this.y;
 };
 
@@ -130,7 +130,7 @@ b9.Vector2D.prototype.sqMag = function() {
 b9.Vector2D.prototype.dist = function(vec) {
     Vector2D._v1.set(this);
     Vector2D._v1.sub(vec);
-    return Vector2D._v1.mag();
+    return Vector2D._v1.norm();
 };
 
 /**
@@ -139,14 +139,14 @@ b9.Vector2D.prototype.dist = function(vec) {
 b9.Vector2D.prototype.sqDist = function(vec) {
     Vector2D._v1.set(this);
     Vector2D._v1.sub(vec);
-    return Vector2D._v1.sqMag();
+    return Vector2D._v1.sqNorm();
 };
 
 /**
  *
  */
 b9.Vector2D.prototype.dot = function(vec) {
-    // TODO
+    return this.x * vec.x + this.y * vec.y;
 };
 
 /**
