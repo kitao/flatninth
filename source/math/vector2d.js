@@ -187,62 +187,78 @@ b9.Vector2D.prototype.normalize = function() {
  *
  */
 b9.Vector2D.prototype.interp = function(aim, ratio) {
-    /*
-    if (ratio < ckMath::EPSILON)
-    {
-        return *this;
+    if (ratio < b9.Math.EPSILON) {
+        return;
+    } else if (ratio > 1.0 - b9.Math.EPSILON) {
+        this.set(aim);
+    } else {
+        this.mul(1.0 - ratio);
+        Vector2D._v1.set(aim);
+        Vector2D._v1.mul(ratio);
+        this.add(Vector2D._v1);
     }
-    else if (ratio > 1.0f - ckMath::EPSILON)
-    {
-        return to;
-    }
-    else
-    {
-        return *this * (1.0f - ratio) + to * ratio;
-    }
-    */
 };
 
 /**
  *
  */
 b9.Vector2D.prototype.toLocal = function(mat) {
-    /*
-    ckVec vec = *this - mat.trans;
+    Vector2D._v1.set(this);
+    Vector2D._v1.sub(mat.trans);
 
-    return ckVec( //
-        vec.dot(mat.x_axis) / mat.x_axis.sqLength(), //
-        vec.dot(mat.y_axis) / mat.y_axis.sqLength(), //
-        vec.dot(mat.z_axis) / mat.z_axis.sqLength());
-    */
+    this.set(Vector2D._v1.dot(mat.x_axis) / mat.x_axis.sqNorm(), Vector2D._v1.dot(mat.y_axis) / mat.y_axis.sqNorm());
 };
 
 /**
  *
  */
 b9.Vector2D.prototype.toGlobal= function(mat) {
-    /*
-    return mat.x_axis * x + mat.y_axis * y + mat.z_axis * z + mat.trans;
-    */
+    Vector2D._v1.set(mat.x_axis);
+    Vector2D._v1.mul(this.x);
+
+    Vector2D._v2.set(mat.y_axis);
+    Vector2D._v2.mul(this.y);
+
+    this.set(Vector2D._v1);
+    this.add(Vector2D._v2);
+    this.add(mat.trans);
 };
 
 /**
  *
  */
 b9.Vector2D.prototype.toLocal_noTrans = function(mat) {
-    /*
-    return ckVec( //
-        dot(mat.x_axis) / mat.x_axis.sqLength(), //
-        dot(mat.y_axis) / mat.y_axis.sqLength(), //
-        dot(mat.z_axis) / mat.z_axis.sqLength());
-    */
+    Vector2D._v1.x = this.dot(mat.x_axis) / mat.x_axis.sqNorm();
+    Vector2D._v1.y = this.dot(mat.y_axis) / mat.y_axis.sqNorm();
+
+    this.set(Vector2D._v1);
 };
 
 /**
  *
  */
 b9.Vector2D.prototype.toGlobal_noTrans = function(mat) {
-    /*
-    return mat.x_axis * x + mat.y_axis * y + mat.z_axis * z;
-    */
+    Vector2D._v1.set(mat.x_axis);
+    Vector2D._v1.mul(this.x);
+
+    Vector2D._v2.set(mat.y_axis);
+    Vector2D._v2.mul(this.y);
+
+    this.set(Vector2D._v1);
+    this.add(Vector2D._v2);
 };
+
+/**
+ * {b9.Vector2D}
+ */
+b9.Vector2D.ZERO = b9.Vector2D(0.0, 0.0);
+
+/**
+ * {b9.Vector2D}
+ */
+b9.Vector2D.X_UNIT = b9.Vector2D(1.0, 0.0);
+
+/**
+ * {b9.Vector2D}
+ */
+b9.Vector2D.Y_UNIT = b9.Vector2D(0.0, 1.0);
