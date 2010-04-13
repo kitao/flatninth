@@ -49,6 +49,88 @@ b9.Math.sqrt = function(s) {
     return Math.sqrt(s);
 };
 
+/**
+ *
+ */
+b9.Math.sin_float = function(deg) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.cos_float = function(deg) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.sin_int = function(deg) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.cos_int = function(deg) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.asin = function(x) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.acos = function(x) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.atan2 = function(y, x) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.srand = function(seed) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.rand_int = function(from, to) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.rand_float = function(from, to, interval) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.Math.interval = function(from, to, ratio) {
+    if (ratio < b9.Math.EPSILON) {
+        return from;
+    } else if (ratio > 1.0 - b9.Math.EPSILON) {
+        return to;
+    } else {
+        return from * (1.0 - ratio) + to * ratio;
+    }
+};
 
 /*
 static const r32 s_sin_tbl[180] =

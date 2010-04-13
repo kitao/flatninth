@@ -26,3 +26,18 @@ function testMath() {
 
 function testVector2() {
 }
+
+/*
+    * assert([comment], booleanValue)
+    * assertTrue([comment], booleanValue)
+    * assertFalse([comment], booleanValue)
+    * assertEquals([comment], value1, value2)
+    * assertNotEquals([comment], value1, value2)
+    * assertNull([comment], value)
+    * assertNotNull([comment], value)
+    * assertUndefined([comment], value)
+    * assertNotUndefined([comment], value)
+    * assertNaN([comment], value)
+    * assertNotNaN([comment], value)
+    * fail(comment)
+*/
