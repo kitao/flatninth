@@ -81,9 +81,10 @@ b9.Matrix2D.prototype.set = function() {
  *
  */
 b9.Matrix2D.prototype.isUnit = function() {
-    return (this.x_axis.x === 1.0 && this.x_axis.y === 0.0 &&
-            this.y_axis.x === 0.0 && this.y_axis.y === 1.0 &&
-            this.trans.x === 0.0 && this.trans.y === 0.0);
+    return (
+        this.x_axis.x === 1.0 && this.x_axis.y === 0.0 &&
+        this.y_axis.x === 0.0 && this.y_axis.y === 1.0 &&
+        this.trans.x === 0.0 && this.trans.y === 0.0);
 };
 
 /**
@@ -97,7 +98,7 @@ b9.Matrix2D.prototype.rotate_float = function(deg) {
     b9.Matrix2D._m1.y_axis.set(-b9.Matrix2D._s1, b9.Matrix2D._s2);
     b9.Matrix2D._m1.trans.set(b9.Matrix2D.ZERO);
 
-    b9.Matrix2D._m1.toGlobal(this);
+    b9.Matrix2D._m1.toGlobalFrom(this);
     this.set(b9.Matrix2D._m1);
 };
 
@@ -112,7 +113,7 @@ b9.Matrix2D.prototype.rotate_int = function(deg) {
     b9.Matrix2D._m1.y_axis.set(-b9.Matrix2D._s1, b9.Matrix2D._s2);
     b9.Matrix2D._m1.trans.set(b9.Matrix2D.ZERO);
 
-    b9.Matrix2D._m1.toGlobal(this);
+    b9.Matrix2D._m1.toGlobalFrom(this);
     this.set(b9.Matrix2D._m1);
 };
 
@@ -155,29 +156,62 @@ b9.Matrix2D.prototype.interp_noTrans = function(to, ratio) {
 /**
  *
  */
-b9.Matrix2D.prototype.toLocal = function(mat) {
-    // TODO
+b9.Matrix2D.prototype.toLocalOf = function(mat) {
+    b9.Matrix2D._s1 = 1.0 / mat.x_axis.sqNorm();
+    b9.Matrix2D._s2 = 1.0 / mat.y_axis.sqNorm();
+
+    b9.Matrix2D._v1.set(this.trans);
+    b9.Matrix2D._v1.sub(mat.trans);
+
+    this.x_axis.set(
+        this.x_axis.dot(mat.x_axis) * b9.Matrix2D._s1,
+        this.x_axis.dot(mat.y_axis) * b9.Matrix2D._s2);
+
+    this.y_axis.set(
+        this.y_axis.dot(mat.x_axis) * b9.Matrix2D._s1,
+        this.y_axis.dot(mat.y_axis) * b9.Matrix2D._s2);
+
+    this.trans.set(
+        b9.Matrix2D._v1.dot(mat.x_axis) * b9.Matrix2D._s1,
+        b9.Matrix2D._v1.dot(mat.y_axis) * b9.Matrix2D._s2);
 };
 
 /**
  *
  */
-b9.Matrix2D.prototype.toGlobal = function(mat) {
-    // TODO
+b9.Matrix2D.prototype.toGlobalFrom = function(mat) {
+    this.x_axis.toGlobalFrom_noTrans(mat);
+    this.y_axis.toGlobalFrom_noTrans(mat);
+    this.z_axis.toGlobalFrom_noTrans(mat);
+    this.trans.toGlobalFrom(mat);
 };
 
 /**
  *
  */
-b9.Matrix2D.prototype.toLocal_noTrans = function(mat) {
-    // TODO
+b9.Matrix2D.prototype.toLocalOf_noTrans = function(mat) {
+    b9.Matrix2D._s1 = 1.0 / mat.x_axis.sqNorm();
+    b9.Matrix2D._s2 = 1.0 / mat.y_axis.sqNorm();
+
+    this.x_axis.set(
+        this.x_axis.dot(mat.x_axis) * b9.Matrix2D._s1,
+        this.x_axis.dot(mat.y_axis) * b9.Matrix2D._s2);
+
+    this.y_axis.set(
+        this.y_axis.dot(mat.x_axis) * b9.Matrix2D._s1,
+        this.y_axis.dot(mat.y_axis) * b9.Matrix2D._s2);
+
+    this.trans.set(b9.Vector2D.ZERO);
 };
 
 /**
  *
  */
-b9.Matrix2D.prototype.toGlobal_noTrans = function(mat) {
-    // TODO
+b9.Matrix2D.prototype.toGlobalFrom_noTrans = function(mat) {
+    this.x_axis.toGlobalFrom_noTrans(mat);
+    this.y_axis.toGlobalFrom_noTrans(mat);
+    this.z_axis.toGlobalFrom_noTrans(mat);
+    trans.set(b9.Vector2D.ZERO);
 };
 
 /**
@@ -185,68 +219,21 @@ b9.Matrix2D.prototype.toGlobal_noTrans = function(mat) {
  */
 b9.Matrix2D.prototype.lookAt = function(from, to) {
     // TODO
-};
-
 /*
-const ckMat ckMat::ZERO(ckVec(0.0f, 0.0f, 0.0f), ckVec(0.0f, 0.0f, 0.0f), ckVec(0.0f, 0.0f, 0.0f), ckVec(0.0f, 0.0f, 0.0f));
-const ckMat ckMat::UNIT(ckVec(1.0f, 0.0f, 0.0f), ckVec(0.0f, 1.0f, 0.0f), ckVec(0.0f, 0.0f, 1.0f), ckVec(0.0f, 0.0f, 0.0f));
-
-
-ckMat ckMat::toLocalOf(const ckMat& mat) const
-{
-    r32 rsq_xa = 1.0f / mat.x_axis.sqLength();
-    r32 rsq_ya = 1.0f / mat.y_axis.sqLength();
-    r32 rsq_za = 1.0f / mat.z_axis.sqLength();
-    ckVec vec = trans - mat.trans;
-
-    return ckMat( //
-        ckVec(x_axis.dot(mat.x_axis) * rsq_xa, x_axis.dot(mat.y_axis) * rsq_ya, x_axis.dot(mat.z_axis) * rsq_za), //
-        ckVec(y_axis.dot(mat.x_axis) * rsq_xa, y_axis.dot(mat.y_axis) * rsq_ya, y_axis.dot(mat.z_axis) * rsq_za), //
-        ckVec(z_axis.dot(mat.x_axis) * rsq_xa, z_axis.dot(mat.y_axis) * rsq_ya, z_axis.dot(mat.z_axis) * rsq_za), //
-        ckVec(vec.dot(mat.x_axis) * rsq_xa, vec.dot(mat.y_axis) * rsq_ya, vec.dot(mat.z_axis) * rsq_za));
-}
-
-
-ckMat ckMat::toGlobalFrom(const ckMat& mat) const
-{
-    return ckMat( //
-        x_axis.toGlobalFrom_noTrans(mat), //
-        y_axis.toGlobalFrom_noTrans(mat), //
-        z_axis.toGlobalFrom_noTrans(mat), //
-        trans.toGlobalFrom(mat));
-}
-
-
-ckMat ckMat::toLocalOf_noTrans(const ckMat& mat) const
-{
-    r32 rsq_xa = 1.0f / mat.x_axis.sqLength();
-    r32 rsq_ya = 1.0f / mat.y_axis.sqLength();
-    r32 rsq_za = 1.0f / mat.z_axis.sqLength();
-
-    return ckMat( //
-        ckVec(x_axis.dot(mat.x_axis) * rsq_xa, x_axis.dot(mat.y_axis) * rsq_ya, x_axis.dot(mat.z_axis) * rsq_za), //
-        ckVec(y_axis.dot(mat.x_axis) * rsq_xa, y_axis.dot(mat.y_axis) * rsq_ya, y_axis.dot(mat.z_axis) * rsq_za), //
-        ckVec(z_axis.dot(mat.x_axis) * rsq_xa, z_axis.dot(mat.y_axis) * rsq_ya, z_axis.dot(mat.z_axis) * rsq_za), //
-        ckVec::ZERO);
-}
-
-
-ckMat ckMat::toGlobalFrom_noTrans(const ckMat& mat) const
-{
-    return ckMat( //
-        x_axis.toGlobalFrom_noTrans(mat), //
-        y_axis.toGlobalFrom_noTrans(mat), //
-        z_axis.toGlobalFrom_noTrans(mat), //
-        ckVec::ZERO);
-}
-
-
-ckMat ckMat::lookAt(const ckVec& from, const ckVec& to, const ckVec& up)
-{
     ckVec new_z_axis = (from - to).normalize();
     ckVec new_x_axis = up.cross(new_z_axis).normalize();
     ckVec new_y_axis = new_z_axis.cross(new_x_axis);
 
     return ckMat(new_x_axis, new_y_axis, new_z_axis, from);
-}
 */
+};
+
+/*
+ *
+ */
+b9.Matrix2D.ZERO = b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector2D.ZERO);
+
+/**
+ *
+ */
+b9.Matrix2D.UNIT = b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);

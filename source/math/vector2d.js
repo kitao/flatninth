@@ -202,17 +202,19 @@ b9.Vector2D.prototype.interp = function(to, ratio) {
 /**
  *
  */
-b9.Vector2D.prototype.toLocal = function(mat) {
+b9.Vector2D.prototype.toLocalOf = function(mat) {
     Vector2D._v1.set(this);
     Vector2D._v1.sub(mat.trans);
 
-    this.set(Vector2D._v1.dot(mat.x_axis) / mat.x_axis.sqNorm(), Vector2D._v1.dot(mat.y_axis) / mat.y_axis.sqNorm());
+    this.set(
+        Vector2D._v1.dot(mat.x_axis) / mat.x_axis.sqNorm(),
+        Vector2D._v1.dot(mat.y_axis) / mat.y_axis.sqNorm());
 };
 
 /**
  *
  */
-b9.Vector2D.prototype.toGlobal= function(mat) {
+b9.Vector2D.prototype.toGlobalFrom = function(mat) {
     Vector2D._v1.set(mat.x_axis);
     Vector2D._v1.mul(this.x);
 
@@ -227,7 +229,7 @@ b9.Vector2D.prototype.toGlobal= function(mat) {
 /**
  *
  */
-b9.Vector2D.prototype.toLocal_noTrans = function(mat) {
+b9.Vector2D.prototype.toLocalOf_noTrans = function(mat) {
     Vector2D._v1.x = this.dot(mat.x_axis) / mat.x_axis.sqNorm();
     Vector2D._v1.y = this.dot(mat.y_axis) / mat.y_axis.sqNorm();
 
@@ -237,7 +239,7 @@ b9.Vector2D.prototype.toLocal_noTrans = function(mat) {
 /**
  *
  */
-b9.Vector2D.prototype.toGlobal_noTrans = function(mat) {
+b9.Vector2D.prototype.toGlobalFrom_noTrans = function(mat) {
     Vector2D._v1.set(mat.x_axis);
     Vector2D._v1.mul(this.x);
 
