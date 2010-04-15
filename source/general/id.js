@@ -24,24 +24,19 @@
  * @class An ID based on a string.
  * @param {String} seed A seed of an ID. When not specified, generate the unique ID automatically.
  */
-b9.ID = function(seed)
-{
-    /** private */
+b9.ID = function(seed) {
+    /** @private */
     this._value = undefined;
 
-    if (seed)
-    {
+    if (seed) {
         this._value = 0;
 
-        for (var i in seed)
-        {
-            this._value = this._value * 37 + seed.charCodeAt(i);
+        for (b9.ID._n1 in seed) {
+            this._value = this._value * 37 + seed.charCodeAt(b9.ID._n1);
         }
 
         this._value = -this._value;
-    }
-    else
-    {
+    } else {
         this._value = b9.ID._cur_value;
         b9.ID._cur_value++;
     }
@@ -51,8 +46,7 @@ b9.ID = function(seed)
  * @param {b9.ID} id
  * @returns {Boolean} Whether an ID is equal to this ID.
  */
-b9.ID.prototype.isEqual = function(id)
-{
+b9.ID.prototype.isEqual = function(id) {
     return (this._value == id._value);
 };
 
@@ -63,3 +57,6 @@ b9.ID.ZERO = new b9.ID();
 
 /** @private */
 b9.ID._cur_value = 0;
+
+/** @private */
+b9.ID._n1 = 0;

@@ -41,15 +41,6 @@ b9.Vector2D = function() {
     }
 };
 
-/** private */
-b9.Vector2D._s1 = 0.0;
-
-/** private */
-b9.Vector2D._s2 = 0.0;
-
-/** private */
-b9.Vector2D._v1 = Vector2D();
-
 /**
  * Sets the coordinates.
  * @param {Number} x The x-coordinate.
@@ -105,9 +96,9 @@ b9.Vector2D.prototype.mul = function(s) {
  * @param {Number} s
  */
 b9.Vector2D.prototype.div = function(s) {
-    this._s1 = 1.0 / s;
-    this.x *= this._s1;
-    this.y *= this._s1;
+    this._f1 = 1.0 / s;
+    this.x *= this._f1;
+    this.y *= this._f1;
 };
 
 /**
@@ -153,11 +144,11 @@ b9.Vector2D.prototype.dot = function(vec) {
  *
  */
 b9.Vector2D.prototype.rotate_float = function(deg) {
-    Vector2D._s1 = b9.Math.sin_float(deg);
-    Vector2D._s2 = b9.Math.cos_float(deg);
+    Vector2D._f1 = b9.Math.sin_float(deg);
+    Vector2D._f2 = b9.Math.cos_float(deg);
 
-    Vector2D._v1.x = x * Vector2D._s2 - y * Vector2D._s1;
-    Vector2D._v1.y = y * Vector2D._s2 + x * Vector2D._s1;
+    Vector2D._v1.x = x * Vector2D._f2 - y * Vector2D._f1;
+    Vector2D._v1.y = y * Vector2D._f2 + x * Vector2D._f1;
 
     this.set(Vector2D._v1);
 };
@@ -166,11 +157,11 @@ b9.Vector2D.prototype.rotate_float = function(deg) {
  *
  */
 b9.Vector2D.prototype.rotate_int = function(deg) {
-    Vector2D._s1 = b9.Math.sin_int(deg);
-    Vector2D._s2 = b9.Math.cos_int(deg);
+    Vector2D._f1 = b9.Math.sin_int(deg);
+    Vector2D._f2 = b9.Math.cos_int(deg);
 
-    Vector2D._v1.x = x * Vector2D._s2 - y * Vector2D._s1;
-    Vector2D._v1.y = y * Vector2D._s2 + x * Vector2D._s1;
+    Vector2D._v1.x = x * Vector2D._f2 - y * Vector2D._f1;
+    Vector2D._v1.y = y * Vector2D._f2 + x * Vector2D._f1;
 
     this.set(Vector2D._v1);
 };
@@ -179,8 +170,8 @@ b9.Vector2D.prototype.rotate_int = function(deg) {
  *
  */
 b9.Vector2D.prototype.normalize = function() {
-    Vector2D._s1 = this.mag();
-    this.div(Vector2D._s1);
+    Vector2D._f1 = this.mag();
+    this.div(Vector2D._f1);
 };
 
 /**
@@ -202,7 +193,7 @@ b9.Vector2D.prototype.interp = function(to, ratio) {
 /**
  *
  */
-b9.Vector2D.prototype.toLocalOf = function(mat) {
+b9.Vector2D.prototype.toLocal = function(mat) {
     Vector2D._v1.set(this);
     Vector2D._v1.sub(mat.trans);
 
@@ -214,7 +205,7 @@ b9.Vector2D.prototype.toLocalOf = function(mat) {
 /**
  *
  */
-b9.Vector2D.prototype.toGlobalFrom = function(mat) {
+b9.Vector2D.prototype.toGlobal = function(mat) {
     Vector2D._v1.set(mat.x_axis);
     Vector2D._v1.mul(this.x);
 
@@ -229,7 +220,7 @@ b9.Vector2D.prototype.toGlobalFrom = function(mat) {
 /**
  *
  */
-b9.Vector2D.prototype.toLocalOf_noTrans = function(mat) {
+b9.Vector2D.prototype.toLocal_noTrans = function(mat) {
     Vector2D._v1.x = this.dot(mat.x_axis) / mat.x_axis.sqNorm();
     Vector2D._v1.y = this.dot(mat.y_axis) / mat.y_axis.sqNorm();
 
@@ -239,7 +230,7 @@ b9.Vector2D.prototype.toLocalOf_noTrans = function(mat) {
 /**
  *
  */
-b9.Vector2D.prototype.toGlobalFrom_noTrans = function(mat) {
+b9.Vector2D.prototype.toGlobal_noTrans = function(mat) {
     Vector2D._v1.set(mat.x_axis);
     Vector2D._v1.mul(this.x);
 
@@ -264,3 +255,12 @@ b9.Vector2D.X_UNIT = b9.Vector2D(1.0, 0.0);
  * {b9.Vector2D}
  */
 b9.Vector2D.Y_UNIT = b9.Vector2D(0.0, 1.0);
+
+/** @private */
+b9.Vector2D._f1 = 0.0;
+
+/** @private */
+b9.Vector2D._f2 = 0.0;
+
+/** @private */
+b9.Vector2D._v1 = Vector2D();

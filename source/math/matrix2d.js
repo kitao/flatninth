@@ -44,24 +44,6 @@ b9.Matrix2D = function() {
     }
 };
 
-/** private */
-b9.Matrix2D._s1 = 0.0;
-
-/** private */
-b9.Matrix2D._s2 = 0.0;
-
-/** private */
-b9.Matrix2D._v1 = b9.Vector2D();
-
-/** private */
-b9.Matrix2D._v2 = b9.Vector2D();
-
-/** private */
-b9.Matrix2D._v3 = b9.Vector2D();
-
-/** private */
-b9.Matrix2D._m1 = b9.Matrix2D();
-
 /**
  *
  */
@@ -91,14 +73,14 @@ b9.Matrix2D.prototype.isUnit = function() {
  *
  */
 b9.Matrix2D.prototype.rotate_float = function(deg) {
-    b9.Matrix2D._s1 = b9.Math.sin_float(deg);
-    b9.Matrix2D._s2 = b9.Math.cos_float(deg);
+    b9.Matrix2D._f1 = b9.Math.sin_float(deg);
+    b9.Matrix2D._f2 = b9.Math.cos_float(deg);
 
-    b9.Matrix2D._m1.x_axis.set(b9.Matrix2D._s2, b9.Matrix2D._s1);
-    b9.Matrix2D._m1.y_axis.set(-b9.Matrix2D._s1, b9.Matrix2D._s2);
+    b9.Matrix2D._m1.x_axis.set(b9.Matrix2D._f2, b9.Matrix2D._f1);
+    b9.Matrix2D._m1.y_axis.set(-b9.Matrix2D._f1, b9.Matrix2D._f2);
     b9.Matrix2D._m1.trans.set(b9.Matrix2D.ZERO);
 
-    b9.Matrix2D._m1.toGlobalFrom(this);
+    b9.Matrix2D._m1.toGlobal(this);
     this.set(b9.Matrix2D._m1);
 };
 
@@ -106,14 +88,14 @@ b9.Matrix2D.prototype.rotate_float = function(deg) {
  *
  */
 b9.Matrix2D.prototype.rotate_int = function(deg) {
-    b9.Matrix2D._s1 = b9.Math.sin_int(deg);
-    b9.Matrix2D._s2 = b9.Math.cos_int(deg);
+    b9.Matrix2D._f1 = b9.Math.sin_int(deg);
+    b9.Matrix2D._f2 = b9.Math.cos_int(deg);
 
-    b9.Matrix2D._m1.x_axis.set(b9.Matrix2D._s2, b9.Matrix2D._s1);
-    b9.Matrix2D._m1.y_axis.set(-b9.Matrix2D._s1, b9.Matrix2D._s2);
+    b9.Matrix2D._m1.x_axis.set(b9.Matrix2D._f2, b9.Matrix2D._f1);
+    b9.Matrix2D._m1.y_axis.set(-b9.Matrix2D._f1, b9.Matrix2D._f2);
     b9.Matrix2D._m1.trans.set(b9.Matrix2D.ZERO);
 
-    b9.Matrix2D._m1.toGlobalFrom(this);
+    b9.Matrix2D._m1.toGlobal(this);
     this.set(b9.Matrix2D._m1);
 };
 
@@ -156,50 +138,50 @@ b9.Matrix2D.prototype.interp_noTrans = function(to, ratio) {
 /**
  *
  */
-b9.Matrix2D.prototype.toLocalOf = function(mat) {
-    b9.Matrix2D._s1 = 1.0 / mat.x_axis.sqNorm();
-    b9.Matrix2D._s2 = 1.0 / mat.y_axis.sqNorm();
+b9.Matrix2D.prototype.toLocal = function(mat) {
+    b9.Matrix2D._f1 = 1.0 / mat.x_axis.sqNorm();
+    b9.Matrix2D._f2 = 1.0 / mat.y_axis.sqNorm();
 
     b9.Matrix2D._v1.set(this.trans);
     b9.Matrix2D._v1.sub(mat.trans);
 
     this.x_axis.set(
-        this.x_axis.dot(mat.x_axis) * b9.Matrix2D._s1,
-        this.x_axis.dot(mat.y_axis) * b9.Matrix2D._s2);
+        this.x_axis.dot(mat.x_axis) * b9.Matrix2D._f1,
+        this.x_axis.dot(mat.y_axis) * b9.Matrix2D._f2);
 
     this.y_axis.set(
-        this.y_axis.dot(mat.x_axis) * b9.Matrix2D._s1,
-        this.y_axis.dot(mat.y_axis) * b9.Matrix2D._s2);
+        this.y_axis.dot(mat.x_axis) * b9.Matrix2D._f1,
+        this.y_axis.dot(mat.y_axis) * b9.Matrix2D._f2);
 
     this.trans.set(
-        b9.Matrix2D._v1.dot(mat.x_axis) * b9.Matrix2D._s1,
-        b9.Matrix2D._v1.dot(mat.y_axis) * b9.Matrix2D._s2);
+        b9.Matrix2D._v1.dot(mat.x_axis) * b9.Matrix2D._f1,
+        b9.Matrix2D._v1.dot(mat.y_axis) * b9.Matrix2D._f2);
 };
 
 /**
  *
  */
-b9.Matrix2D.prototype.toGlobalFrom = function(mat) {
-    this.x_axis.toGlobalFrom_noTrans(mat);
-    this.y_axis.toGlobalFrom_noTrans(mat);
-    this.z_axis.toGlobalFrom_noTrans(mat);
-    this.trans.toGlobalFrom(mat);
+b9.Matrix2D.prototype.toGlobal = function(mat) {
+    this.x_axis.toGlobal_noTrans(mat);
+    this.y_axis.toGlobal_noTrans(mat);
+    this.z_axis.toGlobal_noTrans(mat);
+    this.trans.toGlobal(mat);
 };
 
 /**
  *
  */
-b9.Matrix2D.prototype.toLocalOf_noTrans = function(mat) {
-    b9.Matrix2D._s1 = 1.0 / mat.x_axis.sqNorm();
-    b9.Matrix2D._s2 = 1.0 / mat.y_axis.sqNorm();
+b9.Matrix2D.prototype.toLocal_noTrans = function(mat) {
+    b9.Matrix2D._f1 = 1.0 / mat.x_axis.sqNorm();
+    b9.Matrix2D._f2 = 1.0 / mat.y_axis.sqNorm();
 
     this.x_axis.set(
-        this.x_axis.dot(mat.x_axis) * b9.Matrix2D._s1,
-        this.x_axis.dot(mat.y_axis) * b9.Matrix2D._s2);
+        this.x_axis.dot(mat.x_axis) * b9.Matrix2D._f1,
+        this.x_axis.dot(mat.y_axis) * b9.Matrix2D._f2);
 
     this.y_axis.set(
-        this.y_axis.dot(mat.x_axis) * b9.Matrix2D._s1,
-        this.y_axis.dot(mat.y_axis) * b9.Matrix2D._s2);
+        this.y_axis.dot(mat.x_axis) * b9.Matrix2D._f1,
+        this.y_axis.dot(mat.y_axis) * b9.Matrix2D._f2);
 
     this.trans.set(b9.Vector2D.ZERO);
 };
@@ -207,10 +189,10 @@ b9.Matrix2D.prototype.toLocalOf_noTrans = function(mat) {
 /**
  *
  */
-b9.Matrix2D.prototype.toGlobalFrom_noTrans = function(mat) {
-    this.x_axis.toGlobalFrom_noTrans(mat);
-    this.y_axis.toGlobalFrom_noTrans(mat);
-    this.z_axis.toGlobalFrom_noTrans(mat);
+b9.Matrix2D.prototype.toGlobal_noTrans = function(mat) {
+    this.x_axis.toGlobal_noTrans(mat);
+    this.y_axis.toGlobal_noTrans(mat);
+    this.z_axis.toGlobal_noTrans(mat);
     trans.set(b9.Vector2D.ZERO);
 };
 
@@ -237,3 +219,21 @@ b9.Matrix2D.ZERO = b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector2D.Z
  *
  */
 b9.Matrix2D.UNIT = b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);
+
+/** @private */
+b9.Matrix2D._f1 = 0.0;
+
+/** @private */
+b9.Matrix2D._f2 = 0.0;
+
+/** @private */
+b9.Matrix2D._v1 = b9.Vector2D();
+
+/** @private */
+b9.Matrix2D._v2 = b9.Vector2D();
+
+/** @private */
+b9.Matrix2D._v3 = b9.Vector2D();
+
+/** @private */
+b9.Matrix2D._m1 = b9.Matrix2D();
