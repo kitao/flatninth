@@ -24,8 +24,7 @@
  * @class A tree container.
  * @param {Object} self An object to be stored.
  */
-b9.Tree = function(self)
-{
+b9.Tree = function(self) {
     /** @private */
     this._self = self;
 
@@ -46,8 +45,7 @@ b9.Tree = function(self)
  * Returns the stored object.
  * @returns {b9.Tree} The stored object.
  */
-b9.Tree.prototype.getSelf = function()
-{
+b9.Tree.prototype.getSelf = function() {
     return this._self;
 };
 
@@ -55,8 +53,7 @@ b9.Tree.prototype.getSelf = function()
  * Returns the previous item.
  * @returns {b9.Tree} The previous item.
  */
-b9.Tree.prototype.getPrevAll = function()
-{
+b9.Tree.prototype.getPrevAll = function() {
     return this._prev;
 };
 
@@ -64,8 +61,7 @@ b9.Tree.prototype.getPrevAll = function()
  * Returns the next item.
  * @returns {b9.Tree} The next item.
  */
-b9.Tree.prototype.getNextAll = function()
-{
+b9.Tree.prototype.getNextAll = function() {
     return this._next;
 };
 
@@ -73,8 +69,7 @@ b9.Tree.prototype.getNextAll = function()
  * Returns the parent.
  * @returns {b9.Tree} The parent.
  */
-b9.Tree.prototype.getParent = function()
-{
+b9.Tree.prototype.getParent = function() {
     return this._parent;
 };
 
@@ -82,14 +77,11 @@ b9.Tree.prototype.getParent = function()
  * Returns the previous sibling.
  * @returns {b9.Tree} The previous sibling.
  */
-b9.Tree.prototype.getPrevSibling = function()
-{
-    if (this._parent && this._prev !== this._parent)
-    {
+b9.Tree.prototype.getPrevSibling = function() {
+    if (this._parent && this._prev !== this._parent) {
         var prev = this._prev;
 
-        while (prev._parent !== this._parent)
-        {
+        while (prev._parent !== this._parent) {
             prev = prev._parent;
         }
 
@@ -103,14 +95,11 @@ b9.Tree.prototype.getPrevSibling = function()
  * Returns the next sibling.
  * @returns {b9.Tree} The next sibling.
  */
-b9.Tree.prototype.getNextSibling = function()
-{
-    if (this._parent)
-    {
+b9.Tree.prototype.getNextSibling = function() {
+    if (this._parent) {
         var next = this.getLastDescendant()._next;
 
-        if (next && next._parent === this._parent)
-        {
+        if (next && next._parent === this._parent) {
             return next;
         }
     }
@@ -122,8 +111,7 @@ b9.Tree.prototype.getNextSibling = function()
  * Returns the first child.
  * @returns {b9.Tree} The first child.
  */
-b9.Tree.prototype.getFirstChild = function()
-{
+b9.Tree.prototype.getFirstChild = function() {
     return this._last_child ? this._next : null;
 };
 
@@ -131,8 +119,7 @@ b9.Tree.prototype.getFirstChild = function()
  * Returns the last child.
  * @returns {b9.Tree} The last child.
  */
-b9.Tree.prototype.getLastChild = function()
-{
+b9.Tree.prototype.getLastChild = function() {
     return this._last_child;
 };
 
@@ -140,12 +127,10 @@ b9.Tree.prototype.getLastChild = function()
  * Returns the last descendant.
  * @returns {b9.Tree} The last descendant.
  */
-b9.Tree.prototype.getLastDescendant = function()
-{
+b9.Tree.prototype.getLastDescendant = function() {
     var desc = this;
 
-    while (desc._last_child)
-    {
+    while (desc._last_child) {
         desc = desc._last_child;
     }
 
@@ -156,8 +141,7 @@ b9.Tree.prototype.getLastDescendant = function()
  * Adds a child as the first child.
  * @param {b9.Tree} child A child.
  */
-b9.Tree.prototype.addChildFirst = function(child)
-{
+b9.Tree.prototype.addChildFirst = function(child) {
     this.removeChild(child);
 
     var child_desc = child.getLastDescendant();
@@ -168,13 +152,11 @@ b9.Tree.prototype.addChildFirst = function(child)
 
     child._prev._next = child;
 
-    if (child_desc._next)
-    {
+    if (child_desc._next) {
         child_desc._next._prev = child_desc;
     }
 
-    if (!this._last_child)
-    {
+    if (!this._last_child) {
         this._last_child = child;
     }
 };
@@ -183,8 +165,7 @@ b9.Tree.prototype.addChildFirst = function(child)
  * Adds a child as the last child.
  * @param {b9.Tree} child A child.
  */
-b9.Tree.prototype.addChildLast = function(child)
-{
+b9.Tree.prototype.addChildLast = function(child) {
     this.removeChild(child);
 
     var desc = getLastDescendant();
@@ -196,8 +177,7 @@ b9.Tree.prototype.addChildLast = function(child)
 
     child._prev._next = child;
 
-    if (child_desc._next)
-    {
+    if (child_desc._next) {
         child_desc._next._prev = child_desc;
     }
 
@@ -209,10 +189,8 @@ b9.Tree.prototype.addChildLast = function(child)
  * @param {b9.Tree} child A child.
  * @param {b9.Tree} next_child The next child.
  */
-b9.Tree.prototype.addChildBefore = function(child, next_child)
-{
-    if (next_child._parent === this)
-    {
+b9.Tree.prototype.addChildBefore = function(child, next_child) {
+    if (next_child._parent === this) {
         this.removeChild(child);
 
         var child_desc = child.getLastDescendant();
@@ -233,8 +211,7 @@ b9.Tree.prototype.addChildBefore = function(child, next_child)
  */
 b9.Tree.prototype.addChildAfter = function(child, prev_child)
 {
-    if (prev_child.parent === this)
-    {
+    if (prev_child.parent === this) {
         this.removeChild(child);
 
         var child_desc = child.getLastDescendant();
@@ -246,13 +223,11 @@ b9.Tree.prototype.addChildAfter = function(child, prev_child)
 
         child._prev._next = child;
 
-        if (child_desc._next)
-        {
+        if (child_desc._next) {
             child_desc._next._prev = child_desc;
         }
 
-        if (this._last_child === prev_child)
-        {
+        if (this._last_child === prev_child) {
             this._last_child = child;
         }
     }
@@ -262,21 +237,17 @@ b9.Tree.prototype.addChildAfter = function(child, prev_child)
  * Removes a child.
  * @param {b9.Tree} child A child.
  */
-b9.Tree.prototype.removeChild = function(child)
-{
-    if (child.parent === this)
-    {
+b9.Tree.prototype.removeChild = function(child) {
+    if (child.parent === this) {
         var child_desc = child.getLastDescendant();
 
-        if (this._last_child === child)
-        {
+        if (this._last_child === child) {
             this._last_child = child.getPrevSibling();
         }
 
         child._prev._next = child_desc._next;
 
-        if (child_desc._next)
-        {
+        if (child_desc._next) {
             child_desc._next._prev = child._prev;
         }
 
@@ -289,10 +260,8 @@ b9.Tree.prototype.removeChild = function(child)
 /**
  * Removes the all children.
  */
-b9.Tree.prototype.clear = function()
-{
-    while (this._last_child)
-    {
+b9.Tree.prototype.clear = function() {
+    while (this._last_child) {
         removeChild(this._last_child);
     }
 };
