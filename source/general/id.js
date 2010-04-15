@@ -31,8 +31,8 @@ b9.ID = function(seed) {
     if (seed) {
         this._value = 0;
 
-        for (b9.ID._n1 in seed) {
-            this._value = this._value * 37 + seed.charCodeAt(b9.ID._n1);
+        for (b9._n1 in seed) {
+            this._value = this._value * 37 + seed.charCodeAt(b9._n1);
         }
 
         this._value = -this._value;
@@ -47,7 +47,7 @@ b9.ID = function(seed) {
  * @returns {Boolean} Whether an ID is equal to this ID.
  */
 b9.ID.prototype.isEqual = function(id) {
-    return (this._value == id._value);
+    return (this._value === id._value);
 };
 
 /**
@@ -57,6 +57,3 @@ b9.ID.ZERO = new b9.ID();
 
 /** @private */
 b9.ID._cur_value = 0;
-
-/** @private */
-b9.ID._n1 = 0;

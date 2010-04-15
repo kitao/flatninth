@@ -33,8 +33,9 @@ REF_DIR     = $(BASE_DIR)/doc/reference
 SRC1        = flatninth.js
 SRC2        = $(addprefix math/, math.js vector2d.js matrix2d.js)
 SRC3        = $(addprefix general/, id.js list.js tree.js)
+SRC9        = local.js
 
-SRCS        = $(addprefix $(SRC_DIR)/, $(SRC1) $(SRC2) $(SRC3))
+SRCS        = $(addprefix $(SRC_DIR)/, $(SRC1) $(SRC2) $(SRC3) $(SRC9))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
 TARGET      = $(BASE_DIR)/flatninth.js
 
