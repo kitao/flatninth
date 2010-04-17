@@ -85,6 +85,8 @@ b9.Matrix2D.prototype.rotate_float = function(deg) {
 };
 
 /**
+ *
+ */
 b9.Matrix2D.prototype.rotate_int = function(deg) {
     b9._f1 = b9.Math.sin_int(deg);
     b9._f2 = b9.Math.cos_int(deg);
