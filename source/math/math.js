@@ -30,7 +30,7 @@ b9.Math.EPSILON = 0.0001; // TODO
 /**
  * {Number}
  */
-b9.Math.PI = 3.14159265358979323846; // TODO
+b9.Math.PI = Math.PI;
 
 /**
  * {Number}
@@ -43,6 +43,41 @@ b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
 b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 
 /**
+ *
+ */
+b9.Math.floor = function(x) {
+    return Math.floor(x);
+};
+
+/**
+ *
+ */
+b9.Math.abs = function(x) {
+    return (x >= 0.0) ? x : -x;
+};
+
+/**
+ *
+ */
+b9.Math.min = function(a, b) {
+    return (a < b) return a : b;
+};
+
+/**
+ *
+ */
+b9.Math.max = function(a, b) {
+    return (a > b) return a : b;
+};
+
+/**
+ *
+ */
+b9.Math.clamp = function(x, min, max) {
+    return (x < min) ? min : ((x > max) ? max : x);
+};
+
+/**
  * {Number}
  */
 b9.Math.sqrt = function(s) {
@@ -53,49 +88,58 @@ b9.Math.sqrt = function(s) {
  *
  */
 b9.Math.sin_float = function(deg) {
-    // TODO
+    return Math.sin(deg * b9.Math.DEG_TO_RAD);
 };
 
 /**
  *
  */
 b9.Math.cos_float = function(deg) {
-    // TODO
+    return Math.cos(deg * b9.Math.DEG_TO_RAD);
 };
 
 /**
  *
  */
 b9.Math.sin_int = function(deg) {
-    // TODO
+    /*
+    if (deg < 0)
+    {
+        deg -= (deg / 360 - 1) * 360;
+    }
+
+    deg %= 360;
+
+    return (deg < 180) ? s_sin_tbl[deg] : -s_sin_tbl[deg - 180];
+    */
 };
 
 /**
  *
  */
 b9.Math.cos_int = function(deg) {
-    // TODO
+    return b9.Math.sin_int(deg + 90);
 };
 
 /**
  *
  */
 b9.Math.asin = function(x) {
-    // TODO
+    return Math.asin(x) * b9.Math.RAD_TO_DEG;
 };
 
 /**
  *
  */
 b9.Math.acos = function(x) {
-    // TODO
+    return Math.acos(x) * b9.Math.RAD_TO_DEG;
 };
 
 /**
  *
  */
 b9.Math.atan2 = function(y, x) {
-    // TODO
+    return Math.atan2(y, x) * b9.Math.RAD_TO_DEG;
 };
 
 /**
@@ -108,28 +152,42 @@ b9.Math.srand = function(seed) {
 /**
  *
  */
-b9.Math.rand_int = function(from, to) {
-    // TODO
+b9.Math.random_int = function(from, to) {
+    if (to >= from) {
+        b9._n1 = to - from + 1;
+        return from + b9.Math.floor(Math.random() * b9._n1);
+    } else {
+        b9._n1 = from - to + 1;
+        return from - b9.Math.floor(Math.random() * b9._n1);
+    }
 };
 
 /**
  *
  */
-b9.Math.rand_float = function(from, to, interval) {
-    // TODO
+b9.Math.random_float = function(from, to, interval) {
+    interval = b9.Math.abs(interval);
+
+    if (to >= from) {
+        b9._f1 = b9.Math.floor((to - from) / interval + 1.0);
+        return from + b9.Math.floor(Math.random() * b9._f1) * interval;
+    } else {
+        b9._f1 = b9.Math.floor((from - to) / interval + 1.0);
+        return from - b9.Math.floor(Math.random() * b9._f1) * interval;
+    }
 };
 
 /**
  *
  */
-b9.Math.interval = function(from, to, ratio) {
+b9.Math.interp = function(from, to, ratio) {
     if (ratio < b9.Math.EPSILON) {
         return from;
     } else if (ratio > 1.0 - b9.Math.EPSILON) {
         return to;
     } else {
         return from * (1.0 - ratio) + to * ratio;
-    }
+    };
 };
 
 /*
@@ -166,112 +224,4 @@ static const r32 s_sin_tbl[180] =
     0.207912f, 0.190809f, 0.173648f, 0.156434f, 0.139173f, 0.121869f, //
     0.104528f, 0.087156f, 0.069756f, 0.052336f, 0.034899f, 0.017452f
 };
-
-
-r32 ckMath::sin_r32(r32 deg)
-{
-    return ckLowLevelAPI::sin(deg * DEG_TO_RAD);
-}
-
-
-r32 ckMath::cos_r32(r32 deg)
-{
-    return ckLowLevelAPI::cos(deg * DEG_TO_RAD);
-}
-
-
-r32 ckMath::sin_s32(s32 deg)
-{
-    if (deg < 0)
-    {
-        deg -= (deg / 360 - 1) * 360;
-    }
-
-    deg %= 360;
-
-    return (deg < 180) ? s_sin_tbl[deg] : -s_sin_tbl[deg - 180];
-}
-
-
-r32 ckMath::cos_s32(s32 deg)
-{
-    return sin_s32(deg + 90);
-}
-
-
-r32 ckMath::asin(r32 x)
-{
-    return ckLowLevelAPI::asin(x) * RAD_TO_DEG;
-}
-
-
-r32 ckMath::acos(r32 x)
-{
-    return ckLowLevelAPI::acos(x) * RAD_TO_DEG;
-}
-
-
-r32 ckMath::atan2(r32 y, r32 x)
-{
-    return ckLowLevelAPI::atan2(y, x) * RAD_TO_DEG;
-}
-
-
-void ckMath::srand(u32 seed)
-{
-    ckLowLevelAPI::srand(seed);
-}
-
-
-s32 ckMath::rand(s32 from, s32 to)
-{
-    if (to >= from)
-    {
-        s32 range = to - from + 1;
-
-        return from + (ckLowLevelAPI::rand() % range);
-    }
-    else
-    {
-        s32 range = from - to + 1;
-
-        return from - (ckLowLevelAPI::rand() % range);
-    }
-}
-
-
-r32 ckMath::rand(r32 from, r32 to, r32 interval)
-{
-    interval = abs(interval);
-
-    if (to >= from)
-    {
-        s32 range = static_cast<s32>((to - from) / interval + 1.0f);
-
-        return from + (ckLowLevelAPI::rand() % range) * interval;
-    }
-    else
-    {
-        s32 range = static_cast<s32>((from - to) / interval + 1.0f);
-
-        return from - (ckLowLevelAPI::rand() % range) * interval;
-    }
-}
-
-
-r32 ckMath::interp(r32 from, r32 to, r32 ratio)
-{
-    if (ratio < ckMath::EPSILON)
-    {
-        return from;
-    }
-    else if (ratio > 1.0f - ckMath::EPSILON)
-    {
-        return to;
-    }
-    else
-    {
-        return from * (1.0f - ratio) + to * ratio;
-    }
-}
 */
