@@ -30,8 +30,9 @@ b9.ID = function(seed) {
 
     if (seed) {
         this._value = 0;
+        b9._n2 = seed.length;
 
-        for (b9._n1 in seed) {
+        for (b9._n1 = 0; b9._n1 <  b9._n2; b9._n1++) {
             this._value = this._value * 37 + seed.charCodeAt(b9._n1);
         }
 

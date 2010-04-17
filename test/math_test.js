@@ -21,23 +21,72 @@
  */
 
 function testMath() {
-    assertEquals(b9.Math.sqrt(100.0), 10.0);
+    /* floor */
+    assertEquals(b9.Math.floor(1.234), 1.0);
+
+    /* abs */
+    assertEquals(b9.Math.abs(1.234), 1.234);
+    assertEquals(b9.Math.abs(-1.234), 1.234);
+
+    /* min */
+    assertEquals(b9.Math.min(1.0, 2.0), 1.0);
+    assertEquals(b9.Math.min(2.0, 1.0), 1.0);
+
+    /* max */
+    assertEquals(b9.Math.max(1.0, 2.0), 2.0);
+    assertEquals(b9.Math.max(2.0, 1.0), 2.0);
+
+    /* clamp */
+    assertEquals(b9.Math.clamp(0.0, 1.0, 2.0), 1.0);
+    assertEquals(b9.Math.clamp(1.5, 1.0, 2.0), 1.5);
+    assertEquals(b9.Math.clamp(3.0, 1.0, 2.0), 2.0);
+
+    /* sqrt */
+    assertEquals(b9.Math.sqrt(4.0), 2.0);
+
+    /* sin_float */
+
+    /* cos_float */
+
+    /* sin_int */
+
+    /* cos_int */
+
+    /* asin */
+
+    /* acos */
+
+    /* atan2 */
+
+    /* random_int */
+
+    /* random_float */
+
+    /* interp */
+
+    /* EPSILON */
+
+    /* PI */
+
+    /* DEG_TO_RAD */
+
+    /* RAD_TO_DEG */
 }
 
-function testVector2() {
+function testVector2D() {
 }
 
 /*
-    * assert([comment], booleanValue)
-    * assertTrue([comment], booleanValue)
-    * assertFalse([comment], booleanValue)
-    * assertEquals([comment], value1, value2)
-    * assertNotEquals([comment], value1, value2)
-    * assertNull([comment], value)
-    * assertNotNull([comment], value)
-    * assertUndefined([comment], value)
-    * assertNotUndefined([comment], value)
-    * assertNaN([comment], value)
-    * assertNotNaN([comment], value)
-    * fail(comment)
+    assert([comment], booleanValue)
+    assertTrue([comment], booleanValue)
+    assertFalse([comment], booleanValue)
+    assertEquals([comment], value1, value2)
+    assertNotEquals([comment], value1, value2)
+    assertNull([comment], value)
+    assertNotNull([comment], value)
+    assertUndefined([comment], value)
+    assertNotUndefined([comment], value)
+    assertNaN([comment], value)
+    assertNotNaN([comment], value)
+    fail(comment)
 */

@@ -23,26 +23,6 @@
 b9.Math = {};
 
 /**
- * {Number}
- */
-b9.Math.EPSILON = 0.0001; // TODO
-
-/**
- * {Number}
- */
-b9.Math.PI = Math.PI;
-
-/**
- * {Number}
- */
-b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
-
-/**
- * {Number}
- */
-b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
-
-/**
  *
  */
 b9.Math.floor = function(x) {
@@ -60,14 +40,14 @@ b9.Math.abs = function(x) {
  *
  */
 b9.Math.min = function(a, b) {
-    return (a < b) return a : b;
+    return (a < b) ? a : b;
 };
 
 /**
  *
  */
 b9.Math.max = function(a, b) {
-    return (a > b) return a : b;
+    return (a > b) ? a : b;
 };
 
 /**
@@ -145,13 +125,6 @@ b9.Math.atan2 = function(y, x) {
 /**
  *
  */
-b9.Math.srand = function(seed) {
-    // TODO
-};
-
-/**
- *
- */
 b9.Math.random_int = function(from, to) {
     if (to >= from) {
         b9._n1 = to - from + 1;
@@ -187,8 +160,33 @@ b9.Math.interp = function(from, to, ratio) {
         return to;
     } else {
         return from * (1.0 - ratio) + to * ratio;
-    };
+    }
 };
+
+/**
+ * {Number}
+ */
+b9.Math.EPSILON = 0.0001;
+
+/**
+ * {Number}
+ */
+b9.Math.PI = Math.PI;
+
+/**
+ * {Number}
+ */
+b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
+
+/**
+ * {Number}
+ */
+b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
+
+/** @private */
+b9.Math._sin_table = [
+0.0, 0.0
+];
 
 /*
 static const r32 s_sin_tbl[180] =
