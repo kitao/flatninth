@@ -20,10 +20,14 @@
  * THE SOFTWARE.
  */
 
+/**
+ * @class
+ */
 b9.Math = {};
 
 /**
  *
+ * @param {Number} x
  */
 b9.Math.floor = function(x) {
     return Math.floor(x);
@@ -31,6 +35,7 @@ b9.Math.floor = function(x) {
 
 /**
  *
+ * @param {Number} x
  */
 b9.Math.abs = function(x) {
     return (x >= 0.0) ? x : -x;
@@ -38,6 +43,8 @@ b9.Math.abs = function(x) {
 
 /**
  *
+ * @param {Number} a
+ * @param {Number} b
  */
 b9.Math.min = function(a, b) {
     return (a < b) ? a : b;
@@ -45,6 +52,8 @@ b9.Math.min = function(a, b) {
 
 /**
  *
+ * @param {Number} a
+ * @param {Number} b
  */
 b9.Math.max = function(a, b) {
     return (a > b) ? a : b;
@@ -52,13 +61,17 @@ b9.Math.max = function(a, b) {
 
 /**
  *
+ * @param {Number} x
+ * @param {Number} min
+ * @param {Number} max
  */
 b9.Math.clamp = function(x, min, max) {
     return (x < min) ? min : ((x > max) ? max : x);
 };
 
 /**
- * {Number}
+ *
+ * @param {Number} s
  */
 b9.Math.sqrt = function(s) {
     return Math.sqrt(s);
@@ -66,6 +79,7 @@ b9.Math.sqrt = function(s) {
 
 /**
  *
+ * @param {Number} deg
  */
 b9.Math.sin_float = function(deg) {
     return Math.sin(deg * b9.Math.DEG_TO_RAD);
@@ -73,6 +87,7 @@ b9.Math.sin_float = function(deg) {
 
 /**
  *
+ * @param {Number} deg
  */
 b9.Math.cos_float = function(deg) {
     return Math.cos(deg * b9.Math.DEG_TO_RAD);
@@ -80,22 +95,23 @@ b9.Math.cos_float = function(deg) {
 
 /**
  *
+ * @param {Number} deg
  */
 b9.Math.sin_int = function(deg) {
-    /*
-    if (deg < 0)
-    {
-        deg -= (deg / 360 - 1) * 360;
+    deg = b9.Math.floor(deg);
+
+    if (deg < 0) {
+        deg -= (b9.Math.floor(deg / 360) - 1) * 360;
     }
 
     deg %= 360;
 
-    return (deg < 180) ? s_sin_tbl[deg] : -s_sin_tbl[deg - 180];
-    */
+    return (deg < 180) ? b9.Math._sin_table[deg] : -b9.Math._sin_table[deg - 180];
 };
 
 /**
  *
+ * @param {Number} deg
  */
 b9.Math.cos_int = function(deg) {
     return b9.Math.sin_int(deg + 90);
@@ -103,6 +119,7 @@ b9.Math.cos_int = function(deg) {
 
 /**
  *
+ * @param {Number} x
  */
 b9.Math.asin = function(x) {
     return Math.asin(x) * b9.Math.RAD_TO_DEG;
@@ -110,6 +127,7 @@ b9.Math.asin = function(x) {
 
 /**
  *
+ * @param {Number} x
  */
 b9.Math.acos = function(x) {
     return Math.acos(x) * b9.Math.RAD_TO_DEG;
@@ -117,6 +135,8 @@ b9.Math.acos = function(x) {
 
 /**
  *
+ * @param {Number} y
+ * @param {Number} x
  */
 b9.Math.atan2 = function(y, x) {
     return Math.atan2(y, x) * b9.Math.RAD_TO_DEG;
@@ -124,8 +144,13 @@ b9.Math.atan2 = function(y, x) {
 
 /**
  *
+ * @param {Number} from
+ * @param {Number} to
  */
 b9.Math.random_int = function(from, to) {
+    from = b9.Math.floor(from);
+    to = b9.Math.floor(to);
+
     if (to >= from) {
         b9._n1 = to - from + 1;
         return from + b9.Math.floor(Math.random() * b9._n1);
@@ -137,6 +162,9 @@ b9.Math.random_int = function(from, to) {
 
 /**
  *
+ * @param {Number} from
+ * @param {Number} to
+ * @param {Number} interval
  */
 b9.Math.random_float = function(from, to, interval) {
     interval = b9.Math.abs(interval);
@@ -152,6 +180,9 @@ b9.Math.random_float = function(from, to, interval) {
 
 /**
  *
+ * @param {Number} from
+ * @param {Number} to
+ * @param {Number} ratio
  */
 b9.Math.interp = function(from, to, ratio) {
     if (ratio < b9.Math.EPSILON) {
@@ -184,42 +215,8 @@ b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
 b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 
 /** @private */
-b9.Math._sin_table = [
-0.0, 0.0
-];
+b9.Math._sin_table = new array(180);
 
-/*
-static const r32 s_sin_tbl[180] =
-{
-    0.000000f, 0.017452f, 0.034899f, 0.052336f, 0.069756f, 0.087156f, //
-    0.104528f, 0.121869f, 0.139173f, 0.156434f, 0.173648f, 0.190809f, //
-    0.207912f, 0.224951f, 0.241922f, 0.258819f, 0.275637f, 0.292372f, //
-    0.309017f, 0.325568f, 0.342020f, 0.358368f, 0.374607f, 0.390731f, //
-    0.406737f, 0.422618f, 0.438371f, 0.453991f, 0.469472f, 0.484810f, //
-    0.500000f, 0.515038f, 0.529919f, 0.544639f, 0.559193f, 0.573576f, //
-    0.587785f, 0.601815f, 0.615662f, 0.629320f, 0.642788f, 0.656059f, //
-    0.669131f, 0.681998f, 0.694658f, 0.707107f, 0.719340f, 0.731354f, //
-    0.743145f, 0.754710f, 0.766044f, 0.777146f, 0.788011f, 0.798636f, //
-    0.809017f, 0.819152f, 0.829038f, 0.838671f, 0.848048f, 0.857167f, //
-    0.866025f, 0.874620f, 0.882948f, 0.891007f, 0.898794f, 0.906308f, //
-    0.913545f, 0.920505f, 0.927184f, 0.933580f, 0.939693f, 0.945519f, //
-    0.951057f, 0.956305f, 0.961262f, 0.965926f, 0.970296f, 0.974370f, //
-    0.978148f, 0.981627f, 0.984808f, 0.987688f, 0.990268f, 0.992546f, //
-    0.994522f, 0.996195f, 0.997564f, 0.998630f, 0.999391f, 0.999848f, //
-    1.000000f, 0.999848f, 0.999391f, 0.998630f, 0.997564f, 0.996195f, //
-    0.994522f, 0.992546f, 0.990268f, 0.987688f, 0.984808f, 0.981627f, //
-    0.978148f, 0.974370f, 0.970296f, 0.965926f, 0.961262f, 0.956305f, //
-    0.951056f, 0.945519f, 0.939693f, 0.933580f, 0.927184f, 0.920505f, //
-    0.913545f, 0.906308f, 0.898794f, 0.891006f, 0.882948f, 0.874620f, //
-    0.866025f, 0.857167f, 0.848048f, 0.838671f, 0.829037f, 0.819152f, //
-    0.809017f, 0.798635f, 0.788011f, 0.777146f, 0.766044f, 0.754709f, //
-    0.743145f, 0.731354f, 0.719340f, 0.707107f, 0.694658f, 0.681998f, //
-    0.669130f, 0.656059f, 0.642788f, 0.629320f, 0.615661f, 0.601815f, //
-    0.587785f, 0.573576f, 0.559193f, 0.544639f, 0.529919f, 0.515038f, //
-    0.500000f, 0.484810f, 0.469472f, 0.453990f, 0.438371f, 0.422618f, //
-    0.406737f, 0.390731f, 0.374606f, 0.358368f, 0.342020f, 0.325568f, //
-    0.309017f, 0.292372f, 0.275637f, 0.258819f, 0.241922f, 0.224951f, //
-    0.207912f, 0.190809f, 0.173648f, 0.156434f, 0.139173f, 0.121869f, //
-    0.104528f, 0.087156f, 0.069756f, 0.052336f, 0.034899f, 0.017452f
-};
-*/
+for (var i = 0; i < 180; i++) {
+    b9.Math._sin_table[i] = Math.sin(b9.Math.PI / (180.0 * i));
+}
