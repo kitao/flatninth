@@ -23,6 +23,7 @@
 function testMath() {
     /* floor */
     assertEquals(b9.Math.floor(1.234), 1.0);
+    assertEquals(b9.Math.floor(-1.234), -2.0);
 
     /* abs */
     assertEquals(b9.Math.abs(1.234), 1.234);
@@ -42,15 +43,36 @@ function testMath() {
     assertEquals(b9.Math.clamp(3.0, 1.0, 2.0), 2.0);
 
     /* sqrt */
+    assertEquals(b9.Math.sqrt(0.0), 0.0);
     assertEquals(b9.Math.sqrt(4.0), 2.0);
 
     /* sin_float */
+    assertEquals(b9.Math.sin_float(0.0), 0.0);
+    assertEquals(b9.Math.sin_float(90.0), 1.0);
+    assertEquals(b9.Math.sin_float(450.0), 1.0);
+    assertEquals(b9.Math.sin_float(-90.0), -1.0);
+    assertEquals(b9.Math.sin_float(-450.0), -1.0);
 
     /* cos_float */
+    assertEquals(b9.Math.cos_float(0.0), 1.0);
+    assertEquals(b9.Math.cos_float(180.0), -1.0);
+    assertEquals(b9.Math.cos_float(540.0), -1.0);
+    assertEquals(b9.Math.cos_float(-180.0), -1.0);
+    assertEquals(b9.Math.cos_float(-540.0), -1.0);
 
     /* sin_int */
+    assertEquals(b9.Math.sin_int(0.0), 0.0);
+    assertEquals(b9.Math.sin_int(90.0), 1.0);
+    assertEquals(b9.Math.sin_int(450.0), 1.0);
+    assertEquals(b9.Math.sin_int(-90.0), -1.0);
+    assertEquals(b9.Math.sin_int(-450.0), -1.0);
 
     /* cos_int */
+    assertEquals(b9.Math.cos_int(0.0), 1.0);
+    assertEquals(b9.Math.cos_int(180.0), -1.0);
+    assertEquals(b9.Math.cos_int(540.0), -1.0);
+    assertEquals(b9.Math.cos_int(-180.0), -1.0);
+    assertEquals(b9.Math.cos_int(-540.0), -1.0);
 
     /* asin */
 

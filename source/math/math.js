@@ -215,8 +215,8 @@ b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
 b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 
 /** @private */
-b9.Math._sin_table = new array(180);
+b9.Math._sin_table = new Array(180);
 
 for (var i = 0; i < 180; i++) {
-    b9.Math._sin_table[i] = Math.sin(b9.Math.PI / (180.0 * i));
+    b9.Math._sin_table[i] = b9.Math.sin_float(i);
 }
