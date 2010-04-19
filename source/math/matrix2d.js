@@ -72,6 +72,13 @@ b9.Matrix2D.prototype.isUnit = function() {
 /**
  *
  */
+b9.Matrix2D.prototype.orthonormalize = function() {
+    // TODO
+};
+
+/**
+ *
+ */
 b9.Matrix2D.prototype.rotate_float = function(deg) {
     b9._f1 = b9.Math.sin_float(deg);
     b9._f2 = b9.Math.cos_float(deg);

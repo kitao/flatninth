@@ -143,6 +143,14 @@ b9.Vector2D.prototype.dot = function(vec) {
 /**
  *
  */
+b9.Vector2D.prototype.normalize = function() {
+    b9._f1 = this.mag();
+    this.div(b9._f1);
+};
+
+/**
+ *
+ */
 b9.Vector2D.prototype.rotate_float = function(deg) {
     b9._f1 = b9.Math.sin_float(deg);
     b9._f2 = b9.Math.cos_float(deg);
@@ -164,14 +172,6 @@ b9.Vector2D.prototype.rotate_int = function(deg) {
     b9._v1.y = y * b9._f2 + x * b9._f1;
 
     this.set(b9._v1);
-};
-
-/**
- *
- */
-b9.Vector2D.prototype.normalize = function() {
-    b9._f1 = this.mag();
-    this.div(b9._f1);
 };
 
 /**
