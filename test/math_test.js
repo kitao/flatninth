@@ -20,59 +20,65 @@
  * THE SOFTWARE.
  */
 
+function assertEquals_float(expected, actual) {
+    if (b9.Math.abs(expected - actual) > b9.Math.EPSILON) {
+        fail("Expected " + expected + " but was " + actual);
+    }
+};
+
 function testMath() {
     /* floor */
-    assertEquals(b9.Math.floor(1.234), 1.0);
-    assertEquals(b9.Math.floor(-1.234), -2.0);
+    assertEquals(1.0, b9.Math.floor(1.234));
+    assertEquals(-2.0, b9.Math.floor(-1.234));
 
     /* abs */
-    assertEquals(b9.Math.abs(1.234), 1.234);
-    assertEquals(b9.Math.abs(-1.234), 1.234);
+    assertEquals(1.234, b9.Math.abs(1.234));
+    assertEquals(1.234, b9.Math.abs(-1.234));
 
     /* min */
-    assertEquals(b9.Math.min(1.0, 2.0), 1.0);
-    assertEquals(b9.Math.min(2.0, 1.0), 1.0);
+    assertEquals(1.0, b9.Math.min(1.0, 2.0));
+    assertEquals(1.0, b9.Math.min(2.0, 1.0));
 
     /* max */
-    assertEquals(b9.Math.max(1.0, 2.0), 2.0);
-    assertEquals(b9.Math.max(2.0, 1.0), 2.0);
+    assertEquals(2.0, b9.Math.max(1.0, 2.0));
+    assertEquals(2.0, b9.Math.max(2.0, 1.0));
 
     /* clamp */
-    assertEquals(b9.Math.clamp(0.0, 1.0, 2.0), 1.0);
-    assertEquals(b9.Math.clamp(1.5, 1.0, 2.0), 1.5);
-    assertEquals(b9.Math.clamp(3.0, 1.0, 2.0), 2.0);
+    assertEquals(1.0, b9.Math.clamp(0.0, 1.0, 2.0));
+    assertEquals(1.5, b9.Math.clamp(1.5, 1.0, 2.0));
+    assertEquals(2.0, b9.Math.clamp(3.0, 1.0, 2.0));
 
     /* sqrt */
-    assertEquals(b9.Math.sqrt(0.0), 0.0);
-    assertEquals(b9.Math.sqrt(4.0), 2.0);
+    assertEquals_float(0.0, b9.Math.sqrt(0.0));
+    assertEquals_float(2.0, b9.Math.sqrt(4.0));
 
     /* sin_float */
-    assertEquals(b9.Math.sin_float(0.0), 0.0);
-    assertEquals(b9.Math.sin_float(90.0), 1.0);
-    assertEquals(b9.Math.sin_float(450.0), 1.0);
-    assertEquals(b9.Math.sin_float(-90.0), -1.0);
-    assertEquals(b9.Math.sin_float(-450.0), -1.0);
+    assertEquals_float(0.0, b9.Math.sin_float(0.0));
+    assertEquals_float(1.0, b9.Math.sin_float(90.0));
+    assertEquals_float(-1.0, b9.Math.sin_float(630.0));
+    assertEquals_float(-1.0, b9.Math.sin_float(-90.0));
+    assertEquals_float(1.0, b9.Math.sin_float(-630.0));
 
     /* cos_float */
-    assertEquals(b9.Math.cos_float(0.0), 1.0);
-    assertEquals(b9.Math.cos_float(180.0), -1.0);
-    assertEquals(b9.Math.cos_float(540.0), -1.0);
-    assertEquals(b9.Math.cos_float(-180.0), -1.0);
-    assertEquals(b9.Math.cos_float(-540.0), -1.0);
+    assertEquals_float(0.0, b9.Math.cos_float(90.0));
+    assertEquals_float(-1.0, b9.Math.cos_float(180.0));
+    assertEquals_float(1.0, b9.Math.cos_float(720.0));
+    assertEquals_float(-1.0, b9.Math.cos_float(-180.0));
+    assertEquals_float(1.0, b9.Math.cos_float(-720.0));
 
     /* sin_int */
-    assertEquals(b9.Math.sin_int(0.0), 0.0);
-    assertEquals(b9.Math.sin_int(90.0), 1.0);
-    assertEquals(b9.Math.sin_int(450.0), 1.0);
-    assertEquals(b9.Math.sin_int(-90.0), -1.0);
-    assertEquals(b9.Math.sin_int(-450.0), -1.0);
+    assertEquals_float(0.0, b9.Math.sin_int(0.0));
+    assertEquals_float(1.0, b9.Math.sin_int(90.0));
+    assertEquals_float(-1.0, b9.Math.sin_int(630.0));
+    assertEquals_float(-1.0, b9.Math.sin_int(-90.0));
+    assertEquals_float(1.0, b9.Math.sin_int(-630.0));
 
     /* cos_int */
-    assertEquals(b9.Math.cos_int(0.0), 1.0);
-    assertEquals(b9.Math.cos_int(180.0), -1.0);
-    assertEquals(b9.Math.cos_int(540.0), -1.0);
-    assertEquals(b9.Math.cos_int(-180.0), -1.0);
-    assertEquals(b9.Math.cos_int(-540.0), -1.0);
+    assertEquals_float(0.0, b9.Math.cos_int(90.0));
+    assertEquals_float(-1.0, b9.Math.cos_int(180.0));
+    assertEquals_float(1.0, b9.Math.cos_int(720.0));
+    assertEquals_float(-1.0, b9.Math.cos_int(-180.0));
+    assertEquals_float(1.0, b9.Math.cos_int(-720.0));
 
     /* asin */
 
