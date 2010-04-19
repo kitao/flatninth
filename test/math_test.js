@@ -21,7 +21,7 @@
  */
 
 function assertEquals_float(expected, actual) {
-    if (b9.Math.abs(expected - actual) > b9.Math.EPSILON) {
+    if (b9.Math.abs(expected - actual) >= b9.Math.EPSILON) {
         fail("Expected " + expected + " but was " + actual);
     }
 };
@@ -93,12 +93,16 @@ function testMath() {
     /* interp */
 
     /* EPSILON */
+    assertEquals(0.0001, b9.Math.EPSILON);
 
     /* PI */
+    assertEquals_float(3.14159265358979, b9.Math.PI);
 
     /* DEG_TO_RAD */
+    assertEquals_float(b9.Math.PI / 180.0, b9.Math.DEG_TO_RAD);
 
     /* RAD_TO_DEG */
+    assertEquals_float(180.0 / b9.Math.PI, b9.Math.RAD_TO_DEG);
 }
 
 function testVector2D() {
