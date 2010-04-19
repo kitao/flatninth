@@ -144,8 +144,13 @@ b9.Vector2D.prototype.dot = function(vec) {
  *
  */
 b9.Vector2D.prototype.normalize = function() {
-    b9._f1 = this.mag();
-    this.div(b9._f1);
+    b9._f1 = this.norm();
+
+    if (b9._f1 < b9.Math.EPSILON) {
+        this.set(b9.Math.X_UNIT);
+    } else {
+        this.div(b9._f1);
+    }
 };
 
 /**
