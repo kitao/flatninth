@@ -81,9 +81,9 @@ b9.Matrix2D.prototype.orthonormalize = function() {
  *
  * {Number} deg
  */
-b9.Matrix2D.prototype.rotate_float = function(deg) {
-    b9._f1 = b9.Math.sin_float(deg);
-    b9._f2 = b9.Math.cos_float(deg);
+b9.Matrix2D.prototype.rotateFloat = function(deg) {
+    b9._f1 = b9.Math.sinFloat(deg);
+    b9._f2 = b9.Math.cosFloat(deg);
 
     b9._m1.x_axis.set(b9._f2, b9._f1);
     b9._m1.y_axis.set(-b9._f1, b9._f2);
@@ -97,9 +97,9 @@ b9.Matrix2D.prototype.rotate_float = function(deg) {
  *
  * {Number} deg
  */
-b9.Matrix2D.prototype.rotate_int = function(deg) {
-    b9._f1 = b9.Math.sin_int(deg);
-    b9._f2 = b9.Math.cos_int(deg);
+b9.Matrix2D.prototype.rotateInt = function(deg) {
+    b9._f1 = b9.Math.sinInt(deg);
+    b9._f2 = b9.Math.cosInt(deg);
 
     b9._m1.x_axis.set(b9._f2, b9._f1);
     b9._m1.y_axis.set(-b9._f1, b9._f2);
@@ -149,7 +149,7 @@ b9.Matrix2D.prototype.interp = function(to, ratio) {
  * {Number} to
  * {Number} ratio
  */
-b9.Matrix2D.prototype.interp_noTrans = function(to, ratio) {
+b9.Matrix2D.prototype.interpNoTrans = function(to, ratio) {
     // TODO
 };
 
@@ -174,9 +174,9 @@ b9.Matrix2D.prototype.toLocal = function(mat) {
  * {b9.Matrix2D} mat
  */
 b9.Matrix2D.prototype.toGlobal = function(mat) {
-    this.x_axis.toGlobal_noTrans(mat);
-    this.y_axis.toGlobal_noTrans(mat);
-    this.z_axis.toGlobal_noTrans(mat);
+    this.x_axis.toGlobalNoTrans(mat);
+    this.y_axis.toGlobalNoTrans(mat);
+    this.z_axis.toGlobalNoTrans(mat);
     this.trans.toGlobal(mat);
 };
 
@@ -184,7 +184,7 @@ b9.Matrix2D.prototype.toGlobal = function(mat) {
  *
  * {b9.Matrix2D} mat
  */
-b9.Matrix2D.prototype.toLocal_noTrans = function(mat) {
+b9.Matrix2D.prototype.toLocalNoTrans = function(mat) {
     b9._f1 = 1.0 / mat.x_axis.sqNorm();
     b9._f2 = 1.0 / mat.y_axis.sqNorm();
 
@@ -197,10 +197,10 @@ b9.Matrix2D.prototype.toLocal_noTrans = function(mat) {
  *
  * {b9.Matrix2D} mat
  */
-b9.Matrix2D.prototype.toGlobal_noTrans = function(mat) {
-    this.x_axis.toGlobal_noTrans(mat);
-    this.y_axis.toGlobal_noTrans(mat);
-    this.z_axis.toGlobal_noTrans(mat);
+b9.Matrix2D.prototype.toGlobalNoTrans = function(mat) {
+    this.x_axis.toGlobalNoTrans(mat);
+    this.y_axis.toGlobalNoTrans(mat);
+    this.z_axis.toGlobalNoTrans(mat);
     trans.set(b9.Vector2D.ZERO);
 };
 

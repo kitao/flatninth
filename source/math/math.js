@@ -88,7 +88,7 @@ b9.Math.sqrt = function(s) {
  * @param {Number} deg
  * @returns {Number}
  */
-b9.Math.sin_float = function(deg) {
+b9.Math.sinFloat = function(deg) {
     return Math.sin(deg * b9.Math.DEG_TO_RAD);
 };
 
@@ -97,7 +97,7 @@ b9.Math.sin_float = function(deg) {
  * @param {Number} deg
  * @returns {Number}
  */
-b9.Math.cos_float = function(deg) {
+b9.Math.cosFloat = function(deg) {
     return Math.cos(deg * b9.Math.DEG_TO_RAD);
 };
 
@@ -106,7 +106,7 @@ b9.Math.cos_float = function(deg) {
  * @param {Number} deg
  * @returns {Number}
  */
-b9.Math.sin_int = function(deg) {
+b9.Math.sinInt = function(deg) {
     deg = b9.Math.floor(deg);
 
     if (deg < 0) {
@@ -123,8 +123,8 @@ b9.Math.sin_int = function(deg) {
  * @param {Number} deg
  * @returns {Number}
  */
-b9.Math.cos_int = function(deg) {
-    return b9.Math.sin_int(deg + 90);
+b9.Math.cosInt = function(deg) {
+    return b9.Math.sinInt(deg + 90);
 };
 
 /**
@@ -161,7 +161,7 @@ b9.Math.atan2 = function(y, x) {
  * @param {Number} to
  * @returns {Number}
  */
-b9.Math.random_int = function(from, to) {
+b9.Math.randomInt = function(from, to) {
     from = b9.Math.floor(from);
     to = b9.Math.floor(to);
 
@@ -181,7 +181,7 @@ b9.Math.random_int = function(from, to) {
  * @param {Number} interval
  * @returns {Number}
  */
-b9.Math.random_float = function(from, to, interval) {
+b9.Math.randomFloat = function(from, to, interval) {
     interval = b9.Math.abs(interval);
 
     if (to >= from) {
@@ -234,5 +234,5 @@ b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 b9.Math._sin_table = new Array(180);
 
 for (var i = 0; i < 180; i++) {
-    b9.Math._sin_table[i] = b9.Math.sin_float(i);
+    b9.Math._sin_table[i] = b9.Math.sinFloat(i);
 }

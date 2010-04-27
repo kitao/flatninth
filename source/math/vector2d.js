@@ -161,9 +161,9 @@ b9.Vector2D.prototype.normalize = function() {
  *
  * {Number} deg
  */
-b9.Vector2D.prototype.rotate_float = function(deg) {
-    b9._f1 = b9.Math.sin_float(deg);
-    b9._f2 = b9.Math.cos_float(deg);
+b9.Vector2D.prototype.rotateFloat = function(deg) {
+    b9._f1 = b9.Math.sinFloat(deg);
+    b9._f2 = b9.Math.cosFloat(deg);
 
     b9._v1.x = x * b9._f2 - y * b9._f1;
     b9._v1.y = y * b9._f2 + x * b9._f1;
@@ -175,9 +175,9 @@ b9.Vector2D.prototype.rotate_float = function(deg) {
  *
  * {Number} deg
  */
-b9.Vector2D.prototype.rotate_int = function(deg) {
-    b9._f1 = b9.Math.sin_int(deg);
-    b9._f2 = b9.Math.cos_int(deg);
+b9.Vector2D.prototype.rotateInt = function(deg) {
+    b9._f1 = b9.Math.sinInt(deg);
+    b9._f2 = b9.Math.cosInt(deg);
 
     b9._v1.x = x * b9._f2 - y * b9._f1;
     b9._v1.y = y * b9._f2 + x * b9._f1;
@@ -234,7 +234,7 @@ b9.Vector2D.prototype.toGlobal = function(mat) {
  *
  * {b9.Matrix2D} mat
  */
-b9.Vector2D.prototype.toLocal_noTrans = function(mat) {
+b9.Vector2D.prototype.toLocalNoTrans = function(mat) {
     b9._v1.x = this.dot(mat.x_axis) / mat.x_axis.sqNorm();
     b9._v1.y = this.dot(mat.y_axis) / mat.y_axis.sqNorm();
 
@@ -245,7 +245,7 @@ b9.Vector2D.prototype.toLocal_noTrans = function(mat) {
  *
  * {b9.Matrix2D} mat
  */
-b9.Vector2D.prototype.toGlobal_noTrans = function(mat) {
+b9.Vector2D.prototype.toGlobalNoTrans = function(mat) {
     b9._v1.set(mat.x_axis);
     b9._v1.mul(this.x);
 
