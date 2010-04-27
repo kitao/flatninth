@@ -97,34 +97,36 @@ function testMath() {
     assertEqualsFloat(-90.0, b9.Math.atan2(-4.0, 0.0));
 
     /* randomInt */
-    for (var i = 0; i < 10; i++) {
-        var x = b9.Math.randomInt(-1, 1);
+    var i, x;
+
+    for (i = 0; i < 10; i++) {
+        x = b9.Math.randomInt(-1, 1);
         assertTrue(x === -1 || x === 0 || x === 1);
     }
 
-    for (var i = 0; i < 10; i++) {
-        var x = b9.Math.randomInt(3, 5);
+    for (i = 0; i < 10; i++) {
+        x = b9.Math.randomInt(3, 5);
         assertTrue(x === 3 || x === 4 || x === 5);
     }
 
-    for (var i = 0; i < 10; i++) {
-        var x = b9.Math.randomInt(-3, -5);
+    for (i = 0; i < 10; i++) {
+        x = b9.Math.randomInt(-3, -5);
         assertTrue(x === -3 || x === -4 || x === -5);
     }
 
     /* randomFloat */
-    for (var i = 0; i < 10; i++) {
-        var x = b9.Math.randomFloat(-0.5, 0.5, 0.5);
+    for (i = 0; i < 10; i++) {
+        x = b9.Math.randomFloat(-0.5, 0.5, 0.5);
         assertTrue(x === -0.5 || x === 0.0 || x === 0.5);
     }
 
-    for (var i = 0; i < 10; i++) {
-        var x = b9.Math.randomFloat(3.5, 4.5, 0.5);
+    for (i = 0; i < 10; i++) {
+        x = b9.Math.randomFloat(3.5, 4.5, 0.5);
         assertTrue(x === 3.5 || x === 4.0 || x === 4.5);
     }
 
-    for (var i = 0; i < 10; i++) {
-        var x = b9.Math.randomFloat(-3.5, -4.5, -0.5);
+    for (i = 0; i < 10; i++) {
+        x = b9.Math.randomFloat(-3.5, -4.5, -0.5);
         assertTrue(x === -3.5 || x === -4.0 || x === -4.5);
     }
 
