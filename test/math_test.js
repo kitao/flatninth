@@ -24,7 +24,7 @@ function assertEquals_float(expected, actual) {
     if (b9.Math.abs(expected - actual) >= b9.Math.EPSILON) {
         fail("Expected " + expected + " but was " + actual);
     }
-};
+}
 
 function testMath() {
     /* floor */
@@ -81,16 +81,57 @@ function testMath() {
     assertEquals_float(1.0, b9.Math.cos_int(-720.0));
 
     /* asin */
+    assertEquals_float(0.0, b9.Math.asin(0.0));
+    assertEquals_float(90.0, b9.Math.asin(1.0));
+    assertEquals_float(-90.0, b9.Math.asin(-1.0));
 
     /* acos */
+    assertEquals_float(90.0, b9.Math.acos(0.0));
+    assertEquals_float(0.0, b9.Math.acos(1.0));
+    assertEquals_float(180.0, b9.Math.acos(-1.0));
 
     /* atan2 */
+    assertEquals_float(0.0, b9.Math.atan2(0.0, 1.0));
+    assertEquals_float(90.0, b9.Math.atan2(2.0, 0.0));
+    assertEquals_float(180.0, b9.Math.atan2(0.0, -3.0));
+    assertEquals_float(-90.0, b9.Math.atan2(-4.0, 0.0));
 
     /* random_int */
+    for (var i = 0; i < 10; i++) {
+        var x = b9.Math.random_int(-1, 1);
+        assertTrue(x === -1 || x === 0 || x === 1);
+    }
+
+    for (var i = 0; i < 10; i++) {
+        var x = b9.Math.random_int(3, 5);
+        assertTrue(x === 3 || x === 4 || x === 5);
+    }
+
+    for (var i = 0; i < 10; i++) {
+        var x = b9.Math.random_int(-3, -5);
+        assertTrue(x === -3 || x === -4 || x === -5);
+    }
 
     /* random_float */
+    for (var i = 0; i < 10; i++) {
+        var x = b9.Math.random_float(-0.5, 0.5, 0.5);
+        assertTrue(x === -0.5 || x === 0.0 || x === 0.5);
+    }
+
+    for (var i = 0; i < 10; i++) {
+        var x = b9.Math.random_float(3.5, 4.5, 0.5);
+        assertTrue(x === 3.5 || x === 4.0 || x === 4.5);
+    }
+
+    for (var i = 0; i < 10; i++) {
+        var x = b9.Math.random_float(-3.5, -4.5, -0.5);
+        assertTrue(x === -3.5 || x === -4.0 || x === -4.5);
+    }
 
     /* interp */
+    assertEquals_float(0.0, b9.Math.interp(0.0, 2.0, -1.0));
+    assertEquals_float(1.0, b9.Math.interp(0.0, 2.0, 0.5));
+    assertEquals_float(2.0, b9.Math.interp(0.0, 2.0, 3.0));
 
     /* EPSILON */
     assertEquals(0.0001, b9.Math.EPSILON);
