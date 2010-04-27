@@ -22,8 +22,6 @@
 
 /**
  * @class A 2-element vector which is represented by xy coordinates.
- * @param {Number} x The x-coordinate. Possible not to specify.
- * @param {Number} y The y-coordinate. Possible not to specify.
  */
 b9.Vector2D = function() {
     /** hoge */
@@ -43,8 +41,6 @@ b9.Vector2D = function() {
 
 /**
  * Sets the coordinates.
- * @param {Number} x The x-coordinate.
- * @param {Number} y The y-coordinate.
  */
 b9.Vector2D.prototype.set = function()
 {
@@ -103,6 +99,7 @@ b9.Vector2D.prototype.div = function(s) {
 
 /**
  *
+ * @returns {Number}
  */
 b9.Vector2D.prototype.norm = function() {
     return b9.Math.sqrt(this.x * this.x + this.y * this.y);
@@ -110,6 +107,7 @@ b9.Vector2D.prototype.norm = function() {
 
 /**
  *
+ * @returns {Number}
  */
 b9.Vector2D.prototype.sqNorm = function() {
     return this.x * this.x + this.y * this.y;
@@ -117,6 +115,8 @@ b9.Vector2D.prototype.sqNorm = function() {
 
 /**
  *
+ * {b9.Vector2D} vec
+ * @returns {Number}
  */
 b9.Vector2D.prototype.dist = function(vec) {
     b9._v1.set(this);
@@ -126,6 +126,8 @@ b9.Vector2D.prototype.dist = function(vec) {
 
 /**
  *
+ * {b9.Vector2D} vec
+ * @returns {Number}
  */
 b9.Vector2D.prototype.sqDist = function(vec) {
     b9._v1.set(this);
@@ -135,6 +137,8 @@ b9.Vector2D.prototype.sqDist = function(vec) {
 
 /**
  *
+ * {b9.Vector2D} vec
+ * @returns {Number}
  */
 b9.Vector2D.prototype.dot = function(vec) {
     return this.x * vec.x + this.y * vec.y;
@@ -155,6 +159,7 @@ b9.Vector2D.prototype.normalize = function() {
 
 /**
  *
+ * {Number} deg
  */
 b9.Vector2D.prototype.rotate_float = function(deg) {
     b9._f1 = b9.Math.sin_float(deg);
@@ -168,6 +173,7 @@ b9.Vector2D.prototype.rotate_float = function(deg) {
 
 /**
  *
+ * {Number} deg
  */
 b9.Vector2D.prototype.rotate_int = function(deg) {
     b9._f1 = b9.Math.sin_int(deg);
@@ -181,6 +187,8 @@ b9.Vector2D.prototype.rotate_int = function(deg) {
 
 /**
  *
+ * {Number} to
+ * {Number} ratio
  */
 b9.Vector2D.prototype.interp = function(to, ratio) {
     if (ratio < b9.Math.EPSILON) {
@@ -197,6 +205,7 @@ b9.Vector2D.prototype.interp = function(to, ratio) {
 
 /**
  *
+ * {b9.Matrix2D} mat
  */
 b9.Vector2D.prototype.toLocal = function(mat) {
     b9._v1.set(this);
@@ -207,6 +216,7 @@ b9.Vector2D.prototype.toLocal = function(mat) {
 
 /**
  *
+ * {b9.Matrix2D} mat
  */
 b9.Vector2D.prototype.toGlobal = function(mat) {
     b9._v1.set(mat.x_axis);
@@ -222,6 +232,7 @@ b9.Vector2D.prototype.toGlobal = function(mat) {
 
 /**
  *
+ * {b9.Matrix2D} mat
  */
 b9.Vector2D.prototype.toLocal_noTrans = function(mat) {
     b9._v1.x = this.dot(mat.x_axis) / mat.x_axis.sqNorm();
@@ -232,6 +243,7 @@ b9.Vector2D.prototype.toLocal_noTrans = function(mat) {
 
 /**
  *
+ * {b9.Matrix2D} mat
  */
 b9.Vector2D.prototype.toGlobal_noTrans = function(mat) {
     b9._v1.set(mat.x_axis);

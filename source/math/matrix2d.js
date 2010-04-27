@@ -21,7 +21,7 @@
  */
 
 /**
- *
+ * @class
  */
 b9.Matrix2D = function() {
     /** hoge */
@@ -61,6 +61,7 @@ b9.Matrix2D.prototype.set = function() {
 
 /**
  *
+ * @returns {Boolean}
  */
 b9.Matrix2D.prototype.isUnit = function() {
     return (
@@ -78,6 +79,7 @@ b9.Matrix2D.prototype.orthonormalize = function() {
 
 /**
  *
+ * {Number} deg
  */
 b9.Matrix2D.prototype.rotate_float = function(deg) {
     b9._f1 = b9.Math.sin_float(deg);
@@ -93,6 +95,7 @@ b9.Matrix2D.prototype.rotate_float = function(deg) {
 
 /**
  *
+ * {Number} deg
  */
 b9.Matrix2D.prototype.rotate_int = function(deg) {
     b9._f1 = b9.Math.sin_int(deg);
@@ -108,6 +111,8 @@ b9.Matrix2D.prototype.rotate_int = function(deg) {
 
 /**
  *
+ * {Number} scale_x
+ * {Number} scale_y
  */
 b9.Matrix2D.prototype.scale = function(scale_x, scale_y) {
     this.x_axis.mul(scale_x);
@@ -116,6 +121,8 @@ b9.Matrix2D.prototype.scale = function(scale_x, scale_y) {
 
 /**
  *
+ * {Number} offset_x
+ * {Number} offset_y
  */
 b9.Matrix2D.prototype.translate = function(offset_x, offste_y) {
     b9._v1.set(this.x_axis);
@@ -130,6 +137,8 @@ b9.Matrix2D.prototype.translate = function(offset_x, offste_y) {
 
 /**
  *
+ * {Number} to
+ * {Number} ratio
  */
 b9.Matrix2D.prototype.interp = function(to, ratio) {
     // TODO
@@ -137,6 +146,8 @@ b9.Matrix2D.prototype.interp = function(to, ratio) {
 
 /**
  *
+ * {Number} to
+ * {Number} ratio
  */
 b9.Matrix2D.prototype.interp_noTrans = function(to, ratio) {
     // TODO
@@ -144,6 +155,7 @@ b9.Matrix2D.prototype.interp_noTrans = function(to, ratio) {
 
 /**
  *
+ * {b9.Matrix2D} mat
  */
 b9.Matrix2D.prototype.toLocal = function(mat) {
     b9._f1 = 1.0 / mat.x_axis.sqNorm();
@@ -159,6 +171,7 @@ b9.Matrix2D.prototype.toLocal = function(mat) {
 
 /**
  *
+ * {b9.Matrix2D} mat
  */
 b9.Matrix2D.prototype.toGlobal = function(mat) {
     this.x_axis.toGlobal_noTrans(mat);
@@ -169,6 +182,7 @@ b9.Matrix2D.prototype.toGlobal = function(mat) {
 
 /**
  *
+ * {b9.Matrix2D} mat
  */
 b9.Matrix2D.prototype.toLocal_noTrans = function(mat) {
     b9._f1 = 1.0 / mat.x_axis.sqNorm();
@@ -181,6 +195,7 @@ b9.Matrix2D.prototype.toLocal_noTrans = function(mat) {
 
 /**
  *
+ * {b9.Matrix2D} mat
  */
 b9.Matrix2D.prototype.toGlobal_noTrans = function(mat) {
     this.x_axis.toGlobal_noTrans(mat);
@@ -191,6 +206,8 @@ b9.Matrix2D.prototype.toGlobal_noTrans = function(mat) {
 
 /**
  *
+ * {Number} from
+ * {Number} to
  */
 b9.Matrix2D.prototype.lookAt = function(from, to) {
     // TODO
@@ -203,12 +220,12 @@ b9.Matrix2D.prototype.lookAt = function(from, to) {
 */
 };
 
-/*
- *
+/**
+ * {b9.Matrix2D}
  */
 b9.Matrix2D.ZERO = b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector2D.ZERO);
 
 /**
- *
+ * {b9.Matrix2D}
  */
 b9.Matrix2D.UNIT = b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);

@@ -28,6 +28,7 @@ b9.Math = {};
 /**
  *
  * @param {Number} x
+ * @returns {Number}
  */
 b9.Math.floor = function(x) {
     return Math.floor(x);
@@ -36,6 +37,7 @@ b9.Math.floor = function(x) {
 /**
  *
  * @param {Number} x
+ * @returns {Number}
  */
 b9.Math.abs = function(x) {
     return (x >= 0.0) ? x : -x;
@@ -45,6 +47,7 @@ b9.Math.abs = function(x) {
  *
  * @param {Number} a
  * @param {Number} b
+ * @returns {Number}
  */
 b9.Math.min = function(a, b) {
     return (a < b) ? a : b;
@@ -54,6 +57,7 @@ b9.Math.min = function(a, b) {
  *
  * @param {Number} a
  * @param {Number} b
+ * @returns {Number}
  */
 b9.Math.max = function(a, b) {
     return (a > b) ? a : b;
@@ -64,6 +68,7 @@ b9.Math.max = function(a, b) {
  * @param {Number} x
  * @param {Number} min
  * @param {Number} max
+ * @returns {Number}
  */
 b9.Math.clamp = function(x, min, max) {
     return (x < min) ? min : ((x > max) ? max : x);
@@ -72,6 +77,7 @@ b9.Math.clamp = function(x, min, max) {
 /**
  *
  * @param {Number} s
+ * @returns {Number}
  */
 b9.Math.sqrt = function(s) {
     return Math.sqrt(s);
@@ -80,6 +86,7 @@ b9.Math.sqrt = function(s) {
 /**
  *
  * @param {Number} deg
+ * @returns {Number}
  */
 b9.Math.sin_float = function(deg) {
     return Math.sin(deg * b9.Math.DEG_TO_RAD);
@@ -88,6 +95,7 @@ b9.Math.sin_float = function(deg) {
 /**
  *
  * @param {Number} deg
+ * @returns {Number}
  */
 b9.Math.cos_float = function(deg) {
     return Math.cos(deg * b9.Math.DEG_TO_RAD);
@@ -96,6 +104,7 @@ b9.Math.cos_float = function(deg) {
 /**
  *
  * @param {Number} deg
+ * @returns {Number}
  */
 b9.Math.sin_int = function(deg) {
     deg = b9.Math.floor(deg);
@@ -112,6 +121,7 @@ b9.Math.sin_int = function(deg) {
 /**
  *
  * @param {Number} deg
+ * @returns {Number}
  */
 b9.Math.cos_int = function(deg) {
     return b9.Math.sin_int(deg + 90);
@@ -120,6 +130,7 @@ b9.Math.cos_int = function(deg) {
 /**
  *
  * @param {Number} x
+ * @returns {Number}
  */
 b9.Math.asin = function(x) {
     return Math.asin(x) * b9.Math.RAD_TO_DEG;
@@ -128,6 +139,7 @@ b9.Math.asin = function(x) {
 /**
  *
  * @param {Number} x
+ * @returns {Number}
  */
 b9.Math.acos = function(x) {
     return Math.acos(x) * b9.Math.RAD_TO_DEG;
@@ -137,6 +149,7 @@ b9.Math.acos = function(x) {
  *
  * @param {Number} y
  * @param {Number} x
+ * @returns {Number}
  */
 b9.Math.atan2 = function(y, x) {
     return Math.atan2(y, x) * b9.Math.RAD_TO_DEG;
@@ -146,6 +159,7 @@ b9.Math.atan2 = function(y, x) {
  *
  * @param {Number} from
  * @param {Number} to
+ * @returns {Number}
  */
 b9.Math.random_int = function(from, to) {
     from = b9.Math.floor(from);
@@ -165,16 +179,17 @@ b9.Math.random_int = function(from, to) {
  * @param {Number} from
  * @param {Number} to
  * @param {Number} interval
+ * @returns {Number}
  */
 b9.Math.random_float = function(from, to, interval) {
     interval = b9.Math.abs(interval);
 
     if (to >= from) {
-        b9._f1 = b9.Math.floor((to - from) / interval + 1.0);
-        return from + b9.Math.floor(Math.random() * b9._f1) * interval;
+        b9._n1 = b9.Math.floor((to - from) / interval) + 1;
+        return from + b9.Math.floor(Math.random() * b9._n1) * interval;
     } else {
-        b9._f1 = b9.Math.floor((from - to) / interval + 1.0);
-        return from - b9.Math.floor(Math.random() * b9._f1) * interval;
+        b9._n1 = b9.Math.floor((from - to) / interval) + 1;
+        return from - b9.Math.floor(Math.random() * b9._n1) * interval;
     }
 };
 
@@ -183,6 +198,7 @@ b9.Math.random_float = function(from, to, interval) {
  * @param {Number} from
  * @param {Number} to
  * @param {Number} ratio
+ * @returns {Number}
  */
 b9.Math.interp = function(from, to, ratio) {
     if (ratio < b9.Math.EPSILON) {
