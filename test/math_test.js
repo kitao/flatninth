@@ -20,9 +20,23 @@
  * THE SOFTWARE.
  */
 
+function isEqualFloat(a, b) {
+    return (b9.Math.abs(a - b) < b9.Math.EPSILON);
+}
+
+function isEqualVector2D(a, b) {
+    return (isEqualFloat(a.x, b.x) && isEqualFloat(a.y, b.y));
+}
+
 function assertEqualsFloat(expected, actual) {
-    if (b9.Math.abs(expected - actual) >= b9.Math.EPSILON) {
+    if (!isEqualFloat(expected, actual)) {
         fail("Expected " + expected + " but was " + actual);
+    }
+}
+
+function assertEqualsVector2D(expected, actual) {
+    if (!isEqualVector2D(expected, actual)) {
+        fail("Expected (" + expected.x + ", " + expected.y + ") but was (" + actual.x + ", " + actual.y + ")");
     }
 }
 
@@ -149,7 +163,71 @@ function testMath() {
 }
 
 function testVector2D() {
-    /* b9.Vector2D */
+    /* Vector2D */
+    var vec1 = new b9.Vector2D();
+    assertTrue(vec1.x === 0.0 && vec1.y === 0.0);
+
+    var vec2 = new b9.Vector2D(1.0, 2.0);
+    assertTrue(vec2.x === 1.0 && vec2.y === 2.0);
+
+    var vec3 = new b9.Vector2D(vec2);
+    assertTrue(vec2.x === 1.0 && vec2.y === 2.0);
+
+    /* set */
+    vec1.set(3.0, 4.0);
+    assertEqualsVector2D(new b9.Vector2D(3.0, 4.0), vec1);
+
+    vec2.set(vec1);
+    assertEqualsVector2D(vec1, vec2);
+
+    /* neg */
+    vec1.set(10.0, -20.0);
+    vec1.neg();
+    assertEqualsVector2D(new b9.Vector2D(-10.0, 20.0), vec1);
+
+    /* add */
+    vec1.set(1.0, 2.0);
+    vec2.set(3.0, 4.0);
+    vec1.add(vec2);
+    assertEqualsVector2D(new b9.Vector2D(4.0, 6.0), vec1);
+
+    /* sub */
+
+    /* mul */
+
+    /* div */
+
+    /* norm */
+
+    /* sqNorm */
+
+    /* dist */
+
+    /* sqDist */
+
+    /* dot */
+
+    /* normalize */
+
+    /* rotateFloat */
+
+    /* rotateInt */
+
+    /* interp */
+
+    /* toLocal */
+
+    /* toGlobal */
+
+    /* toLocalNoTrans */
+
+    /* toGlobalNoTrans */
+
+    /* ZERO */
+
+    /* X_UNIT */
+
+    /* Y_UNIT */
 
 }
 

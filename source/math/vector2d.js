@@ -22,34 +22,38 @@
 
 /**
  * @class A 2-element vector which is represented by xy coordinates.
+ * @param {Number|b9.Vector2D} arg1
+ * @param {Number} arg2
  */
-b9.Vector2D = function() {
+b9.Vector2D = function(arg1, arg2) {
     /** hoge */
     this.x = 0.0;
 
     /** hoge */
     this.y = 0.0;
 
-    if (arguments === 2) {
-        this.x = arguments[0];
-        this.y = arguments[1];
-    } else if (arguments === 1) {
-        this.x = arguments[0].x;
-        this.y = arguments[0].y;
+    if (arguments.length === 2) {
+        this.x = arg1;
+        this.y = arg2;
+    } else if (arguments.length === 1) {
+        this.x = arg1.x;
+        this.y = arg1.y;
     }
 };
 
 /**
  * Sets the coordinates.
+ * @param {Number|b9.Vector2D} arg1
+ * @param {Number} arg2
  */
-b9.Vector2D.prototype.set = function()
+b9.Vector2D.prototype.set = function(arg1, arg2)
 {
-    if (arguments === 2) {
-        this.x = arguments[0];
-        this.y = arguments[1];
-    } else if (arguments === 1) {
-        this.x = arguments[0].x;
-        this.y = arguments[0].y;
+    if (arguments.length === 2) {
+        this.x = arg1;
+        this.y = arg2;
+    } else if (arguments.length === 1) {
+        this.x = arg1.x;
+        this.y = arg1.y;
     }
 };
 
