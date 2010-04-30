@@ -261,6 +261,15 @@ b9.Vector2D.prototype.toGlobalNoTrans = function(mat) {
 };
 
 /**
+ *
+ * @param {b9.Vector2D} vec
+ * @returns {Boolean}
+ */
+b9.Vector2D.prototype.isEqual = function(vec) {
+    return (b9.Math.isEqualFloat(this.x, vec.x) && b9.Math.isEqualFloat(this.y, vec.y));
+};
+
+/**
  * @returns {String}
  */
 b9.Vector2D.prototype.toString = function() {

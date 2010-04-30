@@ -53,7 +53,7 @@ b9.Matrix2D = function(arg1, arg2, arg3) {
  * @param {Number} arg2
  * @param {Number} arg3
  */
-b9.Matrix2D.prototype.set = function() {
+b9.Matrix2D.prototype.set = function(arg1, arg2, arg3) {
     if (arguments.length === 3) {
         this.x_axis.set(arg1);
         this.y_axis.set(arg2);
@@ -63,16 +63,6 @@ b9.Matrix2D.prototype.set = function() {
         this.y_axis.set(arg1.y_axis);
         this.trans.set(arg1.trans);
     }
-};
-
-/**
- *
- * @returns {Boolean}
- */
-b9.Matrix2D.prototype.isUnit = function() {
-    return (this.x_axis.x === 1.0 && this.x_axis.y === 0.0 &&
-            this.y_axis.x === 0.0 && this.y_axis.y === 1.0 &&
-            this.trans.x === 0.0 && this.trans.y === 0.0);
 };
 
 /**
@@ -221,6 +211,15 @@ b9.Matrix2D.prototype.lookAt = function(from, to) {
 
     return ckMat(new_x_axis, new_y_axis, new_z_axis, from);
 */
+};
+
+/**
+ *
+ * @param {b9.Matrix2D} mat
+ * @returns {Boolean}
+ */
+b9.Matrix2D.prototype.isEqual = function(mat) {
+    return (this.x_axis.isEqual(mat.x_axis) && this.y_axis.isEqual(mat.y_axis) && this.trans.isEqual(mat.trans));
 };
 
 /**

@@ -211,6 +211,16 @@ b9.Math.interp = function(from, to, ratio) {
 };
 
 /**
+ *
+ * @param {Number} a
+ * @param {Number} b
+ * @returns {Boolean}
+ */
+b9.Math.isEqualFloat = function(a, b) {
+    return (b9.Math.abs(a - b) < b9.Math.EPSILON);
+};
+
+/**
  * {Number}
  */
 b9.Math.EPSILON = 0.0001;

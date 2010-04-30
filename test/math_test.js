@@ -20,34 +20,20 @@
  * THE SOFTWARE.
  */
 
-function isEqualFloat(a, b) {
-    return (b9.Math.abs(a - b) < b9.Math.EPSILON);
-}
-
-function isEqualVector2D(a, b) {
-    return (isEqualFloat(a.x, b.x) && isEqualFloat(a.y, b.y));
-}
-
-function isEqualMatrix2D(a, b) {
-    return (isEqualVector2D(a.x_axis, b.x_axis) &&
-            isEqualVector2D(a.y_axis, b.y_axis) &&
-            isEqualVector2D(a.trans, b.trans));
-}
-
 function assertEqualsFloat(expected, actual) {
-    if (!isEqualFloat(expected, actual)) {
+    if (!b9.Math.isEqualFloat(expected, actual)) {
         fail("Expected " + expected + " but was " + actual);
     }
 }
 
 function assertEqualsVector2D(expected, actual) {
-    if (!isEqualVector2D(expected, actual)) {
+    if (!expected.isEqual(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
 }
 
 function assertEqualsMatrix2D(expected, actual) {
-    if (!isEqualMatrix2D(expected, actual)) {
+    if (!expected.isEqual(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
 }
@@ -160,6 +146,12 @@ function testMath() {
     assertEqualsFloat(0.0, b9.Math.interp(0.0, 2.0, -1.0));
     assertEqualsFloat(1.0, b9.Math.interp(0.0, 2.0, 0.5));
     assertEqualsFloat(2.0, b9.Math.interp(0.0, 2.0, 3.0));
+
+    /* isEqualFloat */
+    assertTrue(b9.Math.isEqualFloat(1.0, 1.0 + b9.Math.EPSILON * 0.99));
+    assertTrue(b9.Math.isEqualFloat(1.0, 1.0 - b9.Math.EPSILON * 0.99));
+    assertFalse(b9.Math.isEqualFloat(1.1, 2.0));
+    assertFalse(b9.Math.isEqualFloat(1.0, 2.1));
 
     /* EPSILON */
     assertEquals(0.0001, b9.Math.EPSILON);
@@ -279,6 +271,20 @@ function testVector2D() {
 
     /* toGlobalNoTrans */
 
+    /* isEqual */
+    vec1.set(1.0, 2.0);
+    vec2.set(vec1);
+    assertTrue(vec1.isEqual(vec2));
+
+    vec2.set(1.1, 2.0);
+    assertFalse(vec1.isEqual(vec2));
+
+    vec2.set(1.0, 2.1);
+    assertFalse(vec1.isEqual(vec2));
+
+    /* toString */
+    assertEquals("(1, 0)", b9.Vector2D.X_UNIT.toString());
+
     /* ZERO */
     assertEqualsVector2D(new b9.Vector2D(0.0, 0.0), b9.Vector2D.ZERO);
 
@@ -287,32 +293,26 @@ function testVector2D() {
 
     /* Y_UNIT */
     assertEqualsVector2D(new b9.Vector2D(0.0, 1.0), b9.Vector2D.Y_UNIT);
-
-    /* toString */
-    vec1.set(1.0, 2.0);
-    assertEquals("(1, 2)", vec1.toString());
 }
 
 function testMatrix2D() {
     /* Matrix2D */
     var mat1 = new b9.Matrix2D();
-    assertTrue(isEqualVector2D(b9.Vector2D.ZERO, mat1.x_axis) &&
-            isEqualVector2D(b9.Vector2D.ZERO, mat1.y_axis) &&
-            isEqualVector2D(b9.Vector2D.ZERO, mat1.trans));
+    assertTrue(b9.Vector2D.ZERO.isEqual(mat1.x_axis) &&
+            b9.Vector2D.ZERO.isEqual(mat1.y_axis) &&
+            b9.Vector2D.ZERO.isEqual(mat1.trans));
 
     var mat2 = new b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, new b9.Vector2D(1.0, 2.0));
-    assertTrue(isEqualVector2D(b9.Vector2D.X_UNIT, mat2.x_axis) &&
-            isEqualVector2D(b9.Vector2D.Y_UNIT, mat2.y_axis) &&
-            isEqualVector2D(new b9.Vector2D(1.0, 2.0), mat2.trans));
+    assertTrue(b9.Vector2D.X_UNIT.isEqual(mat2.x_axis) &&
+            b9.Vector2D.Y_UNIT.isEqual(mat2.y_axis) &&
+            (new b9.Vector2D(1.0, 2.0)).isEqual(mat2.trans));
 
     var mat3 = new b9.Matrix2D(mat2);
-    assertTrue(isEqualVector2D(b9.Vector2D.X_UNIT, mat3.x_axis) &&
-            isEqualVector2D(b9.Vector2D.Y_UNIT, mat3.y_axis) &&
-            isEqualVector2D(new b9.Vector2D(1.0, 2.0), mat3.trans));
+    assertTrue(b9.Vector2D.X_UNIT.isEqual(mat3.x_axis) &&
+            b9.Vector2D.Y_UNIT.isEqual(mat3.y_axis) &&
+            (new b9.Vector2D(1.0, 2.0)).isEqual(mat3.trans));
 
     /* set */
-
-    /* isUnit */
 
     /* orthonormalize */
 
@@ -338,7 +338,25 @@ function testMatrix2D() {
 
     /* lookAt */
 
+    /* isEqual */
+    mat1.set(b9.Matrix2D.UNIT);
+    mat2.set(mat1);
+    assertTrue(mat1.isEqual(mat2));
+
+    mat2.set(mat1);
+    mat2.x_axis.set(b9.Vector2D.ZERO);
+    assertFalse(mat1.isEqual(mat2));
+
+    mat2.set(mat1);
+    mat2.y_axis.set(b9.Vector2D.ZERO);
+    assertFalse(mat1.isEqual(mat2));
+
+    mat2.set(mat1);
+    mat2.trans.set(b9.Vector2D.X_UNIT);
+    assertFalse(mat1.isEqual(mat2));
+
     /* toString */
+    assertEquals("((1, 0), (0, 1), (0, 0))", b9.Matrix2D.UNIT.toString());
 
     /* ZERO */
     assertEqualsMatrix2D(new b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector2D.ZERO), b9.Matrix2D.ZERO);
@@ -346,6 +364,7 @@ function testMatrix2D() {
     /* UNIT */
     assertEqualsMatrix2D(new b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO), b9.Matrix2D.UNIT);
 }
+
 /*
     assertFalse([comment], booleanValue)
     assertEquals([comment], value1, value2)
