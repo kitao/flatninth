@@ -20,24 +20,6 @@
  * THE SOFTWARE.
  */
 
-/** @private */
-b9._n1 = 0;
-
-/** @private */
-b9._n2 = 0;
-
-/** @private */
-b9._n3 = 0;
-
-/** @private */
-b9._f1 = 0.0;
-
-/** @private */
-b9._f2 = 0.0;
-
-/** @private */
-b9._f3 = 0.0;
-
 /**
  * @class
  */
@@ -254,3 +236,21 @@ b9.Math._sin_table = new Array(180);
 for (var i = 0; i < 180; i++) {
     b9.Math._sin_table[i] = b9.Math.sinFloat(i);
 }
+
+/** @private */
+b9._n1 = 0;
+
+/** @private */
+b9._n2 = 0;
+
+/** @private */
+b9._n3 = 0;
+
+/** @private */
+b9._f1 = 0.0;
+
+/** @private */
+b9._f2 = 0.0;
+
+/** @private */
+b9._f3 = 0.0;

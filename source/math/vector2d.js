@@ -41,15 +41,6 @@ b9.Vector2D = function(arg1, arg2) {
     }
 };
 
-/** @private */
-b9._v1 = b9.Vector2D();
-
-/** @private */
-b9._v2 = b9.Vector2D();
-
-/** @private */
-b9._v3 = b9.Vector2D();
-
 /**
  * Sets the coordinates.
  * @param {b9.Vector2D|Number} arg1
@@ -105,9 +96,9 @@ b9.Vector2D.prototype.mul = function(s) {
  * @param {Number} s
  */
 b9.Vector2D.prototype.div = function(s) {
-    this._f1 = 1.0 / s;
-    this.x *= this._f1;
-    this.y *= this._f1;
+    b9._f1 = 1.0 / s;
+    this.x *= b9._f1;
+    this.y *= b9._f1;
 };
 
 /**
@@ -283,3 +274,12 @@ b9.Vector2D.X_UNIT = b9.Vector2D(1.0, 0.0);
  * {b9.Vector2D}
  */
 b9.Vector2D.Y_UNIT = b9.Vector2D(0.0, 1.0);
+
+/** @private */
+b9._v1 = new b9.Vector2D();
+
+/** @private */
+b9._v2 = new b9.Vector2D();
+
+/** @private */
+b9._v3 = new b9.Vector2D();

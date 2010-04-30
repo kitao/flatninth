@@ -47,15 +47,6 @@ b9.Matrix2D = function(arg1, arg2, arg3) {
     }
 };
 
-/** @private */
-b9._m1 = b9.Matrix2();
-
-/** @private */
-b9._m2 = b9.Matrix2();
-
-/** @private */
-b9._m3 = b9.Matrix2();
-
 /**
  *
  * @param {b9.Matrix2D|Number} arg1
@@ -244,3 +235,12 @@ b9.Matrix2D.ZERO = b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector2D.Z
  * {b9.Matrix2D}
  */
 b9.Matrix2D.UNIT = b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);
+
+/** @private */
+b9._m1 = b9.Matrix2();
+
+/** @private */
+b9._m2 = b9.Matrix2();
+
+/** @private */
+b9._m3 = b9.Matrix2();
