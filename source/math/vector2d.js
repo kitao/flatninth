@@ -261,6 +261,13 @@ b9.Vector2D.prototype.toGlobalNoTrans = function(mat) {
 };
 
 /**
+ * @returns {String}
+ */
+b9.Vector2D.prototype.toString = function() {
+    return "(" + this.x + ", " + this.y + ")";
+};
+
+/**
  * {b9.Vector2D}
  */
 b9.Vector2D.ZERO = new b9.Vector2D(0.0, 0.0);

@@ -28,22 +28,22 @@
  */
 b9.Matrix2D = function(arg1, arg2, arg3) {
     /** hoge */
-    this.x_axis = b9.Vector2D();
+    this.x_axis = new b9.Vector2D();
 
     /** hoge */
-    this.y_axis = b9.Vector2D();
+    this.y_axis = new b9.Vector2D();
 
     /** hoge */
-    this.trans = b9.Vector2D();
+    this.trans = new b9.Vector2D();
 
-    if (arguments === 3) {
-        this.x_axis.set(arguments[0]);
-        this.y_axis.set(arguments[1]);
-        this.trans.set(arguments[2]);
-    } else if (arguments === 1) {
-        this.x_axis.set(arguments[0].x_axis);
-        this.y_axis.set(arguments[0].y_axis);
-        this.trans.set(arguments[0].trans);
+    if (arguments.length === 3) {
+        this.x_axis.set(arg1);
+        this.y_axis.set(arg2);
+        this.trans.set(arg3);
+    } else if (arguments.length === 1) {
+        this.x_axis.set(arg1.x_axis);
+        this.y_axis.set(arg1.y_axis);
+        this.trans.set(arg1.trans);
     }
 };
 
@@ -54,14 +54,14 @@ b9.Matrix2D = function(arg1, arg2, arg3) {
  * @param {Number} arg3
  */
 b9.Matrix2D.prototype.set = function() {
-    if (arguments === 3) {
-        this.x_axis.set(arguments[0]);
-        this.y_axis.set(arguments[1]);
-        this.trans.set(arguments[2]);
-    } else if (arguments === 1) {
-        this.x_axis.set(arguments[0].x_axis);
-        this.y_axis.set(arguments[0].y_axis);
-        this.trans.set(arguments[0].trans);
+    if (arguments.length === 3) {
+        this.x_axis.set(arg1);
+        this.y_axis.set(arg2);
+        this.trans.set(arg3);
+    } else if (arguments.length === 1) {
+        this.x_axis.set(arg1.x_axis);
+        this.y_axis.set(arg1.y_axis);
+        this.trans.set(arg1.trans);
     }
 };
 
@@ -70,10 +70,9 @@ b9.Matrix2D.prototype.set = function() {
  * @returns {Boolean}
  */
 b9.Matrix2D.prototype.isUnit = function() {
-    return (
-        this.x_axis.x === 1.0 && this.x_axis.y === 0.0 &&
-        this.y_axis.x === 0.0 && this.y_axis.y === 1.0 &&
-        this.trans.x === 0.0 && this.trans.y === 0.0);
+    return (this.x_axis.x === 1.0 && this.x_axis.y === 0.0 &&
+            this.y_axis.x === 0.0 && this.y_axis.y === 1.0 &&
+            this.trans.x === 0.0 && this.trans.y === 0.0);
 };
 
 /**
@@ -182,7 +181,6 @@ b9.Matrix2D.prototype.toLocal = function(mat) {
 b9.Matrix2D.prototype.toGlobal = function(mat) {
     this.x_axis.toGlobalNoTrans(mat);
     this.y_axis.toGlobalNoTrans(mat);
-    this.z_axis.toGlobalNoTrans(mat);
     this.trans.toGlobal(mat);
 };
 
@@ -206,7 +204,6 @@ b9.Matrix2D.prototype.toLocalNoTrans = function(mat) {
 b9.Matrix2D.prototype.toGlobalNoTrans = function(mat) {
     this.x_axis.toGlobalNoTrans(mat);
     this.y_axis.toGlobalNoTrans(mat);
-    this.z_axis.toGlobalNoTrans(mat);
     trans.set(b9.Vector2D.ZERO);
 };
 
@@ -224,6 +221,13 @@ b9.Matrix2D.prototype.lookAt = function(from, to) {
 
     return ckMat(new_x_axis, new_y_axis, new_z_axis, from);
 */
+};
+
+/**
+ * @returns {String}
+ */
+b9.Matrix2D.prototype.toString = function() {
+    return "(" + this.x_axis.toString() + ", " + this.y_axis.toString() + ", " + this.trans.toString() + ")";
 };
 
 /**
