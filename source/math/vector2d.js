@@ -169,8 +169,8 @@ b9.Vector2D.prototype.rotateFloat = function(deg) {
     b9._f1 = b9.Math.sinFloat(deg);
     b9._f2 = b9.Math.cosFloat(deg);
 
-    b9._v1.x = x * b9._f2 - y * b9._f1;
-    b9._v1.y = y * b9._f2 + x * b9._f1;
+    b9._v1.x = this.x * b9._f2 - this.y * b9._f1;
+    b9._v1.y = this.y * b9._f2 + this.x * b9._f1;
 
     this.set(b9._v1);
 };
@@ -183,15 +183,15 @@ b9.Vector2D.prototype.rotateInt = function(deg) {
     b9._f1 = b9.Math.sinInt(deg);
     b9._f2 = b9.Math.cosInt(deg);
 
-    b9._v1.x = x * b9._f2 - y * b9._f1;
-    b9._v1.y = y * b9._f2 + x * b9._f1;
+    b9._v1.x = this.x * b9._f2 - this.y * b9._f1;
+    b9._v1.y = this.y * b9._f2 + this.x * b9._f1;
 
     this.set(b9._v1);
 };
 
 /**
  *
- * {Number} to
+ * {b9.Vector2D} to
  * {Number} ratio
  */
 b9.Vector2D.prototype.interp = function(to, ratio) {
@@ -263,17 +263,17 @@ b9.Vector2D.prototype.toGlobalNoTrans = function(mat) {
 /**
  * {b9.Vector2D}
  */
-b9.Vector2D.ZERO = b9.Vector2D(0.0, 0.0);
+b9.Vector2D.ZERO = new b9.Vector2D(0.0, 0.0);
 
 /**
  * {b9.Vector2D}
  */
-b9.Vector2D.X_UNIT = b9.Vector2D(1.0, 0.0);
+b9.Vector2D.X_UNIT = new b9.Vector2D(1.0, 0.0);
 
 /**
  * {b9.Vector2D}
  */
-b9.Vector2D.Y_UNIT = b9.Vector2D(0.0, 1.0);
+b9.Vector2D.Y_UNIT = new b9.Vector2D(0.0, 1.0);
 
 /** @private */
 b9._v1 = new b9.Vector2D();
