@@ -229,18 +229,18 @@ b9.Matrix2D.prototype.lookAt = function(from, to) {
 /**
  * {b9.Matrix2D}
  */
-b9.Matrix2D.ZERO = b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector2D.ZERO);
+b9.Matrix2D.ZERO = new b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector2D.ZERO);
 
 /**
  * {b9.Matrix2D}
  */
-b9.Matrix2D.UNIT = b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);
+b9.Matrix2D.UNIT = new b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);
 
 /** @private */
-b9._m1 = b9.Matrix2();
+b9._m1 = new b9.Matrix2();
 
 /** @private */
-b9._m2 = b9.Matrix2();
+b9._m2 = new b9.Matrix2();
 
 /** @private */
-b9._m3 = b9.Matrix2();
+b9._m3 = new b9.Matrix2();
