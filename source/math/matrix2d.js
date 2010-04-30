@@ -22,8 +22,11 @@
 
 /**
  * @class
+ * @param {b9.Matrix2D|Number} arg1
+ * @param {Number} arg2
+ * @param {Number} arg3
  */
-b9.Matrix2D = function() {
+b9.Matrix2D = function(arg1, arg2, arg3) {
     /** hoge */
     this.x_axis = b9.Vector2D();
 
@@ -44,8 +47,20 @@ b9.Matrix2D = function() {
     }
 };
 
+/** @private */
+b9._m1 = b9.Matrix2();
+
+/** @private */
+b9._m2 = b9.Matrix2();
+
+/** @private */
+b9._m3 = b9.Matrix2();
+
 /**
  *
+ * @param {b9.Matrix2D|Number} arg1
+ * @param {Number} arg2
+ * @param {Number} arg3
  */
 b9.Matrix2D.prototype.set = function() {
     if (arguments === 3) {

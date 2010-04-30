@@ -192,16 +192,33 @@ function testVector2D() {
     assertEqualsVector2D(new b9.Vector2D(4.0, 6.0), vec1);
 
     /* sub */
+    vec1.set(2.0, 3.0);
+    vec2.set(3.0, 5.0);
+    vec1.sub(vec2);
+    assertEqualsVector2D(new b9.Vector2D(-1.0, -2.0), vec1);
 
     /* mul */
+    vec1.set(1.0, 2.0);
+    vec1.mul(10.0);
+    assertEqualsVector2D(new b9.Vector2D(10.0, 20.0), vec1);
 
     /* div */
+    vec1.set(1.0, 2.0);
+    vec1.div(10.0);
+    assertEqualsVector2D(new b9.Vector2D(0.1, 0.2), vec1);
 
     /* norm */
+    vec1.set(-3.0, -4.0);
+    assertEqualsFloat(5.0, vec1.norm());
 
     /* sqNorm */
+    vec1.set(2.0, 3.0);
+    assertEqualsFloat(13.0, vec1.sqNorm());
 
     /* dist */
+    vec1.set(-1.0, -2.0);
+    vec2.set(2.0, -6.0);
+    assertEqualsFloat(5.0, vec1.dist(vec2));
 
     /* sqDist */
 

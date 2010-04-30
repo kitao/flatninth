@@ -22,7 +22,7 @@
 
 /**
  * @class A 2-element vector which is represented by xy coordinates.
- * @param {Number|b9.Vector2D} arg1
+ * @param {b9.Vector2D|Number} arg1
  * @param {Number} arg2
  */
 b9.Vector2D = function(arg1, arg2) {
@@ -41,9 +41,18 @@ b9.Vector2D = function(arg1, arg2) {
     }
 };
 
+/** @private */
+b9._v1 = b9.Vector2D();
+
+/** @private */
+b9._v2 = b9.Vector2D();
+
+/** @private */
+b9._v3 = b9.Vector2D();
+
 /**
  * Sets the coordinates.
- * @param {Number|b9.Vector2D} arg1
+ * @param {b9.Vector2D|Number} arg1
  * @param {Number} arg2
  */
 b9.Vector2D.prototype.set = function(arg1, arg2)

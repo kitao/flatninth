@@ -20,6 +20,24 @@
  * THE SOFTWARE.
  */
 
+/** @private */
+b9._n1 = 0;
+
+/** @private */
+b9._n2 = 0;
+
+/** @private */
+b9._n3 = 0;
+
+/** @private */
+b9._f1 = 0.0;
+
+/** @private */
+b9._f2 = 0.0;
+
+/** @private */
+b9._f3 = 0.0;
+
 /**
  * @class
  */
