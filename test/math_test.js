@@ -221,16 +221,40 @@ function testVector2D() {
     assertEqualsFloat(5.0, vec1.dist(vec2));
 
     /* sqDist */
+    vec1.set(1.0, 2.0);
+    vec2.set(3.0, 5.0);
+    assertEqualsFloat(13.0, vec1.sqDist(vec2));
 
     /* dot */
+    vec1.set(1.0, 2.0);
+    vec2.set(3.0, 4.0);
+    assertEqualsFloat(11.0, vec1.dot(vec2));
 
     /* normalize */
+    vec1.set(3.0, 4.0);
+    vec1.normalize();
+    assertEqualsVector2D(new b9.Vector2D(0.6, 0.8), vec1);
 
     /* rotateFloat */
+    vec1.set(1.0, 2.0);
+    vec1.rotateFloat(90.0);
+    assertEqualsVector2D(new b9.Vector2D(-2.0, 1.0), vec1);
 
     /* rotateInt */
+    vec1.set(1.0, 2.0);
+    vec1.rotateInt(90.5);
+    assertEqualsVector2D(new b9.Vector2D(-2.0, 1.0), vec1);
 
     /* interp */
+    vec1.set(1.0, 2.0);
+    vec2.set(-1.0, 2.0);
+    assertEqualsVector2D(new b9.Vector2D(1.0, 2.0), vec1.interp(vec2, -1.0));
+
+    vec1.set(1.0, 2.0);
+//    assertEqualsVector2D(new b9.Vector2D(0.0, 0.0), vec1.interp(vec2, 0.5));
+
+    vec1.set(1.0, 2.0);
+//    assertEqualsVector2D(new b9.Vector2D(-1.0, -2.0), vec1.interp(vec2, 2.0));
 
     /* toLocal */
 
@@ -241,11 +265,13 @@ function testVector2D() {
     /* toGlobalNoTrans */
 
     /* ZERO */
+    assertEqualsVector2D(new b9.Vector2D(0.0, 0.0), b9.Vector2D.ZERO);
 
     /* X_UNIT */
+    assertEqualsVector2D(new b9.Vector2D(1.0, 0.0), b9.Vector2D.X_UNIT);
 
     /* Y_UNIT */
-
+    assertEqualsVector2D(new b9.Vector2D(0.0, 1.0), b9.Vector2D.Y_UNIT);
 }
 
 /*
