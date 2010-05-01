@@ -264,16 +264,28 @@ function testVector2D() {
     assertEqualsVector2D(new b9.Vector2D(-1.0, -2.0), vec1);
 
     /* toLocal */
-    var mat1 = b9.Matrix2D(new b9.Vector2D(0.0, 1.0), new b9.Vector2D(-1.0, 0.0), new b9.Vector2D(2.0, 3.0));
-    vec1.set(1.0, 4.0);
+    var mat1 = new b9.Matrix2D(new b9.Vector2D(0.0, 1.0), new b9.Vector2D(-1.0, 0.0), new b9.Vector2D(2.0, 3.0));
+    vec1.set(1.0, 5.0);
     vec1.toLocal(mat1);
-//    assertEqualsVector2D(new b9.Vector2D(1.0, 1.0), vec1);
+    assertEqualsVector2D(new b9.Vector2D(2.0, 1.0), vec1);
 
     /* toGlobal */
+    mat1.set(new b9.Vector2D(0.0, 1.0), new b9.Vector2D(-1.0, 0.0), new b9.Vector2D(2.0, 3.0));
+    vec1.set(2.0, 1.0);
+    vec1.toGlobal(mat1);
+    assertEqualsVector2D(new b9.Vector2D(1.0, 5.0), vec1);
 
     /* toLocalNoTrans */
+    mat1 = new b9.Matrix2D(new b9.Vector2D(0.0, 1.0), new b9.Vector2D(-1.0, 0.0), new b9.Vector2D(2.0, 3.0));
+    vec1.set(1.0, 5.0);
+    vec1.toLocalNoTrans(mat1);
+    assertEqualsVector2D(new b9.Vector2D(5.0, -1.0), vec1);
 
     /* toGlobalNoTrans */
+    mat1.set(new b9.Vector2D(0.0, 1.0), new b9.Vector2D(-1.0, 0.0), new b9.Vector2D(2.0, 3.0));
+    vec1.set(2.0, 1.0);
+    vec1.toGlobalNoTrans(mat1);
+    assertEqualsVector2D(new b9.Vector2D(-1.0, 2.0), vec1);
 
     /* isEqual */
     vec1.set(1.0, 2.0);
