@@ -69,7 +69,9 @@ b9.Matrix2D.prototype.set = function(arg1, arg2, arg3) {
  *
  */
 b9.Matrix2D.prototype.orthonormalize = function() {
-    // TODO
+    this.x_axis.normalize();
+    this.y_axis.set(this.x_axis);
+    this.y_axis.rotateInt(90.0);
 };
 
 /**
@@ -170,6 +172,7 @@ b9.Matrix2D.prototype.toLocal = function(mat) {
  */
 b9.Matrix2D.prototype.toGlobal = function(mat) {
     this.x_axis.toGlobalNoTrans(mat);
+
     this.y_axis.toGlobalNoTrans(mat);
     this.trans.toGlobal(mat);
 };
@@ -240,10 +243,10 @@ b9.Matrix2D.ZERO = new b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector
 b9.Matrix2D.UNIT = new b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);
 
 /** @private */
-b9._m1 = new b9.Matrix2();
+b9._m1 = new b9.Matrix2D();
 
 /** @private */
-b9._m2 = new b9.Matrix2();
+b9._m2 = new b9.Matrix2D();
 
 /** @private */
-b9._m3 = new b9.Matrix2();
+b9._m3 = new b9.Matrix2D();

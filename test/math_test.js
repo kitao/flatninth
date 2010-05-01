@@ -264,6 +264,10 @@ function testVector2D() {
     assertEqualsVector2D(new b9.Vector2D(-1.0, -2.0), vec1);
 
     /* toLocal */
+    var mat1 = b9.Matrix2D(new b9.Vector2D(0.0, 1.0), new b9.Vector2D(-1.0, 0.0), new b9.Vector2D(2.0, 3.0));
+    vec1.set(1.0, 4.0);
+    vec1.toLocal(mat1);
+//    assertEqualsVector2D(new b9.Vector2D(1.0, 1.0), vec1);
 
     /* toGlobal */
 
@@ -313,10 +317,22 @@ function testMatrix2D() {
             (new b9.Vector2D(1.0, 2.0)).isEqual(mat3.trans));
 
     /* set */
+    mat1.set(b9.Vector2D.Y_UNIT, b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT);
+    assertEqualsMatrix2D(new b9.Matrix2D(b9.Vector2D.Y_UNIT, b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT), mat1);
+
+    mat2.set(mat1);
+    assertEqualsMatrix2D(mat1, mat2);
 
     /* orthonormalize */
+    mat1.set(new b9.Vector2D(0.1, 0.0), new b9.Vector2D(3.0, 3.0), b9.Vector2D.Y_UNIT);
+    mat1.orthonormalize();
+    assertEqualsMatrix2D(new b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.Y_UNIT), mat1);
 
     /* rotateFloat */
+//    mat1.set(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.X_UNIT);
+//    mat1.rotateFloat(90.0);
+//    assertEqualsMatrix2D(
+//            new b9.Matrix2D(new b9.Vector2D(0.0, 1.0), new b9.Vector2D(-1.0, 0.0), b9.Vector2D.X_UNIT), mat1);
 
     /* rotateInt */
 
