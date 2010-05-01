@@ -27,13 +27,19 @@
  * @param {Number} arg3
  */
 b9.Matrix2D = function(arg1, arg2, arg3) {
-    /** hoge */
+    /**
+     * {b9.Vector2D}
+     */
     this.x_axis = new b9.Vector2D();
 
-    /** hoge */
+    /**
+     * {b9.Vector2D}
+     */
     this.y_axis = new b9.Vector2D();
 
-    /** hoge */
+    /**
+     * {b9.Vector2D}
+     */
     this.trans = new b9.Vector2D();
 
     if (arguments.length === 3) {

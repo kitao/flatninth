@@ -26,10 +26,14 @@
  * @param {Number} arg2
  */
 b9.Vector2D = function(arg1, arg2) {
-    /** hoge */
+    /**
+     * {Number}
+     */
     this.x = 0.0;
 
-    /** hoge */
+    /**
+     * {Number}
+     */
     this.y = 0.0;
 
     if (arguments.length === 2) {
