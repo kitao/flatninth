@@ -166,11 +166,11 @@ b9.Math.randomInt = function(from, to) {
     to = b9.Math.floor(to);
 
     if (to >= from) {
-        b9._n1 = to - from + 1;
-        return from + b9.Math.floor(Math.random() * b9._n1);
+        b9.Math._n1 = to - from + 1;
+        return from + b9.Math.floor(Math.random() * b9.Math._n1);
     } else {
-        b9._n1 = from - to + 1;
-        return from - b9.Math.floor(Math.random() * b9._n1);
+        b9.Math._n1 = from - to + 1;
+        return from - b9.Math.floor(Math.random() * b9.Math._n1);
     }
 };
 
@@ -185,11 +185,11 @@ b9.Math.randomFloat = function(from, to, interval) {
     interval = b9.Math.abs(interval);
 
     if (to >= from) {
-        b9._n1 = b9.Math.floor((to - from) / interval) + 1;
-        return from + b9.Math.floor(Math.random() * b9._n1) * interval;
+        b9.Math._n1 = b9.Math.floor((to - from) / interval) + 1;
+        return from + b9.Math.floor(Math.random() * b9.Math._n1) * interval;
     } else {
-        b9._n1 = b9.Math.floor((from - to) / interval) + 1;
-        return from - b9.Math.floor(Math.random() * b9._n1) * interval;
+        b9.Math._n1 = b9.Math.floor((from - to) / interval) + 1;
+        return from - b9.Math.floor(Math.random() * b9.Math._n1) * interval;
     }
 };
 
@@ -248,19 +248,4 @@ for (var i = 0; i < 180; i++) {
 }
 
 /** @private */
-b9._n1 = 0;
-
-/** @private */
-b9._n2 = 0;
-
-/** @private */
-b9._n3 = 0;
-
-/** @private */
-b9._f1 = 0.0;
-
-/** @private */
-b9._f2 = 0.0;
-
-/** @private */
-b9._f3 = 0.0;
+b9.Math._n1 = 0;
