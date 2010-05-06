@@ -74,8 +74,8 @@ b9.ListItem.prototype.getNext = function() {
  *
  */
 b9.ListItem.prototype.leave = function() {
-    if (this.getList()) {
-        this.getList().removeItem(this);
+    if (this._list) {
+        this._list.removeItem(this);
     }
 };
 

@@ -79,13 +79,13 @@ b9.Tree.prototype.getParent = function() {
  */
 b9.Tree.prototype.getPrevSibling = function() {
     if (this._parent && this._prev !== this._parent) {
-        var prev = this._prev;
+        b9.Tree._o1 = this._prev;
 
-        while (prev._parent !== this._parent) {
-            prev = prev._parent;
+        while (b9.Tree._o1._parent !== this._parent) {
+            b9.Tree._o1 = prev._parent;
         }
 
-        return prev;
+        return b9.Tree._o1;
     }
 
     return null;
@@ -97,10 +97,10 @@ b9.Tree.prototype.getPrevSibling = function() {
  */
 b9.Tree.prototype.getNextSibling = function() {
     if (this._parent) {
-        var next = this.getLastDescendant()._next;
+        b9.Tree._o1 = this.getLastDescendant()._next;
 
-        if (next && next._parent === this._parent) {
-            return next;
+        if (b9.Tree._o1 && b9.Tree._o1._parent === this._parent) {
+            return b9.Tree._o1;
         }
     }
 
@@ -128,13 +128,13 @@ b9.Tree.prototype.getLastChild = function() {
  * @returns {b9.Tree} The last descendant.
  */
 b9.Tree.prototype.getLastDescendant = function() {
-    var desc = this;
+    b9.Tree._o1 = this;
 
-    while (desc._last_child) {
-        desc = desc._last_child;
+    while (b9.Tree._o1._last_child) {
+        b9.Tree._o1 = b9.Tree._o1._last_child;
     }
 
-    return desc;
+    return b9.Tree._o1;
 };
 
 /**
@@ -144,16 +144,16 @@ b9.Tree.prototype.getLastDescendant = function() {
 b9.Tree.prototype.addChildFirst = function(child) {
     this.removeChild(child);
 
-    var child_desc = child.getLastDescendant();
+    b9.Tree._o1 = child.getLastDescendant();
 
     child._parent = this;
     child._prev = this;
-    child_desc._next = this._next;
+    b9.Tree._o1._next = this._next;
 
     child._prev._next = child;
 
-    if (child_desc._next) {
-        child_desc._next._prev = child_desc;
+    if (b9.Tree._o1._next) {
+        b9.Tree._o1._next._prev = b9.Tree._o1;
     }
 
     if (!this._last_child) {
@@ -168,17 +168,17 @@ b9.Tree.prototype.addChildFirst = function(child) {
 b9.Tree.prototype.addChildLast = function(child) {
     this.removeChild(child);
 
-    var desc = getLastDescendant();
-    var child_desc = child.getLastDescendant();
+    b9.Tree._o1 = this.getLastDescendant();
+    b9.Tree._o2 = child.getLastDescendant();
 
     child._parent = this;
-    child._prev = desc;
-    child_desc._next = desc._next;
+    child._prev = b9.Tree._o1;
+    b9.Tree._o2._next = b9.Tree._o1._next;
 
     child._prev._next = child;
 
-    if (child_desc._next) {
-        child_desc._next._prev = child_desc;
+    if (b9.Tree._o2._next) {
+        b9.Tree._o2._next._prev = b9.Tree._o2;
     }
 
     this._last_child = child;
@@ -193,14 +193,14 @@ b9.Tree.prototype.addChildBefore = function(child, next_child) {
     if (next_child._parent === this) {
         this.removeChild(child);
 
-        var child_desc = child.getLastDescendant();
+        b9.Tree._o1 = child.getLastDescendant();
 
         child._parent = this;
         child._prev = next_child._prev;
-        child_desc._next = next_child;
+        b9.Tree._o1._next = next_child;
 
         child._prev._next = child;
-        child_desc._next._prev = child_desc;
+        b9.Tree._o1._next._prev = b9.Tree._o1;
     }
 };
 
@@ -214,17 +214,17 @@ b9.Tree.prototype.addChildAfter = function(child, prev_child)
     if (prev_child.parent === this) {
         this.removeChild(child);
 
-        var child_desc = child.getLastDescendant();
-        var prev_child_desc = prev_child.getLastDescendant();
+        b9.Tree._o1 = child.getLastDescendant();
+        b9.Tree._o2 = prev_child.getLastDescendant();
 
         child._parent = this;
-        child._prev = prev_child_desc;
-        child_desc._next = prev_child_desc._next;
+        child._prev = b9.Tree._o2;
+        b9.Tree._o1._next = b9.Tree._o2._next;
 
         child._prev._next = child;
 
-        if (child_desc._next) {
-            child_desc._next._prev = child_desc;
+        if (b9.Tree._o1._next) {
+            b9.Tree._o1._next._prev = b9.Tree._o1;
         }
 
         if (this._last_child === prev_child) {
@@ -239,21 +239,21 @@ b9.Tree.prototype.addChildAfter = function(child, prev_child)
  */
 b9.Tree.prototype.removeChild = function(child) {
     if (child.parent === this) {
-        var child_desc = child.getLastDescendant();
+        b9.Tree._o1 = child.getLastDescendant();
 
         if (this._last_child === child) {
             this._last_child = child.getPrevSibling();
         }
 
-        child._prev._next = child_desc._next;
+        child._prev._next = b9.Tree._o1._next;
 
-        if (child_desc._next) {
-            child_desc._next._prev = child._prev;
+        if (b9.Tree._o1._next) {
+            b9.Tree._o1._next._prev = child._prev;
         }
 
         child._parent = null;
         child._prev = null;
-        child_desc._next = NULL;
+        b9.Tree._o1._next = NULL;
     }
 };
 
@@ -265,3 +265,18 @@ b9.Tree.prototype.clear = function() {
         removeChild(this._last_child);
     }
 };
+
+/**
+ *
+ */
+b9.Tree.prototype.leave = function() {
+    if (this._parent) {
+        this._parent.removeChild(this);
+    }
+};
+
+/** @private */
+b9.Tree._o1 = null;
+
+/** @private */
+b9.Tree._o2 = null;

@@ -126,5 +126,86 @@ function testList() {
 }
 
 function testTree() {
-    // TODO
+    /* b9.Tree */
+    var dummy = 123;
+    var tree1 = new b9.Tree(123);
+
+    /* getSelf */
+    assertEquals(123, tree1.getSelf());
+
+    /* getPrevAll */
+    assertEquals(null, tree1.getPrevAll());
+
+    /* getNextAll */
+    assertEquals(null, tree1.getNextAll());
+
+    /* getParent */
+    assertEquals(null, tree1.getParent());
+
+    /* getPrevSibling */
+    assertEquals(null, tree1.getPrevSibling());
+
+    /* getNextSibling */
+    assertEquals(null, tree1.getNextSibling());
+
+    /* getFirstChild */
+    assertEquals(null, tree1.getFirstChild());
+
+    /* getLastChild */
+    assertEquals(null, tree1.getLastChild());
+
+    /* getLastDescendant */
+    assertEquals(tree1, tree1.getLastDescendant());
+
+    /* addChildFirst */
+    var tree2 = new b9.Tree(dummy);
+    tree1.addChildFirst(tree2);
+    assertEquals(null, tree1.getPrevAll());
+    assertEquals(tree2, tree1.getNextAll());
+    assertEquals(tree1, tree2.getPrevAll());
+    assertEquals(null, tree2.getNextAll());
+    assertEquals(null, tree1.getParent());
+    assertEquals(tree1, tree2.getParent());
+    assertEquals(null, tree1.getPrevSibling());
+    assertEquals(null, tree1.getNextSibling());
+    assertEquals(null, tree2.getPrevSibling());
+    assertEquals(null, tree2.getNextSibling());
+    assertEquals(tree2, tree1.getFirstChild());
+    assertEquals(tree2, tree1.getLastChild());
+    assertEquals(tree2, tree1.getLastDescendant());
+    assertEquals(tree2, tree2.getLastDescendant());
+
+    /* addChildLast */
+    var tree3 = new b9.Tree(dummy);
+    tree1.addChildLast(tree3);
+    assertEquals(null, tree1.getPrevAll());
+    assertEquals(tree2, tree1.getNextAll());
+    assertEquals(tree1, tree2.getPrevAll());
+//    assertEquals(tree3, tree2.getNextAll());
+//    assertEquals(tree2, tree3.getPrevAll());
+//    assertEquals(null, tree3.getNextAll());
+    assertEquals(null, tree1.getParent());
+    assertEquals(tree1, tree2.getParent());
+    assertEquals(tree1, tree3.getParent());
+    assertEquals(null, tree1.getPrevSibling());
+    assertEquals(null, tree1.getNextSibling());
+//    assertEquals(null, tree2.getPrevSibling());
+//    assertEquals(null, tree2.getNextSibling());
+//    assertEquals(tree2, tree1.getFirstChild());
+//    assertEquals(tree2, tree1.getLastChild());
+//    assertEquals(tree2, tree1.getLastDescendant());
+//    assertEquals(tree2, tree2.getLastDescendant());
+
+    var tree4 = new b9.Tree(dummy);
+    tree2.addChildFirst(tree4);
+
+    /* addChildBefore */
+
+    /* addChildAfter */
+
+    /* removeChild */
+
+    /* clear */
+
+    /* leave */
 }
