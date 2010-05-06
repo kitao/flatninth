@@ -21,7 +21,108 @@
  */
 
 function testList() {
-    // TODO
+    /* b9.ListItem */
+    var dummy = 123;
+    var item1 = new b9.ListItem(dummy);
+
+    /* getSelf */
+    assertEquals(123, item1.getSelf());
+
+    /* getList */
+    assertEquals(null, item1.getList());
+
+    /* getPrev */
+    assertEquals(null, item1.getPrev());
+
+    /* getNext */
+    assertEquals(null, item1.getNext());
+
+    /* leave */
+    item1.leave();
+
+    /* b9.List */
+    var list1 = new b9.List();
+
+    /* getItemNum */
+    assertEquals(0, list1.getItemNum());
+
+    /* getFirstItem */
+    assertEquals(null, list1.getFirstItem());
+
+    /* getLastItem */
+    assertEquals(null, list1.getLastItem());
+
+    /* addItemFirst */
+    list1.addItemFirst(item1);
+    assertEquals(1, list1.getItemNum());
+    assertEquals(item1, list1.getFirstItem());
+    assertEquals(item1, list1.getLastItem());
+    assertEquals(null, item1.getPrev());
+    assertEquals(null, item1.getNext());
+
+    /* addItemLast */
+    var item2 = new b9.ListItem(dummy);
+    list1.addItemLast(item2);
+    assertEquals(2, list1.getItemNum());
+    assertEquals(item1, list1.getFirstItem());
+    assertEquals(item2, list1.getLastItem());
+    assertEquals(null, item1.getPrev());
+    assertEquals(item2, item1.getNext());
+    assertEquals(item1, item2.getPrev());
+    assertEquals(null, item2.getNext());
+
+    list1.addItemFirst(item2, list1);
+    assertEquals(2, list1.getItemNum());
+    assertEquals(item2, list1.getFirstItem());
+    assertEquals(item1, list1.getLastItem());
+    assertEquals(null, item2.getPrev());
+    assertEquals(item1, item2.getNext());
+    assertEquals(item2, item1.getPrev());
+    assertEquals(null, item1.getNext());
+
+    item2.leave();
+    assertEquals(1, list1.getItemNum());
+    assertEquals(item1, list1.getFirstItem());
+    assertEquals(item1, list1.getLastItem());
+    assertEquals(null, item1.getPrev());
+    assertEquals(null, item1.getNext());
+
+    /* addItemBefore */
+    list1.addItemBefore(item2, item1);
+    assertEquals(2, list1.getItemNum());
+    assertEquals(item2, list1.getFirstItem());
+    assertEquals(item1, list1.getLastItem());
+    assertEquals(null, item2.getPrev());
+    assertEquals(item1, item2.getNext());
+    assertEquals(item2, item1.getPrev());
+    assertEquals(null, item1.getNext());
+
+    /* addItemAfter */
+    list1.addItemAfter(item2, item1);
+    assertEquals(2, list1.getItemNum());
+    assertEquals(item1, list1.getFirstItem());
+    assertEquals(item2, list1.getLastItem());
+    assertEquals(null, item1.getPrev());
+    assertEquals(item2, item1.getNext());
+    assertEquals(item1, item2.getPrev());
+    assertEquals(null, item2.getNext());
+
+    /* removeItem */
+    list1.removeItem(item1);
+    assertEquals(1, list1.getItemNum());
+    assertEquals(item2, list1.getFirstItem());
+    assertEquals(item2, list1.getLastItem());
+    assertEquals(null, item2.getPrev());
+    assertEquals(null, item2.getNext());
+
+    /* clear */
+    list1.addItemLast(item1);
+    assertEquals(2, list1.getItemNum());
+
+    list1.clear();
+    assertEquals(0, list1.getItemNum());
+    assertEquals(null, list1.getFirstItem());
+    assertEquals(null, list1.getLastItem());
 }
 
 function testTree() {

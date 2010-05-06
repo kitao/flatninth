@@ -71,6 +71,15 @@ b9.ListItem.prototype.getNext = function() {
 };
 
 /**
+ *
+ */
+b9.ListItem.prototype.leave = function() {
+    if (this.getList()) {
+        this.getList().removeItem(this);
+    }
+};
+
+/**
  * @class A list container.
  */
 b9.List = function() {
@@ -135,7 +144,7 @@ b9.List.prototype.addItemLast = function(item) {
  */
 b9.List.prototype.addItemBefore = function(item, next_item) {
     if (next_item._list === this) {
-        this.removeItem(item);
+        item.leave();
 
         item._list = this;
         item._prev = next_item._prev;
@@ -155,7 +164,7 @@ b9.List.prototype.addItemBefore = function(item, next_item) {
  */
 b9.List.prototype.addItemAfter = function(item, prev_item) {
     if (prev_item._list === this) {
-        this.removeItem(item);
+        item.leave();
 
         item._list = this;
         item._prev = prev_item;
