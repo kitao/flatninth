@@ -88,12 +88,12 @@ b9.Matrix2D.prototype.rotateFloat = function(deg) {
     b9.Vector2D._f1 = b9.Math.sinFloat(deg);
     b9.Vector2D._f2 = b9.Math.cosFloat(deg);
 
-    b9.Matrix2D._m1.x_axis.set(b9.Vector2D._f2, b9.Vector2D._f1);
-    b9.Matrix2D._m1.y_axis.set(-b9.Vector2D._f1, b9.Vector2D._f2);
-    b9.Matrix2D._m1.trans.set(b9.Vector2D.ZERO);
+    b9.Matrix2D._mat1.x_axis.set(b9.Vector2D._f2, b9.Vector2D._f1);
+    b9.Matrix2D._mat1.y_axis.set(-b9.Vector2D._f1, b9.Vector2D._f2);
+    b9.Matrix2D._mat1.trans.set(b9.Vector2D.ZERO);
 
-    b9.Matrix2D._m1.toGlobal(this);
-    this.set(b9.Matrix2D._m1);
+    b9.Matrix2D._mat1.toGlobal(this);
+    this.set(b9.Matrix2D._mat1);
 };
 
 /**
@@ -104,12 +104,12 @@ b9.Matrix2D.prototype.rotateInt = function(deg) {
     b9.Vector2D._f1 = b9.Math.sinInt(deg);
     b9.Vector2D._f2 = b9.Math.cosInt(deg);
 
-    b9.Matrix2D._m1.x_axis.set(b9.Vector2D._f2, b9.Vector2D._f1);
-    b9.Matrix2D._m1.y_axis.set(-b9.Vector2D._f1, b9.Vector2D._f2);
-    b9.Matrix2D._m1.trans.set(b9.Vector2D.ZERO);
+    b9.Matrix2D._mat1.x_axis.set(b9.Vector2D._f2, b9.Vector2D._f1);
+    b9.Matrix2D._mat1.y_axis.set(-b9.Vector2D._f1, b9.Vector2D._f2);
+    b9.Matrix2D._mat1.trans.set(b9.Vector2D.ZERO);
 
-    b9.Matrix2D._m1.toGlobal(this);
-    this.set(b9.Matrix2D._m1);
+    b9.Matrix2D._mat1.toGlobal(this);
+    this.set(b9.Matrix2D._mat1);
 };
 
 /**
@@ -128,14 +128,14 @@ b9.Matrix2D.prototype.scale = function(scale_x, scale_y) {
  * {Number} offset_y
  */
 b9.Matrix2D.prototype.translate = function(offset_x, offset_y) {
-    b9.Vector2D._v1.set(this.x_axis);
-    b9.Vector2D._v1.mul(offset_x);
+    b9.Vector2D._vec1.set(this.x_axis);
+    b9.Vector2D._vec1.mul(offset_x);
 
-    b9.Vector2D._v2.set(this.y_axis);
-    b9.Vector2D._v2.mul(offset_y);
+    b9.Vector2D._vec2.set(this.y_axis);
+    b9.Vector2D._vec2.mul(offset_y);
 
-    this.trans.add(b9.Vector2D._v1);
-    this.trans.add(b9.Vector2D._v2);
+    this.trans.add(b9.Vector2D._vec1);
+    this.trans.add(b9.Vector2D._vec2);
 };
 
 /**
@@ -184,13 +184,13 @@ b9.Matrix2D.prototype.toLocal = function(mat) {
     b9.Vector2D._f1 = 1.0 / mat.x_axis.sqNorm();
     b9.Vector2D._f2 = 1.0 / mat.y_axis.sqNorm();
 
-    b9.Vector2D._v1.set(this.trans);
-    b9.Vector2D._v1.sub(mat.trans);
+    b9.Vector2D._vec1.set(this.trans);
+    b9.Vector2D._vec1.sub(mat.trans);
 
     this.x_axis.set(this.x_axis.dot(mat.x_axis) * b9.Vector2D._f1, this.x_axis.dot(mat.y_axis) * b9.Vector2D._f2);
     this.y_axis.set(this.y_axis.dot(mat.x_axis) * b9.Vector2D._f1, this.y_axis.dot(mat.y_axis) * b9.Vector2D._f2);
-    this.trans.set(b9.Vector2D._v1.dot(mat.x_axis) * b9.Vector2D._f1,
-            b9.Vector2D._v1.dot(mat.y_axis) * b9.Vector2D._f2);
+    this.trans.set(b9.Vector2D._vec1.dot(mat.x_axis) * b9.Vector2D._f1,
+            b9.Vector2D._vec1.dot(mat.y_axis) * b9.Vector2D._f2);
 };
 
 /**
@@ -275,10 +275,10 @@ b9.Vector2D._f1 = 0.0;
 b9.Vector2D._f2 = 0.0;
 
 /** @private */
-b9.Vector2D._v1 = new b9.Vector2D();
+b9.Vector2D._vec1 = new b9.Vector2D();
 
 /** @private */
-b9.Vector2D._v2 = new b9.Vector2D();
+b9.Vector2D._vec2 = new b9.Vector2D();
 
 /** @private */
-b9.Matrix2D._m1 = new b9.Matrix2D();
+b9.Matrix2D._mat1 = new b9.Matrix2D();
