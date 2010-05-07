@@ -21,6 +21,7 @@
  */
 
 /**
+ * hoge
  * @class An item of b9.List.
  * @param {Object} self An object to be stored.
  */
@@ -40,7 +41,7 @@ b9.ListItem = function(self) {
 
 /**
  * Returns the stored object.
- * @returns {b9.ListItem} The stored object.
+ * @return {b9.ListItem} The stored object.
  */
 b9.ListItem.prototype.getSelf = function() {
     return this._self;
@@ -48,7 +49,7 @@ b9.ListItem.prototype.getSelf = function() {
 
 /**
  * Returns the list.
- * @returns {b9.List} The list.
+ * @return {b9.List} The list.
  */
 b9.ListItem.prototype.getList = function() {
     return this._list;
@@ -56,7 +57,7 @@ b9.ListItem.prototype.getList = function() {
 
 /**
  * Returns the previous item.
- * @returns {b9.ListItem} The previous item.
+ * @return {b9.ListItem} The previous item.
  */
 b9.ListItem.prototype.getPrev = function() {
     return (this._list && this._prev === this._list._start) ? null : this._prev;
@@ -64,14 +65,14 @@ b9.ListItem.prototype.getPrev = function() {
 
 /**
  * Returns the next item.
- * @returns {b9.ListItem} The next item.
+ * @return {b9.ListItem} The next item.
  */
 b9.ListItem.prototype.getNext = function() {
     return (this._list && this._next === this._list._end) ? null : this._next;
 };
 
 /**
- *
+ * hoge
  */
 b9.ListItem.prototype.leave = function() {
     if (this._list) {
@@ -80,6 +81,7 @@ b9.ListItem.prototype.leave = function() {
 };
 
 /**
+ * hoge
  * @class A list container.
  */
 b9.List = function() {
@@ -99,7 +101,7 @@ b9.List = function() {
 
 /**
  * Returns the number of the items.
- * @returns {Number} The number of the items.
+ * @return {Number} The number of the items.
  */
 b9.List.prototype.getItemNum = function() {
     return this._item_num;
@@ -107,7 +109,7 @@ b9.List.prototype.getItemNum = function() {
 
 /**
  * Returns the first item.
- * @returns {b9.ListItem} The first item.
+ * @return {b9.ListItem} The first item.
  */
 b9.List.prototype.getFirstItem = function() {
     return (this._item_num > 0) ? this._start._next : null;
@@ -115,7 +117,7 @@ b9.List.prototype.getFirstItem = function() {
 
 /**
  * Returns the last item.
- * @returns {b9.ListItem} The last item.
+ * @return {b9.ListItem} The last item.
  */
 b9.List.prototype.getLastItem = function() {
     return (this._item_num > 0) ? this._end._prev : null;

@@ -21,6 +21,7 @@
  */
 
 /**
+ * hoge
  * @class A tree container.
  * @param {Object} self An object to be stored.
  */
@@ -43,7 +44,7 @@ b9.Tree = function(self) {
 
 /**
  * Returns the stored object.
- * @returns {b9.Tree} The stored object.
+ * @return {b9.Tree} The stored object.
  */
 b9.Tree.prototype.getSelf = function() {
     return this._self;
@@ -51,7 +52,7 @@ b9.Tree.prototype.getSelf = function() {
 
 /**
  * Returns the previous item.
- * @returns {b9.Tree} The previous item.
+ * @return {b9.Tree} The previous item.
  */
 b9.Tree.prototype.getPrevAll = function() {
     return this._prev;
@@ -59,7 +60,7 @@ b9.Tree.prototype.getPrevAll = function() {
 
 /**
  * Returns the next item.
- * @returns {b9.Tree} The next item.
+ * @return {b9.Tree} The next item.
  */
 b9.Tree.prototype.getNextAll = function() {
     return this._next;
@@ -67,7 +68,7 @@ b9.Tree.prototype.getNextAll = function() {
 
 /**
  * Returns the parent.
- * @returns {b9.Tree} The parent.
+ * @return {b9.Tree} The parent.
  */
 b9.Tree.prototype.getParent = function() {
     return this._parent;
@@ -75,7 +76,7 @@ b9.Tree.prototype.getParent = function() {
 
 /**
  * Returns the previous sibling.
- * @returns {b9.Tree} The previous sibling.
+ * @return {b9.Tree} The previous sibling.
  */
 b9.Tree.prototype.getPrevSibling = function() {
     if (this._parent && this._prev !== this._parent) {
@@ -93,7 +94,7 @@ b9.Tree.prototype.getPrevSibling = function() {
 
 /**
  * Returns the next sibling.
- * @returns {b9.Tree} The next sibling.
+ * @return {b9.Tree} The next sibling.
  */
 b9.Tree.prototype.getNextSibling = function() {
     if (this._parent) {
@@ -109,7 +110,7 @@ b9.Tree.prototype.getNextSibling = function() {
 
 /**
  * Returns the first child.
- * @returns {b9.Tree} The first child.
+ * @return {b9.Tree} The first child.
  */
 b9.Tree.prototype.getFirstChild = function() {
     return this._last_child ? this._next : null;
@@ -117,7 +118,7 @@ b9.Tree.prototype.getFirstChild = function() {
 
 /**
  * Returns the last child.
- * @returns {b9.Tree} The last child.
+ * @return {b9.Tree} The last child.
  */
 b9.Tree.prototype.getLastChild = function() {
     return this._last_child;
@@ -125,7 +126,7 @@ b9.Tree.prototype.getLastChild = function() {
 
 /**
  * Returns the last descendant.
- * @returns {b9.Tree} The last descendant.
+ * @return {b9.Tree} The last descendant.
  */
 b9.Tree.prototype.getLastDescendant = function() {
     b9.Tree._obj1 = this;
@@ -267,7 +268,7 @@ b9.Tree.prototype.clear = function() {
 };
 
 /**
- *
+ * hoge
  */
 b9.Tree.prototype.leave = function() {
     if (this._parent) {
