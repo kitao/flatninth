@@ -21,90 +21,91 @@
  */
 
 /**
- * @class
+ * hoge
+ * @class hoge
  */
 b9.Math = {};
 
 /**
- *
- * @param {Number} x
- * @returns {Number}
+ * hoge
+ * @param {Number} x hoge
+ * @return {Number} hoge
  */
 b9.Math.floor = function(x) {
     return Math.floor(x);
 };
 
 /**
- *
- * @param {Number} x
- * @returns {Number}
+ * hoge
+ * @param {Number} x hoge
+ * @return {Number} hoge
  */
 b9.Math.abs = function(x) {
     return (x >= 0.0) ? x : -x;
 };
 
 /**
- *
- * @param {Number} a
- * @param {Number} b
- * @returns {Number}
+ * hoge
+ * @param {Number} a hoge
+ * @param {Number} b hoge
+ * @return {Number} hoge
  */
 b9.Math.min = function(a, b) {
     return (a < b) ? a : b;
 };
 
 /**
- *
- * @param {Number} a
- * @param {Number} b
- * @returns {Number}
+ * hoge
+ * @param {Number} a hoge
+ * @param {Number} b hoge
+ * @return {Number} hoge
  */
 b9.Math.max = function(a, b) {
     return (a > b) ? a : b;
 };
 
 /**
- *
- * @param {Number} x
- * @param {Number} min
- * @param {Number} max
- * @returns {Number}
+ * hoge
+ * @param {Number} x hoge
+ * @param {Number} min hoge
+ * @param {Number} max hoge
+ * @return {Number} hoge
  */
 b9.Math.clamp = function(x, min, max) {
     return (x < min) ? min : ((x > max) ? max : x);
 };
 
 /**
- *
- * @param {Number} s
- * @returns {Number}
+ * hoge
+ * @param {Number} s hoge
+ * @return {Number} hoge
  */
 b9.Math.sqrt = function(s) {
     return Math.sqrt(s);
 };
 
 /**
- *
- * @param {Number} deg
- * @returns {Number}
+ * hoge
+ * @param {Number} deg hoge
+ * @return {Number} hoge
  */
 b9.Math.sinFloat = function(deg) {
     return Math.sin(deg * b9.Math.DEG_TO_RAD);
 };
 
 /**
- *
- * @param {Number} deg
- * @returns {Number}
+ * hoge
+ * @param {Number} deg hoge
+ * @return {Number} hoge
  */
 b9.Math.cosFloat = function(deg) {
     return Math.cos(deg * b9.Math.DEG_TO_RAD);
 };
 
 /**
- *
- * @param {Number} deg
- * @returns {Number}
+ * hoge
+ * @param {Number} deg hoge
+ * @return {Number} hoge
  */
 b9.Math.sinInt = function(deg) {
     deg = b9.Math.floor(deg);
@@ -119,47 +120,47 @@ b9.Math.sinInt = function(deg) {
 };
 
 /**
- *
- * @param {Number} deg
- * @returns {Number}
+ * hoge
+ * @param {Number} deg hoge
+ * @return {Number} hoge
  */
 b9.Math.cosInt = function(deg) {
     return b9.Math.sinInt(deg + 90);
 };
 
 /**
- *
- * @param {Number} x
- * @returns {Number}
+ * hoge
+ * @param {Number} x hoge
+ * @return {Number} hoge
  */
 b9.Math.asin = function(x) {
     return Math.asin(x) * b9.Math.RAD_TO_DEG;
 };
 
 /**
- *
- * @param {Number} x
- * @returns {Number}
+ * hoge
+ * @param {Number} x hoge
+ * @return {Number} hoge
  */
 b9.Math.acos = function(x) {
     return Math.acos(x) * b9.Math.RAD_TO_DEG;
 };
 
 /**
- *
- * @param {Number} y
- * @param {Number} x
- * @returns {Number}
+ * hoge
+ * @param {Number} y hoge
+ * @param {Number} x hoge
+ * @return {Number} hoge
  */
 b9.Math.atan2 = function(y, x) {
     return Math.atan2(y, x) * b9.Math.RAD_TO_DEG;
 };
 
 /**
- *
- * @param {Number} from
- * @param {Number} to
- * @returns {Number}
+ * hoge
+ * @param {Number} from hoge
+ * @param {Number} to hoge
+ * @return {Number} hoge
  */
 b9.Math.randomInt = function(from, to) {
     from = b9.Math.floor(from);
@@ -175,11 +176,11 @@ b9.Math.randomInt = function(from, to) {
 };
 
 /**
- *
- * @param {Number} from
- * @param {Number} to
- * @param {Number} interval
- * @returns {Number}
+ * hoge
+ * @param {Number} from hoge
+ * @param {Number} to hoge
+ * @param {Number} interval hoge
+ * @return {Number} hoge
  */
 b9.Math.randomFloat = function(from, to, interval) {
     interval = b9.Math.abs(interval);
@@ -194,11 +195,11 @@ b9.Math.randomFloat = function(from, to, interval) {
 };
 
 /**
- *
- * @param {Number} from
- * @param {Number} to
- * @param {Number} ratio
- * @returns {Number}
+ * hoge
+ * @param {Number} from hoge
+ * @param {Number} to hoge
+ * @param {Number} ratio hoge
+ * @return {Number} hoge
  */
 b9.Math.interp = function(from, to, ratio) {
     if (ratio < b9.Math.EPSILON) {
@@ -211,32 +212,36 @@ b9.Math.interp = function(from, to, ratio) {
 };
 
 /**
- *
- * @param {Number} a
- * @param {Number} b
- * @returns {Boolean}
+ * hoge
+ * @param {Number} a hoge
+ * @param {Number} b hoge
+ * @return {Boolean} hoge
  */
 b9.Math.isEqualFloat = function(a, b) {
     return (b9.Math.abs(a - b) < b9.Math.EPSILON);
 };
 
 /**
- * {Number}
+ * hoge
+ * @return {Number}
  */
 b9.Math.EPSILON = 0.0001;
 
 /**
- * {Number}
+ * hoge
+ * @return {Number}
  */
 b9.Math.PI = Math.PI;
 
 /**
- * {Number}
+ * hoge
+ * @return {Number}
  */
 b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
 
 /**
- * {Number}
+ * hoge
+ * @return {Number}
  */
 b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 

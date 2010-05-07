@@ -21,24 +21,28 @@
  */
 
 /**
- * @class
- * @param {b9.Matrix2D|Number} arg1
- * @param {Number} [arg2]
- * @param {Number} [arg3]
+ * hoge
+ * @class hoge
+ * @param {b9.Matrix2D|Number} arg1 hoge
+ * @param {Number} [arg2] hoge
+ * @param {Number} [arg3] hoge
  */
 b9.Matrix2D = function(arg1, arg2, arg3) {
     /**
-     * {b9.Vector2D}
+     * hoge
+     * @return {b9.Vector2D}
      */
     this.x_axis = new b9.Vector2D();
 
     /**
-     * {b9.Vector2D}
+     * hoge
+     * @return {b9.Vector2D}
      */
     this.y_axis = new b9.Vector2D();
 
     /**
-     * {b9.Vector2D}
+     * hoge
+     * @return {b9.Vector2D}
      */
     this.trans = new b9.Vector2D();
 
@@ -54,10 +58,10 @@ b9.Matrix2D = function(arg1, arg2, arg3) {
 };
 
 /**
- *
- * @param {b9.Matrix2D|Number} arg1
- * @param {Number} [arg2]
- * @param {Number} [arg3]
+ * hoge
+ * @param {b9.Matrix2D|Number} arg1 hoge
+ * @param {Number} [arg2] hoge
+ * @param {Number} [arg3] hoge
  */
 b9.Matrix2D.prototype.set = function(arg1, arg2, arg3) {
     if (arguments.length === 3) {
@@ -72,7 +76,7 @@ b9.Matrix2D.prototype.set = function(arg1, arg2, arg3) {
 };
 
 /**
- *
+ * hoge
  */
 b9.Matrix2D.prototype.orthonormalize = function() {
     this.x_axis.normalize();
@@ -81,8 +85,8 @@ b9.Matrix2D.prototype.orthonormalize = function() {
 };
 
 /**
- *
- * {Number} deg
+ * hoge
+ * @param {Number} deg hoge
  */
 b9.Matrix2D.prototype.rotateFloat = function(deg) {
     b9.Vector2D._f1 = b9.Math.sinFloat(deg);
@@ -97,8 +101,8 @@ b9.Matrix2D.prototype.rotateFloat = function(deg) {
 };
 
 /**
- *
- * {Number} deg
+ * hoge
+ * @param {Number} deg hoge
  */
 b9.Matrix2D.prototype.rotateInt = function(deg) {
     b9.Vector2D._f1 = b9.Math.sinInt(deg);
@@ -113,9 +117,9 @@ b9.Matrix2D.prototype.rotateInt = function(deg) {
 };
 
 /**
- *
- * {Number} scale_x
- * {Number} scale_y
+ * hoge
+ * @param {Number} scale_x hoge
+ * @param {Number} scale_y hoge
  */
 b9.Matrix2D.prototype.scale = function(scale_x, scale_y) {
     this.x_axis.mul(scale_x);
@@ -123,9 +127,9 @@ b9.Matrix2D.prototype.scale = function(scale_x, scale_y) {
 };
 
 /**
- *
- * {Number} offset_x
- * {Number} offset_y
+ * hoge
+ * @param {Number} offset_x hoge
+ * @param {Number} offset_y hoge
  */
 b9.Matrix2D.prototype.translate = function(offset_x, offset_y) {
     b9.Vector2D._vec1.set(this.x_axis);
@@ -139,9 +143,9 @@ b9.Matrix2D.prototype.translate = function(offset_x, offset_y) {
 };
 
 /**
- *
- * {Number} to
- * {Number} ratio
+ * hoge
+ * @param {Number} to hoge
+ * @param {Number} ratio hoge
  */
 b9.Matrix2D.prototype.interp = function(to, ratio) {
     if (ratio < b9.Math.EPSILON) {
@@ -155,9 +159,9 @@ b9.Matrix2D.prototype.interp = function(to, ratio) {
 };
 
 /**
- *
- * {Number} to
- * {Number} ratio
+ * hoge
+ * @param {Number} to hoge
+ * @param {Number} ratio hoge
  */
 b9.Matrix2D.prototype.interpNoTrans = function(to, ratio) {
     if (ratio < b9.Math.EPSILON) {
@@ -177,8 +181,8 @@ b9.Matrix2D.prototype.interpNoTrans = function(to, ratio) {
 };
 
 /**
- *
- * {b9.Matrix2D} mat
+ * hoge
+ * @param {b9.Matrix2D} mat hoge
  */
 b9.Matrix2D.prototype.toLocal = function(mat) {
     b9.Vector2D._f1 = 1.0 / mat.x_axis.sqNorm();
@@ -195,7 +199,7 @@ b9.Matrix2D.prototype.toLocal = function(mat) {
 
 /**
  *
- * {b9.Matrix2D} mat
+ * @param {b9.Matrix2D} mat
  */
 b9.Matrix2D.prototype.toGlobal = function(mat) {
     this.x_axis.toGlobalNoTrans(mat);
@@ -204,8 +208,8 @@ b9.Matrix2D.prototype.toGlobal = function(mat) {
 };
 
 /**
- *
- * {b9.Matrix2D} mat
+ * hoge
+ * @param {b9.Matrix2D} mat hoge
  */
 b9.Matrix2D.prototype.toLocalNoTrans = function(mat) {
     b9.Vector2D._f1 = 1.0 / mat.x_axis.sqNorm();
@@ -217,8 +221,8 @@ b9.Matrix2D.prototype.toLocalNoTrans = function(mat) {
 };
 
 /**
- *
- * {b9.Matrix2D} mat
+ * hoge
+ * @param {b9.Matrix2D} mat hoge
  */
 b9.Matrix2D.prototype.toGlobalNoTrans = function(mat) {
     this.x_axis.toGlobalNoTrans(mat);
@@ -227,9 +231,9 @@ b9.Matrix2D.prototype.toGlobalNoTrans = function(mat) {
 };
 
 /**
- *
- * {Number} from
- * {Number} to
+ * hoge
+ * @param {Number} from hoge
+ * @param {Number} to hoge
  */
 b9.Matrix2D.prototype.lookAt = function(from, to) {
     this.y_axis.set(to);
@@ -243,28 +247,31 @@ b9.Matrix2D.prototype.lookAt = function(from, to) {
 };
 
 /**
- *
- * @param {b9.Matrix2D} mat
- * @returns {Boolean}
+ * hoge
+ * @param {b9.Matrix2D} mat hoge
+ * @return {Boolean} hoge
  */
 b9.Matrix2D.prototype.isEqual = function(mat) {
     return (this.x_axis.isEqual(mat.x_axis) && this.y_axis.isEqual(mat.y_axis) && this.trans.isEqual(mat.trans));
 };
 
 /**
- * @returns {String}
+ * hoge
+ * @return {String} hoge
  */
 b9.Matrix2D.prototype.toString = function() {
     return "(" + this.x_axis.toString() + ", " + this.y_axis.toString() + ", " + this.trans.toString() + ")";
 };
 
 /**
- * {b9.Matrix2D}
+ * hoge
+ * @return {b9.Matrix2D}
  */
 b9.Matrix2D.ZERO = new b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector2D.ZERO);
 
 /**
- * {b9.Matrix2D}
+ * hoge
+ * @return {b9.Matrix2D}
  */
 b9.Matrix2D.UNIT = new b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);
 
