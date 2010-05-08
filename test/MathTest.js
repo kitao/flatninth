@@ -20,12 +20,6 @@
  * THE SOFTWARE.
  */
 
-function assertEqualsFloat(expected, actual) {
-    if (!b9.Math.isEqualFloat(expected, actual)) {
-        fail("Expected " + expected + " but was " + actual);
-    }
-}
-
 function testMath() {
     /* floor */
     assertEquals(1.0, b9.Math.floor(1.234));

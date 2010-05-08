@@ -20,12 +20,6 @@
  * THE SOFTWARE.
  */
 
-function assertEqualsMatrix2D(expected, actual) {
-    if (!expected.isEqual(actual)) {
-        fail("Expected " + expected.toString() + " but was " + actual.toString());
-    }
-}
-
 function testMatrix2D() {
     /* Matrix2D */
     var mat1 = new b9.Matrix2D();

@@ -20,12 +20,6 @@
  * THE SOFTWARE.
  */
 
-function assertEqualsVector2D(expected, actual) {
-    if (!expected.isEqual(actual)) {
-        fail("Expected " + expected.toString() + " but was " + actual.toString());
-    }
-}
-
 function testVector2D() {
     /* Vector2D */
     var vec1 = new b9.Vector2D();
