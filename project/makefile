@@ -31,10 +31,9 @@ TEST_DIR    = $(BASE_DIR)/test
 REF_DIR     = $(BASE_DIR)/doc/reference
 
 SRCS        = b9.js Math.js Vector2D.js Matrix2D.js ListItem.js List.js Tree.js
+SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
 TARGET      = $(BASE_DIR)/flatninth.js
-
-SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS))
 
 .PHONY: all clean test reference
 
