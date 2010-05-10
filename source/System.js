@@ -24,29 +24,40 @@
  * @class An ID based on a string.
  * @param {String} [seed] A seed of an ID. When not specified, generate the unique ID automatically.
  */
-b9.ID = function(seed) {
-    /** @private */
-    this._value = undefined;
+b9.System = {};
 
-    if (seed) {
-        this._value = 0;
-        b9._n2 = seed.length;
+/**
+ * @param {String} str
+ * @return {Number}
+ */
+b9.System.toID = function(str) {
+    b9.System._n1 = 0;
+    b9.System._n2 = str.length;
 
-        for (b9._n1 = 0; b9._n1 <  b9._n2; b9._n1++) {
-            this._value = this._value * 37 + seed.charCodeAt(b9._n1);
-        }
-
-        this._value = -this._value;
-    } else {
-        this._value = b9.ID._cur_value;
-        b9.ID._cur_value++;
+    for (b9.System._n3 = 0; b9.System._n3 <  b9.System._n2; b9.System._n3++) {
+        b9.System._n1 = b9.System._n1 * 37 + str.charCodeAt(b9.System._n3);
     }
+
+    return -b9.System._n1;
 };
 
 /**
- * {b9.ID} The invalid ID.
+ *
+ * @return {Number}
  */
-b9.ID.ZERO = new b9.ID();
+b9.System.generateID = function() {
+    b9.System._cur_id++;
+    return b9.System._cur_id;
+};
 
 /** @private */
-b9.ID._cur_value = 0;
+b9.System._cur_id = 0;
+
+/** @private */
+b9.System._n1 = 0;
+
+/** @private */
+b9.System._n2 = 0;
+
+/** @private */
+b9.System._n3 = 0;
