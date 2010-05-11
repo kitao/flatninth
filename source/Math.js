@@ -166,12 +166,14 @@ b9.Math.randomInt = function(from, to) {
     from = b9.Math.floor(from);
     to = b9.Math.floor(to);
 
+    var range;
+
     if (to >= from) {
-        b9.Math._n1 = to - from + 1;
-        return from + b9.Math.floor(Math.random() * b9.Math._n1);
+        range = to - from + 1;
+        return from + b9.Math.floor(Math.random() * range);
     } else {
-        b9.Math._n1 = from - to + 1;
-        return from - b9.Math.floor(Math.random() * b9.Math._n1);
+        range = from - to + 1;
+        return from - b9.Math.floor(Math.random() * range);
     }
 };
 
@@ -185,12 +187,14 @@ b9.Math.randomInt = function(from, to) {
 b9.Math.randomFloat = function(from, to, interval) {
     interval = b9.Math.abs(interval);
 
+    var range;
+
     if (to >= from) {
-        b9.Math._n1 = b9.Math.floor((to - from) / interval) + 1;
-        return from + b9.Math.floor(Math.random() * b9.Math._n1) * interval;
+        range = b9.Math.floor((to - from) / interval) + 1;
+        return from + b9.Math.floor(Math.random() * range) * interval;
     } else {
-        b9.Math._n1 = b9.Math.floor((from - to) / interval) + 1;
-        return from - b9.Math.floor(Math.random() * b9.Math._n1) * interval;
+        range = b9.Math.floor((from - to) / interval) + 1;
+        return from - b9.Math.floor(Math.random() * range) * interval;
     }
 };
 
@@ -251,6 +255,3 @@ b9.Math._sin_table = new Array(180);
 for (var i = 0; i < 180; i++) {
     b9.Math._sin_table[i] = b9.Math.sinFloat(i);
 }
-
-/** @private */
-b9.Math._n1 = 0;

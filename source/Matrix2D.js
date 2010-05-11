@@ -89,11 +89,11 @@ b9.Matrix2D.prototype.orthonormalize = function() {
  * @param {Number} deg hoge
  */
 b9.Matrix2D.prototype.rotateFloat = function(deg) {
-    b9.Vector2D._f1 = b9.Math.sinFloat(deg);
-    b9.Vector2D._f2 = b9.Math.cosFloat(deg);
+    var sin = b9.Math.sinFloat(deg);
+    var cos = b9.Math.cosFloat(deg);
 
-    b9.Matrix2D._mat1.x_axis.set(b9.Vector2D._f2, b9.Vector2D._f1);
-    b9.Matrix2D._mat1.y_axis.set(-b9.Vector2D._f1, b9.Vector2D._f2);
+    b9.Matrix2D._mat1.x_axis.set(cos, sin);
+    b9.Matrix2D._mat1.y_axis.set(-sin, cos);
     b9.Matrix2D._mat1.trans.set(b9.Vector2D.ZERO);
 
     b9.Matrix2D._mat1.toGlobal(this);
@@ -105,11 +105,11 @@ b9.Matrix2D.prototype.rotateFloat = function(deg) {
  * @param {Number} deg hoge
  */
 b9.Matrix2D.prototype.rotateInt = function(deg) {
-    b9.Vector2D._f1 = b9.Math.sinInt(deg);
-    b9.Vector2D._f2 = b9.Math.cosInt(deg);
+    var sin = b9.Math.sinInt(deg);
+    var cos = b9.Math.cosInt(deg);
 
-    b9.Matrix2D._mat1.x_axis.set(b9.Vector2D._f2, b9.Vector2D._f1);
-    b9.Matrix2D._mat1.y_axis.set(-b9.Vector2D._f1, b9.Vector2D._f2);
+    b9.Matrix2D._mat1.x_axis.set(cos, sin);
+    b9.Matrix2D._mat1.y_axis.set(-sin, cos);
     b9.Matrix2D._mat1.trans.set(b9.Vector2D.ZERO);
 
     b9.Matrix2D._mat1.toGlobal(this);
@@ -169,14 +169,13 @@ b9.Matrix2D.prototype.interpNoTrans = function(to, ratio) {
     } else if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else {
-        b9.Matrix2D._f1 = this.x_axis.dot(to.x_axis);
-        b9.Matrix2D._f2 = b9.Math.acos(b9.Matrix2D._f1);
+        var ang = b9.Math.acos(this.x_axis.dot(to.x_axis));
 
         if (this.y_axis.dot(to.x_axis) < 0.0) {
-            b9.Matrix2D._f2 = -b9.Matrix2D._f2;
+            ang = -ang;
         }
 
-        this.rotateFloat(b9.Matrix2D._f2 * ratio);
+        this.rotateFloat(ang * ratio);
     }
 };
 
@@ -185,16 +184,15 @@ b9.Matrix2D.prototype.interpNoTrans = function(to, ratio) {
  * @param {b9.Matrix2D} mat hoge
  */
 b9.Matrix2D.prototype.toLocal = function(mat) {
-    b9.Vector2D._f1 = 1.0 / mat.x_axis.sqNorm();
-    b9.Vector2D._f2 = 1.0 / mat.y_axis.sqNorm();
+    var r_sq_xa = 1.0 / mat.x_axis.sqNorm();
+    var r_sq_ya = 1.0 / mat.y_axis.sqNorm();
 
     b9.Vector2D._vec1.set(this.trans);
     b9.Vector2D._vec1.sub(mat.trans);
 
-    this.x_axis.set(this.x_axis.dot(mat.x_axis) * b9.Vector2D._f1, this.x_axis.dot(mat.y_axis) * b9.Vector2D._f2);
-    this.y_axis.set(this.y_axis.dot(mat.x_axis) * b9.Vector2D._f1, this.y_axis.dot(mat.y_axis) * b9.Vector2D._f2);
-    this.trans.set(b9.Vector2D._vec1.dot(mat.x_axis) * b9.Vector2D._f1,
-            b9.Vector2D._vec1.dot(mat.y_axis) * b9.Vector2D._f2);
+    this.x_axis.set(this.x_axis.dot(mat.x_axis) * r_sq_xa, this.x_axis.dot(mat.y_axis) * r_sq_ya);
+    this.y_axis.set(this.y_axis.dot(mat.x_axis) * r_sq_xa, this.y_axis.dot(mat.y_axis) * r_sq_ya);
+    this.trans.set(b9.Vector2D._vec1.dot(mat.x_axis) * r_sq_xa, b9.Vector2D._vec1.dot(mat.y_axis) * r_sq_ya);
 };
 
 /**
@@ -212,11 +210,11 @@ b9.Matrix2D.prototype.toGlobal = function(mat) {
  * @param {b9.Matrix2D} mat hoge
  */
 b9.Matrix2D.prototype.toLocalNoTrans = function(mat) {
-    b9.Vector2D._f1 = 1.0 / mat.x_axis.sqNorm();
-    b9.Vector2D._f2 = 1.0 / mat.y_axis.sqNorm();
+    var r_sq_xa = 1.0 / mat.x_axis.sqNorm();
+    var r_sq_ya = 1.0 / mat.y_axis.sqNorm();
 
-    this.x_axis.set(this.x_axis.dot(mat.x_axis) * b9.Vector2D._f1, this.x_axis.dot(mat.y_axis) * b9.Vector2D._f2);
-    this.y_axis.set(this.y_axis.dot(mat.x_axis) * b9.Vector2D._f1, this.y_axis.dot(mat.y_axis) * b9.Vector2D._f2);
+    this.x_axis.set(this.x_axis.dot(mat.x_axis) * r_sq_xa, this.x_axis.dot(mat.y_axis) * r_sq_ya);
+    this.y_axis.set(this.y_axis.dot(mat.x_axis) * r_sq_xa, this.y_axis.dot(mat.y_axis) * r_sq_ya);
     this.trans.set(b9.Vector2D.ZERO);
 };
 
@@ -274,12 +272,6 @@ b9.Matrix2D.ZERO = new b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector
  * @return {b9.Matrix2D}
  */
 b9.Matrix2D.UNIT = new b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);
-
-/** @private */
-b9.Vector2D._f1 = 0.0;
-
-/** @private */
-b9.Vector2D._f2 = 0.0;
 
 /** @private */
 b9.Vector2D._vec1 = new b9.Vector2D();
