@@ -104,9 +104,10 @@ b9.Vector2D.prototype.mul = function(s) {
  * @param {Number} s hoge
  */
 b9.Vector2D.prototype.div = function(s) {
-    b9.Vector2D._f1 = 1.0 / s;
-    this.x *= b9.Vector2D._f1;
-    this.y *= b9.Vector2D._f1;
+    var rs = 1.0 / s;
+
+    this.x *= rs;
+    this.y *= rs;
 };
 
 /**
@@ -160,12 +161,12 @@ b9.Vector2D.prototype.dot = function(vec) {
  * hoge
  */
 b9.Vector2D.prototype.normalize = function() {
-    b9.Vector2D._f1 = this.norm();
+    var norm = this.norm();
 
-    if (b9.Vector2D._f1 < b9.Math.EPSILON) {
+    if (norm < b9.Math.EPSILON) {
         this.set(b9.Math.X_UNIT);
     } else {
-        this.div(b9.Vector2D._f1);
+        this.div(norm);
     }
 };
 
@@ -174,11 +175,11 @@ b9.Vector2D.prototype.normalize = function() {
  * @param {Number} deg hoge
  */
 b9.Vector2D.prototype.rotateFloat = function(deg) {
-    b9.Vector2D._f1 = b9.Math.sinFloat(deg);
-    b9.Vector2D._f2 = b9.Math.cosFloat(deg);
+    var sin = b9.Math.sinFloat(deg);
+    var cos = b9.Math.cosFloat(deg);
 
-    b9.Vector2D._vec1.x = this.x * b9.Vector2D._f2 - this.y * b9.Vector2D._f1;
-    b9.Vector2D._vec1.y = this.y * b9.Vector2D._f2 + this.x * b9.Vector2D._f1;
+    b9.Vector2D._vec1.x = this.x * cos - this.y * sin;
+    b9.Vector2D._vec1.y = this.y * cos + this.x * sin;
 
     this.set(b9.Vector2D._vec1);
 };
@@ -188,11 +189,11 @@ b9.Vector2D.prototype.rotateFloat = function(deg) {
  * @param {Number} deg hoge
  */
 b9.Vector2D.prototype.rotateInt = function(deg) {
-    b9.Vector2D._f1 = b9.Math.sinInt(deg);
-    b9.Vector2D._f2 = b9.Math.cosInt(deg);
+    var sin = b9.Math.sinInt(deg);
+    var cos = b9.Math.cosInt(deg);
 
-    b9.Vector2D._vec1.x = this.x * b9.Vector2D._f2 - this.y * b9.Vector2D._f1;
-    b9.Vector2D._vec1.y = this.y * b9.Vector2D._f2 + this.x * b9.Vector2D._f1;
+    b9.Vector2D._vec1.x = this.x * cos - this.y * sin;
+    b9.Vector2D._vec1.y = this.y * cos + this.x * sin;
 
     this.set(b9.Vector2D._vec1);
 };
@@ -303,12 +304,6 @@ b9.Vector2D.X_UNIT = new b9.Vector2D(1.0, 0.0);
  * @return {b9.Vector2D}
  */
 b9.Vector2D.Y_UNIT = new b9.Vector2D(0.0, 1.0);
-
-/** @private */
-b9.Vector2D._f1 = 0.0;
-
-/** @private */
-b9.Vector2D._f2 = 0.0;
 
 /** @private */
 b9.Vector2D._vec1 = new b9.Vector2D();
