@@ -31,14 +31,14 @@ b9.System = {};
  * @return {Number}
  */
 b9.System.toID = function(str) {
-    b9.System._n1 = 0;
-    b9.System._n2 = str.length;
+    var id = 0;
+    var len = str.length;
 
-    for (b9.System._n3 = 0; b9.System._n3 <  b9.System._n2; b9.System._n3++) {
-        b9.System._n1 = b9.System._n1 * 37 + str.charCodeAt(b9.System._n3);
+    for (var i = 0; i < len; i++) {
+        id = id * 37 - str.charCodeAt(i);
     }
 
-    return -b9.System._n1;
+    return id;
 };
 
 /**
@@ -52,12 +52,3 @@ b9.System.generateID = function() {
 
 /** @private */
 b9.System._cur_id = 0;
-
-/** @private */
-b9.System._n1 = 0;
-
-/** @private */
-b9.System._n2 = 0;
-
-/** @private */
-b9.System._n3 = 0;
