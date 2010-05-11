@@ -184,15 +184,15 @@ b9.Matrix2D.prototype.interpNoTrans = function(to, ratio) {
  * @param {b9.Matrix2D} mat hoge
  */
 b9.Matrix2D.prototype.toLocal = function(mat) {
-    var r_sq_xa = 1.0 / mat.x_axis.sqNorm();
-    var r_sq_ya = 1.0 / mat.y_axis.sqNorm();
+    var rsq_xa = 1.0 / mat.x_axis.sqNorm();
+    var rsq_ya = 1.0 / mat.y_axis.sqNorm();
 
     b9.Vector2D._vec1.set(this.trans);
     b9.Vector2D._vec1.sub(mat.trans);
 
-    this.x_axis.set(this.x_axis.dot(mat.x_axis) * r_sq_xa, this.x_axis.dot(mat.y_axis) * r_sq_ya);
-    this.y_axis.set(this.y_axis.dot(mat.x_axis) * r_sq_xa, this.y_axis.dot(mat.y_axis) * r_sq_ya);
-    this.trans.set(b9.Vector2D._vec1.dot(mat.x_axis) * r_sq_xa, b9.Vector2D._vec1.dot(mat.y_axis) * r_sq_ya);
+    this.x_axis.set(this.x_axis.dot(mat.x_axis) * rsq_xa, this.x_axis.dot(mat.y_axis) * rsq_ya);
+    this.y_axis.set(this.y_axis.dot(mat.x_axis) * rsq_xa, this.y_axis.dot(mat.y_axis) * rsq_ya);
+    this.trans.set(b9.Vector2D._vec1.dot(mat.x_axis) * rsq_xa, b9.Vector2D._vec1.dot(mat.y_axis) * rsq_ya);
 };
 
 /**
@@ -210,11 +210,11 @@ b9.Matrix2D.prototype.toGlobal = function(mat) {
  * @param {b9.Matrix2D} mat hoge
  */
 b9.Matrix2D.prototype.toLocalNoTrans = function(mat) {
-    var r_sq_xa = 1.0 / mat.x_axis.sqNorm();
-    var r_sq_ya = 1.0 / mat.y_axis.sqNorm();
+    var rsq_xa = 1.0 / mat.x_axis.sqNorm();
+    var rsq_ya = 1.0 / mat.y_axis.sqNorm();
 
-    this.x_axis.set(this.x_axis.dot(mat.x_axis) * r_sq_xa, this.x_axis.dot(mat.y_axis) * r_sq_ya);
-    this.y_axis.set(this.y_axis.dot(mat.x_axis) * r_sq_xa, this.y_axis.dot(mat.y_axis) * r_sq_ya);
+    this.x_axis.set(this.x_axis.dot(mat.x_axis) * rsq_xa, this.x_axis.dot(mat.y_axis) * rsq_ya);
+    this.y_axis.set(this.y_axis.dot(mat.x_axis) * rsq_xa, this.y_axis.dot(mat.y_axis) * rsq_ya);
     this.trans.set(b9.Vector2D.ZERO);
 };
 
