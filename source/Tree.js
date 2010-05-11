@@ -80,13 +80,13 @@ b9.Tree.prototype.getParent = function() {
  */
 b9.Tree.prototype.getPrevSibling = function() {
     if (this._parent && this._prev !== this._parent) {
-        b9.Tree._obj1 = this._prev;
+        var prev = this._prev;
 
-        while (b9.Tree._obj1._parent !== this._parent) {
-            b9.Tree._obj1 = b9.Tree._obj1._parent;
+        while (prev._parent !== this._parent) {
+            prev = prev._parent;
         }
 
-        return b9.Tree._obj1;
+        return prev;
     }
 
     return null;
@@ -98,10 +98,10 @@ b9.Tree.prototype.getPrevSibling = function() {
  */
 b9.Tree.prototype.getNextSibling = function() {
     if (this._parent) {
-        b9.Tree._obj1 = this.getLastDescendant()._next;
+        var next = this.getLastDescendant()._next;
 
-        if (b9.Tree._obj1 && b9.Tree._obj1._parent === this._parent) {
-            return b9.Tree._obj1;
+        if (next && next._parent === this._parent) {
+            return next;
         }
     }
 
@@ -129,13 +129,13 @@ b9.Tree.prototype.getLastChild = function() {
  * @return {b9.Tree} The last descendant.
  */
 b9.Tree.prototype.getLastDescendant = function() {
-    b9.Tree._obj1 = this;
+    var desc = this;
 
-    while (b9.Tree._obj1._last_child) {
-        b9.Tree._obj1 = b9.Tree._obj1._last_child;
+    while (desc._last_child) {
+        desc = desc._last_child;
     }
 
-    return b9.Tree._obj1;
+    return desc;
 };
 
 /**
@@ -145,16 +145,16 @@ b9.Tree.prototype.getLastDescendant = function() {
 b9.Tree.prototype.addChildFirst = function(child) {
     child.leave();
 
-    b9.Tree._obj1 = child.getLastDescendant();
+    var child_desc = child.getLastDescendant();
 
     child._parent = this;
     child._prev = this;
-    b9.Tree._obj1._next = this._next;
+    child_desc._next = this._next;
 
     child._prev._next = child;
 
-    if (b9.Tree._obj1._next) {
-        b9.Tree._obj1._next._prev = b9.Tree._obj1;
+    if (child_desc._next) {
+        child_desc._next._prev = child_desc;
     }
 
     if (!this._last_child) {
@@ -169,17 +169,17 @@ b9.Tree.prototype.addChildFirst = function(child) {
 b9.Tree.prototype.addChildLast = function(child) {
     child.leave();
 
-    b9.Tree._obj2 = this.getLastDescendant();
-    b9.Tree._obj3 = child.getLastDescendant();
+    var this_desc = this.getLastDescendant();
+    var child_desc = child.getLastDescendant();
 
     child._parent = this;
-    child._prev = b9.Tree._obj2;
-    b9.Tree._obj3._next = b9.Tree._obj2._next;
+    child._prev = this_desc;
+    child_desc._next = this_desc._next;
 
     child._prev._next = child;
 
-    if (b9.Tree._obj3._next) {
-        b9.Tree._obj3._next._prev = b9.Tree._obj3;
+    if (child_desc._next) {
+        child_desc._next._prev = child_desc;
     }
 
     this._last_child = child;
@@ -194,14 +194,14 @@ b9.Tree.prototype.addChildBefore = function(child, next_child) {
     if (next_child._parent === this) {
         child.leave();
 
-        b9.Tree._obj1 = child.getLastDescendant();
+        var child_desc = child.getLastDescendant();
 
         child._parent = this;
         child._prev = next_child._prev;
-        b9.Tree._obj1._next = next_child;
+        child_desc._next = next_child;
 
         child._prev._next = child;
-        b9.Tree._obj1._next._prev = b9.Tree._obj1;
+        child_desc._next._prev = child_desc;
     }
 };
 
@@ -215,17 +215,17 @@ b9.Tree.prototype.addChildAfter = function(child, prev_child)
     if (prev_child._parent === this) {
         child.leave();
 
-        b9.Tree._obj2 = child.getLastDescendant();
-        b9.Tree._obj3 = prev_child.getLastDescendant();
+        var child_desc = child.getLastDescendant();
+        var prev_child_desc = prev_child.getLastDescendant();
 
         child._parent = this;
-        child._prev = b9.Tree._obj3;
-        b9.Tree._obj2._next = b9.Tree._obj3._next;
+        child._prev = prev_child_desc;
+        child_desc._next = prev_child_desc._next;
 
         child._prev._next = child;
 
-        if (b9.Tree._obj2._next) {
-            b9.Tree._obj2._next._prev = b9.Tree._obj2;
+        if (child_desc._next) {
+            child_desc._next._prev = child_desc;
         }
 
         if (this._last_child === prev_child) {
@@ -240,21 +240,21 @@ b9.Tree.prototype.addChildAfter = function(child, prev_child)
  */
 b9.Tree.prototype.removeChild = function(child) {
     if (child._parent === this) {
-        b9.Tree._obj2 = child.getLastDescendant();
+        var child_desc = child.getLastDescendant();
 
         if (this._last_child === child) {
             this._last_child = child.getPrevSibling();
         }
 
-        child._prev._next = b9.Tree._obj2._next;
+        child._prev._next = child_desc._next;
 
-        if (b9.Tree._obj2._next) {
-            b9.Tree._obj2._next._prev = child._prev;
+        if (child_desc._next) {
+            child_desc._next._prev = child._prev;
         }
 
         child._parent = null;
         child._prev = null;
-        b9.Tree._obj2._next = null;
+        child_desc._next = null;
     }
 };
 
@@ -275,12 +275,3 @@ b9.Tree.prototype.leave = function() {
         this._parent.removeChild(this);
     }
 };
-
-/** @private */
-b9.Tree._obj1 = null;
-
-/** @private */
-b9.Tree._obj2 = null;
-
-/** @private */
-b9.Tree._obj3 = null;
