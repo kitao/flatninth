@@ -23,7 +23,7 @@
 /**
  * hoge
  * @class hoge
- * @param {b9.Vector2D|Number} arg1 hoge
+ * @param {b9.Vector2D|Number} [arg1] hoge
  * @param {Number} [arg2] hoge
  */
 b9.Vector2D = function(arg1, arg2) {

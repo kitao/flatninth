@@ -23,9 +23,9 @@
 /**
  * hoge
  * @class hoge
- * @param {b9.Color|Number} arg1
- * @param {Number} arg2
- * @param {Number} arg3
+ * @param {b9.Color|Number} [arg1]
+ * @param {Number} [arg2]
+ * @param {Number} [arg3]
  * @param {Number} [arg4]
  */
 b9.Color = function(arg1, arg2, arg3, arg4) {

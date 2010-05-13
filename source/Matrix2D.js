@@ -23,7 +23,7 @@
 /**
  * hoge
  * @class hoge
- * @param {b9.Matrix2D|Number} arg1 hoge
+ * @param {b9.Matrix2D|Number} [arg1] hoge
  * @param {Number} [arg2] hoge
  * @param {Number} [arg3] hoge
  */
