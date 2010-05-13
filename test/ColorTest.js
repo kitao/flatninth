@@ -21,5 +21,38 @@
  */
 
 function testColor() {
-    // TODO
+    /* b9.Color */
+    var color1 = new b9.Color();
+    assertTrue(color1.r === 0 && color1.g === 0 && color1.b === 0 && color1.a === 0);
+
+    var color2 = new b9.Color(1, 2, 3);
+    assertTrue(color2.r === 1 && color2.g === 2 && color2.b === 3 && color2.a === 255);
+
+    var color3 = new b9.Color(1, 2, 3, 4);
+    assertTrue(color3.r === 1 && color3.g === 2 && color3.b === 3 && color3.a === 4);
+
+    var color4 = new b9.Color(color3);
+    assertTrue(color4.r === 1 && color4.g === 2 && color4.b === 3 && color4.a === 4);
+
+    /* set */
+
+    /* add */
+
+    /* sub */
+
+    /* mul */
+
+    /* div */
+
+    /* interp */
+
+    /* isEqual */
+
+    /* toString */
+
+    /* ZERO */
+    assertEqualsColor(new b9.Color(0, 0, 0, 0), b9.Color.ZERO);
+
+    /* FULL */
+    assertEqualsColor(new b9.Color(255, 255, 255, 255), b9.Color.FULL);
 }

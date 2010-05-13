@@ -37,3 +37,9 @@ function assertEqualsMatrix2D(expected, actual) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
 }
+
+function assertEqualsColor(expected, actual) {
+    if (!expected.isEqual(actual)) {
+        fail("Expected " + expected.toString() + " but was " + actual.toString());
+    }
+}
