@@ -35,8 +35,25 @@ function testColor() {
     assertTrue(color4.r === 1 && color4.g === 2 && color4.b === 3 && color4.a === 4);
 
     /* set */
+    color1.set(10, 11, 12);
+    assertEqualsColor(new b9.Color(10, 11, 12), color1);
+
+    color2.set(10, 11, 12, 13);
+    assertEqualsColor(new b9.Color(10, 11, 12, 13), color2);
+
+    color3.set(color2);
+    assertEqualsColor(color2, color3);
 
     /* add */
+    color1.set(1, 2, 3, 4);
+    color2.set(5, 6, 7, 8);
+    color1.add(color2);
+    assertEqualsColor(new b9.Color(6, 8, 10, 12));
+
+    color1.set(200, 200, 200, 200);
+    color2.set(300, 400, 500, 600);
+    color1.add(color2);
+    assertEqualsColor(new b9.Color(255, 255, 255, 255));
 
     /* sub */
 
