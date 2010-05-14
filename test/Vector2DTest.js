@@ -115,7 +115,7 @@ function testVector2D() {
 
     vec1.set(1.0, 2.0);
     vec1.interp(vec2, 2.0);
-    assertEqualsVector2D(new b9.Vector2D(-1.0, -2.0), vec1);
+    assertEqualsVector2D(vec2, vec1);
 
     /* toLocal */
     var mat1 = new b9.Matrix2D(new b9.Vector2D(0.0, 1.0), new b9.Vector2D(-1.0, 0.0), new b9.Vector2D(2.0, 3.0));

@@ -80,14 +80,71 @@ function testColor() {
     assertEqualsColor(b9.Color.ZERO, color1);
 
     /* mul */
+    color1.set(64, 64, 64, 64);
+    color2.set(32, 64, 128, 255);
+    color1.mul(color2);
+    assertEqualsColor(new b9.Color(8, 16, 32, 64), color1);
+
+    color1.set(32, 64, 128, 255);
+    color1.mul(0.5);
+    assertEqualsColor(new b9.Color(16, 32, 64, 127), color1);
+
+    color1.set(32, 64, 128, 255);
+    color1.mul(-1.0);
+    assertEqualsColor(b9.Color.ZERO, color1);
+
+    color1.set(32, 64, 128, 255);
+    color1.mul(10.0);
+    assertEqualsColor(b9.Color.FULL, color1);
 
     /* div */
+    color1.set(16, 32, 64, 128);
+    color1.div(2.0);
+    assertEqualsColor(new b9.Color(8, 16, 32, 64), color1);
+
+    color1.set(16, 32, 64, 128);
+    color1.div(-1.0);
+    assertEqualsColor(b9.Color.ZERO, color1);
+
+    color1.set(16, 32, 64, 128);
+    color1.div(0.01);
+    assertEqualsColor(b9.Color.FULL, color1);
 
     /* interp */
+    color1.set(8, 16, 32, 64);
+    color2.set(16, 32, 64, 128);
+    color1.interp(color2, -1.0);
+    assertEqualsColor(new b9.Color(8, 16, 32, 64), color1);
+
+    color1.set(8, 16, 32, 64);
+    color2.set(16, 32, 64, 128);
+    color1.interp(color2, 0.5);
+    assertEqualsColor(new b9.Color(12, 24, 48, 96), color1);
+
+    color1.set(8, 16, 32, 64);
+    color2.set(16, 32, 64, 128);
+    color1.interp(color2, 2.0);
+    assertEqualsColor(color2, color1);
 
     /* isEqual */
+    color1.set(1, 2, 3, 4);
+    color2.set(color1);
+    assertTrue(color1.isEqual(color2));
+
+    color2.set(0, 2, 3, 4);
+    assertFalse(color1.isEqual(color2));
+
+    color2.set(1, 0, 3, 4);
+    assertFalse(color1.isEqual(color2));
+
+    color2.set(1, 2, 0, 4);
+    assertFalse(color1.isEqual(color2));
+
+    color2.set(1, 2, 3, 0);
+    assertFalse(color1.isEqual(color2));
 
     /* toString */
+    assertEquals("(1, 2, 3, 4)", (new b9.Color(1, 2, 3, 4)).toString());
 
     /* ZERO */
     assertEqualsColor(new b9.Color(0, 0, 0, 0), b9.Color.ZERO);

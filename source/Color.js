@@ -157,7 +157,7 @@ b9.Color.prototype.mul = function(arg) {
  * @param {Number} s
  */
 b9.Color.prototype.div = function(s) {
-    var rs = 1.0 / r;
+    var rs = 1.0 / s;
 
     this.r = b9.Math.floor(b9.Math.clamp(this.r * rs, 0, 255));
     this.g = b9.Math.floor(b9.Math.clamp(this.g * rs, 0, 255));
