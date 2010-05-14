@@ -112,20 +112,10 @@ b9.Color.prototype.set = function(arg1, arg2, arg3, arg4) {
  * @param {b9.Color} color
  */
 b9.Color.prototype.add = function(color) {
-    this.r += color.r;
-    this.g += color.g;
-    this.b += color.b;
-    this.a += color.a;
-
-    if (this.r > 255) { this.r = 255; }
-    if (this.g > 255) { this.g = 255; }
-    if (this.b > 255) { this.b = 255; }
-    if (this.a > 255) { this.a = 255; }
-
-    this.r = b9.Math.floor(this.r);
-    this.g = b9.Math.floor(this.g);
-    this.b = b9.Math.floor(this.b);
-    this.a = b9.Math.floor(this.a);
+    this.r = b9.Math.floor(b9.Math.clamp(this.r + color.r, 0, 255));
+    this.g = b9.Math.floor(b9.Math.clamp(this.g + color.g, 0, 255));
+    this.b = b9.Math.floor(b9.Math.clamp(this.b + color.b, 0, 255));
+    this.a = b9.Math.floor(b9.Math.clamp(this.a + color.a, 0, 255));
 };
 
 /**
@@ -133,20 +123,10 @@ b9.Color.prototype.add = function(color) {
  * @param {b9.Color} color
  */
 b9.Color.prototype.sub = function(color) {
-    this.r -= color.r;
-    this.g -= color.g;
-    this.b -= color.b;
-    this.a -= color.a;
-
-    if (this.r < 0) { this.r = 0; }
-    if (this.g < 0) { this.g = 0; }
-    if (this.b < 0) { this.b = 0; }
-    if (this.a < 0) { this.a = 0; }
-
-    this.r = b9.Math.floor(this.r);
-    this.g = b9.Math.floor(this.g);
-    this.b = b9.Math.floor(this.b);
-    this.a = b9.Math.floor(this.a);
+    this.r = b9.Math.floor(b9.Math.clamp(this.r - color.r, 0, 255));
+    this.g = b9.Math.floor(b9.Math.clamp(this.g - color.g, 0, 255));
+    this.b = b9.Math.floor(b9.Math.clamp(this.b - color.b, 0, 255));
+    this.a = b9.Math.floor(b9.Math.clamp(this.a - color.a, 0, 255));
 };
 
 /**
@@ -179,19 +159,6 @@ b9.Color.prototype.mul = function(arg) {
 b9.Color.prototype.div = function(s) {
     var rs = 1.0 / r;
 
-    this.r = b9.Math.floor(b9.Math.clamp(this.r * s, 0, 255));
-    this.g = b9.Math.floor(b9.Math.clamp(this.g * s, 0, 255));
-    this.b = b9.Math.floor(b9.Math.clamp(this.b * s, 0, 255));
-    this.a = b9.Math.floor(b9.Math.clamp(this.a * s, 0, 255));
-};
-
-/**
- * hoge
- * @param {Number} s
- */
-b9.Color.prototype.div = function(s) {
-    var rs = 1.0 / r;
-
     this.r = b9.Math.floor(b9.Math.clamp(this.r * rs, 0, 255));
     this.g = b9.Math.floor(b9.Math.clamp(this.g * rs, 0, 255));
     this.b = b9.Math.floor(b9.Math.clamp(this.b * rs, 0, 255));
@@ -211,10 +178,10 @@ b9.Color.prototype.interp = function(to, ratio) {
     } else {
         var inv_ratio = 1.0 - ratio;
 
-        this.r = b9.Math.floor(b9.Math.clamp(this.r * inv_ratio + to.r, 0, 255));
-        this.g = b9.Math.floor(b9.Math.clamp(this.g * inv_ratio + to.g, 0, 255));
-        this.b = b9.Math.floor(b9.Math.clamp(this.b * inv_ratio + to.b, 0, 255));
-        this.a = b9.Math.floor(b9.Math.clamp(this.a * inv_ratio + to.a, 0, 255));
+        this.r = b9.Math.floor(b9.Math.clamp(this.r * inv_ratio + to.r * ratio, 0, 255));
+        this.g = b9.Math.floor(b9.Math.clamp(this.g * inv_ratio + to.g * ratio, 0, 255));
+        this.b = b9.Math.floor(b9.Math.clamp(this.b * inv_ratio + to.b * ratio, 0, 255));
+        this.a = b9.Math.floor(b9.Math.clamp(this.a * inv_ratio + to.a * ratio, 0, 255));
     }
 };
 
