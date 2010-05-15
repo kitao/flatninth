@@ -22,24 +22,67 @@
 
 function testColor() {
     /* b9.Color */
+    /* getR */
+    /* getG */
+    /* getB */
+    /* getA */
     var color1 = new b9.Color();
-    assertTrue(color1.r === 0 && color1.g === 0 && color1.b === 0 && color1.a === 0);
+    assertTrue(color1.getR() === 0 && color1.getG() === 0 && color1.getB() === 0 && color1.getA() === 0);
 
     var color2 = new b9.Color(1.5, 2.5, 3.5);
-    assertTrue(color2.r === 1 && color2.g === 2 && color2.b === 3 && color2.a === 255);
+    assertTrue(color2.getR() === 1 && color2.getG() === 2 && color2.getB() === 3 && color2.getA() === 255);
 
     var color3 = new b9.Color(1.5, 2.5, 3.5, 4.5);
-    assertTrue(color3.r === 1 && color3.g === 2 && color3.b === 3 && color3.a === 4);
+    assertTrue(color3.getR() === 1 && color3.getG() === 2 && color3.getB() === 3 && color3.getA() === 4);
 
     var color4 = new b9.Color(-100, -200, -300, -400);
-    assertTrue(color4.r === 0 && color4.g === 0 && color4.b === 0 && color4.a === 0);
+    assertTrue(color4.getR() === 0 && color4.getG() === 0 && color4.getB() === 0 && color4.getA() === 0);
 
     var color5 = new b9.Color(300, 400, 500, 600);
-    assertTrue(color5.r === 255 && color5.g === 255 && color5.b === 255 && color5.a === 255);
+    assertTrue(color5.getR() === 255 && color5.getG() === 255 && color5.getB() === 255 && color5.getA() === 255);
 
     var color6 = new b9.Color(color3);
-    assertTrue(color6.r === 1 && color6.g === 2 && color6.b === 3 && color6.a === 4);
+    assertTrue(color6.getR() === 1 && color6.getG() === 2 && color6.getB() === 3 && color6.getA() === 4);
 
+    /* setR */
+    color1.setR(100.5);
+    assertEquals(100, color1.getR());
+
+    color1.setR(-1);
+    assertEquals(0, color1.getR());
+
+    color1.setR(300);
+    assertEquals(255, color1.getR());
+
+    /* setG */
+    color1.setG(100.5);
+    assertEquals(100, color1.getG());
+
+    color1.setG(-1);
+    assertEquals(0, color1.getG());
+
+    color1.setG(300);
+    assertEquals(255, color1.getG());
+
+    /* setB */
+    color1.setB(100.5);
+    assertEquals(100, color1.getB());
+
+    color1.setB(-1);
+    assertEquals(0, color1.getB());
+
+    color1.setB(300);
+    assertEquals(255, color1.getB());
+
+    /* setA */
+    color1.setA(100.5);
+    assertEquals(100, color1.getA());
+
+    color1.setA(-1);
+    assertEquals(0, color1.getA());
+
+    color1.setA(300);
+    assertEquals(255, color1.getA());
 
     /* set */
     color1.set(10.5, 11.5, 12.5);
