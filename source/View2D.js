@@ -26,111 +26,96 @@
  */
 b9.View2D = function() {
     /** @private */
-    this._flag = 0;
+    this._pos = new b9.Vector2D();
 
     /** @private */
-    this._left = 0;
+    this._size = new b9.Vector2D();
 
     /** @private */
-    this._top = 0;
+    this._scale = new b9.Vector2D();
 
     /** @private */
-    this._width = 0;
-
-    /** @private */
-    this._height = 0;
-
-    /** @private */
-    this._scale_x = 0.0;
-
-    /** @private */
-    this._scale_y = 0.0;
+    this._origin = new b9.Vector2D();
 
     /** @private */
     this._color = new b9.Color(b9.Color.FULL);
+
+    /** @private */
+    this._flag = 0;
+
+    /** @private */
+    this._tree = new b9.Tree(this);
 };
 
 /**
  * hoge
- * @return {Number} hoge
+ * @param {b9.Vector2D} pos
  */
-b9.View2D.prototype.getLeft = function() {
-    return this._left;
+b9.View2D.prototype.getPos = function(pos) {
+    pos.set(this._origin);
 };
 
 /**
  * hoge
- * @return {Number} hoge
+ * @param {b9.Vector2D} pos
  */
-b9.View2D.prototype.getTop = function() {
-    return this._top;
+b9.View2D.prototype.setPos = function(pos) {
+    this._pos.set(pos);
 };
 
 /**
  * hoge
- * @param {Number} left
- * @param {Number} top
+ * @param {b9.Vector2D} size
  */
-b9.View2D.prototype.setPos = function(left, top) {
-    this._left = b9.floor(left);
-    this._top = b9.floor(top);
+b9.View2D.prototype.getSize = function(size) {
+    size.set(this._size);
 };
 
 /**
  * hoge
- * @return {Number}
+ * @param {b9.Vector2D} size
  */
-b9.View2D.prototype.getWidth = function() {
-    return this._width;
+b9.View2D.prototype.setSize = function(size) {
+    this._size.x = b9.Math.max(size.x, 0.0);
+    this._size.y = b9.Math.max(size.y, 0.0);
 };
 
 /**
  * hoge
- * @return {Number}
+ * @param {b9.Vector2D} scale
  */
-b9.View2D.prototype.getHeight = function() {
-    return this._height;
+b9.View2D.prototype.getScale = function(scale) {
+    scale.set(this._scale);
 };
 
 /**
  * hoge
- * @param {Number} width
- * @param {Number} height
+ * @param {b9.Vector2D} scale
  */
-b9.View2D.prototype.setSize = function(width, height) {
-    this._width = b9.Math.max(b9.Math.floor(width), 0);
-    this._height = b9.Math.max(b9.Math.floor(height), 0);
+b9.View2D.prototype.setScale = function(scale) {
+    this._scale.x = b9.Math.max(scale.x, 0.0);
+    this._scale.y = b9.Math.max(scale.y, 0.0);
 };
 
 /**
  * hoge
- * @return {Number}
+ * @param {b9.Vector2D} origin
  */
-b9.View2D.prototype.getScaleX = function(scale_x) {
-    return this._scale_x;
+b9.View2D.prototype.getOrigin = function(origin) {
+    origin.set(this._origin);
 };
 
 /**
  * hoge
- * @return {Number}
+ * @param {b9.Vector2D} origin
  */
-b9.View2D.prototype.getScaleY = function(scale_y) {
-    return this._scale_y;
+b9.View2D.prototype.setOrigin = function(origin) {
+    this._origin.set(origin);
 };
 
 /**
  * hoge
- * @param {Number} scale_x
- * @param {Number} scale_y
- */
-b9.View2D.prototype.setScale = function(scale_x, scale_y) {
-    this._scale_x = b9.Math.max(scale_x, 0.0);
-    this._scale_y = b9.Math.max(scale_y, 0.0);
-};
-
-/**
- * hoge
- * @param {Number} color
+ * @param {b9.Color} color
  */
 b9.View2D.prototype.getColor = function(color) {
     color.set(this._color);
@@ -138,24 +123,93 @@ b9.View2D.prototype.getColor = function(color) {
 
 /**
  * hoge
- * @param {Number} color
+ * @param {b9.Color} color
  */
 b9.View2D.prototype.setColor = function(color) {
     this._color.set(color);
 };
 
 /**
- *
+ * hoge
+ * @param {Number} flag
+ * @return {Boolean}
  */
 b9.View2D.prototype.isViewFlagOn = function(flag) {
-    // TODO
+    return (this._flag & flag) ? true : false;
 };
 
 /**
- *
+ * hoge
+ * @param {Number} flag
+ * @param {Boolean} is_on
  */
 b9.View2D.prototype.setViewFlag = function(flag, is_on) {
-    // TODO
+    if (is_on) {
+        this._flag |= flag;
+    } else {
+        this._flag &= ~flag;
+    }
+};
+
+/**
+ * hoge
+ * @return {b9.View2D}
+ */
+b9.View2D.prototype.getParent = function() {
+    var parent = this._tree.getParent();
+    return parent ? parent.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.View2D}
+ */
+b9.View2D.prototype.getPrevSibling = function() {
+    var sibling = this._tree.getPrevSibling();
+    return sibling ? sibling.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.View2D}
+ */
+b9.View2D.prototype.getNextSibling = function() {
+    var sibling = this._tree.getNextSibling();
+    return sibling ? sibling.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.View2D}
+ */
+b9.View2D.prototype.getFirstChild = function() {
+    var child = this._tree.getFirstChild();
+    return child ? child.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.View2D}
+ */
+b9.View2D.prototype.getLastChild = function() {
+    var child = this._tree.getLastChild();
+    return child ? child.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.View2D}
+ */
+b9.View2D.prototype.addChildFirst = function(cihld) {
+    this._tree.addChildFirst(child._tree);
+};
+
+/**
+ * hoge
+ * @param {b9.View2D} child
+ */
+b9.View2D.prototype.addChildLast = function(child) {
+    this._tree.addChildLast(child._tree);
 };
 
 /**
