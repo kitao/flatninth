@@ -44,7 +44,10 @@ b9.View2D = function() {
     this._flag = 0;
 
     /** @private */
-    this._tree = new b9.Tree(this);
+    this._view_tree = new b9.Tree(this);
+
+    /** @private */
+    this._elem_tree = new b9.Tree(this);
 };
 
 /**
@@ -156,7 +159,7 @@ b9.View2D.prototype.setViewFlag = function(flag, is_on) {
  * @return {b9.View2D}
  */
 b9.View2D.prototype.getParent = function() {
-    var parent = this._tree.getParent();
+    var parent = this._view_tree.getParent();
     return parent ? parent.getSelf() : null;
 };
 
@@ -165,7 +168,7 @@ b9.View2D.prototype.getParent = function() {
  * @return {b9.View2D}
  */
 b9.View2D.prototype.getPrevSibling = function() {
-    var sibling = this._tree.getPrevSibling();
+    var sibling = this._view_tree.getPrevSibling();
     return sibling ? sibling.getSelf() : null;
 };
 
@@ -174,7 +177,7 @@ b9.View2D.prototype.getPrevSibling = function() {
  * @return {b9.View2D}
  */
 b9.View2D.prototype.getNextSibling = function() {
-    var sibling = this._tree.getNextSibling();
+    var sibling = this._view_tree.getNextSibling();
     return sibling ? sibling.getSelf() : null;
 };
 
@@ -183,7 +186,7 @@ b9.View2D.prototype.getNextSibling = function() {
  * @return {b9.View2D}
  */
 b9.View2D.prototype.getFirstChild = function() {
-    var child = this._tree.getFirstChild();
+    var child = this._view_tree.getFirstChild();
     return child ? child.getSelf() : null;
 };
 
@@ -192,7 +195,7 @@ b9.View2D.prototype.getFirstChild = function() {
  * @return {b9.View2D}
  */
 b9.View2D.prototype.getLastChild = function() {
-    var child = this._tree.getLastChild();
+    var child = this._view_tree.getLastChild();
     return child ? child.getSelf() : null;
 };
 
@@ -201,7 +204,7 @@ b9.View2D.prototype.getLastChild = function() {
  * @return {b9.View2D}
  */
 b9.View2D.prototype.addChildFirst = function(cihld) {
-    this._tree.addChildFirst(child._tree);
+    this._view_tree.addChildFirst(child._view_tree);
 };
 
 /**
@@ -209,7 +212,67 @@ b9.View2D.prototype.addChildFirst = function(cihld) {
  * @param {b9.View2D} child
  */
 b9.View2D.prototype.addChildLast = function(child) {
-    this._tree.addChildLast(child._tree);
+    this._view_tree.addChildLast(child._view_tree);
+};
+
+/**
+ * hoge
+ * @param {b9.View2D} child
+ * @param {b9.View2D} next_child
+ */
+b9.View2D.prototype.addChildBefore = function(child, next_child) {
+};
+
+/**
+ * hoge
+ * @param {b9.View2D} child
+ * @param {b9.View2D} prev_child
+ */
+b9.View2D.prototype.addChildAfter = function(child, prev_child) {
+};
+
+/**
+ * hoge
+ * @param {b9.View2D} child
+ */
+b9.View2D.prototype.removeChild = function(child) {
+};
+
+/**
+ * hoge
+ * @param {b9.Element} elem
+ */
+b9.View2D.prototype.addElementFirst = function(elem) {
+};
+
+/**
+ * hoge
+ * @param {b9.Element} elem
+ */
+b9.View2D.prototype.addElementLast = function(elem) {
+};
+
+/**
+ * hoge
+ * @param {b9.Element} elem
+ * @param {b9.Element} next_elem
+ */
+b9.View2D.prototype.addElementBefore = function(elem, next_elem) {
+};
+
+/**
+ * hoge
+ * @param {b9.Element} elem
+ * @param {b9.Element} prev_elem
+ */
+b9.View2D.prototype.addElementAfter = function(elem, prev_elem) {
+};
+
+/**
+ * hoge
+ * @param {b9.Element} elem
+ */
+b9.View2D.prototype.removeElement = function(elem) {
 };
 
 /**
