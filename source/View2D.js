@@ -23,7 +23,7 @@
 /**
  * hoge
  * @class hoge
- * @augments b9.View
+ * @extends b9.View
  */
 b9.View2D = function() {
     b9.View.call(this);

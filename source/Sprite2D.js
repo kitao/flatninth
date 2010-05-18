@@ -23,7 +23,7 @@
 /**
  * hoge
  * @class hoge
- * @augments b9.Element
+ * @extends b9.Element
  */
 b9.Sprite2D = function() {
     b9.Element.call(this);
