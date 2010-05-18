@@ -23,13 +23,7 @@
 /**
  * hoge
  * @class hoge
- * @augments b9.View
  */
-b9.View2D = function() {
-    b9.View.call(this);
-
+b9.Element = function() {
     // TODO
 };
-
-b9.View2D.prototype = new b9.View();
-b9.View2D.constructor = b9.View2D;
