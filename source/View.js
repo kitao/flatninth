@@ -23,8 +23,12 @@
 /**
  * hoge
  * @class hoge
+ * @param {Number} id
  */
-b9.View = function() {
+b9.View = function(id) {
+    /** @private */
+    this._id = id;
+
     /** @private */
     this._pos = new b9.Vector2D();
 
@@ -48,6 +52,18 @@ b9.View = function() {
 
     /** @private */
     this._elem_tree = new b9.Tree(this);
+
+    b9.System._registerView(this);
+    // TODO
+};
+
+/**
+ * hoge
+ */
+b9.View.prototype.destroy = function() {
+    b9.System._unregisterView(this);
+
+    // TODO
 };
 
 /**
