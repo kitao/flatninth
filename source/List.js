@@ -80,67 +80,10 @@ b9.List.prototype.addItemLast = function(item) {
 };
 
 /**
- * Inserts an item before the specified item.
- * @param {b9.ListItem} item An item.
- * @param {b9.ListItem} next_item The next item.
- */
-b9.List.prototype.addItemBefore = function(item, next_item) {
-    if (next_item._list === this) {
-        item.leave();
-
-        item._list = this;
-        item._prev = next_item._prev;
-        item._next = next_item;
-
-        item._prev._next = item;
-        item._next._prev = item;
-
-        this._item_num++;
-    }
-};
-
-/**
- * Inserts an item after the specified item.
- * @param {b9.ListItem} item An item.
- * @param {b9.ListItem} prev_item The previous item.
- */
-b9.List.prototype.addItemAfter = function(item, prev_item) {
-    if (prev_item._list === this) {
-        item.leave();
-
-        item._list = this;
-        item._prev = prev_item;
-        item._next = prev_item._next;
-
-        item._prev._next = item;
-        item._next._prev = item;
-
-        this._item_num++;
-    }
-};
-
-/**
- * Removes an item.
- * @param {be.ListItem} item An item.
- */
-b9.List.prototype.removeItem = function(item) {
-    if (item._list === this) {
-        this._item_num--;
-
-        item._prev._next = item._next;
-        item._next._prev = item._prev;
-
-        item._list = null;
-        item._prev = null;
-        item._next = null;
-    }
-};
-
-/**
  * Removes the all items.
  */
 b9.List.prototype.clear = function() {
     while (this._item_num > 0) {
-        this.removeItem(this.getFirstItem());
+        this.getFirstItem().leave();
     }
 };
