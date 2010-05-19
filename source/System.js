@@ -27,6 +27,22 @@
 b9.System = {};
 
 /**
+ * hoge
+ * @param {String} msg
+ */
+b9.System.trace = function(msg) {
+    // TODO
+};
+
+/**
+ * hoge
+ * @param {String} msg
+ */
+b9.System.error = function(msg) {
+    throw new Error(msg);
+};
+
+/**
  * @param {String} str
  * @return {Number}
  */
@@ -48,6 +64,22 @@ b9.System.toID = function(str) {
 b9.System.generateID = function() {
     b9.System._cur_id++;
     return b9.System._cur_id;
+};
+
+/**
+ * hoge
+ * @param {b9.View} view
+ */
+b9.System._registerView = function(view) {
+    // TODO
+};
+
+/**
+ * hoge
+ * @param {b9.View} view
+ */
+b9.System._unregisterView = function(view) {
+    // TODO
 };
 
 /** @private */
