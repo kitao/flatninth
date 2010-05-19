@@ -72,10 +72,55 @@ b9.ListItem.prototype.getNext = function() {
 };
 
 /**
+ * Inserts an item before the specified item.
+ * @param {b9.ListItem} item
+ */
+b9.ListItem.prototype.joinBefore = function(item) {
+    if (item._list) {
+        this.leave();
+
+        this._list = this;
+        this._prev = item._prev;
+        this._next = item;
+
+        this._prev._next = item;
+        this._next._prev = item;
+
+        item._list._item_num++;
+    }
+};
+
+/**
+ * Inserts an item after the specified item.
+ * @param {b9.ListItem} item
+ */
+b9.ListItem.prototype.joinAfter = function(item) {
+    if (item._list) {
+        this.leave();
+
+        this._list = this;
+        this._prev = item;
+        this._next = item._next;
+
+        this._prev._next = item;
+        this._next._prev = item;
+
+        item._list._item_num++;
+    }
+};
+
+/**
  * hoge
  */
 b9.ListItem.prototype.leave = function() {
     if (this._list) {
-        this._list.removeItem(this);
+        this._prev._next = item._next;
+        this._next._prev = item._prev;
+
+        this._list = null;
+        this._prev = null;
+        this._next = null;
+
+        this._list._item_num--;
     }
 };
