@@ -22,22 +22,57 @@
 
 function testListItem() {
     /* b9.ListItem */
-    var dummy = 123;
-    var item1 = new b9.ListItem(dummy);
+    /* getSelf */
+    /* getList */
+    /* getPrev */
+    /* getNext */
+    var dummy1 = 123;
+    var item1 = new b9.ListItem(dummy1);
+
+    assertEquals(123, item1.getSelf());
+    assertEquals(null, item1.getList());
+    assertEquals(null, item1.getPrev());
+    assertEquals(null, item1.getNext());
+
+    var list1 = new b9.List();
+    list1.addItemFirst(item1);
+
+    assertEquals(dummy1, item1.getSelf());
+    assertEquals(list1, item1.getList());
+    assertEquals(null, item1.getPrev());
+    assertEquals(null, item1.getNext());
+
+    var dummy2 = 456;
+    var item2 = new b9.ListItem(dummy2);
+    list1.addItemLast(item2);
+
+    assertEquals(dummy1, item1.getSelf());
+    assertEquals(list1, item1.getList());
+    assertEquals(null, item1.getPrev());
+    assertEquals(item2, item1.getNext());
+
+    assertEquals(dummy2, item2.getSelf());
+    assertEquals(list1, item2.getList());
+    assertEquals(item1, item2.getPrev());
+    assertEquals(null, item2.getNext());
 
     /* destroy */
     item1.destroy();
-    // TODO
 
-    /* getSelf */
-    assertEquals(123, item1.getSelf());
-
-    /* getList */
+    assertEquals(null, item1.getSelf());
     assertEquals(null, item1.getList());
-
-    /* getPrev */
     assertEquals(null, item1.getPrev());
-
-    /* getNext */
     assertEquals(null, item1.getNext());
+
+    assertEquals(dummy2, item2.getSelf());
+    assertEquals(list1, item2.getList());
+    assertEquals(null, item2.getPrev());
+    assertEquals(null, item2.getNext());
+
+    item2.destroy();
+
+    assertEquals(null, item2.getSelf());
+    assertEquals(null, item2.getList());
+    assertEquals(null, item2.getPrev());
+    assertEquals(null, item2.getNext());
 }
