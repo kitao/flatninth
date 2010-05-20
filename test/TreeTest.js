@@ -148,119 +148,134 @@ function testTree() {
     assertEquals(tree4, tree4.getLastDescendant());
 
     /* addChildLast */
-/*    tree1.addChildLast(tree3);
+    tree1.addChildLast(tree3);
+
+    assertEquals(dummy1, tree1.getSelf());
     assertEquals(null, tree1.getPrevAll());
     assertEquals(tree2, tree1.getNextAll());
-    assertEquals(tree1, tree2.getPrevAll());
-    assertEquals(tree3, tree2.getNextAll());
-    assertEquals(tree2, tree3.getPrevAll());
-    assertEquals(tree4, tree3.getNextAll());
-    assertEquals(tree3, tree4.getPrevAll());
-    assertEquals(null, tree4.getNextAll());
     assertEquals(null, tree1.getParent());
-    assertEquals(tree1, tree2.getParent());
-    assertEquals(tree1, tree3.getParent());
-    assertEquals(tree3, tree4.getParent());
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
-    assertEquals(null, tree2.getPrevSibling());
-    assertEquals(tree3, tree2.getNextSibling());
-    assertEquals(tree2, tree3.getPrevSibling());
-    assertEquals(null, tree3.getNextSibling());
-    assertEquals(null, tree4.getPrevSibling());
-    assertEquals(null, tree4.getNextSibling());
     assertEquals(tree2, tree1.getFirstChild());
     assertEquals(tree3, tree1.getLastChild());
+    assertEquals(tree4, tree1.getLastDescendant());
+
+    assertEquals(dummy2, tree2.getSelf());
+    assertEquals(tree1, tree2.getPrevAll());
+    assertEquals(tree3, tree2.getNextAll());
+    assertEquals(tree1, tree2.getParent());
+    assertEquals(null, tree2.getPrevSibling());
+    assertEquals(tree3, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
     assertEquals(null, tree2.getLastChild());
+    assertEquals(tree2, tree2.getLastDescendant());
+
+    assertEquals(dummy3, tree3.getSelf());
+    assertEquals(tree2, tree3.getPrevAll());
+    assertEquals(tree4, tree3.getNextAll());
+    assertEquals(tree1, tree3.getParent());
+    assertEquals(tree2, tree3.getPrevSibling());
+    assertEquals(null, tree3.getNextSibling());
     assertEquals(tree4, tree3.getFirstChild());
     assertEquals(tree4, tree3.getLastChild());
+    assertEquals(tree4, tree3.getLastDescendant());
+
+    assertEquals(dummy4, tree4.getSelf());
+    assertEquals(tree3, tree4.getPrevAll());
+    assertEquals(null, tree4.getNextAll());
+    assertEquals(tree3, tree4.getParent());
+    assertEquals(null, tree4.getPrevSibling());
+    assertEquals(null, tree4.getNextSibling());
     assertEquals(null, tree4.getFirstChild());
     assertEquals(null, tree4.getLastChild());
-    assertEquals(tree4, tree1.getLastDescendant());
-    assertEquals(tree2, tree2.getLastDescendant());
-    assertEquals(tree4, tree3.getLastDescendant());
     assertEquals(tree4, tree4.getLastDescendant());
-*/
 
-    /* destroy */
-
-/*
-/*
     /* addChildBefore */
-/*    tree1.addChildBefore(tree3, tree2);
+    tree1.addChildBefore(tree3, tree2);
+
+    assertEquals(dummy1, tree1.getSelf());
     assertEquals(null, tree1.getPrevAll());
     assertEquals(tree3, tree1.getNextAll());
-    assertEquals(tree4, tree2.getPrevAll());
-    assertEquals(null, tree2.getNextAll());
-    assertEquals(tree1, tree3.getPrevAll());
-    assertEquals(tree4, tree3.getNextAll());
-    assertEquals(tree3, tree4.getPrevAll());
-    assertEquals(tree2, tree4.getNextAll());
     assertEquals(null, tree1.getParent());
-    assertEquals(tree1, tree2.getParent());
-    assertEquals(tree1, tree3.getParent());
-    assertEquals(tree3, tree4.getParent());
-    assertEquals(null, tree1.getParent());
-    assertEquals(tree1, tree2.getParent());
-    assertEquals(tree1, tree3.getParent());
-    assertEquals(tree3, tree4.getParent());
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
-    assertEquals(tree3, tree2.getPrevSibling());
-    assertEquals(null, tree2.getNextSibling());
-    assertEquals(null, tree3.getPrevSibling());
-    assertEquals(tree2, tree3.getNextSibling());
-    assertEquals(null, tree4.getPrevSibling());
-    assertEquals(null, tree4.getNextSibling());
     assertEquals(tree3, tree1.getFirstChild());
     assertEquals(tree2, tree1.getLastChild());
+    assertEquals(tree2, tree1.getLastDescendant());
+
+    assertEquals(dummy2, tree2.getSelf());
+    assertEquals(tree4, tree2.getPrevAll());
+    assertEquals(null, tree2.getNextAll());
+    assertEquals(tree1, tree2.getParent());
+    assertEquals(tree3, tree2.getPrevSibling());
+    assertEquals(null, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
     assertEquals(null, tree2.getLastChild());
+    assertEquals(tree2, tree2.getLastDescendant());
+
+    assertEquals(dummy3, tree3.getSelf());
+    assertEquals(tree1, tree3.getPrevAll());
+    assertEquals(tree4, tree3.getNextAll());
+    assertEquals(tree1, tree3.getParent());
+    assertEquals(null, tree3.getPrevSibling());
+    assertEquals(tree2, tree3.getNextSibling());
     assertEquals(tree4, tree3.getFirstChild());
     assertEquals(tree4, tree3.getLastChild());
-    assertEquals(null, tree4.getFirstChild());
-    assertEquals(null, tree4.getLastChild());
-    assertEquals(tree2, tree1.getLastDescendant());
-    assertEquals(tree2, tree2.getLastDescendant());
     assertEquals(tree4, tree3.getLastDescendant());
-    assertEquals(tree4, tree4.getLastDescendant());
-*/
-    /* addChildAfter */
-/*    tree1.addChildAfter(tree3, tree2);
-    assertEquals(null, tree1.getPrevAll());
-    assertEquals(tree2, tree1.getNextAll());
-    assertEquals(tree1, tree2.getPrevAll());
-    assertEquals(tree3, tree2.getNextAll());
-    assertEquals(tree2, tree3.getPrevAll());
-    assertEquals(tree4, tree3.getNextAll());
+
+    assertEquals(dummy4, tree4.getSelf());
     assertEquals(tree3, tree4.getPrevAll());
-    assertEquals(null, tree4.getNextAll());
-    assertEquals(null, tree1.getParent());
-    assertEquals(tree1, tree2.getParent());
-    assertEquals(tree1, tree3.getParent());
+    assertEquals(tree2, tree4.getNextAll());
     assertEquals(tree3, tree4.getParent());
-    assertEquals(null, tree1.getPrevSibling());
-    assertEquals(null, tree1.getNextSibling());
-    assertEquals(null, tree2.getPrevSibling());
-    assertEquals(tree3, tree2.getNextSibling());
-    assertEquals(tree2, tree3.getPrevSibling());
-    assertEquals(null, tree3.getNextSibling());
     assertEquals(null, tree4.getPrevSibling());
     assertEquals(null, tree4.getNextSibling());
-    assertEquals(tree2, tree1.getFirstChild());
-    assertEquals(tree3, tree1.getLastChild());
-    assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.getLastChild());
-    assertEquals(tree4, tree3.getFirstChild());
-    assertEquals(tree4, tree3.getLastChild());
     assertEquals(null, tree4.getFirstChild());
     assertEquals(null, tree4.getLastChild());
-    assertEquals(tree4, tree1.getLastDescendant());
-    assertEquals(tree2, tree2.getLastDescendant());
-    assertEquals(tree4, tree3.getLastDescendant());
     assertEquals(tree4, tree4.getLastDescendant());
-*/
+
+    /* addChildAfter */
+    tree1.addChildAfter(tree3, tree2);
+
+    assertEquals(dummy1, tree1.getSelf());
+    assertEquals(null, tree1.getPrevAll());
+    assertEquals(tree2, tree1.getNextAll());
+    assertEquals(null, tree1.getParent());
+    assertEquals(null, tree1.getPrevSibling());
+    assertEquals(null, tree1.getNextSibling());
+    assertEquals(tree2, tree1.getFirstChild());
+    assertEquals(tree3, tree1.getLastChild());
+    assertEquals(tree4, tree1.getLastDescendant());
+
+    assertEquals(dummy2, tree2.getSelf());
+    assertEquals(tree1, tree2.getPrevAll());
+    assertEquals(tree3, tree2.getNextAll());
+    assertEquals(tree1, tree2.getParent());
+    assertEquals(null, tree2.getPrevSibling());
+    assertEquals(tree3, tree2.getNextSibling());
+    assertEquals(null, tree2.getFirstChild());
+    assertEquals(null, tree2.getLastChild());
+    assertEquals(tree2, tree2.getLastDescendant());
+
+    assertEquals(dummy3, tree3.getSelf());
+    assertEquals(tree2, tree3.getPrevAll());
+    assertEquals(tree4, tree3.getNextAll());
+    assertEquals(tree1, tree3.getParent());
+    assertEquals(tree2, tree3.getPrevSibling());
+    assertEquals(null, tree3.getNextSibling());
+    assertEquals(tree4, tree3.getFirstChild());
+    assertEquals(tree4, tree3.getLastChild());
+    assertEquals(tree4, tree3.getLastDescendant());
+
+    assertEquals(dummy4, tree4.getSelf());
+    assertEquals(tree3, tree4.getPrevAll());
+    assertEquals(null, tree4.getNextAll());
+    assertEquals(tree3, tree4.getParent());
+    assertEquals(null, tree4.getPrevSibling());
+    assertEquals(null, tree4.getNextSibling());
+    assertEquals(null, tree4.getFirstChild());
+    assertEquals(null, tree4.getLastChild());
+    assertEquals(tree4, tree4.getLastDescendant());
+
     /* removeChild */
 /*    tree1.removeChild(tree3);
     assertEquals(null, tree1.getPrevAll());
@@ -332,4 +347,6 @@ function testTree() {
     assertEquals(tree4, tree3.getLastDescendant());
     assertEquals(tree4, tree4.getLastDescendant());
     */
+
+    /* destroy */
 }
