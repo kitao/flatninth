@@ -24,6 +24,9 @@ function testList() {
     /* b9.List */
     var list1 = new b9.List();
 
+    /* destroy */
+    // TODO
+
     /* getItemNum */
     assertEquals(0, list1.getItemNum());
 
@@ -62,7 +65,7 @@ function testList() {
     assertEquals(item2, item1.getPrev());
     assertEquals(null, item1.getNext());
 
-    item2.leave();
+    list1.removeItem(item2);
     assertEquals(1, list1.getItemNum());
     assertEquals(item1, list1.getFirstItem());
     assertEquals(item1, list1.getLastItem());

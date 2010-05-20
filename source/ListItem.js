@@ -22,8 +22,8 @@
 
 /**
  * hoge
- * @class An item of b9.List.
- * @param {Object} self An object to be stored.
+ * @class hoge
+ * @param {Object} self hoge
  */
 b9.ListItem = function(self) {
     /** @private */
@@ -40,87 +40,44 @@ b9.ListItem = function(self) {
 };
 
 /**
- * Returns the stored object.
- * @return {b9.ListItem} The stored object.
+ * hoge
+ */
+b9.ListItem.prototype.destroy = function() {
+    if (this._list) {
+        this._list.removeItem(this);
+    }
+
+    this._self = null;
+};
+
+/**
+ * hoge
+ * @return {Object} hoge
  */
 b9.ListItem.prototype.getSelf = function() {
     return this._self;
 };
 
 /**
- * Returns the list.
- * @return {b9.List} The list.
+ * hoge
+ * @return {b9.List} hoge
  */
 b9.ListItem.prototype.getList = function() {
     return this._list;
 };
 
 /**
- * Returns the previous item.
- * @return {b9.ListItem} The previous item.
+ * hoge
+ * @return {b9.ListItem} hoge
  */
 b9.ListItem.prototype.getPrev = function() {
     return (this._list && this._prev === this._list._start) ? null : this._prev;
 };
 
 /**
- * Returns the next item.
- * @return {b9.ListItem} The next item.
+ * hoge
+ * @return {b9.ListItem} hoge
  */
 b9.ListItem.prototype.getNext = function() {
     return (this._list && this._next === this._list._end) ? null : this._next;
-};
-
-/**
- * Inserts an item before the specified item.
- * @param {b9.ListItem} item
- */
-b9.ListItem.prototype.joinBefore = function(item) {
-    if (item._list) {
-        this.leave();
-
-        this._list = this;
-        this._prev = item._prev;
-        this._next = item;
-
-        this._prev._next = item;
-        this._next._prev = item;
-
-        item._list._item_num++;
-    }
-};
-
-/**
- * Inserts an item after the specified item.
- * @param {b9.ListItem} item
- */
-b9.ListItem.prototype.joinAfter = function(item) {
-    if (item._list) {
-        this.leave();
-
-        this._list = this;
-        this._prev = item;
-        this._next = item._next;
-
-        this._prev._next = item;
-        this._next._prev = item;
-
-        item._list._item_num++;
-    }
-};
-
-/**
- * hoge
- */
-b9.ListItem.prototype.leave = function() {
-    if (this._list) {
-        this._prev._next = item._next;
-        this._next._prev = item._prev;
-
-        this._list = null;
-        this._prev = null;
-        this._next = null;
-
-        this._list._item_num--;
-    }
 };

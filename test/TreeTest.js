@@ -25,6 +25,9 @@ function testTree() {
     var dummy = 123;
     var tree1 = new b9.Tree(123);
 
+    /* destroy */
+    // TODO
+
     /* getSelf */
     assertEquals(123, tree1.getSelf());
 
@@ -316,43 +319,5 @@ function testTree() {
     assertEquals(tree1, tree1.getLastDescendant());
     assertEquals(tree2, tree2.getLastDescendant());
     assertEquals(tree4, tree3.getLastDescendant());
-    assertEquals(tree4, tree4.getLastDescendant());
-
-    /* leave */
-    tree1.addChildLast(tree2);
-    tree1.addChildLast(tree3);
-    tree2.addChildLast(tree4);
-    tree4.leave();
-    assertEquals(null, tree1.getPrevAll());
-    assertEquals(tree2, tree1.getNextAll());
-    assertEquals(tree1, tree2.getPrevAll());
-    assertEquals(tree3, tree2.getNextAll());
-    assertEquals(tree2, tree3.getPrevAll());
-    assertEquals(null, tree3.getNextAll());
-    assertEquals(null, tree4.getPrevAll());
-    assertEquals(null, tree4.getNextAll());
-    assertEquals(null, tree1.getParent());
-    assertEquals(tree1, tree2.getParent());
-    assertEquals(tree1, tree3.getParent());
-    assertEquals(null, tree4.getParent());
-    assertEquals(null, tree1.getPrevSibling());
-    assertEquals(null, tree1.getNextSibling());
-    assertEquals(null, tree2.getPrevSibling());
-    assertEquals(tree3, tree2.getNextSibling());
-    assertEquals(tree2, tree3.getPrevSibling());
-    assertEquals(null, tree3.getNextSibling());
-    assertEquals(null, tree4.getPrevSibling());
-    assertEquals(null, tree4.getNextSibling());
-    assertEquals(tree2, tree1.getFirstChild());
-    assertEquals(tree3, tree1.getLastChild());
-    assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.getLastChild());
-    assertEquals(null, tree3.getFirstChild());
-    assertEquals(null, tree3.getLastChild());
-    assertEquals(null, tree4.getFirstChild());
-    assertEquals(null, tree4.getLastChild());
-    assertEquals(tree3, tree1.getLastDescendant());
-    assertEquals(tree2, tree2.getLastDescendant());
-    assertEquals(tree3, tree3.getLastDescendant());
     assertEquals(tree4, tree4.getLastDescendant());
 }

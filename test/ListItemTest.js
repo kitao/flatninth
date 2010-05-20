@@ -25,6 +25,10 @@ function testListItem() {
     var dummy = 123;
     var item1 = new b9.ListItem(dummy);
 
+    /* destroy */
+    item1.destroy();
+    // TODO
+
     /* getSelf */
     assertEquals(123, item1.getSelf());
 
@@ -36,7 +40,4 @@ function testListItem() {
 
     /* getNext */
     assertEquals(null, item1.getNext());
-
-    /* leave */
-    item1.leave();
 }

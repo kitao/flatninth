@@ -22,7 +22,7 @@
 
 /**
  * hoge
- * @class A list container.
+ * @class hoge
  */
 b9.List = function() {
     /** @private */
@@ -34,56 +34,135 @@ b9.List = function() {
     /** @private */
     this._item_num = 0;
 
+    this._start._list = this;
+    this._end._list = this;
+
     this._start._next = this._end;
     this._end._prev = this._start;
-    this._start._list = this._end._list = this;
 };
 
 /**
- * Returns the number of the items.
- * @return {Number} The number of the items.
+ * hoge
+ */
+b9.List.prototype.destroy = function() {
+    this.clear();
+
+    this._start._list = null;
+    this._end._list = null;
+
+    this._start._next = null;
+    this._end._prev = null;
+
+    this._start = null;
+    this._end = null;
+};
+
+/**
+ * hoge
+ * @return {Number} hoge
  */
 b9.List.prototype.getItemNum = function() {
     return this._item_num;
 };
 
 /**
- * Returns the first item.
- * @return {b9.ListItem} The first item.
+ * hoge
+ * @return {b9.ListItem} hoge
  */
 b9.List.prototype.getFirstItem = function() {
     return (this._item_num > 0) ? this._start._next : null;
 };
 
 /**
- * Returns the last item.
- * @return {b9.ListItem} The last item.
+ * hoge
+ * @return {b9.ListItem} hoge
  */
 b9.List.prototype.getLastItem = function() {
     return (this._item_num > 0) ? this._end._prev : null;
 };
 
 /**
- * Adds an item as the first item.
- * @param {b9.ListItem} item An item.
+ * hoge
+ * @param {b9.ListItem} item hoge
  */
 b9.List.prototype.addItemFirst = function(item) {
     this.addItemAfter(item, this._start);
 };
 
 /**
- * Adds an item as the last item.
- * @param {b9.ListItem} item An item.
+ * hoge
+ * @param {b9.ListItem} item hoge
  */
 b9.List.prototype.addItemLast = function(item) {
     this.addItemBefore(item, this._end);
 };
 
 /**
- * Removes the all items.
+ * hoge
+ * @param {b9.ListItem} item hoge
+ * @param {b9.ListItem} next_item hoge
+ */
+b9.List.prototype.addItemBefore = function(item, next_item) {
+    if (next_item._list === this) {
+        if (item._list) {
+            item._list.removeItem(item);
+        }
+
+        item._list = this;
+        item._prev = next_item._prev;
+        item._next = next_item;
+
+        item._prev._next = item;
+        item._next._prev = item;
+
+        this._item_num++;
+    }
+};
+
+/**
+ * hoge
+ * @param {b9.ListItem} item hoge
+ * @param {b9.ListItem} prev_item hoge
+ */
+b9.List.prototype.addItemAfter = function(item, prev_item) {
+    if (prev_item._list === this) {
+        if (item._list) {
+            item._list.removeItem(item);
+        }
+
+        item._list = this;
+        item._prev = prev_item;
+        item._next = prev_item._next;
+
+        item._prev._next = item;
+        item._next._prev = item;
+
+        this._item_num++;
+    }
+};
+
+/**
+ * hoge
+ * @param {be.ListItem} item hoge
+ */
+b9.List.prototype.removeItem = function(item) {
+    if (item._list === this) {
+        item._prev._next = item._next;
+        item._next._prev = item._prev;
+
+        item._list = null;
+        item._prev = null;
+        item._next = null;
+
+        this._item_num--;
+    }
+};
+
+/**
+ * hoge
  */
 b9.List.prototype.clear = function() {
     while (this._item_num > 0) {
-        this.getFirstItem().leave();
+        this.removeItem(this.getFirstItem());
     }
 };
