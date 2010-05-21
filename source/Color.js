@@ -41,21 +41,21 @@ b9.Color = function(arg1, arg2, arg3, arg4) {
     /** @private */
     this._a = 0;
 
-    if (arguments.length === 4) {
-        this._r = arg1;
-        this._g = arg2;
-        this._b = arg3;
-        this._a = arg4;
+    if (arguments.length === 1) {
+        this._r = arg1._r;
+        this._g = arg1._g;
+        this._b = arg1._b;
+        this._a = arg1._a;
     } else if (arguments.length === 3) {
         this._r = arg1;
         this._g = arg2;
         this._b = arg3;
         this._a = 255;
-    } else if (arguments.length === 1) {
-        this._r = arg1._r;
-        this._g = arg1._g;
-        this._b = arg1._b;
-        this._a = arg1._a;
+    } else if (arguments.length === 4) {
+        this._r = arg1;
+        this._g = arg2;
+        this._b = arg3;
+        this._a = arg4;
     }
 
     this._r = b9.Math.clamp(b9.Math.floor(this._r), 0, 255);
@@ -131,26 +131,26 @@ b9.Color.prototype.setA = function(a) {
 /**
  * hoge
  * @param {b9.Color|Number} arg1
- * @param {Number} arg2
- * @param {Number} arg3
- * @param {Number} [arg4]
+ * @param {Number} [arg2] hoge
+ * @param {Number} [arg3] hoge
+ * @param {Number} [arg4] hoge
  */
 b9.Color.prototype.set = function(arg1, arg2, arg3, arg4) {
-    if (arguments.length === 4) {
-        this._r = arg1;
-        this._g = arg2;
-        this._b = arg3;
-        this._a = arg4;
+    if (arguments.length === 1) {
+        this._r = arg1._r;
+        this._g = arg1._g;
+        this._b = arg1._b;
+        this._a = arg1._a;
     } else if (arguments.length === 3) {
         this._r = arg1;
         this._g = arg2;
         this._b = arg3;
         this._a = 255;
-    } else if (arguments.length === 1) {
-        this._r = arg1._r;
-        this._g = arg1._g;
-        this._b = arg1._b;
-        this._a = arg1._a;
+    } else if (arguments.length === 4) {
+        this._r = arg1;
+        this._g = arg2;
+        this._b = arg3;
+        this._a = arg4;
     }
 
     this._r = b9.Math.clamp(b9.Math.floor(this._r), 0, 255);
@@ -161,7 +161,7 @@ b9.Color.prototype.set = function(arg1, arg2, arg3, arg4) {
 
 /**
  * hoge
- * @param {b9.Color} color
+ * @param {b9.Color} color hoge
  */
 b9.Color.prototype.add = function(color) {
     this._r = b9.Math.min(b9.Math.floor(this._r + color._r), 255);
@@ -172,7 +172,7 @@ b9.Color.prototype.add = function(color) {
 
 /**
  * hoge
- * @param {b9.Color} color
+ * @param {b9.Color} color hoge
  */
 b9.Color.prototype.sub = function(color) {
     this._r = b9.Math.max(b9.Math.floor(this._r - color._r), 0);
@@ -183,7 +183,7 @@ b9.Color.prototype.sub = function(color) {
 
 /**
  * hoge
- * @param {b9.Color|Number} arg
+ * @param {b9.Color|Number} arg hoge
  */
 b9.Color.prototype.mul = function(arg) {
     if (arg._r === undefined) {

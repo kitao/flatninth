@@ -39,12 +39,12 @@ b9.Vector2D = function(arg1, arg2) {
      */
     this.y = 0.0;
 
-    if (arguments.length === 2) {
-        this.x = arg1;
-        this.y = arg2;
-    } else if (arguments.length === 1) {
+    if (arguments.length === 1) {
         this.x = arg1.x;
         this.y = arg1.y;
+    } else if (arguments.length === 2) {
+        this.x = arg1;
+        this.y = arg2;
     }
 };
 
@@ -55,12 +55,12 @@ b9.Vector2D = function(arg1, arg2) {
  */
 b9.Vector2D.prototype.set = function(arg1, arg2)
 {
-    if (arguments.length === 2) {
-        this.x = arg1;
-        this.y = arg2;
-    } else if (arguments.length === 1) {
+    if (arguments.length === 1) {
         this.x = arg1.x;
         this.y = arg1.y;
+    } else if (arguments.length === 2) {
+        this.x = arg1;
+        this.y = arg2;
     }
 };
 
@@ -74,7 +74,7 @@ b9.Vector2D.prototype.neg = function() {
 
 /**
  * hoge
- * @param {b9.Vector2D} vec2 hoge
+ * @param {b9.Vector2D} vec hoge
  */
 b9.Vector2D.prototype.add = function(vec) {
     this.x += vec.x;
@@ -83,7 +83,7 @@ b9.Vector2D.prototype.add = function(vec) {
 
 /**
  * hoge
- * @param {b9.Vector2D} vec2 hoge
+ * @param {b9.Vector2D} vec hoge
  */
 b9.Vector2D.prototype.sub = function(vec) {
     this.x -= vec.x;

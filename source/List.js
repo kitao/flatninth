@@ -163,6 +163,6 @@ b9.List.prototype.removeItem = function(item) {
  */
 b9.List.prototype.clear = function() {
     while (this._item_num > 0) {
-        this.removeItem(this.getFirstItem());
+        this.removeItem(this._start._next);
     }
 };

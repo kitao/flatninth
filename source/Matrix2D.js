@@ -46,14 +46,14 @@ b9.Matrix2D = function(arg1, arg2, arg3) {
      */
     this.trans = new b9.Vector2D();
 
-    if (arguments.length === 3) {
-        this.x_axis.set(arg1);
-        this.y_axis.set(arg2);
-        this.trans.set(arg3);
-    } else if (arguments.length === 1) {
+    if (arguments.length === 1) {
         this.x_axis.set(arg1.x_axis);
         this.y_axis.set(arg1.y_axis);
         this.trans.set(arg1.trans);
+    } else if (arguments.length === 3) {
+        this.x_axis.set(arg1);
+        this.y_axis.set(arg2);
+        this.trans.set(arg3);
     }
 };
 
@@ -64,24 +64,15 @@ b9.Matrix2D = function(arg1, arg2, arg3) {
  * @param {Number} [arg3] hoge
  */
 b9.Matrix2D.prototype.set = function(arg1, arg2, arg3) {
-    if (arguments.length === 3) {
-        this.x_axis.set(arg1);
-        this.y_axis.set(arg2);
-        this.trans.set(arg3);
-    } else if (arguments.length === 1) {
+    if (arguments.length === 1) {
         this.x_axis.set(arg1.x_axis);
         this.y_axis.set(arg1.y_axis);
         this.trans.set(arg1.trans);
+    } else if (arguments.length === 3) {
+        this.x_axis.set(arg1);
+        this.y_axis.set(arg2);
+        this.trans.set(arg3);
     }
-};
-
-/**
- * hoge
- */
-b9.Matrix2D.prototype.orthonormalize = function() {
-    this.x_axis.normalize();
-    this.y_axis.set(this.x_axis);
-    this.y_axis.rotateInt(90);
 };
 
 /**
@@ -196,8 +187,8 @@ b9.Matrix2D.prototype.toLocal = function(mat) {
 };
 
 /**
- *
- * @param {b9.Matrix2D} mat
+ * hoge
+ * @param {b9.Matrix2D} mat hoge
  */
 b9.Matrix2D.prototype.toGlobal = function(mat) {
     this.x_axis.toGlobalNoTrans(mat);
@@ -230,8 +221,8 @@ b9.Matrix2D.prototype.toGlobalNoTrans = function(mat) {
 
 /**
  * hoge
- * @param {Number} from hoge
- * @param {Number} to hoge
+ * @param {b9.Vector2D} from hoge
+ * @param {b9.Vector2D} to hoge
  */
 b9.Matrix2D.prototype.lookAt = function(from, to) {
     this.y_axis.set(to);
@@ -242,6 +233,15 @@ b9.Matrix2D.prototype.lookAt = function(from, to) {
     this.x_axis.rotateInt(-90);
 
     this.trans.set(from);
+};
+
+/**
+ * hoge
+ */
+b9.Matrix2D.prototype.orthonormalize = function() {
+    this.x_axis.normalize();
+    this.y_axis.set(this.x_axis);
+    this.y_axis.rotateInt(90);
 };
 
 /**
