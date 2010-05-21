@@ -77,6 +77,15 @@ b9.Matrix2D.prototype.set = function(arg1, arg2, arg3) {
 
 /**
  * hoge
+ */
+b9.Matrix2D.prototype.orthonormalize = function() {
+    this.x_axis.normalize();
+    this.y_axis.set(this.x_axis);
+    this.y_axis.rotateInt(90);
+};
+
+/**
+ * hoge
  * @param {Number} deg hoge
  */
 b9.Matrix2D.prototype.rotateFloat = function(deg) {
@@ -233,15 +242,6 @@ b9.Matrix2D.prototype.lookAt = function(from, to) {
     this.x_axis.rotateInt(-90);
 
     this.trans.set(from);
-};
-
-/**
- * hoge
- */
-b9.Matrix2D.prototype.orthonormalize = function() {
-    this.x_axis.normalize();
-    this.y_axis.set(this.x_axis);
-    this.y_axis.rotateInt(90);
 };
 
 /**
