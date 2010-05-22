@@ -29,6 +29,7 @@ function testSystem() {
     var id1 = b9.System.generateID();
     var id2 = b9.System.generateID();
     var id3 = b9.System.generateID();
+
     assertNotEquals(0, id1);
     assertNotEquals(0, id2);
     assertNotEquals(0, id3);
