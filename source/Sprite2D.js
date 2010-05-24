@@ -33,3 +33,18 @@ b9.Sprite2D = function() {
 
 b9.Sprite2D.prototype = b9.Element;
 b9.Sprite2D.constructor = b9.Sprite2D;
+
+/**
+ *
+ */
+b9.Sprite2D.prototype.destroy = function() {
+    b9.Element.destroy.call(this);
+};
+
+/**
+ * hoge
+ * @param {b9.Vector2D} pos
+ */
+b9.Sprite2D.prototype.getPos = function(pos) {
+
+};
