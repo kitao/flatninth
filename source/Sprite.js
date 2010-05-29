@@ -24,27 +24,47 @@
  * hoge
  * @class hoge
  * @extends b9.Element
+ * @param {Number} dimension
+ * @param {Number} max_rect_num
  */
-b9.Sprite2D = function() {
-    b9.Element.call(this);
+b9.Sprite = function(dimension, max_rect_num) {
+    b9.Element.call(this, dimension);
+    this._elem_type = b9.Element.TYPE_SPRITE;
 
     // TODO
 };
 
-b9.Sprite2D.prototype = b9.Element;
-b9.Sprite2D.constructor = b9.Sprite2D;
+b9.Sprite.prototype = b9.Element;
+b9.Sprite.constructor = b9.Sprite;
 
 /**
  *
  */
-b9.Sprite2D.prototype.destroy = function() {
+b9.Sprite.prototype.destroy = function() {
     b9.Element.destroy.call(this);
 };
 
 /**
  * hoge
- * @param {b9.Vector2D} pos
+ * @return {Number} hoge
  */
-b9.Sprite2D.prototype.getPos = function(pos) {
+b9.Sprite.prototype.getMaxRectNum() {
+};
 
+/**
+ *
+ */
+b9.Sprite.prototype.setMaxRectNum(max_rect_num) {
+};
+
+/**
+ *
+ */
+b9.Sprite.prototype.getCurRectNum() {
+};
+
+/**
+ *
+ */
+b9.Sprite.prototype.setCurRectNum() {
 };

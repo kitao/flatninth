@@ -23,23 +23,23 @@
 /**
  * hoge
  * @class hoge
- * @param {Number} elem_type
+ * @param {Number} dimension
  */
-b9.Element = function(elem_type) {
+b9.Element = function(dimension) {
     /** @private */
     this._tree = new b9.Tree(this);
 
     /** @private */
-    this._dimension = (elem_type < b9.Element.TYPE_NODE3D) ? 2 : 3;
+    this._dimension = (dimension === b9.DIM_3D) ? b9.DIM_3D : b9.DIM_2D;
 
     /** @private */
-    this._elem_type = elem_type;
+    this._elem_type = b9.Element.TYPE_ELEMENT;
 
     /** @private */
     this._elem_flag = 0;
 
     /** @private */
-    this._local = (this._dimension == 2) ? new b9.Matrix2D() : new b9.Matrix3D();
+    this._local = (this._dimension === b9.DIM_3D) ? new b9.Matrix3D() : new b9.Matrix2D();
 
     /** @private */
     this._filter_color = new b9.Color();
@@ -56,7 +56,7 @@ b9.Element.prototype.destroy =function() {
 
 /**
  * hoge
- * @return {b9.Number} hoge
+ * @return {Number} hoge
  */
 b9.Element.prototype.getDimention = function() {
     return this._dimension;
@@ -127,37 +127,19 @@ b9.Element.prototype.setFilterColor = function(color) {
  * hoge
  * @return {Number}
  */
-b9.Element.TYPE_NODE2D = 1;
+b9.Element.TYPE_ELEMENT = 0;
 
 /**
  * hoge
  * @return {Number}
  */
-b9.Element.TYPE_SPRITE2D = 2;
+b9.Element.TYPE_SPRITE = 1;
 
 /**
  * hoge
  * @return {Number}
  */
-b9.Element.TYPE_POLYGON2D = 3;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Element.TYPE_NODE3D = 4;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Element.TYPE_SPRITE3D = 5;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Element.TYPE_POLYGON3D = 6;
+b9.Element.TYPE_PRIMITIVE = 2;
 
 /**
  * hoge

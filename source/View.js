@@ -39,9 +39,6 @@ b9.View = function(id) {
     this._scale = new b9.Vector2D();
 
     /** @private */
-    this._origin = new b9.Vector2D();
-
-    /** @private */
     this._color = new b9.Color(b9.Color.FULL);
 
     /** @private */
@@ -71,7 +68,7 @@ b9.View.prototype.destroy = function() {
  * @param {b9.Vector2D} pos
  */
 b9.View.prototype.getPos = function(pos) {
-    pos.set(this._origin);
+    pos.set(this._pos);
 };
 
 /**
@@ -114,22 +111,6 @@ b9.View.prototype.getScale = function(scale) {
 b9.View.prototype.setScale = function(scale) {
     this._scale.x = b9.Math.max(scale.x, 0.0);
     this._scale.y = b9.Math.max(scale.y, 0.0);
-};
-
-/**
- * hoge
- * @param {b9.Vector2D} origin
- */
-b9.View.prototype.getOrigin = function(origin) {
-    origin.set(this._origin);
-};
-
-/**
- * hoge
- * @param {b9.Vector2D} origin
- */
-b9.View.prototype.setOrigin = function(origin) {
-    this._origin.set(origin);
 };
 
 /**
