@@ -20,6 +20,6 @@
  * THE SOFTWARE.
  */
 
-function testSprite() {
+function testPrimitive() {
     // TODO
 }
