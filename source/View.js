@@ -24,13 +24,17 @@
  * hoge
  * @class hoge
  * @param {Number} id
+ * @param {Number} dimension
  */
-b9.View = function(id) {
+b9.View = function(id, dimension) {
     /** @private */
     this._id = id;
 
     /** @private */
-    this._pos = new b9.Vector2D();
+    this._dimension = (dimension === b9.DIM_3D) ? b9.DIM_3D : b9.DIM_2D;
+
+    /** @private */
+    this._pos = (this._dimension === b9.DIM_2D) ? new b9.Vector2D() : new b9.Vector3D();
 
     /** @private */
     this._size = new b9.Vector2D();
@@ -60,7 +64,28 @@ b9.View = function(id) {
 b9.View.prototype.destroy = function() {
     b9.System._unregisterView(this);
 
-    // TODO
+    this._view_tree.destroy();
+    this._elem_tree.destroy();
+
+    this._pos = null;
+    this._size = null;
+    this._scale = null;
+    this._color = null;
+};
+
+/**
+ *
+ */
+b9.View.prototype.getID = function() {
+    return this._id;
+};
+
+/**
+ * hoge
+ * @return {Number} hoge
+ */
+b9.View.prototype.getDimention = function() {
+    return this._dimension;
 };
 
 /**
@@ -81,36 +106,52 @@ b9.View.prototype.setPos = function(pos) {
 
 /**
  * hoge
- * @param {b9.Vector2D} size
+ * @return {Number}
  */
-b9.View.prototype.getSize = function(size) {
-    size.set(this._size);
+b9.View.prototype.getWidth = function() {
+    return this._size.x;
 };
 
 /**
  * hoge
- * @param {b9.Vector2D} size
+ * @return {Number}
  */
-b9.View.prototype.setSize = function(size) {
-    this._size.x = b9.Math.max(size.x, 0.0);
-    this._size.y = b9.Math.max(size.y, 0.0);
+b9.View.prototype.getHeight = function() {
+    return this._size.y;
 };
 
 /**
  * hoge
- * @param {b9.Vector2D} scale
+ * @param {Number} width hoge
+ * @param {Number} height hoge
  */
-b9.View.prototype.getScale = function(scale) {
-    scale.set(this._scale);
+b9.View.prototype.setSize = function(width, height) {
+    this._size.set(b9.Math.max(width, 0.0), b9.Math.max(height, 0.0));
 };
 
 /**
  * hoge
- * @param {b9.Vector2D} scale
+ * @return {Number}
  */
-b9.View.prototype.setScale = function(scale) {
-    this._scale.x = b9.Math.max(scale.x, 0.0);
-    this._scale.y = b9.Math.max(scale.y, 0.0);
+b9.View.prototype.getScaleX = function() {
+    return this._scale.x;
+};
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.View.prototype.getScaleY = function() {
+    return this._scale.y;
+};
+
+/**
+ * hoge
+ * @param {Number} scale_x hoge
+ * @param {Number} scale_y hoge
+ */
+b9.View.prototype.setScale = function(scale_x, scale_y) {
+    this._size.set(b9.Math.max(scale_x, 0.0), b9.Math.max(scale_y, 0.0));
 };
 
 /**
@@ -271,6 +312,18 @@ b9.View.prototype.addElementAfter = function(elem, prev_elem) {
  */
 b9.View.prototype.removeElement = function(elem) {
 };
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.DIM_2D = 2;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.DIM_3D = 3;
 
 /**
  * hoge

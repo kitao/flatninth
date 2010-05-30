@@ -24,15 +24,3 @@
  * @namespace Flatninth package.
  */
 var b9 = {};
-
-/**
- * hoge
- * @return {Number}
- */
-b9.DIM_2D = 2;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.DIM_3D = 3;

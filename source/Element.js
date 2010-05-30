@@ -27,9 +27,6 @@
  */
 b9.Element = function(dimension) {
     /** @private */
-    this._tree = new b9.Tree(this);
-
-    /** @private */
     this._dimension = (dimension === b9.DIM_3D) ? b9.DIM_3D : b9.DIM_2D;
 
     /** @private */
@@ -43,6 +40,9 @@ b9.Element = function(dimension) {
 
     /** @private */
     this._filter_color = new b9.Color();
+
+    /** @private */
+    this._tree = new b9.Tree(this);
 };
 
 /**

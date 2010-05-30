@@ -48,23 +48,95 @@ b9.Sprite.prototype.destroy = function() {
  * hoge
  * @return {Number} hoge
  */
-b9.Sprite.prototype.getMaxRectNum() {
+b9.Sprite.prototype.getMaxRectNum = function() {
+};
+
+/**
+ * hoge
+ * @param {Number} max_rect_num hoge
+ */
+b9.Sprite.prototype.setMaxRectNum = function(max_rect_num) {
+};
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Sprite.prototype.getCurRectNum = function() {
+};
+
+/**
+ * hoge
+ * @param {Number} cur_rect_num hoge
+ */
+b9.Sprite.prototype.setCurRectNum = function(cur_rect_num) {
 };
 
 /**
  *
  */
-b9.Sprite.prototype.setMaxRectNum(max_rect_num) {
+b9.Sprite.prototype.getRectPos = function(rect_index, pos) {
 };
 
 /**
  *
  */
-b9.Sprite.prototype.getCurRectNum() {
+b9.Sprite.prototype.setRectPos = function(rect_index, pos) {
 };
 
 /**
- *
+ * hoge
+ * @param {Number} rect_index
+ * @return {Number}
  */
-b9.Sprite.prototype.setCurRectNum() {
+b9.Sprite.prototype.getRectWidth = function(rect_index) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index
+ * @return {Number}
+ */
+b9.Sprite.prototype.getRectHeight = function(rect_index) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index
+ * @param {Number} width
+ * @param {Number} height
+ */
+b9.Sprite.prototype.setRectSize = function(rect_index, width, height) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index
+ * @return {Number}
+ */
+b9.Sprite.prototype.getRectAngle = function(rect_index) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index
+ * @param {Number} deg
+ */
+b9.Sprite.prototype.setRectAngle =function(rect_index, deg) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index hoge
+ * @param {b9.Color} color hoge
+ */
+b9.Sprite.prototype.getRectColor = function(rect_index, color) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index hoge
+ * @param {b9.Color} color hoge
+ */
+b9.Sprite.prototype.setRectColor = function(rect_index, color) {
 };
