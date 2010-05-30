@@ -259,6 +259,7 @@ b9.View.prototype.addChildLast = function(child) {
  * @param {b9.View} next_child
  */
 b9.View.prototype.addChildBefore = function(child, next_child) {
+    this._view_tree.addChildBefore(child._view_tree, next_child._view_tree);
 };
 
 /**
@@ -267,6 +268,7 @@ b9.View.prototype.addChildBefore = function(child, next_child) {
  * @param {b9.View} prev_child
  */
 b9.View.prototype.addChildAfter = function(child, prev_child) {
+    this._view_tree.addChildAfter(child._view_tree, prev_child._view_tree);
 };
 
 /**
@@ -274,6 +276,7 @@ b9.View.prototype.addChildAfter = function(child, prev_child) {
  * @param {b9.View} child
  */
 b9.View.prototype.removeChild = function(child) {
+    this._view_tree.removeChild(child._view_tree);
 };
 
 /**
@@ -281,6 +284,7 @@ b9.View.prototype.removeChild = function(child) {
  * @param {b9.Element} elem
  */
 b9.View.prototype.addElementFirst = function(elem) {
+    this._elem_tree.addChildFirst(elem._tree);
 };
 
 /**
@@ -288,6 +292,7 @@ b9.View.prototype.addElementFirst = function(elem) {
  * @param {b9.Element} elem
  */
 b9.View.prototype.addElementLast = function(elem) {
+    this._elem_tree.addChildLast(elem._tree);
 };
 
 /**
@@ -296,6 +301,7 @@ b9.View.prototype.addElementLast = function(elem) {
  * @param {b9.Element} next_elem
  */
 b9.View.prototype.addElementBefore = function(elem, next_elem) {
+    this._elem_tree.addChildBefore(elem._tree, next_elem._tree);
 };
 
 /**
@@ -304,6 +310,7 @@ b9.View.prototype.addElementBefore = function(elem, next_elem) {
  * @param {b9.Element} prev_elem
  */
 b9.View.prototype.addElementAfter = function(elem, prev_elem) {
+    this._elem_tree.addChildAfter(elem._tree, prev_elem._tree);
 };
 
 /**
@@ -311,6 +318,7 @@ b9.View.prototype.addElementAfter = function(elem, prev_elem) {
  * @param {b9.Element} elem
  */
 b9.View.prototype.removeElement = function(elem) {
+    this._elem_tree.removeChild(elem._tree);
 };
 
 /**
@@ -330,3 +338,9 @@ b9.DIM_3D = 3;
  * @return {Number}
  */
 b9.View.FLAG_VISIBLE = 0x01;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.View.FLAG_CLEAR = 0x02;

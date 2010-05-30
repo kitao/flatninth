@@ -140,3 +140,46 @@ b9.Sprite.prototype.getRectColor = function(rect_index, color) {
  */
 b9.Sprite.prototype.setRectColor = function(rect_index, color) {
 };
+
+/**
+ * hoge
+ * @param {Number} rect_index
+ * @return {Number}
+ */
+b9.Sprite.prototype.getU1 = function(rect_index) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index
+ * @return {Number}
+ */
+b9.Sprite.prototype.getV1 = function(rect_index) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index
+ * @return {Number}
+ */
+b9.Sprite.prototype.getU2 = function(rect_index) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index
+ * @return {Number}
+ */
+b9.Sprite.prototype.getV2 = function(rect_index) {
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index
+ * @param {Number} u1
+ * @param {Number} v1
+ * @param {Number} u2
+ * @param {Number} v2
+ */
+b9.Sprite.prototype.setRectUV = function(rect_index, u1, v1, u2, v2) {
+};
