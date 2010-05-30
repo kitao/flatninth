@@ -23,18 +23,21 @@
 /**
  * hoge
  * @class hoge
- * @param {Number} id
- * @param {Number} dimension
+ * @param {Number} id hoge
+ * @param {Number} dimension hoge
  */
 b9.View = function(id, dimension) {
     /** @private */
     this._id = id;
 
     /** @private */
-    this._dimension = (dimension === b9.DIM_3D) ? b9.DIM_3D : b9.DIM_2D;
+    this._dimension = (dimension !== 3) ? 2 : 3;
 
     /** @private */
-    this._pos = (this._dimension === b9.DIM_2D) ? new b9.Vector2D() : new b9.Vector3D();
+    this._view_flag = 0;
+
+    /** @private */
+    this._pos = (this._dimension === 2) ? new b9.Vector2D() : new b9.Vector3D();
 
     /** @private */
     this._size = new b9.Vector2D();
@@ -43,38 +46,34 @@ b9.View = function(id, dimension) {
     this._scale = new b9.Vector2D();
 
     /** @private */
-    this._color = new b9.Color(b9.Color.FULL);
+    this._filter_color = new b9.Color(b9.Color.FULL);
 
     /** @private */
-    this._flag = 0;
+    this._clear_color = new b9.Color(b9.Color.ZERO);
 
     /** @private */
     this._view_tree = new b9.Tree(this);
 
     /** @private */
-    this._elem_tree = new b9.Tree(this);
-
-    b9.System._registerView(this);
-    // TODO
+    this._elem_tree = new b9.Tree(null);
 };
 
 /**
  * hoge
  */
 b9.View.prototype.destroy = function() {
-    b9.System._unregisterView(this);
-
     this._view_tree.destroy();
     this._elem_tree.destroy();
 
     this._pos = null;
     this._size = null;
     this._scale = null;
-    this._color = null;
+    this._fileter_color = null;
+    this._clear_color = null;
 };
 
 /**
- *
+ * hoge
  */
 b9.View.prototype.getID = function() {
     return this._id;
@@ -90,7 +89,29 @@ b9.View.prototype.getDimention = function() {
 
 /**
  * hoge
- * @param {b9.Vector2D} pos
+ * @param {Number} view_flag hoge
+ * @return {Boolean} hoge
+ */
+b9.View.prototype.isViewFlagOn = function(view_flag) {
+    return (this._view_flag & view_flag) ? true : false;
+};
+
+/**
+ * hoge
+ * @param {Number} view_flag hoge
+ * @param {Boolean} is_on hoge
+ */
+b9.View.prototype.setViewFlag = function(view_flag, is_on) {
+    if (is_on) {
+        this._view_flag |= view_flag;
+    } else {
+        this._view_flag &= ~view_flag;
+    }
+};
+
+/**
+ * hoge
+ * @param {b9.Vector2D} pos hoge
  */
 b9.View.prototype.getPos = function(pos) {
     pos.set(this._pos);
@@ -98,7 +119,7 @@ b9.View.prototype.getPos = function(pos) {
 
 /**
  * hoge
- * @param {b9.Vector2D} pos
+ * @param {b9.Vector2D} pos hoge
  */
 b9.View.prototype.setPos = function(pos) {
     this._pos.set(pos);
@@ -106,7 +127,7 @@ b9.View.prototype.setPos = function(pos) {
 
 /**
  * hoge
- * @return {Number}
+ * @return {Number} hoge
  */
 b9.View.prototype.getWidth = function() {
     return this._size.x;
@@ -114,7 +135,7 @@ b9.View.prototype.getWidth = function() {
 
 /**
  * hoge
- * @return {Number}
+ * @return {Number} hoge
  */
 b9.View.prototype.getHeight = function() {
     return this._size.y;
@@ -131,7 +152,7 @@ b9.View.prototype.setSize = function(width, height) {
 
 /**
  * hoge
- * @return {Number}
+ * @return {Number} hoge
  */
 b9.View.prototype.getScaleX = function() {
     return this._scale.x;
@@ -139,7 +160,7 @@ b9.View.prototype.getScaleX = function() {
 
 /**
  * hoge
- * @return {Number}
+ * @return {Number} hoge
  */
 b9.View.prototype.getScaleY = function() {
     return this._scale.y;
@@ -156,45 +177,39 @@ b9.View.prototype.setScale = function(scale_x, scale_y) {
 
 /**
  * hoge
- * @param {b9.Color} color
+ * @param {b9.Color} color hoge
  */
-b9.View.prototype.getColor = function(color) {
-    color.set(this._color);
+b9.View.prototype.getFilterColor = function(color) {
+    color.set(this._filter_color);
 };
 
 /**
  * hoge
- * @param {b9.Color} color
+ * @param {b9.Color} color hoge
  */
-b9.View.prototype.setColor = function(color) {
-    this._color.set(color);
+b9.View.prototype.setFilterColor = function(color) {
+    this._filter_color.set(color);
 };
 
 /**
  * hoge
- * @param {Number} flag
- * @return {Boolean}
+ * @param {b9.Color} color hoge
  */
-b9.View.prototype.isViewFlagOn = function(flag) {
-    return (this._flag & flag) ? true : false;
+b9.View.prototype.getClearColor = function(color) {
+    color.set(this._clear_color);
 };
 
 /**
  * hoge
- * @param {Number} flag
- * @param {Boolean} is_on
+ * @param {b9.Color} color hoge
  */
-b9.View.prototype.setViewFlag = function(flag, is_on) {
-    if (is_on) {
-        this._flag |= flag;
-    } else {
-        this._flag &= ~flag;
-    }
+b9.View.prototype.setClearColor = function(color) {
+    this._clear_color.set(color);
 };
 
 /**
  * hoge
- * @return {b9.View}
+ * @return {b9.View} hoge
  */
 b9.View.prototype.getParent = function() {
     var parent = this._view_tree.getParent();
@@ -203,7 +218,7 @@ b9.View.prototype.getParent = function() {
 
 /**
  * hoge
- * @return {b9.View}
+ * @return {b9.View} hoge
  */
 b9.View.prototype.getPrevSibling = function() {
     var sibling = this._view_tree.getPrevSibling();
@@ -212,7 +227,7 @@ b9.View.prototype.getPrevSibling = function() {
 
 /**
  * hoge
- * @return {b9.View}
+ * @return {b9.View} hoge
  */
 b9.View.prototype.getNextSibling = function() {
     var sibling = this._view_tree.getNextSibling();
@@ -221,7 +236,7 @@ b9.View.prototype.getNextSibling = function() {
 
 /**
  * hoge
- * @return {b9.View}
+ * @return {b9.View} hoge
  */
 b9.View.prototype.getFirstChild = function() {
     var child = this._view_tree.getFirstChild();
@@ -230,7 +245,7 @@ b9.View.prototype.getFirstChild = function() {
 
 /**
  * hoge
- * @return {b9.View}
+ * @return {b9.View} hoge
  */
 b9.View.prototype.getLastChild = function() {
     var child = this._view_tree.getLastChild();
@@ -239,7 +254,7 @@ b9.View.prototype.getLastChild = function() {
 
 /**
  * hoge
- * @return {b9.View}
+ * @return {b9.View} hoge
  */
 b9.View.prototype.addChildFirst = function(cihld) {
     this._view_tree.addChildFirst(child._view_tree);
@@ -247,7 +262,7 @@ b9.View.prototype.addChildFirst = function(cihld) {
 
 /**
  * hoge
- * @param {b9.View} child
+ * @param {b9.View} child hoge
  */
 b9.View.prototype.addChildLast = function(child) {
     this._view_tree.addChildLast(child._view_tree);
@@ -255,8 +270,8 @@ b9.View.prototype.addChildLast = function(child) {
 
 /**
  * hoge
- * @param {b9.View} child
- * @param {b9.View} next_child
+ * @param {b9.View} child hoge
+ * @param {b9.View} next_child hoge
  */
 b9.View.prototype.addChildBefore = function(child, next_child) {
     this._view_tree.addChildBefore(child._view_tree, next_child._view_tree);
@@ -264,8 +279,8 @@ b9.View.prototype.addChildBefore = function(child, next_child) {
 
 /**
  * hoge
- * @param {b9.View} child
- * @param {b9.View} prev_child
+ * @param {b9.View} child hoge
+ * @param {b9.View} prev_child hoge
  */
 b9.View.prototype.addChildAfter = function(child, prev_child) {
     this._view_tree.addChildAfter(child._view_tree, prev_child._view_tree);
@@ -273,7 +288,7 @@ b9.View.prototype.addChildAfter = function(child, prev_child) {
 
 /**
  * hoge
- * @param {b9.View} child
+ * @param {b9.View} child hoge
  */
 b9.View.prototype.removeChild = function(child) {
     this._view_tree.removeChild(child._view_tree);
@@ -281,7 +296,7 @@ b9.View.prototype.removeChild = function(child) {
 
 /**
  * hoge
- * @param {b9.Element} elem
+ * @param {b9.Element} elem hoge
  */
 b9.View.prototype.addElementFirst = function(elem) {
     this._elem_tree.addChildFirst(elem._tree);
@@ -289,7 +304,7 @@ b9.View.prototype.addElementFirst = function(elem) {
 
 /**
  * hoge
- * @param {b9.Element} elem
+ * @param {b9.Element} elem hoge
  */
 b9.View.prototype.addElementLast = function(elem) {
     this._elem_tree.addChildLast(elem._tree);
@@ -297,8 +312,8 @@ b9.View.prototype.addElementLast = function(elem) {
 
 /**
  * hoge
- * @param {b9.Element} elem
- * @param {b9.Element} next_elem
+ * @param {b9.Element} elem hoge
+ * @param {b9.Element} next_elem hoge
  */
 b9.View.prototype.addElementBefore = function(elem, next_elem) {
     this._elem_tree.addChildBefore(elem._tree, next_elem._tree);
@@ -306,8 +321,8 @@ b9.View.prototype.addElementBefore = function(elem, next_elem) {
 
 /**
  * hoge
- * @param {b9.Element} elem
- * @param {b9.Element} prev_elem
+ * @param {b9.Element} elem hoge
+ * @param {b9.Element} prev_elem hoge
  */
 b9.View.prototype.addElementAfter = function(elem, prev_elem) {
     this._elem_tree.addChildAfter(elem._tree, prev_elem._tree);
@@ -315,23 +330,11 @@ b9.View.prototype.addElementAfter = function(elem, prev_elem) {
 
 /**
  * hoge
- * @param {b9.Element} elem
+ * @param {b9.Element} elem hoge
  */
 b9.View.prototype.removeElement = function(elem) {
     this._elem_tree.removeChild(elem._tree);
 };
-
-/**
- * hoge
- * @return {Number}
- */
-b9.DIM_2D = 2;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.DIM_3D = 3;
 
 /**
  * hoge

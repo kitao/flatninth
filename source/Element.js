@@ -23,11 +23,11 @@
 /**
  * hoge
  * @class hoge
- * @param {Number} dimension
+ * @param {Number} dimension hoge
  */
 b9.Element = function(dimension) {
     /** @private */
-    this._dimension = (dimension === b9.DIM_3D) ? b9.DIM_3D : b9.DIM_2D;
+    this._dimension = (dimension !== 3) ? 2 : 3;
 
     /** @private */
     this._elem_type = b9.Element.TYPE_ELEMENT;
@@ -36,20 +36,21 @@ b9.Element = function(dimension) {
     this._elem_flag = 0;
 
     /** @private */
-    this._local = (this._dimension === b9.DIM_3D) ? new b9.Matrix3D() : new b9.Matrix2D();
+    this._local = (this._dimension === 2) ? new b9.Matrix2D() : new b9.Matrix3D();
 
     /** @private */
     this._filter_color = new b9.Color();
 
     /** @private */
-    this._tree = new b9.Tree(this);
+    this._elem_tree = new b9.Tree(this);
 };
 
 /**
  *
  */
-b9.Element.prototype.destroy =function() {
-    this._tree.destroy();
+b9.Element.prototype.destroy = function() {
+    this._elem_tree.destroy();
+
     this._local = null;
     this._filter_color = null;
 };
@@ -121,6 +122,93 @@ b9.Element.prototype.getFilterColor = function(color) {
  */
 b9.Element.prototype.setFilterColor = function(color) {
     this._filter_color.set(color);
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Element.prototype.getParent = function() {
+    var parent = this._elem_tree.getParent();
+    return parent ? parent.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Element.prototype.getPrevSibling = function() {
+    var sibling = this._elem_tree.getPrevSibling();
+    return sibling ? sibling.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Element.prototype.getNextSibling = function() {
+    var sibling = this._elem_tree.getNextSibling();
+    return sibling ? sibling.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Element.prototype.getFirstChild = function() {
+    var child = this._elem_tree.getFirstChild();
+    return child ? child.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Element.prototype.getLastChild = function() {
+    var child = this._elem_tree.getLastChild();
+    return child ? child.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Element.prototype.addChildFirst = function(cihld) {
+    this._elem_tree.addChildFirst(child._elem_tree);
+};
+
+/**
+ * hoge
+ * @param {b9.Element} child hoge
+ */
+b9.Element.prototype.addChildLast = function(child) {
+    this._elem_tree.addChildLast(child._elem_tree);
+};
+
+/**
+ * hoge
+ * @param {b9.Element} child hoge
+ * @param {b9.Element} next_child hoge
+ */
+b9.Element.prototype.addChildBefore = function(child, next_child) {
+    this._elem_tree.addChildBefore(child._elem_tree, next_child._elem_tree);
+};
+
+/**
+ * hoge
+ * @param {b9.Element} child hoge
+ * @param {b9.Element} prev_child hoge
+ */
+b9.Element.prototype.addChildAfter = function(child, prev_child) {
+    this._elem_tree.addChildAfter(child._elem_tree, prev_child._elem_tree);
+};
+
+/**
+ * hoge
+ * @param {b9.Element} child hoge
+ */
+b9.Element.prototype.removeChild = function(child) {
+    this._elem_tree.removeChild(child._elem_tree);
 };
 
 /**

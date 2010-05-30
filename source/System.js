@@ -22,13 +22,12 @@
 
 /**
  * @class An ID based on a string.
- * @param {String} [seed] A seed of an ID. When not specified, generate the unique ID automatically.
  */
 b9.System = {};
 
 /**
  * hoge
- * @param {String} msg
+ * @param {String} msg hoge
  */
 b9.System.trace = function(msg) {
     // TODO
@@ -36,15 +35,15 @@ b9.System.trace = function(msg) {
 
 /**
  * hoge
- * @param {String} msg
+ * @param {String} msg hoge
  */
 b9.System.error = function(msg) {
     throw new Error(msg);
 };
 
 /**
- * @param {String} str
- * @return {Number}
+ * @param {String} str hoge
+ * @return {Number} hoge
  */
 b9.System.toID = function(str) {
     var id = 0;
@@ -58,8 +57,8 @@ b9.System.toID = function(str) {
 };
 
 /**
- *
- * @return {Number}
+ * hoge
+ * @return {Number} hoge
  */
 b9.System.generateID = function() {
     b9.System._cur_id++;
@@ -68,19 +67,48 @@ b9.System.generateID = function() {
 
 /**
  * hoge
- * @param {b9.View} view
+ * @param {b9.View} view hoge
  */
-b9.System._registerView = function(view) {
-    // TODO
+b9.System.addViewFirst = function(view) {
+    b9.System._view_tree.addChildFirst(view._tree);
 };
 
 /**
  * hoge
- * @param {b9.View} view
+ * @param {b9.View} view hoge
  */
-b9.System._unregisterView = function(view) {
-    // TODO
+b9.System.addViewLast = function(view) {
+    b9.System._view_tree.addChildLast(view._tree);
+};
+
+/**
+ * hoge
+ * @param {b9.View} view hoge
+ * @param {b9.View} next_view hoge
+ */
+b9.System.addViewBefore = function(view, next_view) {
+    b9.System._view_tree.addChildBefore(view._tree, next_view._tree);
+};
+
+/**
+ * hoge
+ * @param {b9.View} view hoge
+ * @param {b9.View} prev_view hoge
+ */
+b9.System.addViewAfter = function(view, prev_view) {
+    b9.System._view_tree.addChildAfter(view._tree, prev_view._tree);
+};
+
+/**
+ * hoge
+ * @param {b9.View} view hoge
+ */
+b9.System.removeView = function(view) {
+    b9.System._view_tree.removeChild(view._tree);
 };
 
 /** @private */
 b9.System._cur_id = 0;
+
+/** @private */
+b9.System._view_tree = new b9.Tree(null);
