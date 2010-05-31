@@ -24,3 +24,9 @@
  * @namespace Flatninth package.
  */
 var b9 = {};
+
+/**
+ *
+ * @return {String}
+ */
+b9.VERSION = "0.0.1";

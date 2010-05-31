@@ -31,7 +31,24 @@ b9.Sprite = function(dimension, max_rect_num) {
     b9.Element.call(this, dimension);
     this._elem_type = b9.Element.TYPE_SPRITE;
 
-    // TODO
+    this._max_rect_num = max_rect_num;
+    this._cur_rect_num = max_rect_num;
+    this._rect = new Array(max_rect_num);
+
+    for (var i = 0; i < max_rect_num; i++) {
+        this._rect[i] = { width: 0.0, height: 0.0, angle: 0.0,
+            color: new b9.Color(b9.Color.FULL), u1: 0.0, v1: 0.0, u2: 0.0, v2: 0.0 };
+    }
+
+    if (this._dimension === 2) {
+        for (i = 0; i < max_rect_num; i++) {
+            this._rect[i].pos = new b9.Vector2D();
+        }
+    } else {
+        for (i = 0; i < max_rect_num; i++) {
+            this._rect[i].pos = new b9.Vector3D();
+        }
+    }
 };
 
 b9.Sprite.prototype = b9.Element;
@@ -42,6 +59,8 @@ b9.Sprite.constructor = b9.Sprite;
  */
 b9.Sprite.prototype.destroy = function() {
     b9.Element.destroy.call(this);
+
+    this._rect = null;
 };
 
 /**
@@ -49,13 +68,7 @@ b9.Sprite.prototype.destroy = function() {
  * @return {Number} hoge
  */
 b9.Sprite.prototype.getMaxRectNum = function() {
-};
-
-/**
- * hoge
- * @param {Number} max_rect_num hoge
- */
-b9.Sprite.prototype.setMaxRectNum = function(max_rect_num) {
+    return this._max_rect_num;
 };
 
 /**
@@ -63,6 +76,7 @@ b9.Sprite.prototype.setMaxRectNum = function(max_rect_num) {
  * @return {Number}
  */
 b9.Sprite.prototype.getCurRectNum = function() {
+    return this._cur_rect_num;
 };
 
 /**
@@ -70,18 +84,21 @@ b9.Sprite.prototype.getCurRectNum = function() {
  * @param {Number} cur_rect_num hoge
  */
 b9.Sprite.prototype.setCurRectNum = function(cur_rect_num) {
+    this._cur_rect_num = b9.Math.clamp(cur_rect_num, 0, this._max_rect_num);
 };
 
 /**
  *
  */
 b9.Sprite.prototype.getRectPos = function(rect_index, pos) {
+    pos.set(this._rect[rect_index].pos);
 };
 
 /**
  *
  */
 b9.Sprite.prototype.setRectPos = function(rect_index, pos) {
+    this._rect[rect_index].pos.set(pos);
 };
 
 /**
@@ -90,6 +107,7 @@ b9.Sprite.prototype.setRectPos = function(rect_index, pos) {
  * @return {Number}
  */
 b9.Sprite.prototype.getRectWidth = function(rect_index) {
+    return this._rect[rect_index].width;
 };
 
 /**
@@ -98,6 +116,7 @@ b9.Sprite.prototype.getRectWidth = function(rect_index) {
  * @return {Number}
  */
 b9.Sprite.prototype.getRectHeight = function(rect_index) {
+    return this._rect[rect_index].height;
 };
 
 /**
@@ -107,6 +126,8 @@ b9.Sprite.prototype.getRectHeight = function(rect_index) {
  * @param {Number} height
  */
 b9.Sprite.prototype.setRectSize = function(rect_index, width, height) {
+    this._rect[rect_index].width = width;
+    this._rect[rect_index].height = height;
 };
 
 /**
@@ -115,6 +136,7 @@ b9.Sprite.prototype.setRectSize = function(rect_index, width, height) {
  * @return {Number}
  */
 b9.Sprite.prototype.getRectAngle = function(rect_index) {
+    return this._rect[rect_index].angle;
 };
 
 /**
@@ -123,6 +145,7 @@ b9.Sprite.prototype.getRectAngle = function(rect_index) {
  * @param {Number} deg
  */
 b9.Sprite.prototype.setRectAngle =function(rect_index, deg) {
+    this._rect[rect_index].angle = deg;
 };
 
 /**
@@ -131,6 +154,7 @@ b9.Sprite.prototype.setRectAngle =function(rect_index, deg) {
  * @param {b9.Color} color hoge
  */
 b9.Sprite.prototype.getRectColor = function(rect_index, color) {
+    color.set(this._rect[rect_index].color);
 };
 
 /**
@@ -139,6 +163,7 @@ b9.Sprite.prototype.getRectColor = function(rect_index, color) {
  * @param {b9.Color} color hoge
  */
 b9.Sprite.prototype.setRectColor = function(rect_index, color) {
+    this._rect[rect_index].color.set(color);
 };
 
 /**
@@ -147,6 +172,7 @@ b9.Sprite.prototype.setRectColor = function(rect_index, color) {
  * @return {Number}
  */
 b9.Sprite.prototype.getU1 = function(rect_index) {
+    return this._rect[rect_index].u1;
 };
 
 /**
@@ -155,6 +181,7 @@ b9.Sprite.prototype.getU1 = function(rect_index) {
  * @return {Number}
  */
 b9.Sprite.prototype.getV1 = function(rect_index) {
+    return this._rect[rect_index].v1;
 };
 
 /**
@@ -163,6 +190,7 @@ b9.Sprite.prototype.getV1 = function(rect_index) {
  * @return {Number}
  */
 b9.Sprite.prototype.getU2 = function(rect_index) {
+    return this._rect[rect_index].u2;
 };
 
 /**
@@ -171,6 +199,7 @@ b9.Sprite.prototype.getU2 = function(rect_index) {
  * @return {Number}
  */
 b9.Sprite.prototype.getV2 = function(rect_index) {
+    return this._rect[rect_index].v2;
 };
 
 /**
@@ -182,4 +211,8 @@ b9.Sprite.prototype.getV2 = function(rect_index) {
  * @param {Number} v2
  */
 b9.Sprite.prototype.setRectUV = function(rect_index, u1, v1, u2, v2) {
+    this._rect[rect_index].u1 = u1;
+    this._rect[rect_index].v1 = v1;
+    this._rect[rect_index].u2 = u2;
+    this._rect[rect_index].v2 = v2;
 };
