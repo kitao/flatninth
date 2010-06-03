@@ -26,6 +26,18 @@
 b9.System = {};
 
 /**
+ *
+ */
+b9.startFlatninth = function() {
+};
+
+/**
+ *
+ */
+b9.endFlatninth = function() {
+};
+
+/**
  * hoge
  * @param {String} msg hoge
  */
@@ -63,6 +75,53 @@ b9.System.toID = function(str) {
 b9.System.generateID = function() {
     b9.System._cur_id++;
     return b9.System._cur_id;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} order hoge
+ */
+b9.View.getFirstTask = function(order) {
+    // TODO
+};
+
+/**
+ * hoge
+ * @return {b9.Task} order hoge
+ */
+b9.View.getLastTask = function(order) {
+    // TODO
+};
+
+/**
+ * hoge
+ * @param {Number} order
+ * @param {b9.Task} task
+ */
+b9.View.addTask = function(order, task) {
+};
+
+/**
+ * hoge
+ * @param {b9.Task} task
+ */
+b9.View.removeTask = function(task) {
+};
+
+/**
+ *
+ * @return {b9.View}
+ */
+b9.System.getFirstView = function() {
+    // TODO
+};
+
+/**
+ *
+ * @return {b9.View}
+ */
+b9.System.getLastView = function() {
+    // TODO
 };
 
 /**
@@ -109,6 +168,9 @@ b9.System.removeView = function(view) {
 
 /** @private */
 b9.System._cur_id = 0;
+
+/** @private */
+b9.View._task_list = new b9.List(null);
 
 /** @private */
 b9.System._view_tree = new b9.Tree(null);
