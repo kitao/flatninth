@@ -30,3 +30,26 @@ var b9 = {};
  * @return {String}
  */
 b9.VERSION = "0.0.1";
+
+/**
+ * hoge
+ * @param {Object} [super_class] hoge
+ * @return {Object} hoge
+ */
+b9.createClass = function(super_class) {
+    var sub_class = function() {
+        this.initialize.apply(this, arguments);
+    };
+
+    if (super_class) {
+        var temp_class = function() {};
+        temp_class.prototype = super_class.prototype;
+
+        sub_class.prototype = new temp_class();
+        sub_class.prototype.super_class = super_class;
+        sub_class.prototype.initializeSuper = super_class.initialize;
+        sub_class.constructor = sub_class;
+    }
+
+    return sub_class;
+};
