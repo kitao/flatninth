@@ -23,12 +23,17 @@
 /**
  * hoge
  * @class hoge
+ */
+b9.Margin = b9.createClass();
+
+/**
+ * hoge
  * @param {Number} [left]
  * @param {Number} [top]
  * @param {Number} [right]
  * @param {Number} [bottom]
  */
-b9.Margin = function(left, top, right, bottom) {
+b9.Margin.prototype.initialize = function(left, top, right, bottom) {
     /**
      * hoge
      * @return {Number}

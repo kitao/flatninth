@@ -23,11 +23,16 @@
 /**
  * hoge
  * @class hoge
+ */
+b9.Matrix2D = b9.createClass();
+
+/**
+ * hoge
  * @param {b9.Matrix2D|Number} [arg1] hoge
  * @param {Number} [arg2] hoge
  * @param {Number} [arg3] hoge
  */
-b9.Matrix2D = function(arg1, arg2, arg3) {
+b9.Matrix2D.prototype.initialize = function(arg1, arg2, arg3) {
     /**
      * hoge
      * @return {b9.Vector2D}
