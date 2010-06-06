@@ -57,9 +57,17 @@ b9.Sprite.prototype.initialize = function(dimension, max_rect_num) {
 };
 
 /**
- *
+ * hoge
  */
 b9.Sprite.prototype.finalize = function() {
+    for (var i = 0; i < max_rect_num; i++) {
+        var rect = this._rect[i];
+        b9.release(rect.color);
+        b9.release(rect.pos);
+        this._rect[i] = null;
+    }
+
+    b9.release(this._rect);
     this._rect = null;
 
     this.finalizeSuper();

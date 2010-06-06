@@ -67,14 +67,26 @@ b9.View.prototype.initialize = function(id, dimension) {
  * hoge
  */
 b9.View.prototype.finalize = function() {
-    this._view_tree.finalize();
-    this._elem_tree.finalize();
-
+    b9.release(this._pos);
     this._pos = null;
+
+    b9.release(this._size);
     this._size = null;
+
+    b9.release(this._scale);
     this._scale = null;
+
+    b9.release(this._filter_color);
     this._fileter_color = null;
+
+    b9.release(this._clear_color);
     this._clear_color = null;
+
+    b9.release(this._view_tree);
+    this._view_tree = null;
+
+    b9.release(this._elem_tree);
+    this._elem_tree = null;
 };
 
 /**

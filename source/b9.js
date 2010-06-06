@@ -45,14 +45,31 @@ b9.createClass = function(super_class) {
         var temp_class = function() {};
         temp_class.prototype = super_class.prototype;
 
-        sub_class.prototype = new temp_class;
+        sub_class.prototype = new temp_class();
         sub_class.prototype.super_class = super_class;
-        sub_class.prototype.initializeSuper = super_class.initialize;
-        sub_class.prototype.finalizeSuper = super_class.finalize;
+
+        if (super_class.prototype.initialize) {
+            sub_class.prototype.initializeSuper = super_class.prototype.initialize;
+        }
+
+        if (super_class.prototype.finalize) {
+            sub_class.prototype.finalizeSuper = super_class.prototype.finalize;
+        }
+
         sub_class.constructor = sub_class;
     }
 
     return sub_class;
+};
+
+/**
+ * hoge
+ * @param {Object} instance
+ */
+b9.release = function(instance) {
+    if (instance.finalize) {
+        instance.finalize();
+    }
 };
 
 /**

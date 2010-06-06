@@ -32,16 +32,17 @@ b9.Task = function(name) {
     this._task_flag = b9.Task.FLAG_ACTIVE;
 
     /** @private */
-    this._list_item = b9.ListItem(this);
+    this._list_item = new b9.ListItem(this);
 };
 
 /**
  * hoge
  */
 b9.Task.prototype.finalize = function() {
-    this._list_item.finalize();
-
     this._name = null;
+
+    b9.release(this._list_item);
+    this._list_item = null;
 };
 
 /**

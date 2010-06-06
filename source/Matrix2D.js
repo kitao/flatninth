@@ -64,6 +64,20 @@ b9.Matrix2D.prototype.initialize = function(arg1, arg2, arg3) {
 
 /**
  * hoge
+ */
+b9.Matrix2D.prototype.finalize = function() {
+    b9.release(this.x_axis);
+    this.x_axis = null;
+
+    b9.release(this.y_axis);
+    this.y_axis = null;
+
+    b9.release(this.trans);
+    this.trans = null;
+};
+
+/**
+ * hoge
  * @param {b9.Matrix2D|Number} arg1 hoge
  * @param {Number} [arg2] hoge
  * @param {Number} [arg3] hoge

@@ -54,10 +54,14 @@ b9.Element.prototype.initialize = function(dimension) {
  *
  */
 b9.Element.prototype.finalize = function() {
-    this._elem_tree.finalize();
-
+    b9.release(this._local);
     this._local = null;
+
+    b9.release(this._filter_color);
     this._filter_color = null;
+
+    b9.release(this._elem_tree);
+    this._elem_tree = null;
 };
 
 /**

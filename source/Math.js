@@ -90,7 +90,7 @@ b9.Math.sqrt = function(s) {
  * @return {Number} hoge
  */
 b9.Math.sinFloat = function(deg) {
-    return Math.sin(deg * this.Math.DEG_TO_RAD);
+    return Math.sin(deg * this.DEG_TO_RAD);
 };
 
 /**
