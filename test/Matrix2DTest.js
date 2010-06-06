@@ -21,7 +21,7 @@
  */
 
 function testMatrix2D() {
-    /* Matrix2D */
+    /* initialize */
     var mat1 = new b9.Matrix2D();
     assertTrue(b9.Vector2D.ZERO.isEqual(mat1.x_axis) &&
             b9.Vector2D.ZERO.isEqual(mat1.y_axis) &&
@@ -161,6 +161,12 @@ function testMatrix2D() {
 
     /* toString */
     assertEquals("((1, 0), (0, 1), (0, 0))", b9.Matrix2D.UNIT.toString());
+
+    /* finalize */
+    b9.release(mat1);
+    assertEquals(null, mat1.x_axis);
+    assertEquals(null, mat1.y_axis);
+    assertEquals(null, mat1.trans);
 
     /* ZERO */
     assertEqualsMatrix2D(new b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector2D.ZERO), b9.Matrix2D.ZERO);
