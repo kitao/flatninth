@@ -28,13 +28,16 @@ b9.System = {};
 /**
  *
  */
-b9.startFlatninth = function() {
+b9.System.startFlatninth = function() {
+    while (true) {
+        b9.System._update();
+    }
 };
 
 /**
  *
  */
-b9.endFlatninth = function() {
+b9.System.endFlatninth = function() {
 };
 
 /**
@@ -52,125 +55,3 @@ b9.System.trace = function(msg) {
 b9.System.error = function(msg) {
     throw new Error(msg);
 };
-
-/**
- * @param {String} str hoge
- * @return {Number} hoge
- */
-b9.System.toID = function(str) {
-    var id = 0;
-    var len = str.length;
-
-    for (var i = 0; i < len; i++) {
-        id = id * 37 - str.charCodeAt(i);
-    }
-
-    return id;
-};
-
-/**
- * hoge
- * @return {Number} hoge
- */
-b9.System.generateID = function() {
-    b9.System._cur_id++;
-    return b9.System._cur_id;
-};
-
-/**
- * hoge
- * @return {b9.Task} order hoge
- */
-b9.View.getFirstTask = function(order) {
-    // TODO
-};
-
-/**
- * hoge
- * @return {b9.Task} order hoge
- */
-b9.View.getLastTask = function(order) {
-    // TODO
-};
-
-/**
- * hoge
- * @param {Number} order
- * @param {b9.Task} task
- */
-b9.View.addTask = function(order, task) {
-};
-
-/**
- * hoge
- * @param {b9.Task} task
- */
-b9.View.removeTask = function(task) {
-};
-
-/**
- *
- * @return {b9.View}
- */
-b9.System.getFirstView = function() {
-    // TODO
-};
-
-/**
- *
- * @return {b9.View}
- */
-b9.System.getLastView = function() {
-    // TODO
-};
-
-/**
- * hoge
- * @param {b9.View} view hoge
- */
-b9.System.addViewFirst = function(view) {
-    b9.System._view_tree.addChildFirst(view._tree);
-};
-
-/**
- * hoge
- * @param {b9.View} view hoge
- */
-b9.System.addViewLast = function(view) {
-    b9.System._view_tree.addChildLast(view._tree);
-};
-
-/**
- * hoge
- * @param {b9.View} view hoge
- * @param {b9.View} next_view hoge
- */
-b9.System.addViewBefore = function(view, next_view) {
-    b9.System._view_tree.addChildBefore(view._tree, next_view._tree);
-};
-
-/**
- * hoge
- * @param {b9.View} view hoge
- * @param {b9.View} prev_view hoge
- */
-b9.System.addViewAfter = function(view, prev_view) {
-    b9.System._view_tree.addChildAfter(view._tree, prev_view._tree);
-};
-
-/**
- * hoge
- * @param {b9.View} view hoge
- */
-b9.System.removeView = function(view) {
-    b9.System._view_tree.removeChild(view._tree);
-};
-
-/** @private */
-b9.System._cur_id = 0;
-
-/** @private */
-b9.View._task_list = new b9.List(null);
-
-/** @private */
-b9.System._view_tree = new b9.Tree(null);
