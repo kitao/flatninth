@@ -54,7 +54,7 @@ b9.Element.prototype.initialize = function(dimension) {
  *
  */
 b9.Element.prototype.finalize = function() {
-    b9.release(this._elem_tree);
+    this._elem_tree.finalize();
 
     this._local = null;
     this._filter_color = null;
