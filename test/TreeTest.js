@@ -363,11 +363,11 @@ function testTree() {
     assertEquals(null, tree4.getLastChild());
     assertEquals(tree4, tree4.getLastDescendant());
 
-    /* destroy */
+    /* finalize */
     tree1.addChildFirst(tree2);
     tree2.addChildFirst(tree3);
     tree3.addChildLast(tree4);
-    tree2.destroy();
+    tree2.finalize();
 
     assertEquals(dummy1, tree1.getSelf());
     assertEquals(null, tree1.getPrevAll());

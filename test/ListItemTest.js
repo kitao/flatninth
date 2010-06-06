@@ -56,8 +56,8 @@ function testListItem() {
     assertEquals(item1, item2.getPrev());
     assertEquals(null, item2.getNext());
 
-    /* destroy */
-    item1.destroy();
+    /* finalize */
+    item1.finalize();
 
     assertEquals(null, item1.getSelf());
     assertEquals(null, item1.getList());
@@ -69,7 +69,7 @@ function testListItem() {
     assertEquals(null, item2.getPrev());
     assertEquals(null, item2.getNext());
 
-    item2.destroy();
+    item2.finalize();
 
     assertEquals(null, item2.getSelf());
     assertEquals(null, item2.getList());

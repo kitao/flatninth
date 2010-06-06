@@ -21,19 +21,5 @@
  */
 
 function testSystem() {
-    /* toID */
-    assertEquals(0, b9.System.toID(""));
-    assertEquals(-(((97 * 37) + 98) * 37 + 99), b9.System.toID("abc"));
-
-    /* generateID */
-    var id1 = b9.System.generateID();
-    var id2 = b9.System.generateID();
-    var id3 = b9.System.generateID();
-
-    assertNotEquals(0, id1);
-    assertNotEquals(0, id2);
-    assertNotEquals(0, id3);
-    assertNotEquals(id1, id2);
-    assertNotEquals(id2, id3);
-    assertNotEquals(id3, id1);
+    // TODO
 }

@@ -159,10 +159,10 @@ function testList() {
     assertEquals(null, item2.getPrev());
     assertEquals(null, item2.getNext());
 
-    /* destroy */
+    /* finalize */
     list1.addItemLast(item1);
     list1.addItemLast(item2);
-    list1.destroy();
+    list1.finalize();
 
     assertEquals(0, list1.getItemNum());
     assertEquals(null, list1.getFirstItem());

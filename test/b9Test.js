@@ -21,14 +21,51 @@
  */
 
 function test_b9() {
-    /* toID */
-    assertEquals(0, b9.System.toID(""));
-    assertEquals(-(((97 * 37) + 98) * 37 + 99), b9.System.toID("abc"));
+    /* VERSION */
+    assertEquals("0.0.1", b9.VERSION);
+
+    /* createClass */
+    var ctor_count1 = 0;
+    var dtor_count1 = 0;
+    var test_class1 = b9.createClass();
+    test_class1.prototype.initialize = function() { ctor_count1++; };
+    test_class1.prototype.finalize = function() { dtor_count1++; };
+
+    var ctor_count2 = 0;
+    var dtor_count2 = 0;
+    var test_class2 = b9.createClass(test_class1);
+    test_class2.prototype.initialize = function() { ctor_count2++; this.initializeSuper(); };
+    test_class2.prototype.finalize = function() { dtor_count2++; this.finalizeSuper(); };
+
+    var test_ins1 = new test_class1();
+    assertEquals(1, ctor_count1);
+    assertEquals(0, dtor_count1);
+    assertEquals(0, ctor_count2);
+    assertEquals(0, dtor_count2);
+
+    var test_ins2 = new test_class2();
+    assertEquals(2, ctor_count1);
+    assertEquals(0, dtor_count1);
+    assertEquals(1, ctor_count2);
+    assertEquals(0, dtor_count2);
+
+    /* release */
+    b9.release(test_ins1);
+    assertEquals(2, ctor_count1);
+    assertEquals(1, dtor_count1);
+    assertEquals(1, ctor_count2);
+    assertEquals(0, dtor_count2);
+
+    b9.release(test_ins2);
+    assertEquals(2, ctor_count1);
+    assertEquals(2, dtor_count1);
+    assertEquals(1, ctor_count2);
+    assertEquals(1, dtor_count2);
 
     /* generateID */
-    var id1 = b9.System.generateID();
-    var id2 = b9.System.generateID();
-    var id3 = b9.System.generateID();
+    var id1 = b9.generateID();
+    var id2 = b9.generateID();
+    var id3 = b9.generateID();
 
     assertNotEquals(0, id1);
     assertNotEquals(0, id2);
@@ -36,4 +73,8 @@ function test_b9() {
     assertNotEquals(id1, id2);
     assertNotEquals(id2, id3);
     assertNotEquals(id3, id1);
+
+    /* toID */
+    assertEquals(0, b9.toID(""));
+    assertEquals(-(((97 * 37) + 98) * 37 + 99), b9.toID("abc"));
 }
