@@ -90,7 +90,7 @@ b9.Math.sqrt = function(s) {
  * @return {Number} hoge
  */
 b9.Math.sinFloat = function(deg) {
-    return Math.sin(deg * b9.Math.DEG_TO_RAD);
+    return Math.sin(deg * this.Math.DEG_TO_RAD);
 };
 
 /**
@@ -99,7 +99,7 @@ b9.Math.sinFloat = function(deg) {
  * @return {Number} hoge
  */
 b9.Math.cosFloat = function(deg) {
-    return Math.cos(deg * b9.Math.DEG_TO_RAD);
+    return Math.cos(deg * this.DEG_TO_RAD);
 };
 
 /**
@@ -108,15 +108,15 @@ b9.Math.cosFloat = function(deg) {
  * @return {Number} hoge
  */
 b9.Math.sinInt = function(deg) {
-    deg = b9.Math.floor(deg);
+    deg = this.floor(deg);
 
     if (deg < 0) {
-        deg -= (b9.Math.floor(deg / 360) - 1) * 360;
+        deg -= (this.floor(deg / 360) - 1) * 360;
     }
 
     deg %= 360;
 
-    return (deg < 180) ? b9.Math._sin_table[deg] : -b9.Math._sin_table[deg - 180];
+    return (deg < 180) ? this._sin_table[deg] : -this._sin_table[deg - 180];
 };
 
 /**
@@ -125,7 +125,7 @@ b9.Math.sinInt = function(deg) {
  * @return {Number} hoge
  */
 b9.Math.cosInt = function(deg) {
-    return b9.Math.sinInt(deg + 90);
+    return this.sinInt(deg + 90);
 };
 
 /**
@@ -134,7 +134,7 @@ b9.Math.cosInt = function(deg) {
  * @return {Number} hoge
  */
 b9.Math.asin = function(x) {
-    return Math.asin(x) * b9.Math.RAD_TO_DEG;
+    return Math.asin(x) * this.RAD_TO_DEG;
 };
 
 /**
@@ -143,7 +143,7 @@ b9.Math.asin = function(x) {
  * @return {Number} hoge
  */
 b9.Math.acos = function(x) {
-    return Math.acos(x) * b9.Math.RAD_TO_DEG;
+    return Math.acos(x) * this.RAD_TO_DEG;
 };
 
 /**
@@ -153,7 +153,7 @@ b9.Math.acos = function(x) {
  * @return {Number} hoge
  */
 b9.Math.atan2 = function(y, x) {
-    return Math.atan2(y, x) * b9.Math.RAD_TO_DEG;
+    return Math.atan2(y, x) * this.RAD_TO_DEG;
 };
 
 /**
@@ -163,17 +163,17 @@ b9.Math.atan2 = function(y, x) {
  * @return {Number} hoge
  */
 b9.Math.randomInt = function(from, to) {
-    from = b9.Math.floor(from);
-    to = b9.Math.floor(to);
+    from = this.floor(from);
+    to = this.floor(to);
 
     var range;
 
     if (to >= from) {
         range = to - from + 1;
-        return from + b9.Math.floor(Math.random() * range);
+        return from + this.floor(Math.random() * range);
     } else {
         range = from - to + 1;
-        return from - b9.Math.floor(Math.random() * range);
+        return from - this.floor(Math.random() * range);
     }
 };
 
@@ -185,16 +185,16 @@ b9.Math.randomInt = function(from, to) {
  * @return {Number} hoge
  */
 b9.Math.randomFloat = function(from, to, interval) {
-    interval = b9.Math.abs(interval);
+    interval = this.abs(interval);
 
     var range;
 
     if (to >= from) {
-        range = b9.Math.floor((to - from) / interval) + 1;
-        return from + b9.Math.floor(Math.random() * range) * interval;
+        range = this.floor((to - from) / interval) + 1;
+        return from + this.floor(Math.random() * range) * interval;
     } else {
-        range = b9.Math.floor((from - to) / interval) + 1;
-        return from - b9.Math.floor(Math.random() * range) * interval;
+        range = this.floor((from - to) / interval) + 1;
+        return from - this.floor(Math.random() * range) * interval;
     }
 };
 
@@ -206,9 +206,9 @@ b9.Math.randomFloat = function(from, to, interval) {
  * @return {Number} hoge
  */
 b9.Math.interp = function(from, to, ratio) {
-    if (ratio < b9.Math.EPSILON) {
+    if (ratio < this.EPSILON) {
         return from;
-    } else if (ratio > 1.0 - b9.Math.EPSILON) {
+    } else if (ratio > 1.0 - this.EPSILON) {
         return to;
     } else {
         return from * (1.0 - ratio) + to * ratio;
@@ -222,7 +222,7 @@ b9.Math.interp = function(from, to, ratio) {
  * @return {Boolean} hoge
  */
 b9.Math.isEqualFloat = function(a, b) {
-    return (b9.Math.abs(a - b) < b9.Math.EPSILON);
+    return (this.abs(a - b) < this.EPSILON);
 };
 
 /**
