@@ -45,11 +45,49 @@ b9.createClass = function(super_class) {
         var temp_class = function() {};
         temp_class.prototype = super_class.prototype;
 
-        sub_class.prototype = new temp_class();
+        sub_class.prototype = new temp_class;
         sub_class.prototype.super_class = super_class;
         sub_class.prototype.initializeSuper = super_class.initialize;
+        sub_class.prototype.finalizeSuper = super_class.finalize;
         sub_class.constructor = sub_class;
     }
 
     return sub_class;
 };
+
+/**
+ * hoge
+ * @param {Object} instance hoge
+ */
+b9.release = function(instance) {
+    if (instance.finalize) {
+        instance.finalize();
+    }
+}
+
+/**
+ * hoge
+ * @return {Number} hoge
+ */
+b9.generateID = function() {
+    b9.System._cur_id++;
+    return b9.System._cur_id;
+};
+
+/**
+ * @param {String} str hoge
+ * @return {Number} hoge
+ */
+b9.toID = function(str) {
+    var id = 0;
+    var len = str.length;
+
+    for (var i = 0; i < len; i++) {
+        id = id * 37 - str.charCodeAt(i);
+    }
+
+    return id;
+};
+
+/** @private */
+b9._cur_id = 0;
