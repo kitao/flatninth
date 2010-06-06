@@ -62,8 +62,13 @@ b9.Sprite.prototype.initialize = function(dimension, max_rect_num) {
 b9.Sprite.prototype.finalize = function() {
     for (var i = 0; i < max_rect_num; i++) {
         var rect = this._rect[i];
+
         b9.release(rect.color);
+        rect.color = null;
+
         b9.release(rect.pos);
+        rect.pos = null;
+
         this._rect[i] = null;
     }
 
