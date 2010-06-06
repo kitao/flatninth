@@ -21,7 +21,7 @@
  */
 
 function testVector2D() {
-    /* Vector2D */
+    /* initialize */
     var vec1 = new b9.Vector2D();
     assertTrue(vec1.x === 0.0 && vec1.y === 0.0);
 

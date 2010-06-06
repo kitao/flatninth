@@ -21,7 +21,7 @@
  */
 
 function testColor() {
-    /* b9.Color */
+    /* initialize */
     /* getR */
     /* getG */
     /* getB */

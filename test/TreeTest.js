@@ -21,7 +21,7 @@
  */
 
 function testTree() {
-    /* b9.Tree */
+    /* initialize */
     /* getSelf */
     /* getPrevAll */
     /* getNextAll */

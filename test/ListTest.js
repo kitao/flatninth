@@ -21,7 +21,7 @@
  */
 
 function testList() {
-    /* b9.List */
+    /* initialize */
     /* getItemNum */
     /* getFirstItem */
     /* getLastItem */

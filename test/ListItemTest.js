@@ -21,7 +21,7 @@
  */
 
 function testListItem() {
-    /* b9.ListItem */
+    /* initialize */
     /* getSelf */
     /* getList */
     /* getPrev */
