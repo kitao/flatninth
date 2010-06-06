@@ -23,10 +23,15 @@
 /**
  * hoge
  * @class hoge
+ */
+b9.View = b9.createClass();
+
+/**
+ * hoge
  * @param {Number} id hoge
  * @param {Number} dimension hoge
  */
-b9.View = function(id, dimension) {
+b9.View.prototype.initialize = function(id, dimension) {
     /** @private */
     this._id = id;
 
@@ -61,9 +66,9 @@ b9.View = function(id, dimension) {
 /**
  * hoge
  */
-b9.View.prototype.destroy = function() {
-    this._view_tree.destroy();
-    this._elem_tree.destroy();
+b9.View.prototype.finalize = function() {
+    this._view_tree.finalize();
+    this._elem_tree.finalize();
 
     this._pos = null;
     this._size = null;

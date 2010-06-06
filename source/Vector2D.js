@@ -23,10 +23,15 @@
 /**
  * hoge
  * @class hoge
+ */
+b9.Vector2D = b9.createClass();
+
+/**
+ * hoge
  * @param {b9.Vector2D|Number} [arg1] hoge
  * @param {Number} [arg2] hoge
  */
-b9.Vector2D = function(arg1, arg2) {
+b9.Vector2D.prototype.initialize = function(arg1, arg2) {
     /**
      * hoge
      * @return {Number}
