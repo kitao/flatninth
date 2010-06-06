@@ -28,7 +28,8 @@ b9.ViewManager._initialize = function() {
 
 /** @private */
 b9.ViewManager._finalize = function() {
-    b9.ViewManager._view_tree.finalize();
+    b9.release(this._view_tree);
+    this._view_tree = null;
 };
 
 /**

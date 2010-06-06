@@ -43,6 +43,8 @@ b9.Primitive.prototype.initialize = function(dimension, max_vert_num) {
  *
  */
 b9.Primitive.prototype.finalize = function() {
+    // TODO
+
     this.finalizeSuper();
 };
 
