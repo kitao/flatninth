@@ -20,6 +20,6 @@
  * THE SOFTWARE.
  */
 
-function testObjectPool() {
-    /* TODO */
+function testViewManager() {
+    // TODO
 }
