@@ -24,7 +24,12 @@
  * hoge
  * @class hoge
  */
-b9.List = function() {
+b9.List = b9.createClass();
+
+/**
+ * hoge
+ */
+b9.List.prototype.initialize = function() {
     /** @private */
     this._start = new b9.ListItem(null);
 
@@ -44,7 +49,7 @@ b9.List = function() {
 /**
  * hoge
  */
-b9.List.prototype.destroy = function() {
+b9.List.prototype.finalize = function() {
     this.clear();
 
     this._start._list = null;

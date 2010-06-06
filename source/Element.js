@@ -23,9 +23,14 @@
 /**
  * hoge
  * @class hoge
+ */
+b9.Element = b9.createClass();
+
+/**
+ * hoge
  * @param {Number} dimension hoge
  */
-b9.Element = function(dimension) {
+b9.Element.prototype.initialize = function(dimension) {
     /** @private */
     this._dimension = (dimension !== 3) ? 2 : 3;
 
@@ -48,8 +53,8 @@ b9.Element = function(dimension) {
 /**
  *
  */
-b9.Element.prototype.destroy = function() {
-    this._elem_tree.destroy();
+b9.Element.prototype.finalize = function() {
+    b9.release(this._elem_tree);
 
     this._local = null;
     this._filter_color = null;

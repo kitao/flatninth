@@ -23,9 +23,14 @@
 /**
  * hoge
  * @class hoge
+ */
+b9.ListItem = b9.createClass();
+
+/**
+ * hoge
  * @param {Object} self hoge
  */
-b9.ListItem = function(self) {
+b9.ListItem.prototype.initialize = function(self) {
     /** @private */
     this._self = self;
 
@@ -42,7 +47,7 @@ b9.ListItem = function(self) {
 /**
  * hoge
  */
-b9.ListItem.prototype.destroy = function() {
+b9.ListItem.prototype.finalize = function() {
     if (this._list) {
         this._list.removeItem(this);
     }
