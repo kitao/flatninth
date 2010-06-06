@@ -24,11 +24,16 @@
  * hoge
  * @class hoge
  * @extends b9.Element
+ */
+b9.Sprite = b9.createClass(b9.Element);
+
+/**
+ * hoge
  * @param {Number} dimension
  * @param {Number} max_rect_num
  */
-b9.Sprite = function(dimension, max_rect_num) {
-    b9.Element.call(this, dimension);
+b9.Sprite.prototype.initialize = function(dimension, max_rect_num) {
+    this.initializeSuper(dimension);
     this._elem_type = b9.Element.TYPE_SPRITE;
 
     this._max_rect_num = max_rect_num;
@@ -51,16 +56,13 @@ b9.Sprite = function(dimension, max_rect_num) {
     }
 };
 
-b9.Sprite.prototype = b9.Element;
-b9.Sprite.constructor = b9.Sprite;
-
 /**
  *
  */
-b9.Sprite.prototype.destroy = function() {
-    b9.Element.destroy.call(this);
-
+b9.Sprite.prototype.finalize = function() {
     this._rect = null;
+
+    this.finalizeSuper();
 };
 
 /**

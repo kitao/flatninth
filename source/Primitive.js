@@ -24,24 +24,26 @@
  * hoge
  * @class hoge
  * @extends b9.Element
+ */
+b9.Primitive = b9.createClass();
+
+/**
+ * hoge
  * @param {Number} dimension
  * @param {Number} max_vert_num
  */
-b9.Primitive = function(dimension, max_vert_num) {
-    b9.Element.call(this, dimension);
+b9.Primitive.prototype.initialize = function(dimension, max_vert_num) {
+    this.initializeSuper(dimension);
     this._elem_type = b9.Element.TYPE_PRIMITIVE;
 
     // TODO
 };
 
-b9.Primitive.prototype = b9.Element;
-b9.Primitive.constructor = b9.Primitive;
-
 /**
  *
  */
-b9.Primitive.prototype.destroy = function() {
-    b9.Element.destroy.call(this);
+b9.Primitive.prototype.finalize = function() {
+    this.finalizeSuper();
 };
 
 /**
