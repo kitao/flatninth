@@ -20,6 +20,6 @@
  * THE SOFTWARE.
  */
 
-function testViewManager() {
+function testTaskRoot() {
     // TODO
 }

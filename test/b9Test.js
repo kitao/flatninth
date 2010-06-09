@@ -75,6 +75,6 @@ function test_b9() {
     assertNotEquals(id3, id1);
 
     /* toID */
-    assertEquals(0, b9.toID(""));
-    assertEquals(-(((97 * 37) + 98) * 37 + 99), b9.toID("abc"));
+    assertEquals(0, b9.StringToID(""));
+    assertEquals(-(((97 * 37) + 98) * 37 + 99), b9.StringToID("abc"));
 }

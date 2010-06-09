@@ -20,6 +20,6 @@
  * THE SOFTWARE.
  */
 
-function testTaskManager() {
+function testElementRoot() {
     // TODO
 }
