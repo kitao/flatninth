@@ -22,9 +22,14 @@
 
 /**
  * @class hoge
+ */
+b9.Task = b9.createClass();
+
+/**
+ *
  * @param {String} name
  */
-b9.Task = function(name) {
+b9.Task.initialize = function(name) {
     /** @private */
     this._name = name;
 
@@ -32,7 +37,7 @@ b9.Task = function(name) {
     this._task_flag = b9.Task.FLAG_ACTIVE;
 
     /** @private */
-    this._list_item = new b9.ListItem(this);
+    this._task_tree = new b9.Tree(this);
 };
 
 /**
@@ -43,6 +48,14 @@ b9.Task.prototype.finalize = function() {
 
     b9.release(this._list_item);
     this._list_item = null;
+};
+
+/**
+ * hoge
+ * @release {Boolean} hoge
+ */
+b9.Task.prototype.isRoot = function() {
+    return false;
 };
 
 /**
@@ -73,6 +86,93 @@ b9.Task.prototype.setTaskFlag = function(task_flag, is_on) {
     } else {
         this._task_flag &= ~task_flag;
     }
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.Task.prototype.getParent = function() {
+    var parent = this._task_tree.getParent();
+    return parent ? parent.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.Task.prototype.getPrevSibling = function() {
+    var sibling = this._task_tree.getPrevSibling();
+    return sibling ? sibling.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.Task.prototype.getNextSibling = function() {
+    var sibling = this._task_tree.getNextSibling();
+    return sibling ? sibling.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.Task.prototype.getFirstChild = function() {
+    var child = this._task_tree.getFirstChild();
+    return child ? child.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.Task.prototype.getLastChild = function() {
+    var child = this._task_tree.getLastChild();
+    return child ? child.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.Task.prototype.addChildFirst = function(cihld) {
+    this._task_tree.addChildFirst(child._task_tree);
+};
+
+/**
+ * hoge
+ * @param {b9.Task} child hoge
+ */
+b9.Task.prototype.addChildLast = function(child) {
+    this._task_tree.addChildLast(child._task_tree);
+};
+
+/**
+ * hoge
+ * @param {b9.Task} child hoge
+ * @param {b9.Task} next_child hoge
+ */
+b9.Task.prototype.addChildBefore = function(child, next_child) {
+    this._task_tree.addChildBefore(child._task_tree, next_child._task_tree);
+};
+
+/**
+ * hoge
+ * @param {b9.Task} child hoge
+ * @param {b9.Task} prev_child hoge
+ */
+b9.Task.prototype.addChildAfter = function(child, prev_child) {
+    this._task_tree.addChildAfter(child._task_tree, prev_child._task_tree);
+};
+
+/**
+ * hoge
+ * @param {b9.Task} child hoge
+ */
+b9.Task.prototype.removeChild = function(child) {
+    this._task_tree.removeChild(child._task_tree);
 };
 
 /**

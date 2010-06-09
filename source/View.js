@@ -60,7 +60,7 @@ b9.View.prototype.initialize = function(id, dimension) {
     this._view_tree = new b9.Tree(this);
 
     /** @private */
-    this._elem_tree = new b9.Tree(null);
+    this._elem_root = new b9.ElementRoot(this); // this line should be at the last line
 };
 
 /**
@@ -87,6 +87,14 @@ b9.View.prototype.finalize = function() {
 
     b9.release(this._elem_tree);
     this._elem_tree = null;
+};
+
+/**
+ * hoge
+ * @release {Boolean} hoge
+ */
+b9.View.prototype.isRoot = function() {
+    return false;
 };
 
 /**

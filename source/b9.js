@@ -85,7 +85,7 @@ b9.generateID = function() {
  * @param {String} str hoge
  * @return {Number} hoge
  */
-b9.toID = function(str) {
+b9.StringToID = function(str) {
     var id = 0;
     var len = str.length;
 

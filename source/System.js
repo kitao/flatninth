@@ -29,15 +29,45 @@ b9.System = {};
  *
  */
 b9.System.startFlatninth = function() {
-    while (true) {
-        b9.System._update();
+    /** @private */
+    this._task_root = new Array(b9.Task._ORDER_NUM);
+
+    for (var i = 0; i < b9.Task._ORDER_NUM; i++) {
+        this._task_root[i] = new b9.TaskRoot(i);
     }
+
+    /** @private */
+    this._view_root = new b9.ViewRoot();
 };
 
 /**
  *
  */
 b9.System.endFlatninth = function() {
+    for (var i = 0; i < b9.Task._ORDER_NUM; i++) {
+        this._task_root[i].destroy();
+        this._task_root[i] = null;
+    }
+
+    this._task_root = null;
+
+    // TODO
+};
+
+/**
+ * hoge
+ * @return {b9.TaskRoot} hoge
+ */
+b9.System.getTaskRoot = function(task_order) {
+    return this._task_root[task_order];
+};
+
+/**
+ * hoge
+ * @return {b9.ViewRoot} hoge
+ */
+b9.System.getViewRoot = function() {
+    return this._view_root;
 };
 
 /**
@@ -54,4 +84,21 @@ b9.System.trace = function(msg) {
  */
 b9.System.error = function(msg) {
     throw new Error(msg);
+};
+
+/**
+ *
+ */
+b9.System._update = function() {
+    for (var i = 0; i < b9.Task._ORDER_NUM; i++) {
+        var next_task = null;
+
+        for (var task = this._task_root.getFirstChild(); task; task = next_task) {
+            next_task = task.getNextAll();
+
+            if (task.isFlagOn(b9.Task.FLAG_ACTIVE)) {
+                task.onUpdate();
+            }
+        }
+    }
 };
