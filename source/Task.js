@@ -90,11 +90,29 @@ b9.Task.prototype.setTaskFlag = function(task_flag, is_on) {
 
 /**
  * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Task.prototype.getPrevAsList = function() {
+    var tree = this._task_tree.getPrevAsList();
+    return tree ? tree.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Task.prototype.getNextAsList = function() {
+    var tree = this._task_tree.getNextAsList();
+    return tree ? tree.getSelf() : null;
+};
+
+/**
+ * hoge
  * @return {b9.Task} hoge
  */
 b9.Task.prototype.getParent = function() {
-    var parent = this._task_tree.getParent();
-    return parent ? parent.getSelf() : null;
+    var tree = this._task_tree.getParent();
+    return tree ? tree.getSelf() : null;
 };
 
 /**
@@ -102,8 +120,8 @@ b9.Task.prototype.getParent = function() {
  * @return {b9.Task} hoge
  */
 b9.Task.prototype.getPrevSibling = function() {
-    var sibling = this._task_tree.getPrevSibling();
-    return sibling ? sibling.getSelf() : null;
+    var tree = this._task_tree.getPrevSibling();
+    return tree ? tree.getSelf() : null;
 };
 
 /**
@@ -111,8 +129,8 @@ b9.Task.prototype.getPrevSibling = function() {
  * @return {b9.Task} hoge
  */
 b9.Task.prototype.getNextSibling = function() {
-    var sibling = this._task_tree.getNextSibling();
-    return sibling ? sibling.getSelf() : null;
+    var tree = this._task_tree.getNextSibling();
+    return tree ? tree.getSelf() : null;
 };
 
 /**
@@ -120,8 +138,8 @@ b9.Task.prototype.getNextSibling = function() {
  * @return {b9.Task} hoge
  */
 b9.Task.prototype.getFirstChild = function() {
-    var child = this._task_tree.getFirstChild();
-    return child ? child.getSelf() : null;
+    var tree = this._task_tree.getFirstChild();
+    return tree ? tree.getSelf() : null;
 };
 
 /**
@@ -129,8 +147,17 @@ b9.Task.prototype.getFirstChild = function() {
  * @return {b9.Task} hoge
  */
 b9.Task.prototype.getLastChild = function() {
-    var child = this._task_tree.getLastChild();
-    return child ? child.getSelf() : null;
+    var tree = this._task_tree.getLastChild();
+    return tree ? tree.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.Task.prototype.getLastDescendant = function() {
+    var tree = this._task_tree.getLastDescendant();
+    return tree ? tree.getSelf() : null;
 };
 
 /**

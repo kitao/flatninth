@@ -137,9 +137,27 @@ b9.Element.prototype.setFilterColor = function(color) {
  * hoge
  * @return {b9.Element} hoge
  */
+b9.Element.prototype.getPrevAsList = function() {
+    var tree = this._elem_tree.getPrevAsList();
+    return tree ? tree.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Element.prototype.getNextAsList = function() {
+    var tree = this._elem_tree.getNextAsList();
+    return tree ? tree.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
 b9.Element.prototype.getParent = function() {
-    var parent = this._elem_tree.getParent();
-    return parent ? parent.getSelf() : null;
+    var tree = this._elem_tree.getParent();
+    return tree ? tree.getSelf() : null;
 };
 
 /**
@@ -147,8 +165,8 @@ b9.Element.prototype.getParent = function() {
  * @return {b9.Element} hoge
  */
 b9.Element.prototype.getPrevSibling = function() {
-    var sibling = this._elem_tree.getPrevSibling();
-    return sibling ? sibling.getSelf() : null;
+    var tree = this._elem_tree.getPrevSibling();
+    return tree ? tree.getSelf() : null;
 };
 
 /**
@@ -156,8 +174,8 @@ b9.Element.prototype.getPrevSibling = function() {
  * @return {b9.Element} hoge
  */
 b9.Element.prototype.getNextSibling = function() {
-    var sibling = this._elem_tree.getNextSibling();
-    return sibling ? sibling.getSelf() : null;
+    var tree = this._elem_tree.getNextSibling();
+    return tree ? tree.getSelf() : null;
 };
 
 /**
@@ -165,8 +183,8 @@ b9.Element.prototype.getNextSibling = function() {
  * @return {b9.Element} hoge
  */
 b9.Element.prototype.getFirstChild = function() {
-    var child = this._elem_tree.getFirstChild();
-    return child ? child.getSelf() : null;
+    var tree = this._elem_tree.getFirstChild();
+    return tree ? tree.getSelf() : null;
 };
 
 /**
@@ -174,8 +192,17 @@ b9.Element.prototype.getFirstChild = function() {
  * @return {b9.Element} hoge
  */
 b9.Element.prototype.getLastChild = function() {
-    var child = this._elem_tree.getLastChild();
-    return child ? child.getSelf() : null;
+    var tree = this._elem_tree.getLastChild();
+    return tree ? tree.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Element} hoge
+ */
+b9.Element.prototype.getLastDescendant = function() {
+    var tree = this._elem_tree.getLastDescendant();
+    return tree ? tree.getSelf() : null;
 };
 
 /**

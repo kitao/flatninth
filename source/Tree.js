@@ -72,7 +72,7 @@ b9.Tree.prototype.getSelf = function() {
  * hoge
  * @return {b9.Tree} hoge
  */
-b9.Tree.prototype.getPrevAll = function() {
+b9.Tree.prototype.getPrevAsList = function() {
     return this._prev;
 };
 
@@ -80,7 +80,7 @@ b9.Tree.prototype.getPrevAll = function() {
  * hoge
  * @return {b9.Tree} hoge
  */
-b9.Tree.prototype.getNextAll = function() {
+b9.Tree.prototype.getNextAsList = function() {
     return this._next;
 };
 
