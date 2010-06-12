@@ -21,9 +21,6 @@
  */
 
 function test_b9() {
-    /* VERSION */
-    assertEquals("0.0.1", b9.VERSION);
-
     /* createClass */
     var ctor_count1 = 0;
     var dtor_count1 = 0;
@@ -74,7 +71,12 @@ function test_b9() {
     assertNotEquals(id2, id3);
     assertNotEquals(id3, id1);
 
-    /* toID */
-    assertEquals(0, b9.StringToID(""));
-    assertEquals(-(((97 * 37) + 98) * 37 + 99), b9.StringToID("abc"));
+    /* VERSION */
+    assertEquals(0.01, b9.VERSION);
+
+    /* DIMENSION_2 */
+    assertEquals(2, b9.DIMENSION_2);
+
+    /* DIMENSION_3 */
+    assertEquals(3, b9.DIMENSION_3);
 }
