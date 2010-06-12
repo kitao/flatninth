@@ -28,21 +28,24 @@ b9.View = b9.createClass();
 
 /**
  * hoge
- * @param {Number} id hoge
  * @param {Number} dimension hoge
+ * @param {String} [name] hoge
  */
-b9.View.prototype.initialize = function(id, dimension) {
+b9.View.prototype.initialize = function(dimension, name) {
     /** @private */
-    this._id = id;
+    this._id = b9.generateID();
 
     /** @private */
-    this._dimension = (dimension !== 3) ? 2 : 3;
+    this._name = name || "";
 
     /** @private */
-    this._view_flag = 0;
+    this._dimension = (dimension !== b9.DIMENSION_3) ? b9.DIMENSION_2 : b9.DIMENSION_3;
 
     /** @private */
-    this._pos = (this._dimension === 2) ? new b9.Vector2D() : new b9.Vector3D();
+    this._view_flag = b9.View.FLAG_VISIBLE;
+
+    /** @private */
+    this._pos = (this._dimension === b9.DIMENSION_2) ? new b9.Vector2D() : new b9.Vector3D();
 
     /** @private */
     this._size = new b9.Vector2D();
@@ -110,6 +113,14 @@ b9.View.prototype.getID = function() {
  */
 b9.View.prototype.getDimention = function() {
     return this._dimension;
+};
+
+/**
+ * hoge
+ * @return {String} hoge
+ */
+b9.View.prototype.getName = function() {
+    return this._name;
 };
 
 /**
@@ -386,6 +397,11 @@ b9.View.prototype.addElementAfter = function(elem, prev_elem) {
  */
 b9.View.prototype.removeElement = function(elem) {
     this._elem_tree.removeChild(elem._tree);
+};
+
+/** @private */
+b9.View.prototype._render = function() {
+    // TODO
 };
 
 /**

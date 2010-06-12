@@ -27,11 +27,14 @@ b9.Task = b9.createClass();
 
 /**
  *
- * @param {String} name
+ * @param {String} [name] hoge
  */
-b9.Task.initialize = function(name) {
+b9.Task.prototype.initialize = function(name) {
     /** @private */
-    this._name = name;
+    this._id = b9.generateID();
+
+    /** @private */
+    this._name = name || "";
 
     /** @private */
     this._task_flag = b9.Task.FLAG_ACTIVE;
@@ -56,6 +59,14 @@ b9.Task.prototype.finalize = function() {
  */
 b9.Task.prototype.isRoot = function() {
     return false;
+};
+
+/**
+ * hoge
+ * @return {Number} hoge
+ */
+b9.Task.prototype.getID = function() {
+    return this._id;
 };
 
 /**

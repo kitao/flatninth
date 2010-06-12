@@ -26,12 +26,6 @@
 var b9 = {};
 
 /**
- *
- * @return {String}
- */
-b9.VERSION = "0.0.1";
-
-/**
  * hoge
  * @param {Object} [super_class] hoge
  * @return {Object} hoge
@@ -82,19 +76,22 @@ b9.generateID = function() {
 };
 
 /**
- * @param {String} str hoge
- * @return {Number} hoge
+ * hoge
+ * @return {String}
  */
-b9.StringToID = function(str) {
-    var id = 0;
-    var len = str.length;
+b9.VERSION = 0.01;
 
-    for (var i = 0; i < len; i++) {
-        id = id * 37 - str.charCodeAt(i);
-    }
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.DIMENSION_2 = 2;
 
-    return id;
-};
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.DIMENSION_3 = 3;
 
 /** @private */
 b9._cur_id = 0;

@@ -29,12 +29,11 @@ b9.ViewRoot = b9.createClass(b9.View);
 
 /**
  * hoge
- * @param {Number} task_order
  */
-b9.ViewRoot.prototype.initialize = function(task_order) {
-    this.initializeSuper(b9.StringToID("ViewRoot"), 0);
+b9.ViewRoot.prototype.initialize = function() {
+    this.initializeSuper(b9.DIMENSION_2, "ViewRoot");
 
-    this._dimension = 0; // TODO: need to declare private?
+    this._dimension = null; // TODO: need to declare private?
 };
 
 /**

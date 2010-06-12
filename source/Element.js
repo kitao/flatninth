@@ -32,7 +32,7 @@ b9.Element = b9.createClass();
  */
 b9.Element.prototype.initialize = function(dimension) {
     /** @private */
-    this._dimension = (dimension !== 3) ? 2 : 3;
+    this._dimension = (dimension !== b9.DIMENSION_3) ? b9.DIMENSION_2 : b9.DIMENSION_3;
 
     /** @private */
     this._elem_type = b9.Element.TYPE_ELEMENT;
@@ -41,7 +41,7 @@ b9.Element.prototype.initialize = function(dimension) {
     this._elem_flag = 0;
 
     /** @private */
-    this._local = (this._dimension === 2) ? new b9.Matrix2D() : new b9.Matrix3D();
+    this._local = (this._dimension === b9.DIMENSION_2) ? new b9.Matrix2D() : new b9.Matrix3D();
 
     /** @private */
     this._filter_color = new b9.Color();
