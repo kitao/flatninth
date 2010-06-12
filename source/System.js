@@ -37,7 +37,7 @@ b9.System._initialize = function(canvas_id, aim_fps) {
     this._task_root = new b9.Task("TaskRoot");
 
     /** @private */
-    this._view_root = new b9.View(b9.DIMENSION_2, "ViewRoot");
+    this._view_root = new b9.View(2, "ViewRoot");
     this._view_root._dimension = null;
 
     /** @private */

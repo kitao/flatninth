@@ -42,13 +42,19 @@ b9.View.prototype.initialize = function(dimension, name) {
     this._is_root = false;
 
     /** @private */
-    this._dimension = (dimension !== b9.DIMENSION_3) ? b9.DIMENSION_2 : b9.DIMENSION_3;
+    this._dimension = (dimension !== 3) ? 2 : 3;
+
+    /** @private */
+    this._canvas_id = null;
+
+    /** @private */
+    this._canvas_ctx = null;
 
     /** @private */
     this._view_flag = b9.View.FLAG_VISIBLE;
 
     /** @private */
-    this._pos = (this._dimension === b9.DIMENSION_2) ? new b9.Vector2D() : new b9.Vector3D();
+    this._pos = (this._dimension === 2) ? new b9.Vector2D() : new b9.Vector3D();
 
     /** @private */
     this._size = new b9.Vector2D();
@@ -125,6 +131,35 @@ b9.View.prototype.isRoot = function() {
  */
 b9.View.prototype.getDimention = function() {
     return this._dimension;
+};
+
+/**
+ * hoge
+ * @return {String} hoge
+ */
+b9.View.prototype.getCanvas = function() {
+    return this._canvas_id;
+};
+
+/**
+ * hoge
+ * @param {String} canvas_id
+ */
+b9.View.prototype.attachCanvas = function(canvas_id) {
+    var canvas = document.getElementById(canvas_id);
+
+    if (canvas) {
+        this._canvas_id = canvas_id;
+        this._canvas_ctx = canvas.getContext("2d");
+    }
+};
+
+/**
+ * hoge
+ */
+b9.View.prototype.detatchCanvas = function() {
+    this._canvas_id = null;
+    tihs._canvas_ctx = null;
 };
 
 /**
