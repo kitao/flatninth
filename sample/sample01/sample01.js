@@ -24,7 +24,8 @@
  *
  */
 function main() {
-    b9.startFlatninth();
+    b9.System.setup("sample01_canvas", 10);
+    b9.System.start();
 };
 
 main();
