@@ -32,6 +32,9 @@ b9.Element = b9.createClass();
  */
 b9.Element.prototype.initialize = function(dimension) {
     /** @private */
+    this._is_root = false;
+
+    /** @private */
     this._dimension = (dimension !== b9.DIMENSION_3) ? b9.DIMENSION_2 : b9.DIMENSION_3;
 
     /** @private */
@@ -62,6 +65,14 @@ b9.Element.prototype.finalize = function() {
 
     b9.release(this._elem_tree);
     this._elem_tree = null;
+};
+
+/**
+ * hoge
+ * @return {Boolean} hoge
+ */
+b9.Element.prototype.isRoot = function() {
+    return this._is_root;
 };
 
 /**

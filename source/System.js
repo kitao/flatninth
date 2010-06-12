@@ -34,14 +34,11 @@ b9.System._initialize = function(canvas_id, aim_fps) {
     this._aim_fps = b9.Math.max(aim_fps, 1);
 
     /** @private */
-    this._task_root = new Array(b9.Task._ORDER_NUM);
-
-    for (var i = 0; i < b9.Task._ORDER_NUM; i++) {
-        this._task_root[i] = new b9.TaskRoot(i);
-    }
+    this._task_root = new b9.Task("TaskRoot");
 
     /** @private */
-    this._view_root = new b9.ViewRoot();
+    this._view_root = new b9.View(b9.DIMENSION_2, "ViewRoot");
+    this._view_root._dimension = null;
 
     /** @private */
     this._timer_id = null;
@@ -49,30 +46,28 @@ b9.System._initialize = function(canvas_id, aim_fps) {
 
 /** @private */
 b9.System._finalize = function() {
-    for (var i = 0; i < b9.Task._ORDER_NUM; i++) {
-        this._task_root[i].destroy();
-        this._task_root[i] = null;
-    }
-
+    b9.release(this._task_root);
     this._task_root = null;
+
+    b9.release(this._view_root);
+    this._view_root = null;
 };
 
 /**
  * hoge
- * @return {b9.TaskRoot} hoge
+ * @return {b9.Task} hoge
  */
-b9.System.getTaskRoot = function(task_order) {
-    return this._task_root[task_order];
+b9.System.getTaskRoot = function() {
+    return this._task_root;
 };
 
 /**
  * hoge
- * @return {b9.ViewRoot} hoge
+ * @return {b9.View} hoge
  */
 b9.System.getViewRoot = function() {
     return this._view_root;
 };
-
 
 /**
  * hoge
@@ -127,15 +122,14 @@ b9.System.error = function(msg) {
  *
  */
 b9.System._update = function() {
-    for (var i = 0; i < b9.Task._ORDER_NUM; i++) {
-        var next_task = null;
+    var next_task;
 
-        for (var task = this._task_root[i].getFirstChild(); task; task = next_task) {
-            next_task = task.getNextAll();
+    for (var task = this._task_root.getFirstChild(); task; task = next_task) {
+        next_task = task.getNextAll();
 
-            if (task.isFlagOn(b9.Task.FLAG_ACTIVE)) {
-                task.onUpdate();
-            }
+        if (task.isFlagOn(b9.Task.FLAG_ACTIVE)) {
+            // TODO
+            task.onUpdate();
         }
     }
 };

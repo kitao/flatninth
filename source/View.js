@@ -36,7 +36,10 @@ b9.View.prototype.initialize = function(dimension, name) {
     this._id = b9.generateID();
 
     /** @private */
-    this._name = name || "";
+    this._name = name || "View";
+
+    /** @private */
+    this._is_root = false;
 
     /** @private */
     this._dimension = (dimension !== b9.DIMENSION_3) ? b9.DIMENSION_2 : b9.DIMENSION_3;
@@ -63,7 +66,8 @@ b9.View.prototype.initialize = function(dimension, name) {
     this._view_tree = new b9.Tree(this);
 
     /** @private */
-    this._elem_root = new b9.ElementRoot(this); // this line should be at the last line
+    this._elem_root = new b9.Element();
+    this._elem_root._is_root = true;
 };
 
 /**
@@ -94,25 +98,9 @@ b9.View.prototype.finalize = function() {
 
 /**
  * hoge
- * @release {Boolean} hoge
- */
-b9.View.prototype.isRoot = function() {
-    return false;
-};
-
-/**
- * hoge
  */
 b9.View.prototype.getID = function() {
     return this._id;
-};
-
-/**
- * hoge
- * @return {Number} hoge
- */
-b9.View.prototype.getDimention = function() {
-    return this._dimension;
 };
 
 /**
@@ -121,6 +109,22 @@ b9.View.prototype.getDimention = function() {
  */
 b9.View.prototype.getName = function() {
     return this._name;
+};
+
+/**
+ * hoge
+ * @release {Boolean} hoge
+ */
+b9.View.prototype.isRoot = function() {
+    return this._is_root;
+};
+
+/**
+ * hoge
+ * @return {Number} hoge
+ */
+b9.View.prototype.getDimention = function() {
+    return this._dimension;
 };
 
 /**

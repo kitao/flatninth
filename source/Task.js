@@ -34,7 +34,10 @@ b9.Task.prototype.initialize = function(name) {
     this._id = b9.generateID();
 
     /** @private */
-    this._name = name || "";
+    this._name = name || "Task";
+
+    /** @private */
+    this._is_root = false;
 
     /** @private */
     this._task_flag = b9.Task.FLAG_ACTIVE;
@@ -55,14 +58,6 @@ b9.Task.prototype.finalize = function() {
 
 /**
  * hoge
- * @release {Boolean} hoge
- */
-b9.Task.prototype.isRoot = function() {
-    return false;
-};
-
-/**
- * hoge
  * @return {Number} hoge
  */
 b9.Task.prototype.getID = function() {
@@ -75,6 +70,14 @@ b9.Task.prototype.getID = function() {
  */
 b9.Task.prototype.getName = function() {
     return this._name;
+};
+
+/**
+ * hoge
+ * @release {Boolean} hoge
+ */
+b9.Task.prototype.isRoot = function() {
+    return this._is_root;
 };
 
 /**
@@ -217,69 +220,6 @@ b9.Task.prototype.removeChild = function(child) {
  *
  */
 b9.Task.prototype.onUpdate = function() {};
-
-/** @private */
-b9.Task._ORDER_MINUS_5 = 0;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Task.ORDER_MINUS_4 = 1;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Task.ORDER_MINUS_3 = 2;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Task.ORDER_MINUS_2 = 3;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Task.ORDER_MINUS_1 = 4;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Task.ORDER_ZERO = 5;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Task.ORDER_PLUS_1 = 6;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Task.ORDER_PLUS_2 = 7;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Task.ORDER_PLUS_3 = 8;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Task.ORDER_PLUS_4 = 9;
-
-/** @private */
-b9.Task._ORDER_PLUS_5 = 10;
-
-/** @private */
-b9.Task._ORDER_NUM = 11;
 
 /**
  * hoge
