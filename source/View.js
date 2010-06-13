@@ -36,7 +36,7 @@ b9.View.prototype.initialize = function(dimension, name) {
     this._id = b9.generateID();
 
     /** @private */
-    this._name = name || "View";
+    this._name = name || "";
 
     /** @private */
     this._is_root = false;

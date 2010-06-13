@@ -34,14 +34,42 @@ b9.System._initialize = function(canvas_id, aim_fps) {
     this._aim_fps = b9.Math.max(aim_fps, 1);
 
     /** @private */
-    this._task_root = new b9.Task("TaskRoot");
+    this._task_root = new b9.Task("TASK_ROOT");
 
     /** @private */
-    this._view_root = new b9.View(2, "ViewRoot");
+    this._view_root = new b9.View(2, "VIEW_ROOT");
     this._view_root._dimension = null;
 
     /** @private */
     this._timer_id = null;
+
+    /** @private */
+    this._default_task_first = new b9.Task("DEFAULT_TASK_FIRST");
+    this._task_root.addChildLast(this._default_task_first);
+
+    /** @private */
+    this._default_task_before = new b9.Task("DEFAULT_TASK_BEFORE");
+    this._task_root.addChildLast(this._default_task_before);
+
+    /** @private */
+    this._default_task_normal = new b9.Task("DEFAULT_TASK_NORMAL");
+    this._task_root.addChildLast(this._default_task_normal);
+
+    /** @private */
+    this._default_task_after = new b9.Task("DEFAULT_TASK_AFTER");
+    this._task_root.addChildLast(this._default_task_after);
+
+    /** @private */
+    this._default_task_last = new b9.Task("DEFAULT_TASK_LAST");
+    this._task_root.addChildLast(this._default_task_last);
+
+    /** @private */
+    this._default_view_2d = new b9.View(2, "DEFAULT_VIEW_2D");
+    this._view_root.addChildLast(this._default_view_2d);
+
+    /** @private */
+    this._default_view_3d = null; //new b9.View(3, "DEFAULT_VIEW_3D");
+//    this._view_root.addChildLast(this._default_view_3d);
 };
 
 /** @private */
@@ -51,22 +79,6 @@ b9.System._finalize = function() {
 
     b9.release(this._view_root);
     this._view_root = null;
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.getTaskRoot = function() {
-    return this._task_root;
-};
-
-/**
- * hoge
- * @return {b9.View} hoge
- */
-b9.System.getViewRoot = function() {
-    return this._view_root;
 };
 
 /**
@@ -119,15 +131,87 @@ b9.System.error = function(msg) {
 };
 
 /**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.System.taskRoot = function() {
+    return this._task_root;
+};
+
+/**
+ * hoge
+ * @return {b9.View} hoge
+ */
+b9.System.viewRoot = function() {
+    return this._view_root;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.System.defaultTaskFirst = function() {
+    return this._default_task_first;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.System.defaultTaskBefore = function() {
+    return this._default_task_before;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.System.defaultTaskNormal = function() {
+    return this._default_task_normal;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.System.defaultTaskAfter = function() {
+    return this._default_task_after;
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.System.defaultTaskLast = function() {
+    return this._default_task_last;
+};
+
+/**
+ * hoge
+ * @return {b9.View} hoge
+ */
+b9.System.defaultView2D = function() {
+    return this._default_view_2d;
+};
+
+/**
+ * hoge
+ * @return {b9.View} hoge
+ */
+b9.System.defaultView3D = function() {
+    return this._default_view_3d;
+};
+
+/**
  *
  */
 b9.System._update = function() {
     var next_task;
 
     for (var task = this._task_root.getFirstChild(); task; task = next_task) {
-        next_task = task.getNextAll();
+        next_task = task.getNextAsList();
 
-        if (task.isFlagOn(b9.Task.FLAG_ACTIVE)) {
+        if (task.isTaskFlagOn(b9.Task.FLAG_ACTIVE)) {
             // TODO
             task.onUpdate();
         }
@@ -140,7 +224,7 @@ var x = 0;
  */
 b9.System._render = function() {
     for (var view = this._view_root.getFirstChild(); view; view = view.getNextAsList()) {
-        if (view.isFlagOn(b9.View.FLAG_VISIBLE)) {
+        if (view.isViewFlagOn(b9.View.FLAG_VISIBLE)) {
             // TODO
             view._render();
         }

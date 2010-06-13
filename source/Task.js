@@ -34,7 +34,7 @@ b9.Task.prototype.initialize = function(name) {
     this._id = b9.generateID();
 
     /** @private */
-    this._name = name || "Task";
+    this._name = name || "";
 
     /** @private */
     this._is_root = false;

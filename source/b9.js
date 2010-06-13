@@ -46,7 +46,7 @@ b9.createClass = function(super_class) {
         temp_class.prototype = super_class.prototype;
 
         sub_class.prototype = new temp_class();
-        sub_class.prototype.super_class = super_class;
+        sub_class.prototype.getSuperClass = function() { return super_class; };
 
         if (super_class.prototype.initialize) {
             sub_class.prototype.initializeSuper = super_class.prototype.initialize;
