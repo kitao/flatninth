@@ -38,12 +38,18 @@ function test_b9() {
     test_class2.prototype.finalize = function() { dtor_count2++; this.finalizeSuper(); };
 
     var test_ins1 = new test_class1();
+    assertUndefined(test_ins1.getSuperClass);
+    assertUndefined(test_ins1.initializeSuper);
+    assertUndefined(test_ins1.finalizeSuper);
     assertEquals(1, ctor_count1);
     assertEquals(0, dtor_count1);
     assertEquals(0, ctor_count2);
     assertEquals(0, dtor_count2);
 
     var test_ins2 = new test_class2();
+    assertEquals(test_class1, test_ins2.getSuperClass());
+    assertNotUndefined(test_ins2.initializeSuper);
+    assertNotUndefined(test_ins2.finalizeSuper);
     assertEquals(2, ctor_count1);
     assertEquals(0, dtor_count1);
     assertEquals(1, ctor_count2);
