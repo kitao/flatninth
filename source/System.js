@@ -28,9 +28,6 @@ b9.System = {};
 /** @private */
 b9.System._initialize = function(canvas_id, aim_fps) {
     /** @private */
-    this._canvas_id = canvas_id;
-
-    /** @private */
     this._aim_fps = b9.Math.max(aim_fps, 1);
 
     /** @private */
@@ -38,7 +35,7 @@ b9.System._initialize = function(canvas_id, aim_fps) {
 
     /** @private */
     this._view_root = new b9.View(2, "VIEW_ROOT");
-    this._view_root._dimension = null;
+    this._view_root.attachCanvas(canvas_id);
 
     /** @private */
     this._timer_id = null;
@@ -230,7 +227,7 @@ b9.System._render = function() {
         }
     }
 
-    var canvas = document.getElementById(this._canvas_id);
+    var canvas = document.getElementById(this._view_root._canvas_id);
 
     if (!canvas || !canvas.getContext) {
         return;
