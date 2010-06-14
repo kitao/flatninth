@@ -148,7 +148,7 @@ b9.List.prototype.addItemAfter = function(item, prev_item) {
 
 /**
  * hoge
- * @param {be.ListItem} item hoge
+ * @param {b9.ListItem} item hoge
  */
 b9.List.prototype.removeItem = function(item) {
     if (item._list === this) {

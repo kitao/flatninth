@@ -77,8 +77,8 @@ b9.release = function(instance) {
  * @return {Number} hoge
  */
 b9.generateID = function() {
-    b9.System._cur_id++;
-    return b9.System._cur_id;
+    this._cur_id++;
+    return this._cur_id;
 };
 
 /** @private */
