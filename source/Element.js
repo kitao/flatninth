@@ -279,8 +279,5 @@ b9.Element.TYPE_PRIMITIVE = 2;
  */
 b9.Element.FLAG_VISIBLE = 0x8000;
 
-/**
- * hoge
- * @return {Number}
- */
+/** @private */
 b9.Element._FLAG_ROOT = 0x0001;

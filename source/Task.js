@@ -224,8 +224,5 @@ b9.Task.prototype.onUpdate = function() {};
  */
 b9.Task.FLAG_ACTIVE = 0x8000;
 
-/**
- * hoge
- * @return {Number}
- */
+/** @private */
 b9.Task._FLAG_ROOT = 0x0001;
