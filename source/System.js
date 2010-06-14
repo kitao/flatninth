@@ -32,9 +32,11 @@ b9.System._initialize = function(canvas_id, aim_fps) {
 
     /** @private */
     this._task_root = new b9.Task("TASK_ROOT");
+    this._task_root.setTaskFlag(b9.Task._FLAG_ROOT);
 
     /** @private */
     this._view_root = new b9.View(2, "VIEW_ROOT");
+    this._view_root.setViewFlag(b9.View._FLAG_ROOT);
     this._view_root.attachCanvas(canvas_id);
 
     /** @private */

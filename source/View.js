@@ -39,9 +39,6 @@ b9.View.prototype.initialize = function(dimension, name) {
     this._name = name || "";
 
     /** @private */
-    this._is_root = false;
-
-    /** @private */
     this._dimension = (dimension !== 3) ? 2 : 3;
 
     /** @private */
@@ -73,7 +70,7 @@ b9.View.prototype.initialize = function(dimension, name) {
 
     /** @private */
     this._elem_root = new b9.Element();
-    this._elem_root._is_root = true;
+    this._elem_root.setElementFlag(b9.Element._FLAG_ROOT, true);
 };
 
 /**
@@ -122,7 +119,7 @@ b9.View.prototype.getName = function() {
  * @release {Boolean} hoge
  */
 b9.View.prototype.isRoot = function() {
-    return this._is_root;
+    return (this._view_flag & b9.View._FLAG_ROOT) ? true : false;
 };
 
 /**
@@ -447,10 +444,16 @@ b9.View.prototype._render = function() {
  * hoge
  * @return {Number}
  */
-b9.View.FLAG_VISIBLE = 0x01;
+b9.View.FLAG_VISIBLE = 0x8000;
 
 /**
  * hoge
  * @return {Number}
  */
-b9.View.FLAG_CLEAR = 0x02;
+b9.View.FLAG_CLEAR = 0x4000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Element._FLAG_ROOT = 0x0001;

@@ -26,7 +26,7 @@
 b9.Task = b9.createClass();
 
 /**
- *
+ * hoge
  * @param {String} [name] hoge
  */
 b9.Task.prototype.initialize = function(name) {
@@ -35,9 +35,6 @@ b9.Task.prototype.initialize = function(name) {
 
     /** @private */
     this._name = name || "";
-
-    /** @private */
-    this._is_root = false;
 
     /** @private */
     this._task_flag = b9.Task.FLAG_ACTIVE;
@@ -77,7 +74,7 @@ b9.Task.prototype.getName = function() {
  * @release {Boolean} hoge
  */
 b9.Task.prototype.isRoot = function() {
-    return this._is_root;
+    return (this._task_flag & b9.Task._FLAG_ROOT) ? true : false;
 };
 
 /**
@@ -226,3 +223,9 @@ b9.Task.prototype.onUpdate = function() {};
  * @return {Number}
  */
 b9.Task.FLAG_ACTIVE = 0x8000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Task._FLAG_ROOT = 0x0001;

@@ -32,9 +32,6 @@ b9.Element = b9.createClass();
  */
 b9.Element.prototype.initialize = function(dimension) {
     /** @private */
-    this._is_root = false;
-
-    /** @private */
     this._dimension = (dimension !== 3) ? 2 : 3;
 
     /** @private */
@@ -72,7 +69,7 @@ b9.Element.prototype.finalize = function() {
  * @return {Boolean} hoge
  */
 b9.Element.prototype.isRoot = function() {
-    return this._is_root;
+    return (this._elem_flag & b9.Element._FLAG_ROOT) ? true : false;
 };
 
 /**
@@ -281,3 +278,9 @@ b9.Element.TYPE_PRIMITIVE = 2;
  * @return {Number}
  */
 b9.Element.FLAG_VISIBLE = 0x8000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Element._FLAG_ROOT = 0x0001;
