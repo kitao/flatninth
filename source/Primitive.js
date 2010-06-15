@@ -24,7 +24,7 @@
  * @class hoge
  * @extends b9.Element
  */
-b9.Primitive = b9.createClass();
+b9.Primitive = b9.createClass(b9.Element);
 
 /**
  * hoge
