@@ -21,5 +21,6 @@
  */
 
 function testElement() {
+    var elem1 = new b9.Element(2);
     // TODO
 }

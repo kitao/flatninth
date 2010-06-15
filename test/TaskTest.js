@@ -21,5 +21,6 @@
  */
 
 function testTask() {
+    var task1 = new b9.Task("test_task");
     // TODO
 }

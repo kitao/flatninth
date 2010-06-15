@@ -21,5 +21,6 @@
  */
 
 function testView() {
+    var view1 = new b9.View(2, "test_view");
     // TODO
 }

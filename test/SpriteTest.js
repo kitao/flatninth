@@ -21,5 +21,6 @@
  */
 
 function testSprite() {
+    var sprt1 = new b9.Sprite(2, 10);
     // TODO
 }

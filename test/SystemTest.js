@@ -21,5 +21,8 @@
  */
 
 function testSystem() {
+    /* setup */
+    b9.System.setup("test_canvas", 60);
+
     // TODO
 }
