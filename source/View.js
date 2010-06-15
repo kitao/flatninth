@@ -453,4 +453,4 @@ b9.View.FLAG_VISIBLE = 0x8000;
 b9.View.FLAG_CLEAR = 0x4000;
 
 /** @private */
-b9.Element._FLAG_ROOT = 0x0001;
+b9.View._FLAG_ROOT = 0x0001;
