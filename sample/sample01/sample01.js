@@ -20,11 +20,21 @@
  * THE SOFTWARE.
  */
 
+var Sample = b9.createClass(b9.Task);
+
+Sample.prototype.onUpdate = function() {
+    // hoge
+};
+
 /**
  *
  */
 function main() {
     b9.System.setup("sample01_canvas", 10);
+
+    var sample = new Sample();
+    b9.System.defaultTaskNormal().addChildFirst(sample);
+
     b9.System.start();
 };
 
