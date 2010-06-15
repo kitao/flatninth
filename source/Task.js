@@ -30,16 +30,9 @@ b9.Task = b9.createClass();
  * @param {String} [name] hoge
  */
 b9.Task.prototype.initialize = function(name) {
-    /** @private */
     this._id = b9.generateID();
-
-    /** @private */
     this._name = name || "";
-
-    /** @private */
     this._task_flag = b9.Task.FLAG_ACTIVE;
-
-    /** @private */
     this._task_tree = new b9.Tree(this);
 };
 
@@ -62,8 +55,8 @@ b9.Task.prototype.getID = function() {
 };
 
 /**
- *
- * @return {String}
+ * hoge
+ * @return {String} hoge
  */
 b9.Task.prototype.getName = function() {
     return this._name;
@@ -214,15 +207,14 @@ b9.Task.prototype.removeChild = function(child) {
 };
 
 /**
- *
+ * hoge
  */
 b9.Task.prototype.onUpdate = function() {};
 
 /**
  * hoge
- * @return {Number}
+ * @return {Number} hoge
  */
 b9.Task.FLAG_ACTIVE = 0x8000;
 
-/** @private */
 b9.Task._FLAG_ROOT = 0x0001;

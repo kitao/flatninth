@@ -21,29 +21,21 @@
  */
 
 /**
- * hoge
  * @class hoge
  */
 b9.Color = b9.createClass();
 
 /**
  * hoge
- * @param {b9.Color|Number} [arg1]
- * @param {Number} [arg2]
- * @param {Number} [arg3]
- * @param {Number} [arg4]
+ * @param {b9.Color|Number} [arg1] hoge
+ * @param {Number} [arg2] hoge
+ * @param {Number} [arg3] hoge
+ * @param {Number} [arg4] hoge
  */
 b9.Color.prototype.initialize = function(arg1, arg2, arg3, arg4) {
-    /** @private */
     this._r = 0;
-
-    /** @private */
     this._g = 0;
-
-    /** @private */
     this._b = 0;
-
-    /** @private */
     this._a = 0;
 
     if (arguments.length === 1) {
@@ -79,7 +71,7 @@ b9.Color.prototype.getR = function() {
 
 /**
  * hoge
- * @param {Number} r
+ * @param {Number} r hoge
  */
 b9.Color.prototype.setR = function(r) {
     this._r = b9.Math.clamp(b9.Math.floor(r), 0, 255);
@@ -95,7 +87,7 @@ b9.Color.prototype.getG = function() {
 
 /**
  * hoge
- * @param {Number} g
+ * @param {Number} g hoge
  */
 b9.Color.prototype.setG = function(g) {
     this._g = b9.Math.clamp(b9.Math.floor(g), 0, 255);
@@ -111,7 +103,7 @@ b9.Color.prototype.getB = function() {
 
 /**
  * hoge
- * @param {Number} b
+ * @param {Number} b hoge
  */
 b9.Color.prototype.setB = function(b) {
     this._b = b9.Math.clamp(b9.Math.floor(b), 0, 255);
@@ -127,7 +119,7 @@ b9.Color.prototype.getA = function() {
 
 /**
  * hoge
- * @param {Number} a
+ * @param {Number} a hoge
  */
 b9.Color.prototype.setA = function(a) {
     this._a = b9.Math.clamp(b9.Math.floor(a), 0, 255);
@@ -135,7 +127,7 @@ b9.Color.prototype.setA = function(a) {
 
 /**
  * hoge
- * @param {b9.Color|Number} arg1
+ * @param {b9.Color|Number} arg1 hoge
  * @param {Number} [arg2] hoge
  * @param {Number} [arg3] hoge
  * @param {Number} [arg4] hoge
@@ -211,7 +203,7 @@ b9.Color.prototype.mul = function(arg) {
 
 /**
  * hoge
- * @param {Number} s
+ * @param {Number} s hoge
  */
 b9.Color.prototype.div = function(s) {
     var rs = 1.0 / s;
@@ -244,7 +236,7 @@ b9.Color.prototype.interp = function(to, ratio) {
 
 /**
  * hoge
- * @param {b9.Color} color
+ * @param {b9.Color} color hoge
  * @return {Boolean} hoge
  */
 b9.Color.prototype.isEqual = function(color) {
@@ -253,7 +245,7 @@ b9.Color.prototype.isEqual = function(color) {
 
 /**
  * hoge
- * @return {String}
+ * @return {String} hoge
  */
 b9.Color.prototype.toString = function() {
     return "(" + this._r + ", " + this._g + ", " + this._b + ", " + this._a + ")";
@@ -261,12 +253,12 @@ b9.Color.prototype.toString = function() {
 
 /**
  * hoge
- * return {b9.Color}
+ * @return {b9.Color}
  */
 b9.Color.ZERO = new b9.Color(0, 0, 0, 0);
 
 /**
  * hoge
- * return {b9.Color}
+ * @return {b9.Color}
  */
 b9.Color.FULL = new b9.Color(255, 255, 255, 255);

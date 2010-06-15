@@ -21,17 +21,16 @@
  */
 
 /**
- * hoge
  * @class hoge
  */
 b9.Margin = b9.createClass();
 
 /**
  * hoge
- * @param {Number} [left]
- * @param {Number} [top]
- * @param {Number} [right]
- * @param {Number} [bottom]
+ * @param {Number} [left] hoge
+ * @param {Number} [top] hoge
+ * @param {Number} [right] hoge
+ * @param {Number} [bottom] hoge
  */
 b9.Margin.prototype.initialize = function(left, top, right, bottom) {
     /**
@@ -61,10 +60,10 @@ b9.Margin.prototype.initialize = function(left, top, right, bottom) {
 
 /**
  * hoge
- * @param {Number} [left]
- * @param {Number} [top]
- * @param {Number} [right]
- * @param {Number} [bottom]
+ * @param {Number} [left] hoge
+ * @param {Number} [top] hoge
+ * @param {Number} [right] hoge
+ * @param {Number} [bottom] hoge
  */
 b9.Margin.prototype.set = function(left, top, right, bottom) {
     // TODO
@@ -79,7 +78,7 @@ b9.Margin.prototype.isEqual = function(margin) {
 };
 
 /**
- *
+ * hoge
  * @return {String}
  */
 b9.Margin.prototype.toString = function() {

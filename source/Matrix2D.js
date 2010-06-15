@@ -21,7 +21,6 @@
  */
 
 /**
- * hoge
  * @class hoge
  */
 b9.Matrix2D = b9.createClass();
@@ -292,11 +291,6 @@ b9.Matrix2D.ZERO = new b9.Matrix2D(b9.Vector2D.ZERO, b9.Vector2D.ZERO, b9.Vector
  */
 b9.Matrix2D.UNIT = new b9.Matrix2D(b9.Vector2D.X_UNIT, b9.Vector2D.Y_UNIT, b9.Vector2D.ZERO);
 
-/** @private */
 b9.Vector2D._vec1 = new b9.Vector2D();
-
-/** @private */
 b9.Vector2D._vec2 = new b9.Vector2D();
-
-/** @private */
 b9.Matrix2D._mat1 = new b9.Matrix2D();

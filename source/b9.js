@@ -46,6 +46,8 @@ b9.createClass = function(super_class) {
         temp_class.prototype = super_class.prototype;
 
         sub_class.prototype = new temp_class();
+
+        /** @ignore */
         sub_class.prototype.getSuperClass = function() { return super_class; };
 
         if (super_class.prototype.initialize) {
@@ -77,9 +79,8 @@ b9.release = function(instance) {
  * @return {Number} hoge
  */
 b9.generateID = function() {
-    this._cur_id++;
+    this._cur_id--;
     return this._cur_id;
 };
 
-/** @private */
 b9._cur_id = 0;

@@ -25,53 +25,40 @@
  */
 b9.System = {};
 
-/** @private */
 b9.System._initialize = function(canvas_id, aim_fps) {
-    /** @private */
     this._aim_fps = b9.Math.max(aim_fps, 1);
 
-    /** @private */
     this._task_root = new b9.Task("TASK_ROOT");
     this._task_root.setTaskFlag(b9.Task._FLAG_ROOT);
 
-    /** @private */
     this._view_root = new b9.View(2, "VIEW_ROOT");
     this._view_root.setViewFlag(b9.View._FLAG_ROOT);
     this._view_root.attachCanvas(canvas_id);
 
-    /** @private */
     this._timer_id = null;
 
-    /** @private */
     this._default_task_first = new b9.Task("DEFAULT_TASK_FIRST");
     this._task_root.addChildLast(this._default_task_first);
 
-    /** @private */
     this._default_task_before = new b9.Task("DEFAULT_TASK_BEFORE");
     this._task_root.addChildLast(this._default_task_before);
 
-    /** @private */
     this._default_task_normal = new b9.Task("DEFAULT_TASK_NORMAL");
     this._task_root.addChildLast(this._default_task_normal);
 
-    /** @private */
     this._default_task_after = new b9.Task("DEFAULT_TASK_AFTER");
     this._task_root.addChildLast(this._default_task_after);
 
-    /** @private */
     this._default_task_last = new b9.Task("DEFAULT_TASK_LAST");
     this._task_root.addChildLast(this._default_task_last);
 
-    /** @private */
     this._default_view_2d = new b9.View(2, "DEFAULT_VIEW_2D");
     this._view_root.addChildLast(this._default_view_2d);
 
-    /** @private */
     this._default_view_3d = null; //new b9.View(3, "DEFAULT_VIEW_3D");
 //    this._view_root.addChildLast(this._default_view_3d);
 };
 
-/** @private */
 b9.System._finalize = function() {
     b9.release(this._task_root);
     this._task_root = null;
@@ -82,8 +69,8 @@ b9.System._finalize = function() {
 
 /**
  * hoge
- * @param {String} canvas_id
- * @param {Number} fps
+ * @param {String} canvas_id hoge
+ * @param {Number} fps hoge
  */
 b9.System.setup = function(canvas_id, aim_fps) {
     this._initialize(canvas_id, aim_fps);
@@ -201,9 +188,6 @@ b9.System.defaultView3D = function() {
     return this._default_view_3d;
 };
 
-/**
- *
- */
 b9.System._update = function() {
     var next_task;
 
@@ -218,9 +202,6 @@ b9.System._update = function() {
 };
 
 var x = 0;
-/**
- *
- */
 b9.System._render = function() {
     for (var view = this._view_root.getFirstChild(); view; view = view.getNextAsList()) {
         if (view.isViewFlagOn(b9.View.FLAG_VISIBLE)) {

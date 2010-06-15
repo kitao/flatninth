@@ -21,7 +21,6 @@
  */
 
 /**
- * hoge
  * @class hoge
  */
 b9.View = b9.createClass();
@@ -32,43 +31,19 @@ b9.View = b9.createClass();
  * @param {String} [name] hoge
  */
 b9.View.prototype.initialize = function(dimension, name) {
-    /** @private */
     this._id = b9.generateID();
-
-    /** @private */
     this._name = name || "";
-
-    /** @private */
     this._dimension = (dimension !== 3) ? 2 : 3;
-
-    /** @private */
     this._canvas_id = null;
-
-    /** @private */
     this._canvas_ctx = null;
-
-    /** @private */
     this._view_flag = b9.View.FLAG_VISIBLE;
-
-    /** @private */
     this._pos = (this._dimension === 2) ? new b9.Vector2D() : new b9.Vector3D();
-
-    /** @private */
     this._size = new b9.Vector2D();
-
-    /** @private */
     this._scale = new b9.Vector2D();
-
-    /** @private */
     this._filter_color = new b9.Color(b9.Color.FULL);
-
-    /** @private */
     this._clear_color = new b9.Color(b9.Color.ZERO);
-
-    /** @private */
     this._view_tree = new b9.Tree(this);
 
-    /** @private */
     this._elem_root = new b9.Element();
     this._elem_root.setElementFlag(b9.Element._FLAG_ROOT, true);
 };
@@ -101,6 +76,7 @@ b9.View.prototype.finalize = function() {
 
 /**
  * hoge
+ * @return {Number} hoge
  */
 b9.View.prototype.getID = function() {
     return this._id;
@@ -140,7 +116,7 @@ b9.View.prototype.getCanvas = function() {
 
 /**
  * hoge
- * @param {String} canvas_id
+ * @param {String} canvas_id hoge
  */
 b9.View.prototype.attachCanvas = function(canvas_id) {
     var canvas = document.getElementById(canvas_id);
@@ -435,7 +411,6 @@ b9.View.prototype.removeElement = function(elem) {
     this._elem_tree.removeChild(elem._tree);
 };
 
-/** @private */
 b9.View.prototype._render = function() {
     // TODO
 };
@@ -452,5 +427,4 @@ b9.View.FLAG_VISIBLE = 0x8000;
  */
 b9.View.FLAG_CLEAR = 0x4000;
 
-/** @private */
 b9.View._FLAG_ROOT = 0x0001;

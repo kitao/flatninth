@@ -21,7 +21,6 @@
  */
 
 /**
- * hoge
  * @class hoge
  */
 b9.List = b9.createClass();
@@ -30,17 +29,13 @@ b9.List = b9.createClass();
  * hoge
  */
 b9.List.prototype.initialize = function() {
-    /** @private */
     this._start = new b9.ListItem(null);
-
-    /** @private */
-    this._end = new b9.ListItem(null);
-
-    /** @private */
-    this._item_num = 0;
-
     this._start._list = this;
+
+    this._end = new b9.ListItem(null);
     this._end._list = this;
+
+    this._item_num = 0;
 
     this._start._next = this._end;
     this._end._prev = this._start;

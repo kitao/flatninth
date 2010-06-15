@@ -21,7 +21,6 @@
  */
 
 /**
- * hoge
  * @class hoge
  */
 b9.Vector2D = b9.createClass();
@@ -310,8 +309,5 @@ b9.Vector2D.X_UNIT = new b9.Vector2D(1.0, 0.0);
  */
 b9.Vector2D.Y_UNIT = new b9.Vector2D(0.0, 1.0);
 
-/** @private */
 b9.Vector2D._vec1 = new b9.Vector2D();
-
-/** @private */
 b9.Vector2D._vec2 = new b9.Vector2D();

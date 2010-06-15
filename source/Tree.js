@@ -21,7 +21,6 @@
  */
 
 /**
- * hoge
  * @class hoge
  */
 b9.Tree = b9.createClass();
@@ -31,19 +30,10 @@ b9.Tree = b9.createClass();
  * @param {Object} self hoge
  */
 b9.Tree.prototype.initialize = function(self) {
-    /** @private */
     this._self = self;
-
-    /** @private */
     this._parent = null;
-
-    /** @private */
     this._last_child = null;
-
-    /** @private */
     this._prev = null;
-
-    /** @private */
     this._next = null;
 };
 

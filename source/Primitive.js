@@ -21,7 +21,6 @@
  */
 
 /**
- * hoge
  * @class hoge
  * @extends b9.Element
  */
@@ -29,8 +28,8 @@ b9.Primitive = b9.createClass();
 
 /**
  * hoge
- * @param {Number} dimension
- * @param {Number} max_vert_num
+ * @param {Number} dimension hoge
+ * @param {Number} max_vert_num hoge
  */
 b9.Primitive.prototype.initialize = function(dimension, max_vert_num) {
     this.initializeSuper(dimension);
@@ -40,7 +39,7 @@ b9.Primitive.prototype.initialize = function(dimension, max_vert_num) {
 };
 
 /**
- *
+ * hoge
  */
 b9.Primitive.prototype.finalize = function() {
     // TODO
@@ -110,7 +109,7 @@ b9.Primitive.prototype.setVertColor = function(vert_index, color) {
 
 /**
  * hoge
- * @param {Number} vert_index
+ * @param {Number} vert_index hoge
  * @return {Number}
  */
 b9.Primitive.prototype.getU = function(vert_index) {
@@ -118,7 +117,7 @@ b9.Primitive.prototype.getU = function(vert_index) {
 
 /**
  * hoge
- * @param {Number} vert_index
+ * @param {Number} vert_index hoge
  * @return {Number}
  */
 b9.Primitive.prototype.getV = function(vert_index) {
@@ -126,9 +125,9 @@ b9.Primitive.prototype.getV = function(vert_index) {
 
 /**
  * hoge
- * @param {Number} vert_index
- * @param {Number} u
- * @param {Number} v
+ * @param {Number} vert_index hoge
+ * @param {Number} u hoge
+ * @param {Number} v hoge
  */
 b9.Primitive.prototype.setVertUV = function(vert_index, u, v) {
 };

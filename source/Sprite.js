@@ -21,7 +21,6 @@
  */
 
 /**
- * hoge
  * @class hoge
  * @extends b9.Element
  */
@@ -29,8 +28,8 @@ b9.Sprite = b9.createClass(b9.Element);
 
 /**
  * hoge
- * @param {Number} dimension
- * @param {Number} max_rect_num
+ * @param {Number} dimension hoge
+ * @param {Number} max_rect_num hoge
  */
 b9.Sprite.prototype.initialize = function(dimension, max_rect_num) {
     this.initializeSuper(dimension);
@@ -88,7 +87,7 @@ b9.Sprite.prototype.getMaxRectNum = function() {
 
 /**
  * hoge
- * @return {Number}
+ * @return {Number} hoge
  */
 b9.Sprite.prototype.getCurRectNum = function() {
     return this._cur_rect_num;
@@ -103,14 +102,14 @@ b9.Sprite.prototype.setCurRectNum = function(cur_rect_num) {
 };
 
 /**
- *
+ * hoge
  */
 b9.Sprite.prototype.getRectPos = function(rect_index, pos) {
     pos.set(this._rect[rect_index].pos);
 };
 
 /**
- *
+ * hoge
  */
 b9.Sprite.prototype.setRectPos = function(rect_index, pos) {
     this._rect[rect_index].pos.set(pos);
@@ -118,8 +117,8 @@ b9.Sprite.prototype.setRectPos = function(rect_index, pos) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @return {Number}
+ * @param {Number} rect_index hoge
+ * @return {Number} hoge
  */
 b9.Sprite.prototype.getRectWidth = function(rect_index) {
     return this._rect[rect_index].width;
@@ -127,8 +126,8 @@ b9.Sprite.prototype.getRectWidth = function(rect_index) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @return {Number}
+ * @param {Number} rect_index hoge
+ * @return {Number} hoge
  */
 b9.Sprite.prototype.getRectHeight = function(rect_index) {
     return this._rect[rect_index].height;
@@ -136,9 +135,9 @@ b9.Sprite.prototype.getRectHeight = function(rect_index) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @param {Number} width
- * @param {Number} height
+ * @param {Number} rect_index hoge
+ * @param {Number} width hoge
+ * @param {Number} height hoge
  */
 b9.Sprite.prototype.setRectSize = function(rect_index, width, height) {
     this._rect[rect_index].width = width;
@@ -147,8 +146,8 @@ b9.Sprite.prototype.setRectSize = function(rect_index, width, height) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @return {Number}
+ * @param {Number} rect_index hoge
+ * @return {Number} hoge
  */
 b9.Sprite.prototype.getRectAngle = function(rect_index) {
     return this._rect[rect_index].angle;
@@ -156,8 +155,8 @@ b9.Sprite.prototype.getRectAngle = function(rect_index) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @param {Number} deg
+ * @param {Number} rect_index hoge
+ * @param {Number} deg hoge
  */
 b9.Sprite.prototype.setRectAngle =function(rect_index, deg) {
     this._rect[rect_index].angle = deg;
@@ -183,8 +182,8 @@ b9.Sprite.prototype.setRectColor = function(rect_index, color) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @return {Number}
+ * @param {Number} rect_index hoge
+ * @return {Number} hoge
  */
 b9.Sprite.prototype.getU1 = function(rect_index) {
     return this._rect[rect_index].u1;
@@ -192,8 +191,8 @@ b9.Sprite.prototype.getU1 = function(rect_index) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @return {Number}
+ * @param {Number} rect_index hoge
+ * @return {Number} hoge
  */
 b9.Sprite.prototype.getV1 = function(rect_index) {
     return this._rect[rect_index].v1;
@@ -201,8 +200,8 @@ b9.Sprite.prototype.getV1 = function(rect_index) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @return {Number}
+ * @param {Number} rect_index hoge
+ * @return {Number} hoge
  */
 b9.Sprite.prototype.getU2 = function(rect_index) {
     return this._rect[rect_index].u2;
@@ -210,8 +209,8 @@ b9.Sprite.prototype.getU2 = function(rect_index) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @return {Number}
+ * @param {Number} rect_index hoge
+ * @return {Number} hoge
  */
 b9.Sprite.prototype.getV2 = function(rect_index) {
     return this._rect[rect_index].v2;
@@ -219,11 +218,11 @@ b9.Sprite.prototype.getV2 = function(rect_index) {
 
 /**
  * hoge
- * @param {Number} rect_index
- * @param {Number} u1
- * @param {Number} v1
- * @param {Number} u2
- * @param {Number} v2
+ * @param {Number} rect_index hoge
+ * @param {Number} u1 hoge
+ * @param {Number} v1 hoge
+ * @param {Number} u2 hoge
+ * @param {Number} v2 hoge
  */
 b9.Sprite.prototype.setRectUV = function(rect_index, u1, v1, u2, v2) {
     this._rect[rect_index].u1 = u1;

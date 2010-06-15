@@ -21,7 +21,6 @@
  */
 
 /**
- * hoge
  * @class hoge
  */
 b9.Element = b9.createClass();
@@ -31,27 +30,16 @@ b9.Element = b9.createClass();
  * @param {Number} dimension hoge
  */
 b9.Element.prototype.initialize = function(dimension) {
-    /** @private */
     this._dimension = (dimension !== 3) ? 2 : 3;
-
-    /** @private */
     this._elem_type = b9.Element.TYPE_ELEMENT;
-
-    /** @private */
     this._elem_flag = 0;
-
-    /** @private */
     this._local = (this._dimension === 2) ? new b9.Matrix2D() : new b9.Matrix3D();
-
-    /** @private */
     this._filter_color = new b9.Color();
-
-    /** @private */
     this._elem_tree = new b9.Tree(this);
 };
 
 /**
- *
+ * hoge
  */
 b9.Element.prototype.finalize = function() {
     b9.release(this._local);
@@ -279,5 +267,4 @@ b9.Element.TYPE_PRIMITIVE = 2;
  */
 b9.Element.FLAG_VISIBLE = 0x8000;
 
-/** @private */
 b9.Element._FLAG_ROOT = 0x0001;
