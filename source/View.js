@@ -411,8 +411,19 @@ b9.View.prototype.removeElement = function(elem) {
     this._elem_tree.removeChild(elem._tree);
 };
 
+var x = 0;
 b9.View.prototype._render = function() {
-    // TODO
+    if (this._canvas_ctx) {
+        this._canvas_ctx.beginPath();
+        this._canvas_ctx.moveTo(x + 20, 20);
+        this._canvas_ctx.lineTo(x + 120, 20);
+        this._canvas_ctx.lineTo(x + 120, 120);
+        this._canvas_ctx.lineTo(x + 20, 120);
+        this._canvas_ctx.closePath();
+        this._canvas_ctx.stroke();
+
+        x++;
+    }
 };
 
 /**

@@ -191,7 +191,7 @@ b9.System.defaultView3D = function() {
 b9.System._update = function() {
     var next_task;
 
-    for (var task = this._task_root.getFirstChild(); task; task = next_task) {
+    for (var task = this._task_root; task; task = next_task) {
         next_task = task.getNextAsList();
 
         if (task.isTaskFlagOn(b9.Task.FLAG_ACTIVE)) {
@@ -201,29 +201,11 @@ b9.System._update = function() {
     }
 };
 
-var x = 0;
 b9.System._render = function() {
-    for (var view = this._view_root.getFirstChild(); view; view = view.getNextAsList()) {
+    for (var view = this._view_root; view; view = view.getNextAsList()) {
         if (view.isViewFlagOn(b9.View.FLAG_VISIBLE)) {
             // TODO
             view._render();
         }
     }
-
-    var canvas = document.getElementById(this._view_root._canvas_id);
-
-    if (!canvas || !canvas.getContext) {
-        return;
-    }
-
-    var ctx = canvas.getContext('2d');
-    ctx.beginPath();
-    ctx.moveTo(x + 20, 20);
-    ctx.lineTo(x + 120, 20);
-    ctx.lineTo(x + 120, 120);
-    ctx.lineTo(x + 20, 120);
-    ctx.closePath();
-    ctx.stroke();
-
-    x++;
 };
