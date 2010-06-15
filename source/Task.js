@@ -166,9 +166,9 @@ b9.Task.prototype.getLastDescendant = function() {
 
 /**
  * hoge
- * @return {b9.Task} hoge
+ * @param {b9.Task} child hoge
  */
-b9.Task.prototype.addChildFirst = function(cihld) {
+b9.Task.prototype.addChildFirst = function(child) {
     this._task_tree.addChildFirst(child._task_tree);
 };
 
