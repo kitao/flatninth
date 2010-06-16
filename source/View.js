@@ -34,18 +34,23 @@ b9.View.prototype.initialize = function(dimension, name) {
     this._id = b9.generateID();
     this._name = name || "";
     this._dimension = (dimension !== 3) ? 2 : 3;
-    this._canvas_id = null;
+    this._canvas = null;
     this._canvas_ctx = null;
     this._view_flag = b9.View.FLAG_VISIBLE;
-    this._pos = (this._dimension === 2) ? new b9.Vector2D() : new b9.Vector3D();
+    this._pos = new b9.Vector2D();
     this._size = new b9.Vector2D();
-    this._scale = new b9.Vector2D();
+    this._scale = new b9.Vector2D(1.0, 1.0);
     this._filter_color = new b9.Color(b9.Color.FULL);
     this._clear_color = new b9.Color(b9.Color.ZERO);
     this._view_tree = new b9.Tree(this);
 
     this._elem_root = new b9.Element();
     this._elem_root.setElementFlag(b9.Element._FLAG_ROOT, true);
+
+    this._final_pos = new b9.Vector2D();
+    this._final_size = new b9.Vector2D();
+    this._final_scale = new b9.Vector2D();
+    this._final_filter_color = new b9.Color();
 };
 
 /**
@@ -72,6 +77,21 @@ b9.View.prototype.finalize = function() {
 
     b9.release(this._elem_tree);
     this._elem_tree = null;
+
+    b9.release(this._elem_root);
+    this._elem_root = null;
+
+    b9.release(this._final_pos);
+    this._final_pos = null;
+
+    b9.release(this._final_size);
+    this._final_size = null;
+
+    b9.release(this._final_scale);
+    this._final_scale = null;
+
+    b9.release(this._final_filter_color);
+    this._final_filter_color = null;
 };
 
 /**
@@ -108,10 +128,10 @@ b9.View.prototype.getDimention = function() {
 
 /**
  * hoge
- * @return {String} hoge
+ * @return {Canvas} hoge
  */
 b9.View.prototype.getCanvas = function() {
-    return this._canvas_id;
+    return this._canvas;
 };
 
 /**
@@ -121,8 +141,8 @@ b9.View.prototype.getCanvas = function() {
 b9.View.prototype.attachCanvas = function(canvas_id) {
     var canvas = document.getElementById(canvas_id);
 
-    if (canvas) {
-        this._canvas_id = canvas_id;
+    if (canvas && canvas.getContext) {
+        this._canvas = canvas;
         this._canvas_ctx = canvas.getContext("2d");
     }
 };
@@ -131,7 +151,7 @@ b9.View.prototype.attachCanvas = function(canvas_id) {
  * hoge
  */
 b9.View.prototype.detatchCanvas = function() {
-    this._canvas_id = null;
+    this._canvas = null;
     tihs._canvas_ctx = null;
 };
 
@@ -411,18 +431,45 @@ b9.View.prototype.removeElement = function(elem) {
     this._elem_tree.removeChild(elem._tree);
 };
 
-var x = 0;
 b9.View.prototype._render = function() {
-    if (this._canvas_ctx) {
-        this._canvas_ctx.beginPath();
-        this._canvas_ctx.moveTo(x + 20, 20);
-        this._canvas_ctx.lineTo(x + 120, 20);
-        this._canvas_ctx.lineTo(x + 120, 120);
-        this._canvas_ctx.lineTo(x + 20, 120);
-        this._canvas_ctx.closePath();
-        this._canvas_ctx.stroke();
+    /*
+     * calculate final params
+     */
+    if (this._canvas) {
+        this._final_pos.set(b9.Vector2D.ZERO);
+        this._final_size.set(this._size);
+        this._final_scale.set(1.0, 1.0);
+        this._final_filter_color.set(this._filter_color);
+    } else {
+        var parent = this.getParent();
 
-        x++;
+        this._canvas_ctx = parent._canvas_ctx;
+
+        this._final_pos.set(this._pos);
+        this._final_pos.x *= parent._final_scale.x;
+        this._final_pos.y *= parent._final_scale.y;
+        this._final_pos.add(parent._final_pos);
+
+        this._final_scale.set(this._scale);
+        this._final_scale.x *= parent._final_scale.x;
+        this._final_scale.y *= parent._final_scale.y;
+
+        this._final_size.set(this._size);
+        this._final_size.x *= this._final_scale.x;
+        this._final_size.y *= this._final_scale.y;
+
+        this._final_filter_color.set(this._filter_color);
+        this._final_filter_color.mul(parent._final_filter_color);
+    }
+
+    /*
+     * clear view
+     */
+    if (this._canvas_ctx) {
+        if (this._view_flag & b9.View.FLAG_CLEAR) {
+            this._canvas_ctx.fillStyle = 'rgb(255, 0, 0)';
+            this._canvas_ctx.fillRect(this._final_pos.x, this._final_pos.y, this._final_size.x, this._final_size.y);
+        }
     }
 };
 

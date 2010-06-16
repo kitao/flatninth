@@ -53,10 +53,19 @@ b9.System._initialize = function(canvas_id, aim_fps) {
     this._task_root.addChildLast(this._default_task_last);
 
     this._default_view_2d = new b9.View(2, "DEFAULT_VIEW_2D");
+    this._default_view_2d.setViewFlag(b9.View.FLAG_CLEAR, true);
     this._view_root.addChildLast(this._default_view_2d);
 
     this._default_view_3d = null; //new b9.View(3, "DEFAULT_VIEW_3D");
 //    this._view_root.addChildLast(this._default_view_3d);
+
+    var canvas = this._view_root.getCanvas();
+
+    if (canvas) {
+        this._view_root.setSize(canvas.width, canvas.height);
+        this._default_view_2d.setSize(canvas.width, canvas.height);
+//        this._default_view_3d.setSize(canvas.width, canvas.height);
+    }
 };
 
 b9.System._finalize = function() {
