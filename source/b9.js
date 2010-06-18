@@ -66,16 +66,6 @@ b9.createClass = function(super_class) {
 
 /**
  * hoge
- * @param {Object} instance
- */
-b9.release = function(instance) {
-    if (instance.finalize) {
-        instance.finalize();
-    }
-};
-
-/**
- * hoge
  * @return {Number} hoge
  */
 b9.generateID = function() {
