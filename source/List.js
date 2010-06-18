@@ -46,15 +46,6 @@ b9.List.prototype.initialize = function() {
  */
 b9.List.prototype.finalize = function() {
     this.clear();
-
-    this._start._list = null;
-    this._end._list = null;
-
-    this._start._next = null;
-    this._end._prev = null;
-
-    this._start = null;
-    this._end = null;
 };
 
 /**
