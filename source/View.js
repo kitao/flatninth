@@ -27,19 +27,17 @@ b9.View = b9.createClass();
 
 /**
  * hoge
- * @param {Number} dimension hoge
  * @param {String} [name] hoge
  */
-b9.View.prototype.initialize = function(dimension, name) {
+b9.View.prototype.initialize = function(name) {
     this._id = b9.generateID();
     this._name = name || "";
-    this._dimension = (dimension !== 3) ? 2 : 3;
     this._canvas = null;
     this._canvas_ctx = null;
     this._view_flag = b9.View.FLAG_VISIBLE;
-    this._pos = new b9.Vector2D();
-    this._size = new b9.Vector2D();
-    this._scale = new b9.Vector2D(1.0, 1.0);
+    this._pos = new b9.Vector();
+    this._size = new b9.Vector();
+    this._scale = new b9.Vector(1.0, 1.0);
     this._filter_color = new b9.Color(b9.Color.FULL);
     this._clear_color = new b9.Color(b9.Color.ZERO);
     this._view_tree = new b9.Tree(this);
@@ -47,9 +45,9 @@ b9.View.prototype.initialize = function(dimension, name) {
     this._elem_root = new b9.Element();
     this._elem_root.setElementFlag(b9.Element._FLAG_ROOT, true);
 
-    this._final_pos = new b9.Vector2D();
-    this._final_size = new b9.Vector2D();
-    this._final_scale = new b9.Vector2D();
+    this._final_pos = new b9.Vector();
+    this._final_size = new b9.Vector();
+    this._final_scale = new b9.Vector();
     this._final_filter_color = new b9.Color();
 };
 
@@ -83,14 +81,6 @@ b9.View.prototype.getName = function() {
  */
 b9.View.prototype.isRoot = function() {
     return (this._view_flag & b9.View._FLAG_ROOT) ? true : false;
-};
-
-/**
- * hoge
- * @return {Number} hoge
- */
-b9.View.prototype.getDimention = function() {
-    return this._dimension;
 };
 
 /**
@@ -146,7 +136,7 @@ b9.View.prototype.setViewFlag = function(view_flag, is_on) {
 
 /**
  * hoge
- * @param {b9.Vector2D} pos hoge
+ * @param {b9.Vector} pos hoge
  */
 b9.View.prototype.getPos = function(pos) {
     pos.set(this._pos);
@@ -154,7 +144,7 @@ b9.View.prototype.getPos = function(pos) {
 
 /**
  * hoge
- * @param {b9.Vector2D} pos hoge
+ * @param {b9.Vector} pos hoge
  */
 b9.View.prototype.setPos = function(pos) {
     this._pos.set(pos);
@@ -403,7 +393,7 @@ b9.View.prototype._render = function() {
      * calculate final params
      */
     if (this._canvas) {
-        this._final_pos.set(b9.Vector2D.ZERO);
+        this._final_pos.set(b9.Vector.ZERO);
         this._final_size.set(this._size);
         this._final_scale.set(1.0, 1.0);
         this._final_filter_color.set(this._filter_color);

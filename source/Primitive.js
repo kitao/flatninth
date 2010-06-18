@@ -78,7 +78,7 @@ b9.Primitive.prototype.setCurVertNum = function(cur_vert_num) {
 /**
  * hoge
  * @param {Number} vert_index hoge
- * @param {b9.Vector2D|b9.Vector3D} pos hoge
+ * @param {b9.Vector} pos hoge
  */
 b9.Primitive.prototype.getVertPos = function(vert_index, pos) {
 };
@@ -86,7 +86,7 @@ b9.Primitive.prototype.getVertPos = function(vert_index, pos) {
 /**
  * hoge
  * @param {Number} vert_index hoge
- * @param {b9.Vector2D|b9.Vector3D} pos hoge
+ * @param {b9.Vector} pos hoge
  */
 b9.Primitive.prototype.setVertPos = function(vert_index, pos) {
 };

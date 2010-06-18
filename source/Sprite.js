@@ -40,18 +40,8 @@ b9.Sprite.prototype.initialize = function(dimension, max_rect_num) {
     this._rect = new Array(max_rect_num);
 
     for (var i = 0; i < max_rect_num; i++) {
-        this._rect[i] = { width: 0.0, height: 0.0, angle: 0.0,
+        this._rect[i] = { pos: new b9.Vector(), width: 0.0, height: 0.0, angle: 0.0,
             color: new b9.Color(b9.Color.FULL), u1: 0.0, v1: 0.0, u2: 0.0, v2: 0.0 };
-    }
-
-    if (this._dimension === 2) {
-        for (i = 0; i < max_rect_num; i++) {
-            this._rect[i].pos = new b9.Vector2D();
-        }
-    } else {
-        for (i = 0; i < max_rect_num; i++) {
-            this._rect[i].pos = new b9.Vector3D();
-        }
     }
 };
 

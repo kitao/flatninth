@@ -27,13 +27,11 @@ b9.Element = b9.createClass();
 
 /**
  * hoge
- * @param {Number} dimension hoge
  */
-b9.Element.prototype.initialize = function(dimension) {
-    this._dimension = (dimension !== 3) ? 2 : 3;
+b9.Element.prototype.initialize = function() {
     this._elem_type = b9.Element.TYPE_ELEMENT;
     this._elem_flag = 0;
-    this._local = (this._dimension === 2) ? new b9.Matrix2D() : new b9.Matrix3D();
+    this._local = new b9.Matrix();
     this._filter_color = new b9.Color();
     this._elem_tree = new b9.Tree(this);
 };
@@ -51,14 +49,6 @@ b9.Element.prototype.finalize = function() {
  */
 b9.Element.prototype.isRoot = function() {
     return (this._elem_flag & b9.Element._FLAG_ROOT) ? true : false;
-};
-
-/**
- * hoge
- * @return {Number} hoge
- */
-b9.Element.prototype.getDimention = function() {
-    return this._dimension;
 };
 
 /**
@@ -92,7 +82,7 @@ b9.Element.prototype.setElementFlag = function(elem_flag, is_on) {
 
 /**
  * hoge
- * @param {b9.Matrix2D|b9.Matrix3D} local hoge
+ * @param {b9.Matrix} local hoge
  */
 b9.Element.prototype.getLocal = function(local) {
     local.set(this._local);
@@ -100,7 +90,7 @@ b9.Element.prototype.getLocal = function(local) {
 
 /**
  * hoge
- * @param {b9.Matrix2D|b9.Matrix3D} local hoge
+ * @param {b9.Matrix} local hoge
  */
 b9.Element.prototype.setLocal = function(local) {
     this._local.set(local);
