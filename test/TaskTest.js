@@ -21,6 +21,11 @@
  */
 
 function testTask() {
+    /* initialize */
     var task1 = new b9.Task("test_task");
+
+    /* finalize */
+    task1.finalize();
+
     // TODO
 }

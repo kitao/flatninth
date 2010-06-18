@@ -21,6 +21,11 @@
  */
 
 function testPrimitive() {
+    /* initialize */
     var prim1 = new b9.Primitive(2, 10);
+
+    /* finalize */
+    prim1.finalize();
+
     // TODO
 }

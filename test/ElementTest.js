@@ -21,6 +21,11 @@
  */
 
 function testElement() {
+    /* initialize */
     var elem1 = new b9.Element(2);
+
+    /* finalize */
+    elem1.finalize();
+
     // TODO
 }

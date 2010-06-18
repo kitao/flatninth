@@ -21,6 +21,11 @@
  */
 
 function testView() {
+    /* initialize */
     var view1 = new b9.View(2, "test_view");
+
+    /* finalize */
+    view1.finalize();
+
     // TODO
 }
