@@ -30,7 +30,7 @@ SRC_DIR     = $(BASE_DIR)/source
 TEST_DIR    = $(BASE_DIR)/test
 REF_DIR     = $(BASE_DIR)/doc/reference
 
-SRCS1       = b9.js Math.js Vector2D.js Matrix2D.js Color.js Margin.js List.js ListItem.js Tree.js
+SRCS1       = b9.js Math.js Vector.js Matrix.js Color.js Margin.js List.js ListItem.js Tree.js
 SRCS2       = Task.js View.js Element.js Sprite.js Primitive.js System.js
 
 SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS1) $(SRCS2))
