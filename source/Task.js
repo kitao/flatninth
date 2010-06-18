@@ -40,10 +40,7 @@ b9.Task.prototype.initialize = function(name) {
  * hoge
  */
 b9.Task.prototype.finalize = function() {
-    this._name = null;
-
-    b9.release(this._list_item);
-    this._list_item = null;
+    this._task_tree.finalize();
 };
 
 /**
@@ -64,7 +61,7 @@ b9.Task.prototype.getName = function() {
 
 /**
  * hoge
- * @release {Boolean} hoge
+ * @return {Boolean} hoge
  */
 b9.Task.prototype.isRoot = function() {
     return (this._task_flag & b9.Task._FLAG_ROOT) ? true : false;
