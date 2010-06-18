@@ -28,16 +28,17 @@ function test_b9() {
     var ctor_count1 = 0;
     var dtor_count1 = 0;
     var test_class1 = b9.createClass();
-    test_class1.prototype.initialize = function() { ctor_count1++; };
+    test_class1.prototype.initialize = function(param) { ctor_count1++; this.param = param; };
     test_class1.prototype.finalize = function() { dtor_count1++; };
 
     var ctor_count2 = 0;
     var dtor_count2 = 0;
     var test_class2 = b9.createClass(test_class1);
-    test_class2.prototype.initialize = function() { ctor_count2++; this.initializeSuper(); };
+    test_class2.prototype.initialize = function() { ctor_count2++; this.initializeSuper(456); };
     test_class2.prototype.finalize = function() { dtor_count2++; this.finalizeSuper(); };
 
-    var test_ins1 = new test_class1();
+    var test_ins1 = new test_class1(123);
+
     assertUndefined(test_ins1.getSuperClass);
     assertUndefined(test_ins1.initializeSuper);
     assertUndefined(test_ins1.finalizeSuper);
@@ -45,8 +46,10 @@ function test_b9() {
     assertEquals(0, dtor_count1);
     assertEquals(0, ctor_count2);
     assertEquals(0, dtor_count2);
+    assertEquals(123, test_ins1.param);
 
     var test_ins2 = new test_class2();
+
     assertEquals(test_class1, test_ins2.getSuperClass());
     assertNotUndefined(test_ins2.initializeSuper);
     assertNotUndefined(test_ins2.finalizeSuper);
@@ -54,19 +57,23 @@ function test_b9() {
     assertEquals(0, dtor_count1);
     assertEquals(1, ctor_count2);
     assertEquals(0, dtor_count2);
+    assertEquals(456, test_ins2.param);
 
-    /* release */
-    b9.release(test_ins1);
+    test_ins1.finalize();
+
     assertEquals(2, ctor_count1);
     assertEquals(1, dtor_count1);
     assertEquals(1, ctor_count2);
     assertEquals(0, dtor_count2);
+    assertEquals(123, test_ins1.param);
 
-    b9.release(test_ins2);
+    test_ins2.finalize();
+
     assertEquals(2, ctor_count1);
     assertEquals(2, dtor_count1);
     assertEquals(1, ctor_count2);
     assertEquals(1, dtor_count2);
+    assertEquals(456, test_ins2.param);
 
     /* generateID */
     var id1 = b9.generateID();
