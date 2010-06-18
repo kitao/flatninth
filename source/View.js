@@ -57,41 +57,8 @@ b9.View.prototype.initialize = function(dimension, name) {
  * hoge
  */
 b9.View.prototype.finalize = function() {
-    b9.release(this._pos);
-    this._pos = null;
-
-    b9.release(this._size);
-    this._size = null;
-
-    b9.release(this._scale);
-    this._scale = null;
-
-    b9.release(this._filter_color);
-    this._fileter_color = null;
-
-    b9.release(this._clear_color);
-    this._clear_color = null;
-
-    b9.release(this._view_tree);
-    this._view_tree = null;
-
-    b9.release(this._elem_tree);
-    this._elem_tree = null;
-
-    b9.release(this._elem_root);
-    this._elem_root = null;
-
-    b9.release(this._final_pos);
-    this._final_pos = null;
-
-    b9.release(this._final_size);
-    this._final_size = null;
-
-    b9.release(this._final_scale);
-    this._final_scale = null;
-
-    b9.release(this._final_filter_color);
-    this._final_filter_color = null;
+    this._view_tree.finalize();
+    this._elem_root.finalize();
 };
 
 /**
@@ -112,7 +79,7 @@ b9.View.prototype.getName = function() {
 
 /**
  * hoge
- * @release {Boolean} hoge
+ * @return {Boolean} hoge
  */
 b9.View.prototype.isRoot = function() {
     return (this._view_flag & b9.View._FLAG_ROOT) ? true : false;
