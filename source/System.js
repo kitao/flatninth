@@ -69,11 +69,10 @@ b9.System._initialize = function(canvas_id, aim_fps) {
 };
 
 b9.System._finalize = function() {
-    b9.release(this._task_root);
-    this._task_root = null;
+    // TODO
 
-    b9.release(this._view_root);
-    this._view_root = null;
+    this._task_root.finalize();
+    this._view_root.finalize();
 };
 
 /**
