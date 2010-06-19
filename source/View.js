@@ -101,6 +101,10 @@ b9.View.prototype.attachCanvas = function(canvas_id) {
     if (canvas && canvas.getContext) {
         this._canvas = canvas;
         this._canvas_ctx = canvas.getContext("2d");
+
+        this.setPos(b9.Vector.ZERO);
+        this.setSize(canvas.width, canvas.height);
+        this.setViewFlag(b9.View.FLAG_CLEAR, true);
     }
 };
 
@@ -424,7 +428,7 @@ b9.View.prototype._render = function() {
      */
     if (this._canvas_ctx) {
         if (this._view_flag & b9.View.FLAG_CLEAR) {
-            this._canvas_ctx.fillStyle = 'rgb(255, 0, 0)';
+            this._canvas_ctx.fillStyle = this._clear_color.toRGB();
             this._canvas_ctx.fillRect(this._final_pos.x, this._final_pos.y, this._final_size.x, this._final_size.y);
         }
     }
