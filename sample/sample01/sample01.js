@@ -22,8 +22,17 @@
 
 var Sample = b9.createClass(b9.Task);
 
+Sample.prototype.initialize = function() {
+    this.initializeSuper("Sample");
+};
+
 Sample.prototype.onUpdate = function() {
     // hoge
+};
+
+Sample.create = function() {
+    var task = new Sample();
+    b9.System.defaultTask(b9.System.ORDER_NORMAL).addChildLast(task);
 };
 
 /**
@@ -32,10 +41,9 @@ Sample.prototype.onUpdate = function() {
 function main() {
     b9.System.setup("sample01_canvas", 10);
 
-    var sample = new Sample();
-    b9.System.defaultTaskNormal().addChildFirst(sample);
+    Sample.create();
 
     b9.System.start();
-};
+}
 
 main();
