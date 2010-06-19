@@ -31,45 +31,34 @@ b9.System._initialize = function(canvas_id, aim_fps) {
     this._task_root = new b9.Task("TASK_ROOT");
     this._task_root.setTaskFlag(b9.Task._FLAG_ROOT);
 
-    this._view_root = new b9.View(2, "VIEW_ROOT");
-    this._view_root.setViewFlag(b9.View._FLAG_ROOT);
+    this._view_root = new b9.View("VIEW_ROOT");
+    this._view_root.setViewFlag(b9.View._FLAG_ROOT, true);
     this._view_root.attachCanvas(canvas_id);
 
     this._timer_id = null;
 
-    this._default_task_first = new b9.Task("DEFAULT_TASK_FIRST");
-    this._task_root.addChildLast(this._default_task_first);
+    this._default_task = new Array(this._ORDER_NUM);
+    this._default_view = new Array(this._ORDER_NUM);
 
-    this._default_task_before = new b9.Task("DEFAULT_TASK_BEFORE");
-    this._task_root.addChildLast(this._default_task_before);
+    for (var i = 0; i < this._ORDER_NUM; i++) {
+        var task = new b9.Task("DEFAULT_TASK");
 
-    this._default_task_normal = new b9.Task("DEFAULT_TASK_NORMAL");
-    this._task_root.addChildLast(this._default_task_normal);
+        this._default_task[i] = task;
+        this._task_root.addChildLast(task);
 
-    this._default_task_after = new b9.Task("DEFAULT_TASK_AFTER");
-    this._task_root.addChildLast(this._default_task_after);
+        var view = new b9.View("DEFAULT_VIEW");
+        view.setSize(this._view_root.getWidth(), this._view_root.getHeight());
 
-    this._default_task_last = new b9.Task("DEFAULT_TASK_LAST");
-    this._task_root.addChildLast(this._default_task_last);
-
-    this._default_view_2d = new b9.View(2, "DEFAULT_VIEW_2D");
-    this._default_view_2d.setViewFlag(b9.View.FLAG_CLEAR, true);
-    this._view_root.addChildLast(this._default_view_2d);
-
-    this._default_view_3d = null; //new b9.View(3, "DEFAULT_VIEW_3D");
-//    this._view_root.addChildLast(this._default_view_3d);
-
-    var canvas = this._view_root.getCanvas();
-
-    if (canvas) {
-        this._view_root.setSize(canvas.width, canvas.height);
-        this._default_view_2d.setSize(canvas.width, canvas.height);
-//        this._default_view_3d.setSize(canvas.width, canvas.height);
+        this._default_view[i] = view;
+        this._view_root.addChildLast(view);
     }
 };
 
 b9.System._finalize = function() {
-    // TODO
+    for (var i = 0; i < this._ORDER_NUM; i++) {
+        this._default_task[i].finalize();
+        this._default_view[i].finalize();
+    }
 
     this._task_root.finalize();
     this._view_root.finalize();
@@ -142,58 +131,20 @@ b9.System.viewRoot = function() {
 
 /**
  * hoge
+ * @param {Number} system_order
  * @return {b9.Task} hoge
  */
-b9.System.defaultTaskFirst = function() {
-    return this._default_task_first;
+b9.System.defaultTask = function(system_order) {
+    return this._default_task[system_order];
 };
 
 /**
  * hoge
- * @return {b9.Task} hoge
- */
-b9.System.defaultTaskBefore = function() {
-    return this._default_task_before;
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.defaultTaskNormal = function() {
-    return this._default_task_normal;
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.defaultTaskAfter = function() {
-    return this._default_task_after;
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.defaultTaskLast = function() {
-    return this._default_task_last;
-};
-
-/**
- * hoge
+ * @param {Number} system_order
  * @return {b9.View} hoge
  */
-b9.System.defaultView2D = function() {
-    return this._default_view_2d;
-};
-
-/**
- * hoge
- * @return {b9.View} hoge
- */
-b9.System.defaultView3D = function() {
-    return this._default_view_3d;
+b9.System.defaultView = function(system_order) {
+    return this._default_view[system_order];
 };
 
 b9.System._update = function() {
@@ -217,3 +168,35 @@ b9.System._render = function() {
         }
     }
 };
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.System.ORDER_FIRST = 0;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.System.ORDER_BEFORE = 1;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.System.ORDER_NORMAL = 2;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.System.ORDER_AFTER = 3;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.System.ORDER_LAST = 4;
+
+b9.System._ORDER_NUM = 5;
