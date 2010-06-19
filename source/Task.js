@@ -31,7 +31,7 @@ b9.Task = b9.createClass();
  */
 b9.Task.prototype.initialize = function(parent) {
     this._id = b9.generateID();
-    this._name = name || "";
+    this._name = "";
     this._task_flag = b9.Task.FLAG_ACTIVE;
     this._task_tree = new b9.Tree(this);
 
