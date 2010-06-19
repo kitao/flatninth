@@ -28,6 +28,7 @@ JSDOC_DIR   = $(BASE_DIR)/tool/jsdoc-toolkit
 
 SRC_DIR     = $(BASE_DIR)/source
 TEST_DIR    = $(BASE_DIR)/test
+SAMPLE_DIR  = $(BASE_DIR)/sample
 REF_DIR     = $(BASE_DIR)/doc/reference
 
 SRCS1       = b9.js Math.js Vector.js Matrix.js Color.js Margin.js List.js ListItem.js Tree.js
@@ -35,9 +36,10 @@ SRCS2       = Task.js View.js Element.js Sprite.js Primitive.js System.js
 
 SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS1) $(SRCS2))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
+SAMPLE_SRCS = $(shell find $(SAMPLE_DIR) -name "*.js")
 TARGET      = $(BASE_DIR)/flatninth.js
 
-.PHONY: all clean test reference
+.PHONY: all clean test sample reference
 
 all: $(TARGET)
 
@@ -47,6 +49,9 @@ clean:
 
 test:
 	java -jar $(JSLINT_DIR)/jslint4java.jar $(TEST_SRCS)
+
+sample:
+	java -jar $(JSLINT_DIR)/jslint4java.jar $(SAMPLE_SRCS)
 
 reference:
 	java -jar $(JSDOC_DIR)/jsrun.jar $(JSDOC_DIR)/app/run.js -a -r -t=$(JSDOC_DIR)/templates/jsdoc -d=$(REF_DIR) $(SRC_DIR)
