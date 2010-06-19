@@ -189,6 +189,12 @@ function testColor() {
     /* toString */
     assertEquals("(0.1, 0.2, 0.3, 0.4)", (new b9.Color(0.1, 0.2, 0.3, 0.4)).toString());
 
+    /* toRGB */
+    assertEquals("rgb(26,51,77)", (new b9.Color(0.1, 0.2, 0.3, 0.4)).toRGB());
+
+    /* toRGBA */
+    assertEquals("rgba(26,51,77,102)", (new b9.Color(0.1, 0.2, 0.3, 0.4)).toRGBA());
+
     /* ZERO */
     assertEqualsColor(new b9.Color(0.0, 0.0, 0.0, 0.0), b9.Color.ZERO);
 
