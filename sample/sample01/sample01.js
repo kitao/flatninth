@@ -22,17 +22,18 @@
 
 var Sample = b9.createClass(b9.Task);
 
-Sample.prototype.initialize = function() {
-    this.initializeSuper("Sample");
+Sample.prototype.initialize = function(parent) {
+    this.initializeSuper(parent);
+
+    this._sprt = new b9.Sprite(1, b9.System.defaultView(b9.System.ORDER_NORMAL).getElementRoot());
 };
 
 Sample.prototype.onUpdate = function() {
     // hoge
 };
 
-Sample.create = function() {
-    var task = new Sample();
-    b9.System.defaultTask(b9.System.ORDER_NORMAL).addChildLast(task);
+Sample.prototype.createSample = function() {
+    return new Sample();
 };
 
 /**
@@ -41,7 +42,7 @@ Sample.create = function() {
 function main() {
     b9.System.setup("sample01_canvas", 10);
 
-    Sample.create();
+//    Sample.create();
 
     b9.System.start();
 }
