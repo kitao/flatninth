@@ -22,7 +22,7 @@
 
 function testSprite() {
     /* initialize */
-    var sprt1 = new b9.Sprite(2, 10);
+    var sprt1 = new b9.Sprite(10);
 
     /* finalize */
     sprt1.finalize();

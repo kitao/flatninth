@@ -22,7 +22,7 @@
 
 function testView() {
     /* initialize */
-    var view1 = new b9.View(2, "test_view");
+    var view1 = new b9.View();
 
     /* finalize */
     view1.finalize();

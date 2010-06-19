@@ -22,7 +22,7 @@
 
 function testPrimitive() {
     /* initialize */
-    var prim1 = new b9.Primitive(2, 10);
+    var prim1 = new b9.Primitive(10);
 
     /* finalize */
     prim1.finalize();

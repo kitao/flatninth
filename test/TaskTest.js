@@ -22,7 +22,7 @@
 
 function testTask() {
     /* initialize */
-    var task1 = new b9.Task("test_task");
+    var task1 = new b9.Task();
 
     /* finalize */
     task1.finalize();

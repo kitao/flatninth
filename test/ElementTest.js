@@ -22,7 +22,7 @@
 
 function testElement() {
     /* initialize */
-    var elem1 = new b9.Element(2);
+    var elem1 = new b9.Element();
 
     /* finalize */
     elem1.finalize();
