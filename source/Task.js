@@ -27,13 +27,17 @@ b9.Task = b9.createClass();
 
 /**
  * hoge
- * @param {String} [name] hoge
+ * @param {b9.Task} [parent] hoge
  */
-b9.Task.prototype.initialize = function(name) {
+b9.Task.prototype.initialize = function(parent) {
     this._id = b9.generateID();
     this._name = name || "";
     this._task_flag = b9.Task.FLAG_ACTIVE;
     this._task_tree = new b9.Tree(this);
+
+    if (parent) {
+        parent.addChildLast(this);
+    }
 };
 
 /**
@@ -41,6 +45,14 @@ b9.Task.prototype.initialize = function(name) {
  */
 b9.Task.prototype.finalize = function() {
     this._task_tree.finalize();
+};
+
+/**
+ * hoge
+ * @return {Boolean} hoge
+ */
+b9.Task.prototype.isRoot = function() {
+    return (this._task_flag & b9.Task._FLAG_ROOT) ? true : false;
 };
 
 /**
@@ -61,10 +73,10 @@ b9.Task.prototype.getName = function() {
 
 /**
  * hoge
- * @return {Boolean} hoge
+ * @param {String} name
  */
-b9.Task.prototype.isRoot = function() {
-    return (this._task_flag & b9.Task._FLAG_ROOT) ? true : false;
+b9.Task.prototype.setName = function(name) {
+    this._name = name;
 };
 
 /**

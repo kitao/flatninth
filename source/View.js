@@ -27,11 +27,11 @@ b9.View = b9.createClass();
 
 /**
  * hoge
- * @param {String} [name] hoge
+ * @param {b9.View} [parent] hoge
  */
-b9.View.prototype.initialize = function(name) {
+b9.View.prototype.initialize = function(parent) {
     this._id = b9.generateID();
-    this._name = name || "";
+    this._name = "";
     this._canvas = null;
     this._canvas_ctx = null;
     this._view_flag = b9.View.FLAG_VISIBLE;
@@ -49,6 +49,10 @@ b9.View.prototype.initialize = function(name) {
     this._final_size = new b9.Vector();
     this._final_scale = new b9.Vector();
     this._final_filter_color = new b9.Color();
+
+    if (parent) {
+        parent.addChildLast(this);
+    }
 };
 
 /**
@@ -57,6 +61,14 @@ b9.View.prototype.initialize = function(name) {
 b9.View.prototype.finalize = function() {
     this._view_tree.finalize();
     this._elem_root.finalize();
+};
+
+/**
+ * hoge
+ * @return {Boolean} hoge
+ */
+b9.View.prototype.isRoot = function() {
+    return (this._view_flag & b9.View._FLAG_ROOT) ? true : false;
 };
 
 /**
@@ -77,10 +89,10 @@ b9.View.prototype.getName = function() {
 
 /**
  * hoge
- * @return {Boolean} hoge
+ * @param {String} name
  */
-b9.View.prototype.isRoot = function() {
-    return (this._view_flag & b9.View._FLAG_ROOT) ? true : false;
+b9.View.prototype.setName = function(name) {
+    this._name = name;
 };
 
 /**
@@ -430,6 +442,17 @@ b9.View.prototype._render = function() {
         if (this._view_flag & b9.View.FLAG_CLEAR) {
             this._canvas_ctx.fillStyle = this._clear_color.toRGB();
             this._canvas_ctx.fillRect(this._final_pos.x, this._final_pos.y, this._final_size.x, this._final_size.y);
+        }
+    }
+
+    /*
+     * draw elements
+     */
+    for (var elem = this._elem_root; elem; elem = elem.getNextAsList()) {
+        if (elem.isElementFlagOn(b9.Element.FLAG_VISIBLE)) {
+            elem._render();
+        } else {
+            elem = elem.getLastDescendant();
         }
     }
 };

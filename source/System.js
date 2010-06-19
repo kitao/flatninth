@@ -28,10 +28,12 @@ b9.System = {};
 b9.System._initialize = function(canvas_id, aim_fps) {
     this._aim_fps = b9.Math.max(aim_fps, 1);
 
-    this._task_root = new b9.Task("TASK_ROOT");
+    this._task_root = new b9.Task();
+    this._task_root.setName("TASK_ROOT");
     this._task_root.setTaskFlag(b9.Task._FLAG_ROOT);
 
-    this._view_root = new b9.View("VIEW_ROOT");
+    this._view_root = new b9.View();
+    this._view_root.setName("VIEW_ROOT");
     this._view_root.setViewFlag(b9.View._FLAG_ROOT, true);
     this._view_root.attachCanvas(canvas_id);
 
@@ -41,17 +43,22 @@ b9.System._initialize = function(canvas_id, aim_fps) {
     this._default_view = new Array(this._ORDER_NUM);
 
     for (var i = 0; i < this._ORDER_NUM; i++) {
-        var task = new b9.Task("DEFAULT_TASK");
-
-        this._default_task[i] = task;
-        this._task_root.addChildLast(task);
-
-        var view = new b9.View("DEFAULT_VIEW");
-        view.setSize(this._view_root.getWidth(), this._view_root.getHeight());
-
-        this._default_view[i] = view;
-        this._view_root.addChildLast(view);
+        this._default_task[i] = new b9.Task(this._task_root);
+        this._default_view[i] = new b9.View(this._view_root);
+        this._default_view[i].setSize(this._view_root.getWidth(), this._view_root.getHeight());
     }
+
+    this._default_task[this.ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
+    this._default_task[this.ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
+    this._default_task[this.ORDER_NORMAL].setName("DEFAULT_TASK_NORMAL");
+    this._default_task[this.ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
+    this._default_task[this.ORDER_LAST].setName("DEFAULT_TASK_LAST");
+
+    this._default_view[this.ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
+    this._default_view[this.ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
+    this._default_view[this.ORDER_NORMAL].setName("DEFAULT_TASK_NORMAL");
+    this._default_view[this.ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
+    this._default_view[this.ORDER_LAST].setName("DEFAULT_TASK_LAST");
 };
 
 b9.System._finalize = function() {
@@ -154,8 +161,9 @@ b9.System._update = function() {
         next_task = task.getNextAsList();
 
         if (task.isTaskFlagOn(b9.Task.FLAG_ACTIVE)) {
-            // TODO
             task.onUpdate();
+        } else {
+            next_task = task.getLastDescendant().getNextAsList();
         }
     }
 };
@@ -163,8 +171,9 @@ b9.System._update = function() {
 b9.System._render = function() {
     for (var view = this._view_root; view; view = view.getNextAsList()) {
         if (view.isViewFlagOn(b9.View.FLAG_VISIBLE)) {
-            // TODO
             view._render();
+        } else {
+            view = view.getLastDescendant();
         }
     }
 };

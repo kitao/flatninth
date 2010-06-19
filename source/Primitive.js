@@ -28,11 +28,11 @@ b9.Primitive = b9.createClass(b9.Element);
 
 /**
  * hoge
- * @param {Number} dimension hoge
  * @param {Number} max_vert_num hoge
+ * @param {b9.Element} [parent] hoge
  */
-b9.Primitive.prototype.initialize = function(dimension, max_vert_num) {
-    this.initializeSuper(dimension);
+b9.Primitive.prototype.initialize = function(max_vert_num, parent) {
+    this.initializeSuper(parent);
     this._elem_type = b9.Element.TYPE_PRIMITIVE;
 
     // TODO

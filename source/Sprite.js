@@ -28,11 +28,11 @@ b9.Sprite = b9.createClass(b9.Element);
 
 /**
  * hoge
- * @param {Number} dimension hoge
  * @param {Number} max_rect_num hoge
+ * @param {b9.Element} [parent] hoge
  */
-b9.Sprite.prototype.initialize = function(dimension, max_rect_num) {
-    this.initializeSuper(dimension);
+b9.Sprite.prototype.initialize = function(max_rect_num, parent) {
+    this.initializeSuper(parent);
     this._elem_type = b9.Element.TYPE_SPRITE;
 
     this._max_rect_num = max_rect_num;
@@ -204,4 +204,8 @@ b9.Sprite.prototype.setRectUV = function(rect_index, u1, v1, u2, v2) {
     this._rect[rect_index].v1 = v1;
     this._rect[rect_index].u2 = u2;
     this._rect[rect_index].v2 = v2;
+};
+
+b9.Sprite.prototype._render = function() {
+    alert("sprite");
 };
