@@ -262,7 +262,15 @@ b9.Matrix.prototype.isEqual = function(mat) {
  * @return {String} hoge
  */
 b9.Matrix.prototype.toString = function() {
-    return "(" + this.x_axis.toString() + ", " + this.y_axis.toString() + ", " + this.trans.toString() + ")";
+    var str = "(";
+    str += this.x_axis.toString();
+    str += ", ";
+    str += this.y_axis.toString();
+    str += ", ";
+    str += this.trans.toString();
+    str += ")";
+
+    return str;
 };
 
 /**

@@ -249,7 +249,51 @@ b9.Color.prototype.isEqual = function(color) {
  * @return {String} hoge
  */
 b9.Color.prototype.toString = function() {
-    return "(" + this._r + ", " + this._g + ", " + this._b + ", " + this._a + ")";
+    var str = "(";
+    str += this._r;
+    str += ", ";
+    str += this._g;
+    str += ", ";
+    str += this._b;
+    str += ", ";
+    str += this._a;
+    str += ")";
+
+    return str;
+};
+
+/**
+ * hoge
+ * @return {String} hoge
+ */
+b9.Color.prototype.toRGB = function() {
+    var rgb = "rgb(";
+    rgb += b9.Math.floor(this._r * 255.0 + 0.5);
+    rgb += ",";
+    rgb += b9.Math.floor(this._g * 255.0 + 0.5);
+    rgb += ",";
+    rgb += b9.Math.floor(this._b * 255.0 + 0.5);
+    rgb += ")";
+
+    return rgb;
+};
+
+/**
+ * hoge
+ * @return {String} hoge
+ */
+b9.Color.prototype.toRGBA = function() {
+    var rgba = "rgba(";
+    rgba += b9.Math.floor(this._r * 255.0 + 0.5);
+    rgba += ",";
+    rgba += b9.Math.floor(this._g * 255.0 + 0.5);
+    rgba += ",";
+    rgba += b9.Math.floor(this._b * 255.0 + 0.5);
+    rgba += ",";
+    rgba += b9.Math.floor(this._a * 255.0 + 0.5);
+    rgba += ")";
+
+    return rgba;
 };
 
 /**

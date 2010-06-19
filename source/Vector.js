@@ -288,7 +288,13 @@ b9.Vector.prototype.isEqual = function(vec) {
  * @return {String} hoge
  */
 b9.Vector.prototype.toString = function() {
-    return "(" + this.x + ", " + this.y + ")";
+    var str = "(";
+    str += this.x;
+    str += ", ";
+    str += this.y;
+    str += ")";
+
+    return str;
 };
 
 /**
