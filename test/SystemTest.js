@@ -25,4 +25,8 @@ function testSystem() {
     b9.System.setup("test_canvas", 60);
 
     // TODO
+    //
+    b9.System.defaultTask(b9.System.ORDER_NORMAL);
+
+    b9.System.defaultView(b9.System.ORDER_NORMAL);
 }
