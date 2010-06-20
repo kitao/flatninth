@@ -25,24 +25,33 @@ var Sample = b9.createClass(b9.Task);
 Sample.prototype.initialize = function(parent) {
     this.initializeSuper(parent);
 
-    this._sprt = new b9.Sprite(1, b9.System.defaultView(b9.System.ORDER_NORMAL).getElementRoot());
+    this._sprt = new b9.Sprite(1, b9.System.defaultView(b9.System.ORDER_NORMAL).elementRoot());
+
+    this._sprt.setRectPos(0, new b9.Vector(50.0, 50.0));
+    this._sprt.setRectSize(0, 30.0, 20.0);
+
+    this._sprt.setRectColor(0, new b9.Color(1.0, 0.0, 0.0));
 };
 
 Sample.prototype.onUpdate = function() {
-    // hoge
+    var pos = new b9.Vector();
+
+    this._sprt.getRectPos(0, pos);
+    pos.x += 1.0;
+    this._sprt.setRectPos(0, pos);
 };
 
-Sample.prototype.createSample = function() {
-    return new Sample();
+Sample.create= function() {
+    return new Sample(b9.System.defaultTask(b9.System.ORDER_NORMAL));
 };
 
 /**
  *
  */
 function main() {
-    b9.System.setup("sample01_canvas", 10);
+    b9.System.setup("sample01_canvas", 60);
 
-//    Sample.create();
+    Sample.create();
 
     b9.System.start();
 }
