@@ -22,27 +22,22 @@
 
 var Sample = b9.createClass(b9.Task);
 
-Sample.prototype.initialize = function(parent) {
-    this.initializeSuper(parent);
+Sample.prototype.initialize = function() {
+    this.initializeSuper(b9.System.defaultTaskNormal());
 
-    this._sprt = new b9.Sprite(1, b9.System.defaultView(b9.System.ORDER_NORMAL).elementRoot());
+    this._sprt = new b9.Sprite(1, b9.System.defaultViewNormal().elementRoot());
 
-    this._sprt.setRectPos(0, new b9.Vector(50.0, 50.0));
-    this._sprt.setRectSize(0, 30.0, 20.0);
-
-    this._sprt.setRectColor(0, new b9.Color(1.0, 0.0, 0.0));
+    this._sprt.rectPos(0).set(50.0, 50.0);
+    this._sprt.rectSize(0).set(30.0, 20.0);
+    this._sprt.rectColor(0).set(1.0, 0.0, 0.0);
 };
 
 Sample.prototype.onUpdate = function() {
-    var pos = new b9.Vector();
-
-    this._sprt.getRectPos(0, pos);
-    pos.x += 1.0;
-    this._sprt.setRectPos(0, pos);
+    this._sprt.rectPos(0).x += 1.0;
 };
 
 Sample.create= function() {
-    return new Sample(b9.System.defaultTask(b9.System.ORDER_NORMAL));
+    return new Sample();
 };
 
 /**

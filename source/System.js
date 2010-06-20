@@ -39,8 +39,6 @@ b9.System._initialize = function(canvas_id, aim_fps) {
 
     this._timer_id = null;
 
-    this._ORDER_NUM = 5;
-
     this._default_task = new Array(this._ORDER_NUM);
     this._default_view = new Array(this._ORDER_NUM);
 
