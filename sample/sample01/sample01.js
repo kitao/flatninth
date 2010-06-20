@@ -22,12 +22,12 @@
 
 var Sample = b9.createClass(b9.Task);
 
-Sample.prototype.initialize = function() {
+Sample.prototype.initialize = function(x, y) {
     this.initializeSuper(b9.System.defaultTaskNormal());
 
     this._sprt = new b9.Sprite(1, b9.System.defaultViewNormal().elementRoot());
 
-    this._sprt.rectPos(0).set(50.0, 50.0);
+    this._sprt.rectPos(0).set(x, y);
     this._sprt.rectSize(0).set(30.0, 20.0);
     this._sprt.rectColor(0).set(1.0, 0.0, 0.0);
 };
@@ -36,8 +36,8 @@ Sample.prototype.onUpdate = function() {
     this._sprt.rectPos(0).x += 1.0;
 };
 
-Sample.create= function() {
-    return new Sample();
+Sample.create= function(x, y) {
+    return new Sample(x, y);
 };
 
 /**
@@ -46,7 +46,9 @@ Sample.create= function() {
 function main() {
     b9.System.setup("sample01_canvas", 60);
 
-    Sample.create();
+    for (var i = 0; i < 200; i++) {
+        Sample.create(i * 2, i * 2);
+    }
 
     b9.System.start();
 }
