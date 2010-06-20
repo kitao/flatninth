@@ -40,8 +40,8 @@ b9.Sprite.prototype.initialize = function(max_rect_num, parent) {
     this._rect = new Array(max_rect_num);
 
     for (var i = 0; i < max_rect_num; i++) {
-        this._rect[i] = { pos: new b9.Vector(), width: 0.0, height: 0.0,
-            color: new b9.Color(b9.Color.FULL), u1: 0.0, v1: 0.0, u2: 0.0, v2: 0.0 };
+        this._rect[i] = { pos: new b9.Vector(), size: new b9.Vector(),
+            color: new b9.Color(b9.Color.FULL), uv1: new b9.Vector(), uv2: new b9.Vector() };
     }
 };
 
@@ -78,114 +78,47 @@ b9.Sprite.prototype.setCurRectNum = function(cur_rect_num) {
 
 /**
  * hoge
+ * @param {Number} rect_index hoge
+ * @return {b9.Vector} hoge
  */
-b9.Sprite.prototype.getRectPos = function(rect_index, pos) {
-    pos.set(this._rect[rect_index].pos);
-};
-
-/**
- * hoge
- */
-b9.Sprite.prototype.setRectPos = function(rect_index, pos) {
-    this._rect[rect_index].pos.set(pos);
+b9.Sprite.prototype.rectPos = function(rect_index) {
+    return this._rect[rect_index].pos;
 };
 
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @return {Number} hoge
+ * @return {b9.Vector} hoge
  */
-b9.Sprite.prototype.getRectWidth = function(rect_index) {
-    return this._rect[rect_index].width;
+b9.Sprite.prototype.rectSize = function(rect_index) {
+    return this._rect[rect_index].size;
 };
 
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @return {Number} hoge
+ * @return {b9.Color} color hoge
  */
-b9.Sprite.prototype.getRectHeight = function(rect_index) {
-    return this._rect[rect_index].height;
+b9.Sprite.prototype.rectColor = function(rect_index) {
+    return this._rect[rect_index].color;
 };
 
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @param {Number} width hoge
- * @param {Number} height hoge
+ * @return {b9.Vector} hoge
  */
-b9.Sprite.prototype.setRectSize = function(rect_index, width, height) {
-    this._rect[rect_index].width = width;
-    this._rect[rect_index].height = height;
+b9.Sprite.prototype.rectUV1 = function(rect_index) {
+    return this._rect[rect_index].uv1;
 };
 
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @param {b9.Color} color hoge
+ * @return {b9.Vector} hoge
  */
-b9.Sprite.prototype.getRectColor = function(rect_index, color) {
-    color.set(this._rect[rect_index].color);
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
- * @param {b9.Color} color hoge
- */
-b9.Sprite.prototype.setRectColor = function(rect_index, color) {
-    this._rect[rect_index].color.set(color);
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
- * @return {Number} hoge
- */
-b9.Sprite.prototype.getU1 = function(rect_index) {
-    return this._rect[rect_index].u1;
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
- * @return {Number} hoge
- */
-b9.Sprite.prototype.getV1 = function(rect_index) {
-    return this._rect[rect_index].v1;
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
- * @return {Number} hoge
- */
-b9.Sprite.prototype.getU2 = function(rect_index) {
-    return this._rect[rect_index].u2;
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
- * @return {Number} hoge
- */
-b9.Sprite.prototype.getV2 = function(rect_index) {
-    return this._rect[rect_index].v2;
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
- * @param {Number} u1 hoge
- * @param {Number} v1 hoge
- * @param {Number} u2 hoge
- * @param {Number} v2 hoge
- */
-b9.Sprite.prototype.setRectUV = function(rect_index, u1, v1, u2, v2) {
-    this._rect[rect_index].u1 = u1;
-    this._rect[rect_index].v1 = v1;
-    this._rect[rect_index].u2 = u2;
-    this._rect[rect_index].v2 = v2;
+b9.Sprite.prototype.rectUV2 = function(rect_index) {
+    return this._rect[rect_index].uv2;
 };
 
 b9.Sprite.prototype._render = function(canvas_ctx) {
@@ -200,7 +133,7 @@ b9.Sprite.prototype._render = function(canvas_ctx) {
         b9.Sprite._color1.mul(this._final_filter_color);
 
         canvas_ctx.fillStyle = b9.Sprite._color1.toRGBA();
-        canvas_ctx.fillRect(b9.Sprite._vec1.x, b9.Sprite._vec1.y, rect.width, rect.height);
+        canvas_ctx.fillRect(b9.Sprite._vec1.x, b9.Sprite._vec1.y, rect.size.x, rect.size.y);
     }
 };
 

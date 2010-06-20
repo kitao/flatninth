@@ -90,34 +90,18 @@ b9.Element.prototype.setElementFlag = function(elem_flag, is_on) {
 
 /**
  * hoge
- * @param {b9.Matrix} local hoge
+ * @return {b9.Matrix} hoge
  */
-b9.Element.prototype.getLocal = function(local) {
-    local.set(this._local);
+b9.Element.prototype.local = function() {
+    return this._local;
 };
 
 /**
  * hoge
- * @param {b9.Matrix} local hoge
+ * @return {b9.Color} hoge
  */
-b9.Element.prototype.setLocal = function(local) {
-    this._local.set(local);
-};
-
-/**
- * hoge
- * @param {b9.Color} color hoge
- */
-b9.Element.prototype.getFilterColor = function(color) {
-    color.set(this._filter_color);
-};
-
-/**
- * hoge
- * @param {b9.Color} color hoge
- */
-b9.Element.prototype.setFilterColor = function(color) {
-    this._filter_color.set(color);
+b9.Element.prototype.filterColor = function() {
+    return this._filter_color;
 };
 
 /**

@@ -66,7 +66,10 @@ b9.Margin.prototype.initialize = function(left, top, right, bottom) {
  * @param {Number} [bottom] hoge
  */
 b9.Margin.prototype.set = function(left, top, right, bottom) {
-    // TODO
+    this.left = left;
+    this.top = top;
+    this.right = right;
+    this.bottom = bottom;
 };
 
 /**
@@ -74,7 +77,8 @@ b9.Margin.prototype.set = function(left, top, right, bottom) {
  * @return {Boolean}
  */
 b9.Margin.prototype.isEqual = function(margin) {
-    // TODO
+    return (this.left === margin.left && this.top === margin.top &&
+            this.right === margin.right && this.Boolean === margin.Boolean);
 };
 
 /**

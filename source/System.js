@@ -39,26 +39,28 @@ b9.System._initialize = function(canvas_id, aim_fps) {
 
     this._timer_id = null;
 
+    this._ORDER_NUM = 5;
+
     this._default_task = new Array(this._ORDER_NUM);
     this._default_view = new Array(this._ORDER_NUM);
 
     for (var i = 0; i < this._ORDER_NUM; i++) {
         this._default_task[i] = new b9.Task(this._task_root);
         this._default_view[i] = new b9.View(this._view_root);
-        this._default_view[i].setSize(this._view_root.getWidth(), this._view_root.getHeight());
+        this._default_view[i].size().set(this._view_root.size());
     }
 
-    this._default_task[this.ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
-    this._default_task[this.ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
-    this._default_task[this.ORDER_NORMAL].setName("DEFAULT_TASK_NORMAL");
-    this._default_task[this.ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
-    this._default_task[this.ORDER_LAST].setName("DEFAULT_TASK_LAST");
+    this._default_task[this._ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
+    this._default_task[this._ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
+    this._default_task[this._ORDER_NORMAL].setName("DEFAULT_TASK_NORMAL");
+    this._default_task[this._ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
+    this._default_task[this._ORDER_LAST].setName("DEFAULT_TASK_LAST");
 
-    this._default_view[this.ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
-    this._default_view[this.ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
-    this._default_view[this.ORDER_NORMAL].setName("DEFAULT_TASK_NORMAL");
-    this._default_view[this.ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
-    this._default_view[this.ORDER_LAST].setName("DEFAULT_TASK_LAST");
+    this._default_view[this._ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
+    this._default_view[this._ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
+    this._default_view[this._ORDER_NORMAL].setName("DEFAULT_TASK_NORMAL");
+    this._default_view[this._ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
+    this._default_view[this._ORDER_LAST].setName("DEFAULT_TASK_LAST");
 };
 
 b9.System._finalize = function() {
@@ -138,20 +140,82 @@ b9.System.viewRoot = function() {
 
 /**
  * hoge
- * @param {Number} system_order
  * @return {b9.Task} hoge
  */
-b9.System.defaultTask = function(system_order) {
-    return this._default_task[system_order];
+b9.System.defaultTaskFirst = function() {
+    return this._default_task[this._ORDER_FIRST];
 };
 
 /**
  * hoge
- * @param {Number} system_order
+ * @return {b9.Task} hoge
+ */
+b9.System.defaultTaskBefore = function() {
+    return this._default_task[this._ORDER_BEFORE];
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.System.defaultTaskNormal = function() {
+    return this._default_task[this._ORDER_NORMAL];
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.System.defaultTaskAfter = function() {
+    return this._default_task[this._ORDER_AFTER];
+};
+
+/**
+ * hoge
+ * @return {b9.Task} hoge
+ */
+b9.System.defaultTaskLast = function() {
+    return this._default_task[this._ORDER_LAST];
+};
+
+/**
+ * hoge
  * @return {b9.View} hoge
  */
-b9.System.defaultView = function(system_order) {
-    return this._default_view[system_order];
+b9.System.defaultViewFirst = function() {
+    return this._default_view[this._ORDER_FIRST];
+};
+
+/**
+ * hoge
+ * @return {b9.View} hoge
+ */
+b9.System.defaultViewBefore = function() {
+    return this._default_view[this._ORDER_BEFORE];
+};
+
+/**
+ * hoge
+ * @return {b9.View} hoge
+ */
+b9.System.defaultViewNormal = function() {
+    return this._default_view[this._ORDER_NORMAL];
+};
+
+/**
+ * hoge
+ * @return {b9.View} hoge
+ */
+b9.System.defaultViewAfter = function() {
+    return this._default_view[this._ORDER_AFTER];
+};
+
+/**
+ * hoge
+ * @return {b9.View} hoge
+ */
+b9.System.defaultViewLast = function() {
+    return this._default_view[this._ORDER_LAST];
 };
 
 b9.System._update = function() {
@@ -178,34 +242,9 @@ b9.System._render = function() {
     }
 };
 
-/**
- * hoge
- * @return {Number}
- */
-b9.System.ORDER_FIRST = 0;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.System.ORDER_BEFORE = 1;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.System.ORDER_NORMAL = 2;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.System.ORDER_AFTER = 3;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.System.ORDER_LAST = 4;
-
+b9.System._ORDER_FIRST = 0;
+b9.System._ORDER_BEFORE = 1;
+b9.System._ORDER_NORMAL = 2;
+b9.System._ORDER_AFTER = 3;
+b9.System._ORDER_LAST = 4;
 b9.System._ORDER_NUM = 5;

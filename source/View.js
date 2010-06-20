@@ -114,8 +114,8 @@ b9.View.prototype.attachCanvas = function(canvas_id) {
         this._canvas = canvas;
         this._canvas_ctx = canvas.getContext("2d");
 
-        this.setPos(b9.Vector.ZERO);
-        this.setSize(canvas.width, canvas.height);
+        this.pos().set(b9.Vector.ZERO);
+        this.size().set(canvas.width, canvas.height);
         this.setViewFlag(b9.View.FLAG_CLEAR, true);
     }
 };
@@ -152,100 +152,42 @@ b9.View.prototype.setViewFlag = function(view_flag, is_on) {
 
 /**
  * hoge
- * @param {b9.Vector} pos hoge
+ * @return {b9.Vector} hoge
  */
-b9.View.prototype.getPos = function(pos) {
-    pos.set(this._pos);
+b9.View.prototype.pos = function() {
+    return this._pos;
 };
 
 /**
  * hoge
- * @param {b9.Vector} pos hoge
+ * @return {b9.Vector} hoge
  */
-b9.View.prototype.setPos = function(pos) {
-    this._pos.set(pos);
+b9.View.prototype.size = function() {
+    return this._size;
 };
 
 /**
  * hoge
- * @return {Number} hoge
+ * @return {b9.Vector} hoge
  */
-b9.View.prototype.getWidth = function() {
-    return this._size.x;
+b9.View.prototype.scale = function() {
+    return this._scale;
 };
 
 /**
  * hoge
- * @return {Number} hoge
+ * @return {b9.Color} hoge
  */
-b9.View.prototype.getHeight = function() {
-    return this._size.y;
+b9.View.prototype.filterColor = function() {
+    return this._filter_color;
 };
 
 /**
  * hoge
- * @param {Number} width hoge
- * @param {Number} height hoge
+ * @return {b9.Color} hoge
  */
-b9.View.prototype.setSize = function(width, height) {
-    this._size.set(b9.Math.max(width, 0.0), b9.Math.max(height, 0.0));
-};
-
-/**
- * hoge
- * @return {Number} hoge
- */
-b9.View.prototype.getScaleX = function() {
-    return this._scale.x;
-};
-
-/**
- * hoge
- * @return {Number} hoge
- */
-b9.View.prototype.getScaleY = function() {
-    return this._scale.y;
-};
-
-/**
- * hoge
- * @param {Number} scale_x hoge
- * @param {Number} scale_y hoge
- */
-b9.View.prototype.setScale = function(scale_x, scale_y) {
-    this._size.set(b9.Math.max(scale_x, 0.0), b9.Math.max(scale_y, 0.0));
-};
-
-/**
- * hoge
- * @param {b9.Color} color hoge
- */
-b9.View.prototype.getFilterColor = function(color) {
-    color.set(this._filter_color);
-};
-
-/**
- * hoge
- * @param {b9.Color} color hoge
- */
-b9.View.prototype.setFilterColor = function(color) {
-    this._filter_color.set(color);
-};
-
-/**
- * hoge
- * @param {b9.Color} color hoge
- */
-b9.View.prototype.getClearColor = function(color) {
-    color.set(this._clear_color);
-};
-
-/**
- * hoge
- * @param {b9.Color} color hoge
- */
-b9.View.prototype.setClearColor = function(color) {
-    this._clear_color.set(color);
+b9.View.prototype.clearColor = function() {
+    return this._clear_color;
 };
 
 /**

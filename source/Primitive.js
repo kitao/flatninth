@@ -52,6 +52,7 @@ b9.Primitive.prototype.finalize = function() {
  * @return {Number} hoge
  */
 b9.Primitive.prototype.getMaxVertNum = function() {
+    // TODO
 };
 
 /**
@@ -59,6 +60,7 @@ b9.Primitive.prototype.getMaxVertNum = function() {
  * @param {Number} max_vert_num hoge
  */
 b9.Primitive.prototype.setMaxVertNum = function(max_vert_num) {
+    // TODO
 };
 
 /**
@@ -66,6 +68,7 @@ b9.Primitive.prototype.setMaxVertNum = function(max_vert_num) {
  * @return {Number}
  */
 b9.Primitive.prototype.getCurVertNum = function() {
+    // TODO
 };
 
 /**
@@ -73,63 +76,34 @@ b9.Primitive.prototype.getCurVertNum = function() {
  * @param {Number} cur_vert_num hoge
  */
 b9.Primitive.prototype.setCurVertNum = function(cur_vert_num) {
+    // TODO
 };
 
 /**
  * hoge
  * @param {Number} vert_index hoge
- * @param {b9.Vector} pos hoge
+ * @return {b9.Vector} hoge
  */
-b9.Primitive.prototype.getVertPos = function(vert_index, pos) {
+b9.Primitive.prototype.vertPos = function(vert_index) {
+    // TODO
 };
 
 /**
  * hoge
  * @param {Number} vert_index hoge
- * @param {b9.Vector} pos hoge
+ * @reutrn {b9.Color} hoge
  */
-b9.Primitive.prototype.setVertPos = function(vert_index, pos) {
+b9.Primitive.prototype.vertColor = function(vert_index) {
+    // TODO
 };
 
 /**
  * hoge
  * @param {Number} vert_index hoge
- * @param {b9.Color} color hoge
+ * @return {b9.Vector} hoge
  */
-b9.Primitive.prototype.getVertColor = function(vert_index, color) {
-};
-
-/**
- * hoge
- * @param {Number} vert_index hoge
- * @param {b9.Color} color hoge
- */
-b9.Primitive.prototype.setVertColor = function(vert_index, color) {
-};
-
-/**
- * hoge
- * @param {Number} vert_index hoge
- * @return {Number}
- */
-b9.Primitive.prototype.getU = function(vert_index) {
-};
-
-/**
- * hoge
- * @param {Number} vert_index hoge
- * @return {Number}
- */
-b9.Primitive.prototype.getV = function(vert_index) {
-};
-
-/**
- * hoge
- * @param {Number} vert_index hoge
- * @param {Number} u hoge
- * @param {Number} v hoge
- */
-b9.Primitive.prototype.setVertUV = function(vert_index, u, v) {
+b9.Primitive.prototype.vertUV = function(vert_index) {
+    // TODO
 };
 
 b9.Primitive.prototype._render = function(canvas_ctx) {
