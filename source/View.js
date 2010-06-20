@@ -364,50 +364,13 @@ b9.View.prototype.removeChild = function(child) {
 
 /**
  * hoge
- * @param {b9.Element} elem hoge
+ * @return {b9.Element} hoge
  */
-b9.View.prototype.addElementFirst = function(elem) {
-    this._elem_tree.addChildFirst(elem._tree);
+b9.View.prototype.elementRoot = function() {
+    return this._elem_root;
 };
 
-/**
- * hoge
- * @param {b9.Element} elem hoge
- */
-b9.View.prototype.addElementLast = function(elem) {
-    this._elem_tree.addChildLast(elem._tree);
-};
-
-/**
- * hoge
- * @param {b9.Element} elem hoge
- * @param {b9.Element} next_elem hoge
- */
-b9.View.prototype.addElementBefore = function(elem, next_elem) {
-    this._elem_tree.addChildBefore(elem._tree, next_elem._tree);
-};
-
-/**
- * hoge
- * @param {b9.Element} elem hoge
- * @param {b9.Element} prev_elem hoge
- */
-b9.View.prototype.addElementAfter = function(elem, prev_elem) {
-    this._elem_tree.addChildAfter(elem._tree, prev_elem._tree);
-};
-
-/**
- * hoge
- * @param {b9.Element} elem hoge
- */
-b9.View.prototype.removeElement = function(elem) {
-    this._elem_tree.removeChild(elem._tree);
-};
-
-b9.View.prototype._render = function() {
-    /*
-     * calculate final params
-     */
+b9.View.prototype._calcFinal = function() {
     if (this._canvas) {
         this._final_pos.set(b9.Vector.ZERO);
         this._final_size.set(this._size);
@@ -434,6 +397,10 @@ b9.View.prototype._render = function() {
         this._final_filter_color.set(this._filter_color);
         this._final_filter_color.mul(parent._final_filter_color);
     }
+};
+
+b9.View.prototype._render = function() {
+    this._calcFinal();
 
     /*
      * clear view
@@ -450,7 +417,7 @@ b9.View.prototype._render = function() {
      */
     for (var elem = this._elem_root; elem; elem = elem.getNextAsList()) {
         if (elem.isElementFlagOn(b9.Element.FLAG_VISIBLE)) {
-            elem._render();
+            elem._render(this._canvas_ctx);
         } else {
             elem = elem.getLastDescendant();
         }

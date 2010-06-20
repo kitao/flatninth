@@ -131,3 +131,7 @@ b9.Primitive.prototype.getV = function(vert_index) {
  */
 b9.Primitive.prototype.setVertUV = function(vert_index, u, v) {
 };
+
+b9.Primitive.prototype._render = function(canvas_ctx) {
+    // TODO
+};

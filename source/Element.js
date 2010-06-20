@@ -32,9 +32,12 @@ b9.Element = b9.createClass();
 b9.Element.prototype.initialize = function(parent) {
     this._elem_type = b9.Element.TYPE_ELEMENT;
     this._elem_flag = b9.Element.FLAG_VISIBLE;
-    this._local = new b9.Matrix();
-    this._filter_color = new b9.Color();
+    this._local = new b9.Matrix(b9.Matrix.UNIT);
+    this._filter_color = new b9.Color(b9.Color.FULL);
     this._elem_tree = new b9.Tree(this);
+
+    this._world = new b9.Matrix();
+    this._final_filter_color = new b9.Color();
 
     if (parent) {
         parent.addChildLast(this);
@@ -231,7 +234,21 @@ b9.Element.prototype.removeChild = function(child) {
     this._elem_tree.removeChild(child._elem_tree);
 };
 
-b9.Element.prototype._render = function() { alert("element"); };
+b9.Element.prototype._calcFinal = function() {
+    this._world.set(this._local);
+    this._final_filter_color.set(this._filter_color);
+
+    if (!this.isRoot()) {
+        var parent = this.getParent();
+
+        this._world.toGlobal(parent._local);
+        this._final_filter_color.mul(parent._filter_color);
+    }
+};
+
+b9.Element.prototype._render = function(canvas_ctx) {
+    this._calcFinal();
+};
 
 /**
  * hoge

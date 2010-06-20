@@ -40,7 +40,7 @@ b9.Sprite.prototype.initialize = function(max_rect_num, parent) {
     this._rect = new Array(max_rect_num);
 
     for (var i = 0; i < max_rect_num; i++) {
-        this._rect[i] = { pos: new b9.Vector(), width: 0.0, height: 0.0, angle: 0.0,
+        this._rect[i] = { pos: new b9.Vector(), width: 0.0, height: 0.0,
             color: new b9.Color(b9.Color.FULL), u1: 0.0, v1: 0.0, u2: 0.0, v2: 0.0 };
     }
 };
@@ -122,24 +122,6 @@ b9.Sprite.prototype.setRectSize = function(rect_index, width, height) {
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @return {Number} hoge
- */
-b9.Sprite.prototype.getRectAngle = function(rect_index) {
-    return this._rect[rect_index].angle;
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
- * @param {Number} deg hoge
- */
-b9.Sprite.prototype.setRectAngle =function(rect_index, deg) {
-    this._rect[rect_index].angle = deg;
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
  * @param {b9.Color} color hoge
  */
 b9.Sprite.prototype.getRectColor = function(rect_index, color) {
@@ -206,6 +188,21 @@ b9.Sprite.prototype.setRectUV = function(rect_index, u1, v1, u2, v2) {
     this._rect[rect_index].v2 = v2;
 };
 
-b9.Sprite.prototype._render = function() {
-    alert("sprite");
+b9.Sprite.prototype._render = function(canvas_ctx) {
+    this._calcFinal();
+
+    for (var i = 0; i < this._cur_rect_num; i++) {
+        var rect = this._rect[i];
+        b9.Sprite._vec1.set(rect.pos);
+        b9.Sprite._vec1.toGlobal(this._world);
+
+        b9.Sprite._color1.set(rect.color);
+        b9.Sprite._color1.mul(this._final_filter_color);
+
+        canvas_ctx.fillStyle = b9.Sprite._color1.toRGBA();
+        canvas_ctx.fillRect(b9.Sprite._vec1.x, b9.Sprite._vec1.y, rect.width, rect.height);
+    }
 };
+
+b9.Sprite._vec1 = new b9.Vector();
+b9.Sprite._color1 = new b9.Color();
