@@ -226,10 +226,10 @@ b9.Vector.prototype.interp = function(to, ratio) {
  */
 b9.Vector.prototype.toLocal = function(mat) {
     b9.Vector._vec1.set(this);
-    b9.Vector._vec1.sub(mat.trans);
+    b9.Vector._vec1.sub(mat._trans);
 
-    this.set(b9.Vector._vec1.dot(mat.x_axis) / mat.x_axis.sqNorm(),
-            b9.Vector._vec1.dot(mat.y_axis) / mat.y_axis.sqNorm());
+    this.set(b9.Vector._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
+            b9.Vector._vec1.dot(mat._y_axis) / mat._y_axis.sqNorm());
 };
 
 /**
@@ -237,15 +237,15 @@ b9.Vector.prototype.toLocal = function(mat) {
  * @param {b9.Matrix} mat hoge
  */
 b9.Vector.prototype.toGlobal = function(mat) {
-    b9.Vector._vec1.set(mat.x_axis);
+    b9.Vector._vec1.set(mat._x_axis);
     b9.Vector._vec1.mul(this.x);
 
-    b9.Vector._vec2.set(mat.y_axis);
+    b9.Vector._vec2.set(mat._y_axis);
     b9.Vector._vec2.mul(this.y);
 
     this.set(b9.Vector._vec1);
     this.add(b9.Vector._vec2);
-    this.add(mat.trans);
+    this.add(mat._trans);
 };
 
 /**
@@ -253,8 +253,8 @@ b9.Vector.prototype.toGlobal = function(mat) {
  * @param {b9.Matrix} mat hoge
  */
 b9.Vector.prototype.toLocalNoTrans = function(mat) {
-    b9.Vector._vec1.x = this.dot(mat.x_axis) / mat.x_axis.sqNorm();
-    b9.Vector._vec1.y = this.dot(mat.y_axis) / mat.y_axis.sqNorm();
+    b9.Vector._vec1.x = this.dot(mat._x_axis) / mat._x_axis.sqNorm();
+    b9.Vector._vec1.y = this.dot(mat._y_axis) / mat._y_axis.sqNorm();
 
     this.set(b9.Vector._vec1);
 };
@@ -264,10 +264,10 @@ b9.Vector.prototype.toLocalNoTrans = function(mat) {
  * @param {b9.Matrix} mat hoge
  */
 b9.Vector.prototype.toGlobalNoTrans = function(mat) {
-    b9.Vector._vec1.set(mat.x_axis);
+    b9.Vector._vec1.set(mat._x_axis);
     b9.Vector._vec1.mul(this.x);
 
-    b9.Vector._vec2.set(mat.y_axis);
+    b9.Vector._vec2.set(mat._y_axis);
     b9.Vector._vec2.mul(this.y);
 
     this.set(b9.Vector._vec1);

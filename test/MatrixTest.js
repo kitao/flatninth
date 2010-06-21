@@ -22,20 +22,23 @@
 
 function testMatrix() {
     /* initialize */
+    /* xAxis */
+    /* yAxis */
+    /* trans */
     var mat1 = new b9.Matrix();
-    assertTrue(b9.Vector.ZERO.isEqual(mat1.x_axis) &&
-            b9.Vector.ZERO.isEqual(mat1.y_axis) &&
-            b9.Vector.ZERO.isEqual(mat1.trans));
+    assertTrue(b9.Vector.ZERO.isEqual(mat1.xAxis()) &&
+            b9.Vector.ZERO.isEqual(mat1.yAxis()) &&
+            b9.Vector.ZERO.isEqual(mat1.trans()));
 
     var mat2 = new b9.Matrix(b9.Vector.X_UNIT, b9.Vector.Y_UNIT, new b9.Vector(1.0, 2.0));
-    assertTrue(b9.Vector.X_UNIT.isEqual(mat2.x_axis) &&
-            b9.Vector.Y_UNIT.isEqual(mat2.y_axis) &&
-            (new b9.Vector(1.0, 2.0)).isEqual(mat2.trans));
+    assertTrue(b9.Vector.X_UNIT.isEqual(mat2.xAxis()) &&
+            b9.Vector.Y_UNIT.isEqual(mat2.yAxis()) &&
+            (new b9.Vector(1.0, 2.0)).isEqual(mat2.trans()));
 
     var mat3 = new b9.Matrix(mat2);
-    assertTrue(b9.Vector.X_UNIT.isEqual(mat3.x_axis) &&
-            b9.Vector.Y_UNIT.isEqual(mat3.y_axis) &&
-            (new b9.Vector(1.0, 2.0)).isEqual(mat3.trans));
+    assertTrue(b9.Vector.X_UNIT.isEqual(mat3.xAxis()) &&
+            b9.Vector.Y_UNIT.isEqual(mat3.yAxis()) &&
+            (new b9.Vector(1.0, 2.0)).isEqual(mat3.trans()));
 
     /* set */
     mat1.set(b9.Vector.Y_UNIT, b9.Vector.X_UNIT, b9.Vector.Y_UNIT);
@@ -74,20 +77,20 @@ function testMatrix() {
     /* interp */
     mat1.set(b9.Matrix.UNIT);
     mat2.set(mat1);
-    mat2.trans.set(1.0, -1.0);
+    mat2.trans().set(1.0, -1.0);
     mat2.rotateInt(40);
     mat3.set(mat1);
-    mat3.trans.set(0.5, -0.5);
+    mat3.trans().set(0.5, -0.5);
     mat3.rotateInt(20);
     mat1.interp(mat2, 0.5);
     assertEqualsMatrix(mat3, mat1);
 
     mat1.set(b9.Matrix.UNIT);
     mat2.set(mat1);
-    mat2.trans.set(1.0, -1.0);
+    mat2.trans().set(1.0, -1.0);
     mat2.rotateInt(-40);
     mat3.set(mat1);
-    mat3.trans.set(0.5, -0.5);
+    mat3.trans().set(0.5, -0.5);
     mat3.rotateInt(-20);
     mat1.interp(mat2, 0.5);
     assertEqualsMatrix(mat3, mat1);
@@ -95,7 +98,7 @@ function testMatrix() {
     /* interpNoTrans */
     mat1.set(b9.Matrix.UNIT);
     mat2.set(mat1);
-    mat2.trans.set(1.0, 1.0);
+    mat2.trans().set(1.0, 1.0);
     mat2.rotateInt(40);
     mat3.set(mat1);
     mat3.rotateInt(20);
@@ -104,7 +107,7 @@ function testMatrix() {
 
     mat1.set(b9.Matrix.UNIT);
     mat2.set(mat1);
-    mat2.trans.set(1.0, 1.0);
+    mat2.trans().set(1.0, 1.0);
     mat2.rotateInt(-40);
     mat3.set(mat1);
     mat3.rotateInt(-20);
@@ -148,15 +151,15 @@ function testMatrix() {
     assertTrue(mat1.isEqual(mat2));
 
     mat2.set(mat1);
-    mat2.x_axis.set(b9.Vector.ZERO);
+    mat2.xAxis().set(b9.Vector.ZERO);
     assertFalse(mat1.isEqual(mat2));
 
     mat2.set(mat1);
-    mat2.y_axis.set(b9.Vector.ZERO);
+    mat2.yAxis().set(b9.Vector.ZERO);
     assertFalse(mat1.isEqual(mat2));
 
     mat2.set(mat1);
-    mat2.trans.set(b9.Vector.X_UNIT);
+    mat2.trans().set(b9.Vector.X_UNIT);
     assertFalse(mat1.isEqual(mat2));
 
     /* toString */
