@@ -38,27 +38,52 @@ b9.VERSION = 0.01;
  */
 b9.createClass = function(super_class) {
     var sub_class = function() {
-        this.initialize.apply(this, arguments);
+        if (sub_class.prototype.initialize) {
+            sub_class.prototype.initialize.apply(this, arguments);
+        }
     };
 
     if (super_class) {
         var temp_class = function() {};
         temp_class.prototype = super_class.prototype;
-
         sub_class.prototype = new temp_class();
+        sub_class.prototype.constructor = sub_class;
 
         /** @ignore */
-        sub_class.prototype.getSuperClass = function() { return super_class; };
+        sub_class.prototype.getSuperClass = function() {
+            return super_class;
+        };
 
         if (super_class.prototype.initialize) {
-            sub_class.prototype.initializeSuper = super_class.prototype.initialize;
+            sub_class.prototype.initializeSuper = function() {
+                var temp_method = this.initializeSuper;
+                this.initializeSuper = super_class.prototype.initializeSuper || null;
+
+                super_class.prototype.initialize.apply(this, arguments);
+
+                if (this.constructor == sub_class) {
+                    delete this.initializeSuper;
+                } else {
+                    this.initializeSuper = temp_method;
+                }
+            };
         }
 
         if (super_class.prototype.finalize) {
-            sub_class.prototype.finalizeSuper = super_class.prototype.finalize;
+            sub_class.prototype.finalizeSuper = function() {
+                var temp_method = this.finalizeSuper;
+                this.finalizeSuper = super_class.prototype.finalizeSuper || null;
+
+                super_class.prototype.finalize.apply(this, arguments);
+
+                if (this.constructor == sub_class) {
+                    delete this.finalizeSuper;
+                } else {
+                    this.finalizeSuper = temp_method;
+                }
+            };
         }
 
-        sub_class.constructor = sub_class;
     }
 
     return sub_class;

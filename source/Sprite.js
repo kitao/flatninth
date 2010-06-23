@@ -40,8 +40,8 @@ b9.Sprite.prototype.initialize = function(max_rect_num, parent) {
     this._rect = new Array(max_rect_num);
 
     for (var i = 0; i < max_rect_num; i++) {
-        this._rect[i] = { pos: new b9.Vector(), size: new b9.Vector(),
-            color: new b9.Color(b9.Color.FULL), uv1: new b9.Vector(), uv2: new b9.Vector() };
+        this._rect[i] = { pos: new b9.Vector(), size: new b9.Vector(), rot: new b9.Sprite.Angle(),
+            color: new b9.Color(b9.Color.FULL), uv: new b9.Sprite.TexCoord() };
     }
 };
 
@@ -97,6 +97,15 @@ b9.Sprite.prototype.rectSize = function(rect_index) {
 /**
  * hoge
  * @param {Number} rect_index hoge
+ * @return {b9.Sprite.Angle} hoge
+ */
+b9.Sprite.prototype.rectRot = function(rect_index) {
+    return this._rect[rect_index].rot;
+};
+
+/**
+ * hoge
+ * @param {Number} rect_index hoge
  * @return {b9.Color} color hoge
  */
 b9.Sprite.prototype.rectColor = function(rect_index) {
@@ -106,19 +115,10 @@ b9.Sprite.prototype.rectColor = function(rect_index) {
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Sprite.TexCoord} hoge
  */
-b9.Sprite.prototype.rectUV1 = function(rect_index) {
-    return this._rect[rect_index].uv1;
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
- * @return {b9.Vector} hoge
- */
-b9.Sprite.prototype.rectUV2 = function(rect_index) {
-    return this._rect[rect_index].uv2;
+b9.Sprite.prototype.rectUV = function(rect_index) {
+    return this._rect[rect_index].uv;
 };
 
 b9.Sprite.prototype._render = function(canvas_ctx) {
@@ -139,3 +139,55 @@ b9.Sprite.prototype._render = function(canvas_ctx) {
 
 b9.Sprite._vec1 = new b9.Vector();
 b9.Sprite._color1 = new b9.Color();
+
+/**
+ * @class hoge
+ */
+b9.Sprite.Angle = b9.createClass();
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Sprite.Angle.prototype.deg = 0.0;
+
+/**
+ * @class hoge
+ */
+b9.Sprite.TexCoord = b9.createClass();
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Sprite.TexCoord.prototype.u1 = 0.0;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Sprite.TexCoord.prototype.v1 = 0.0;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Sprite.TexCoord.prototype.u2 = 0.0;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Sprite.TexCoord.prototype.v2 = 0.0;
+
+/**
+ * hoge
+ * @param {Number} u hoge
+ * @param {Number} v hoge
+ */
+b9.Sprite.TexCoord.prototype.set = function(u1, v1, u2, v2) {
+    this.u1 = u1;
+    this.v1 = v1;
+    this.u2 = u2;
+    this.v2 = v2;
+};

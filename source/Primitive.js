@@ -109,3 +109,30 @@ b9.Primitive.prototype.vertUV = function(vert_index) {
 b9.Primitive.prototype._render = function(canvas_ctx) {
     // TODO
 };
+
+/**
+ * @class hoge
+ */
+b9.Primitive.TexCoord = b9.createClass();
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Primitive.TexCoord.prototype.u = 0.0;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Primitive.TexCoord.prototype.v = 0.0;
+
+/**
+ * hoge
+ * @param {Number} u hoge
+ * @param {Number} v hoge
+ */
+b9.Primitive.TexCoord.prototype.set = function(u, v) {
+    this.u = u;
+    this.v = v;
+};
