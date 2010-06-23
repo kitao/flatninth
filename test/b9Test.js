@@ -49,7 +49,6 @@ function test_b9() {
 
     var test_ins1 = new test_class1(123);
 
-    assertUndefined(test_ins1.getSuperClass);
     assertUndefined(test_ins1.initializeSuper);
     assertUndefined(test_ins1.finalizeSuper);
     assertEquals(1, ctor_count1);
@@ -71,7 +70,6 @@ function test_b9() {
 
     var test_ins2 = new test_class2();
 
-    assertEquals(test_class1, test_ins2.getSuperClass());
     assertNotUndefined(test_ins2.initializeSuper);
     assertNotUndefined(test_ins2.finalizeSuper);
     assertEquals(2, ctor_count1);
@@ -93,7 +91,6 @@ function test_b9() {
 
     var test_ins3 = new test_class3();
 
-    assertEquals(test_class2, test_ins3.getSuperClass());
     assertNotUndefined(test_ins3.initializeSuper);
     assertNotUndefined(test_ins3.finalizeSuper);
     assertEquals(3, ctor_count1);
