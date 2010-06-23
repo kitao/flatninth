@@ -49,11 +49,6 @@ b9.createClass = function(super_class) {
         sub_class.prototype = new temp_class();
         sub_class.prototype.constructor = sub_class;
 
-        /** @ignore */
-        sub_class.prototype.getSuperClass = function() {
-            return super_class;
-        };
-
         if (super_class.prototype.initialize) {
             sub_class.prototype.initializeSuper = function() {
                 var temp_method = this.initializeSuper;
