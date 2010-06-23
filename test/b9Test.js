@@ -25,6 +25,8 @@ function test_b9() {
     assertEquals(0.01, b9.VERSION);
 
     /* createClass */
+    var test_class0 = b9.createClass();
+
     var ctor_count1 = 0;
     var dtor_count1 = 0;
     var test_class1 = b9.createClass();
@@ -37,6 +39,14 @@ function test_b9() {
     test_class2.prototype.initialize = function() { ctor_count2++; this.initializeSuper(456); };
     test_class2.prototype.finalize = function() { dtor_count2++; this.finalizeSuper(); };
 
+    var ctor_count3 = 0;
+    var dtor_count3 = 0;
+    var test_class3 = b9.createClass(test_class2);
+    test_class3.prototype.initialize = function() { ctor_count3++; this.initializeSuper(); };
+    test_class3.prototype.finalize = function() { dtor_count3++; this.finalizeSuper(); };
+
+    var test_ins0 = new test_class0;
+
     var test_ins1 = new test_class1(123);
 
     assertUndefined(test_ins1.getSuperClass);
@@ -46,7 +56,18 @@ function test_b9() {
     assertEquals(0, dtor_count1);
     assertEquals(0, ctor_count2);
     assertEquals(0, dtor_count2);
+    assertEquals(0, ctor_count3);
+    assertEquals(0, dtor_count3);
     assertEquals(123, test_ins1.param);
+
+    test_ins1.finalize();
+
+    assertEquals(1, ctor_count1);
+    assertEquals(1, dtor_count1);
+    assertEquals(0, ctor_count2);
+    assertEquals(0, dtor_count2);
+    assertEquals(0, ctor_count3);
+    assertEquals(0, dtor_count3);
 
     var test_ins2 = new test_class2();
 
@@ -54,18 +75,12 @@ function test_b9() {
     assertNotUndefined(test_ins2.initializeSuper);
     assertNotUndefined(test_ins2.finalizeSuper);
     assertEquals(2, ctor_count1);
-    assertEquals(0, dtor_count1);
-    assertEquals(1, ctor_count2);
-    assertEquals(0, dtor_count2);
-    assertEquals(456, test_ins2.param);
-
-    test_ins1.finalize();
-
-    assertEquals(2, ctor_count1);
     assertEquals(1, dtor_count1);
     assertEquals(1, ctor_count2);
     assertEquals(0, dtor_count2);
-    assertEquals(123, test_ins1.param);
+    assertEquals(0, ctor_count3);
+    assertEquals(0, dtor_count3);
+    assertEquals(456, test_ins2.param);
 
     test_ins2.finalize();
 
@@ -73,7 +88,30 @@ function test_b9() {
     assertEquals(2, dtor_count1);
     assertEquals(1, ctor_count2);
     assertEquals(1, dtor_count2);
-    assertEquals(456, test_ins2.param);
+    assertEquals(0, ctor_count3);
+    assertEquals(0, dtor_count3);
+
+    var test_ins3 = new test_class3();
+
+    assertEquals(test_class2, test_ins3.getSuperClass());
+    assertNotUndefined(test_ins3.initializeSuper);
+    assertNotUndefined(test_ins3.finalizeSuper);
+    assertEquals(3, ctor_count1);
+    assertEquals(2, dtor_count1);
+    assertEquals(2, ctor_count2);
+    assertEquals(1, dtor_count2);
+    assertEquals(1, ctor_count3);
+    assertEquals(0, dtor_count3);
+    assertEquals(456, test_ins3.param);
+
+    test_ins3.finalize();
+
+    assertEquals(3, ctor_count1);
+    assertEquals(3, dtor_count1);
+    assertEquals(2, ctor_count2);
+    assertEquals(2, dtor_count2);
+    assertEquals(1, ctor_count3);
+    assertEquals(1, dtor_count3);
 
     /* generateID */
     var id1 = b9.generateID();

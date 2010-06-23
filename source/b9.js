@@ -83,7 +83,6 @@ b9.createClass = function(super_class) {
                 }
             };
         }
-
     }
 
     return sub_class;

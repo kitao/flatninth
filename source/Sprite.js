@@ -106,7 +106,7 @@ b9.Sprite.prototype.rectRot = function(rect_index) {
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @return {b9.Color} color hoge
+ * @return {b9.Color} hoge
  */
 b9.Sprite.prototype.rectColor = function(rect_index) {
     return this._rect[rect_index].color;
