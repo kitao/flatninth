@@ -45,7 +45,7 @@ function test_b9() {
     test_class3.prototype.initialize = function() { ctor_count3++; this.initializeSuper(); };
     test_class3.prototype.finalize = function() { dtor_count3++; this.finalizeSuper(); };
 
-    var test_ins0 = new test_class0;
+    var test_ins0 = new test_class0();
 
     var test_ins1 = new test_class1(123);
 

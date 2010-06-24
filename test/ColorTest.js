@@ -45,129 +45,86 @@ function testColor() {
     assertTrue(color6.getR() === 0.1 && color6.getG() === 0.2 && color6.getB() === 0.3 && color6.getA() === 0.4);
 
     /* setR */
-    color1.setR(0.5);
-    assertEquals(0.5, color1.getR());
-
-    color1.setR(-0.5);
-    assertEquals(0.0, color1.getR());
-
-    color1.setR(2.0);
-    assertEquals(1.0, color1.getR());
+    assertEquals(0.5, color1.setR(0.5).getR());
+    assertEquals(0.0, color1.setR(-0.5).getR());
+    assertEquals(1.0, color1.setR(2.0).getR());
 
     /* setG */
-    color1.setG(0.5);
-    assertEquals(0.5, color1.getG());
-
-    color1.setG(-0.5);
-    assertEquals(0.0, color1.getG());
-
-    color1.setG(2.0);
-    assertEquals(1.0, color1.getG());
+    assertEquals(0.5, color1.setG(0.5).getG());
+    assertEquals(0.0, color1.setG(-0.5).getG());
+    assertEquals(1.0, color1.setG(2.0).getG());
 
     /* setB */
-    color1.setB(0.5);
-    assertEquals(0.5, color1.getB());
-
-    color1.setB(-0.5);
-    assertEquals(0.0, color1.getB());
-
-    color1.setB(2.0);
-    assertEquals(1.0, color1.getB());
+    assertEquals(0.5, color1.setB(0.5).getB());
+    assertEquals(0.0, color1.setB(-0.5).getB());
+    assertEquals(1.0, color1.setB(2.0).getB());
 
     /* setA */
-    color1.setA(0.5);
-    assertEquals(0.5, color1.getA());
-
-    color1.setA(-0.5);
-    assertEquals(0.0, color1.getA());
-
-    color1.setA(2.0);
-    assertEquals(1.0, color1.getA());
+    assertEquals(0.5, color1.setA(0.5).getA());
+    assertEquals(0.0, color1.setA(-0.5).getA());
+    assertEquals(1.0, color1.setA(2.0).getA());
 
     /* set */
-    color1.set(0.1, 0.2, 0.3);
-    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 1.0), color1);
-
-    color2.set(0.1, 0.2, 0.3, 0.4);
-    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 0.4), color2);
-
-    color3.set(-0.1, -0.2, -0.3, -0.4);
-    assertEqualsColor(b9.Color.ZERO, color3);
-
-    color4.set(2.0, 3.0, 4.0, 5.0);
-    assertEqualsColor(b9.Color.FULL, color4);
-
-    color5.set(color2);
-    assertEqualsColor(color2, color5);
+    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 1.0), color1.set(0.1, 0.2, 0.3));
+    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 0.4), color2.set(0.1, 0.2, 0.3, 0.4));
+    assertEqualsColor(b9.Color.ZERO, color3.set(-0.1, -0.2, -0.3, -0.4));
+    assertEqualsColor(b9.Color.FULL, color4.set(2.0, 3.0, 4.0, 5.0));
+    assertEqualsColor(color2, color5.set(color2));
 
     /* add */
     color1.set(0.1, 0.2, 0.3, 0.4);
     color2.set(0.2, 0.3, 0.4, 0.5);
-    color1.add(color2);
-    assertEqualsColor(new b9.Color(0.3, 0.5, 0.7, 0.9), color1);
+    assertEqualsColor(new b9.Color(0.3, 0.5, 0.7, 0.9), color1.add(color2));
 
     color1.set(0.8, 0.8, 0.8, 0.8);
     color2.set(0.4, 0.5, 0.6, 0.7);
-    color1.add(color2);
-    assertEqualsColor(b9.Color.FULL, color1);
+    assertEqualsColor(b9.Color.FULL, color1.add(color2));
 
     /* sub */
     color1.set(0.5, 0.6, 0.7, 0.8);
     color2.set(0.4, 0.3, 0.2, 0.1);
-    color1.sub(color2);
-    assertEqualsColor(new b9.Color(0.1, 0.3, 0.5, 0.7), color1);
+    assertEqualsColor(new b9.Color(0.1, 0.3, 0.5, 0.7), color1.sub(color2));
 
     color1.set(0.2, 0.2, 0.2, 0.2);
     color2.set(0.3, 0.4, 0.5, 0.6);
-    color1.sub(color2);
-    assertEqualsColor(b9.Color.ZERO, color1);
+    assertEqualsColor(b9.Color.ZERO, color1.sub(color2));
 
     /* mul */
     color1.set(0.4, 0.4, 0.4, 0.4);
     color2.set(0.25, 0.5, 0.75, 1.0);
-    color1.mul(color2);
-    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 0.4), color1);
+    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 0.4), color1.mul(color2));
 
     color1.set(0.2, 0.4, 0.6, 0.8);
-    color1.mul(0.5);
-    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 0.4), color1);
+    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 0.4), color1.mul(0.5));
 
     color1.set(0.1, 0.2, 0.3, 0.4);
-    color1.mul(-1.0);
-    assertEqualsColor(b9.Color.ZERO, color1);
+    assertEqualsColor(b9.Color.ZERO, color1.mul(-1.0));
 
     color1.set(0.2, 0.3, 0.4, 0.5);
-    color1.mul(10.0);
-    assertEqualsColor(b9.Color.FULL, color1);
+    assertEqualsColor(b9.Color.FULL, color1.mul(10.0));
 
     /* div */
     color1.set(0.2, 0.4, 0.6, 0.8);
-    color1.div(2.0);
-    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 0.4), color1);
+    assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 0.4), color1.div(2.0));
 
     color1.set(0.1, 0.2, 0.3, 0.4);
-    color1.div(-1.0);
-    assertEqualsColor(b9.Color.ZERO, color1);
+    assertEqualsColor(b9.Color.ZERO, color1.div(-1.0));
 
     color1.set(0.2, 0.3, 0.4, 0.5);
-    color1.div(0.1);
-    assertEqualsColor(b9.Color.FULL, color1);
+    assertEqualsColor(b9.Color.FULL, color1.div(0.1));
 
     /* interp */
     color1.set(0.2, 0.4, 0.6, 0.8);
     color2.set(0.4, 0.6, 0.8, 1.0);
-    color1.interp(color2, -1.0);
-    assertEqualsColor(new b9.Color(0.2, 0.4, 0.6, 0.8), color1);
+    assertEqualsColor(new b9.Color(0.2, 0.4, 0.6, 0.8), color1.interp(color2, -1.0));
 
     color1.set(0.2, 0.4, 0.6, 0.8);
     color2.set(0.4, 0.6, 0.8, 1.0);
-    color1.interp(color2, 0.5);
-    assertEqualsColor(new b9.Color(0.3, 0.5, 0.7, 0.9), color1);
+    assertEqualsColor(new b9.Color(0.3, 0.5, 0.7, 0.9), color1.interp(color2, 0.5));
 
     color1.set(0.2, 0.4, 0.6, 0.8);
     color2.set(0.4, 0.6, 0.8, 1.0);
-    color1.interp(color2, 2.0);
-    assertEqualsColor(color2, color1);
+    assertEqualsColor(color2, color1.interp(color2, 2.0));
 
     /* isEqual */
     color1.set(0.1, 0.2, 0.3, 0.4);

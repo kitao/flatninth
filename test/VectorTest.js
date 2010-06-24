@@ -32,38 +32,30 @@ function testVector() {
     assertTrue(vec2.x === 1.0 && vec2.y === 2.0);
 
     /* set */
-    vec1.set(3.0, 4.0);
-    assertEqualsVector(new b9.Vector(3.0, 4.0), vec1);
-
-    vec2.set(vec1);
-    assertEqualsVector(vec1, vec2);
+    assertEqualsVector(new b9.Vector(3.0, 4.0), vec1.set(3.0, 4.0));
+    assertEqualsVector(vec1, vec2.set(vec1));
 
     /* neg */
     vec1.set(10.0, -20.0);
-    vec1.neg();
-    assertEqualsVector(new b9.Vector(-10.0, 20.0), vec1);
+    assertEqualsVector(new b9.Vector(-10.0, 20.0), vec1.neg());
 
     /* add */
     vec1.set(1.0, 2.0);
     vec2.set(3.0, 4.0);
-    vec1.add(vec2);
-    assertEqualsVector(new b9.Vector(4.0, 6.0), vec1);
+    assertEqualsVector(new b9.Vector(4.0, 6.0), vec1.add(vec2));
 
     /* sub */
     vec1.set(2.0, 3.0);
     vec2.set(3.0, 5.0);
-    vec1.sub(vec2);
-    assertEqualsVector(new b9.Vector(-1.0, -2.0), vec1);
+    assertEqualsVector(new b9.Vector(-1.0, -2.0), vec1.sub(vec2));
 
     /* mul */
     vec1.set(1.0, 2.0);
-    vec1.mul(10.0);
-    assertEqualsVector(new b9.Vector(10.0, 20.0), vec1);
+    assertEqualsVector(new b9.Vector(10.0, 20.0), vec1.mul(10.0));
 
     /* div */
     vec1.set(1.0, 2.0);
-    vec1.div(10.0);
-    assertEqualsVector(new b9.Vector(0.1, 0.2), vec1);
+    assertEqualsVector(new b9.Vector(0.1, 0.2), vec1.div(10.0));
 
     /* norm */
     vec1.set(-3.0, -4.0);
@@ -90,56 +82,46 @@ function testVector() {
 
     /* normalize */
     vec1.set(3.0, 4.0);
-    vec1.normalize();
-    assertEqualsVector(new b9.Vector(0.6, 0.8), vec1);
+    assertEqualsVector(new b9.Vector(0.6, 0.8), vec1.normalize());
 
     /* rotateFloat */
     vec1.set(1.0, 2.0);
-    vec1.rotateFloat(90.0);
-    assertEqualsVector(new b9.Vector(-2.0, 1.0), vec1);
+    assertEqualsVector(new b9.Vector(-2.0, 1.0), vec1.rotateFloat(90.0));
 
     /* rotateInt */
     vec1.set(1.0, 2.0);
-    vec1.rotateInt(90.5);
-    assertEqualsVector(new b9.Vector(-2.0, 1.0), vec1);
+    assertEqualsVector(new b9.Vector(-2.0, 1.0), vec1.rotateInt(90.5));
 
     /* interp */
     vec1.set(1.0, 2.0);
     vec2.set(-1.0, -2.0);
-    vec1.interp(vec2, -1.0);
-    assertEqualsVector(new b9.Vector(1.0, 2.0), vec1);
+    assertEqualsVector(new b9.Vector(1.0, 2.0), vec1.interp(vec2, -1.0));
 
     vec1.set(1.0, 2.0);
-    vec1.interp(vec2, 0.5);
-    assertEqualsVector(new b9.Vector(0.0, 0.0), vec1);
+    assertEqualsVector(new b9.Vector(0.0, 0.0), vec1.interp(vec2, 0.5));
 
     vec1.set(1.0, 2.0);
-    vec1.interp(vec2, 2.0);
-    assertEqualsVector(vec2, vec1);
+    assertEqualsVector(vec2, vec1.interp(vec2, 2.0));
 
     /* toLocal */
     var mat1 = new b9.Matrix(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(2.0, 3.0));
     vec1.set(1.0, 5.0);
-    vec1.toLocal(mat1);
-    assertEqualsVector(new b9.Vector(2.0, 1.0), vec1);
+    assertEqualsVector(new b9.Vector(2.0, 1.0), vec1.toLocal(mat1));
 
     /* toGlobal */
     mat1.set(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(2.0, 3.0));
     vec1.set(2.0, 1.0);
-    vec1.toGlobal(mat1);
-    assertEqualsVector(new b9.Vector(1.0, 5.0), vec1);
+    assertEqualsVector(new b9.Vector(1.0, 5.0), vec1.toGlobal(mat1));
 
     /* toLocalNoTrans */
     mat1 = new b9.Matrix(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(2.0, 3.0));
     vec1.set(1.0, 5.0);
-    vec1.toLocalNoTrans(mat1);
-    assertEqualsVector(new b9.Vector(5.0, -1.0), vec1);
+    assertEqualsVector(new b9.Vector(5.0, -1.0), vec1.toLocalNoTrans(mat1));
 
     /* toGlobalNoTrans */
     mat1.set(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(2.0, 3.0));
     vec1.set(2.0, 1.0);
-    vec1.toGlobalNoTrans(mat1);
-    assertEqualsVector(new b9.Vector(-1.0, 2.0), vec1);
+    assertEqualsVector(new b9.Vector(-1.0, 2.0), vec1.toGlobalNoTrans(mat1));
 
     /* isEqual */
     vec1.set(1.0, 2.0);

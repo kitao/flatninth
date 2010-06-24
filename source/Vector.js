@@ -56,6 +56,7 @@ b9.Vector.prototype.initialize = function(arg1, arg2) {
  * hoge
  * @param {b9.Vector|Number} arg1 hoge
  * @param {Number} [arg2] hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.set = function(arg1, arg2)
 {
@@ -66,52 +67,69 @@ b9.Vector.prototype.set = function(arg1, arg2)
         this.x = arg1;
         this.y = arg2;
     }
+
+    return this;
 };
 
 /**
  * hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.neg = function() {
     this.x = -this.x;
     this.y = -this.y;
+
+    return this;
 };
 
 /**
  * hoge
  * @param {b9.Vector} vec hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.add = function(vec) {
     this.x += vec.x;
     this.y += vec.y;
+
+    return this;
 };
 
 /**
  * hoge
  * @param {b9.Vector} vec hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.sub = function(vec) {
     this.x -= vec.x;
     this.y -= vec.y;
+
+    return this;
 };
 
 /**
  * hoge
  * @param {Number} s hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.mul = function(s) {
     this.x *= s;
     this.y *= s;
+
+    return this;
 };
 
 /**
  * hoge
  * @param {Number} s hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.div = function(s) {
     var rs = 1.0 / s;
 
     this.x *= rs;
     this.y *= rs;
+
+    return this;
 };
 
 /**
@@ -136,9 +154,7 @@ b9.Vector.prototype.sqNorm = function() {
  * @return {Number} hoge
  */
 b9.Vector.prototype.dist = function(vec) {
-    b9.Vector._vec1.set(this);
-    b9.Vector._vec1.sub(vec);
-    return b9.Vector._vec1.norm();
+    return b9.Vector._vec1.set(this).sub(vec).norm();
 };
 
 /**
@@ -147,9 +163,7 @@ b9.Vector.prototype.dist = function(vec) {
  * @return {Number} hoge
  */
 b9.Vector.prototype.sqDist = function(vec) {
-    b9.Vector._vec1.set(this);
-    b9.Vector._vec1.sub(vec);
-    return b9.Vector._vec1.sqNorm();
+    return b9.Vector._vec1.set(this).sub(vec).sqNorm();
 };
 
 /**
@@ -163,6 +177,7 @@ b9.Vector.prototype.dot = function(vec) {
 
 /**
  * hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.normalize = function() {
     var norm = this.norm();
@@ -172,11 +187,14 @@ b9.Vector.prototype.normalize = function() {
     } else {
         this.div(norm);
     }
+
+    return this;
 };
 
 /**
  * hoge
  * @param {Number} deg hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.rotateFloat = function(deg) {
     var sin = b9.Math.sinFloat(deg);
@@ -185,12 +203,13 @@ b9.Vector.prototype.rotateFloat = function(deg) {
     b9.Vector._vec1.x = this.x * cos - this.y * sin;
     b9.Vector._vec1.y = this.y * cos + this.x * sin;
 
-    this.set(b9.Vector._vec1);
+    return this.set(b9.Vector._vec1);
 };
 
 /**
  * hoge
  * @param {Number} deg hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.rotateInt = function(deg) {
     var sin = b9.Math.sinInt(deg);
@@ -199,79 +218,72 @@ b9.Vector.prototype.rotateInt = function(deg) {
     b9.Vector._vec1.x = this.x * cos - this.y * sin;
     b9.Vector._vec1.y = this.y * cos + this.x * sin;
 
-    this.set(b9.Vector._vec1);
+    return this.set(b9.Vector._vec1);
 };
 
 /**
  * hoge
  * @param {b9.Vector} to hoge
  * @param {Number} ratio hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.interp = function(to, ratio) {
-    if (ratio < b9.Math.EPSILON) {
-        return;
-    } else if (ratio > 1.0 - b9.Math.EPSILON) {
+    if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
-    } else {
-        this.mul(1.0 - ratio);
-        b9.Vector._vec1.set(to);
-        b9.Vector._vec1.mul(ratio);
-        this.add(b9.Vector._vec1);
+    } else if (ratio >= b9.Math.EPSILON) {
+        b9.Vector._vec1.set(to).mul(ratio);
+        this.mul(1.0 - ratio).add(b9.Vector._vec1);
     }
+
+    return this;
 };
 
 /**
  * hoge
  * @param {b9.Matrix} mat hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.toLocal = function(mat) {
-    b9.Vector._vec1.set(this);
-    b9.Vector._vec1.sub(mat._trans);
+    b9.Vector._vec1.set(this).sub(mat._trans);
 
-    this.set(b9.Vector._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
+    return this.set(b9.Vector._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
             b9.Vector._vec1.dot(mat._y_axis) / mat._y_axis.sqNorm());
 };
 
 /**
  * hoge
  * @param {b9.Matrix} mat hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.toGlobal = function(mat) {
-    b9.Vector._vec1.set(mat._x_axis);
-    b9.Vector._vec1.mul(this.x);
+    b9.Vector._vec1.set(mat._x_axis).mul(this.x);
+    b9.Vector._vec2.set(mat._y_axis).mul(this.y);
 
-    b9.Vector._vec2.set(mat._y_axis);
-    b9.Vector._vec2.mul(this.y);
-
-    this.set(b9.Vector._vec1);
-    this.add(b9.Vector._vec2);
-    this.add(mat._trans);
+    return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(mat._trans);
 };
 
 /**
  * hoge
  * @param {b9.Matrix} mat hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.toLocalNoTrans = function(mat) {
     b9.Vector._vec1.x = this.dot(mat._x_axis) / mat._x_axis.sqNorm();
     b9.Vector._vec1.y = this.dot(mat._y_axis) / mat._y_axis.sqNorm();
 
-    this.set(b9.Vector._vec1);
+    return this.set(b9.Vector._vec1);
 };
 
 /**
  * hoge
  * @param {b9.Matrix} mat hoge
+ * @return {b9.Vector} hoge
  */
 b9.Vector.prototype.toGlobalNoTrans = function(mat) {
-    b9.Vector._vec1.set(mat._x_axis);
-    b9.Vector._vec1.mul(this.x);
+    b9.Vector._vec1.set(mat._x_axis).mul(this.x);
+    b9.Vector._vec2.set(mat._y_axis).mul(this.y);
 
-    b9.Vector._vec2.set(mat._y_axis);
-    b9.Vector._vec2.mul(this.y);
-
-    this.set(b9.Vector._vec1);
-    this.add(b9.Vector._vec2);
+    return this.set(b9.Vector._vec1).add(b9.Vector._vec2);
 };
 
 /**
