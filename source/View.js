@@ -35,9 +35,9 @@ b9.View.prototype.initialize = function(parent) {
     this._canvas = null;
     this._canvas_ctx = null;
     this._view_flag = b9.View.FLAG_VISIBLE;
-    this._pos = new b9.Vector();
-    this._size = new b9.Vector();
-    this._scale = new b9.Vector(1.0, 1.0);
+    this._pos = new b9.Vector2D();
+    this._size = new b9.Vector2D();
+    this._scale = new b9.Vector2D(1.0, 1.0);
     this._filter_color = new b9.Color(b9.Color.FULL);
     this._clear_color = new b9.Color(b9.Color.ZERO);
     this._view_tree = new b9.Tree(this);
@@ -45,9 +45,9 @@ b9.View.prototype.initialize = function(parent) {
     this._elem_root = new b9.Element();
     this._elem_root.setElementFlag(b9.Element._FLAG_ROOT, true);
 
-    this._final_pos = new b9.Vector();
-    this._final_size = new b9.Vector();
-    this._final_scale = new b9.Vector();
+    this._final_pos = new b9.Vector2D();
+    this._final_size = new b9.Vector2D();
+    this._final_scale = new b9.Vector2D();
     this._final_filter_color = new b9.Color();
 
     if (parent) {
@@ -114,7 +114,7 @@ b9.View.prototype.attachCanvas = function(canvas_id) {
         this._canvas = canvas;
         this._canvas_ctx = canvas.getContext("2d");
 
-        this.pos().set(b9.Vector.ZERO);
+        this.pos().set(b9.Vector2D.ZERO);
         this.size().set(canvas.width, canvas.height);
         this.setViewFlag(b9.View.FLAG_CLEAR, true);
     }
@@ -152,7 +152,7 @@ b9.View.prototype.setViewFlag = function(view_flag, is_on) {
 
 /**
  * hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
 b9.View.prototype.pos = function() {
     return this._pos;
@@ -160,7 +160,7 @@ b9.View.prototype.pos = function() {
 
 /**
  * hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
 b9.View.prototype.size = function() {
     return this._size;
@@ -168,7 +168,7 @@ b9.View.prototype.size = function() {
 
 /**
  * hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
 b9.View.prototype.scale = function() {
     return this._scale;
@@ -314,7 +314,7 @@ b9.View.prototype.elementRoot = function() {
 
 b9.View.prototype._calcFinal = function() {
     if (this._canvas) {
-        this._final_pos.set(b9.Vector.ZERO);
+        this._final_pos.set(b9.Vector2D.ZERO);
         this._final_size.set(this._size);
         this._final_scale.set(1.0, 1.0);
         this._final_filter_color.set(this._filter_color);

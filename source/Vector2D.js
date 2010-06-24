@@ -23,14 +23,14 @@
 /**
  * @class hoge
  */
-b9.Vector = b9.createClass();
+b9.Vector2D = b9.createClass();
 
 /**
  * hoge
- * @param {b9.Vector|Number} [arg1] hoge
+ * @param {b9.Vector2D|Number} [arg1] hoge
  * @param {Number} [arg2] hoge
  */
-b9.Vector.prototype.initialize = function(arg1, arg2) {
+b9.Vector2D.prototype.initialize = function(arg1, arg2) {
     /**
      * hoge
      * @return {Number}
@@ -54,11 +54,11 @@ b9.Vector.prototype.initialize = function(arg1, arg2) {
 
 /**
  * hoge
- * @param {b9.Vector|Number} arg1 hoge
+ * @param {b9.Vector2D|Number} arg1 hoge
  * @param {Number} [arg2] hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.set = function(arg1, arg2)
+b9.Vector2D.prototype.set = function(arg1, arg2)
 {
     if (arguments.length === 1) {
         this.x = arg1.x;
@@ -73,9 +73,9 @@ b9.Vector.prototype.set = function(arg1, arg2)
 
 /**
  * hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.neg = function() {
+b9.Vector2D.prototype.neg = function() {
     this.x = -this.x;
     this.y = -this.y;
 
@@ -84,10 +84,10 @@ b9.Vector.prototype.neg = function() {
 
 /**
  * hoge
- * @param {b9.Vector} vec hoge
- * @return {b9.Vector} hoge
+ * @param {b9.Vector2D} vec hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.add = function(vec) {
+b9.Vector2D.prototype.add = function(vec) {
     this.x += vec.x;
     this.y += vec.y;
 
@@ -96,10 +96,10 @@ b9.Vector.prototype.add = function(vec) {
 
 /**
  * hoge
- * @param {b9.Vector} vec hoge
- * @return {b9.Vector} hoge
+ * @param {b9.Vector2D} vec hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.sub = function(vec) {
+b9.Vector2D.prototype.sub = function(vec) {
     this.x -= vec.x;
     this.y -= vec.y;
 
@@ -109,9 +109,9 @@ b9.Vector.prototype.sub = function(vec) {
 /**
  * hoge
  * @param {Number} s hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.mul = function(s) {
+b9.Vector2D.prototype.mul = function(s) {
     this.x *= s;
     this.y *= s;
 
@@ -121,9 +121,9 @@ b9.Vector.prototype.mul = function(s) {
 /**
  * hoge
  * @param {Number} s hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.div = function(s) {
+b9.Vector2D.prototype.div = function(s) {
     var rs = 1.0 / s;
 
     this.x *= rs;
@@ -136,7 +136,7 @@ b9.Vector.prototype.div = function(s) {
  * hoge
  * @return {Number} hoge
  */
-b9.Vector.prototype.norm = function() {
+b9.Vector2D.prototype.norm = function() {
     return b9.Math.sqrt(this.x * this.x + this.y * this.y);
 };
 
@@ -144,42 +144,42 @@ b9.Vector.prototype.norm = function() {
  * hoge
  * @return {Number} hoge
  */
-b9.Vector.prototype.sqNorm = function() {
+b9.Vector2D.prototype.sqNorm = function() {
     return this.x * this.x + this.y * this.y;
 };
 
 /**
  * hoge
- * @param {b9.Vector} vec hoge
+ * @param {b9.Vector2D} vec hoge
  * @return {Number} hoge
  */
-b9.Vector.prototype.dist = function(vec) {
-    return b9.Vector._vec1.set(this).sub(vec).norm();
+b9.Vector2D.prototype.dist = function(vec) {
+    return b9.Vector2D._vec1.set(this).sub(vec).norm();
 };
 
 /**
  * hoge
- * @param {b9.Vector} vec hoge
+ * @param {b9.Vector2D} vec hoge
  * @return {Number} hoge
  */
-b9.Vector.prototype.sqDist = function(vec) {
-    return b9.Vector._vec1.set(this).sub(vec).sqNorm();
+b9.Vector2D.prototype.sqDist = function(vec) {
+    return b9.Vector2D._vec1.set(this).sub(vec).sqNorm();
 };
 
 /**
  * hoge
- * @param {b9.Vector} vec hoge
+ * @param {b9.Vector2D} vec hoge
  * @return {Number} hoge
  */
-b9.Vector.prototype.dot = function(vec) {
+b9.Vector2D.prototype.dot = function(vec) {
     return this.x * vec.x + this.y * vec.y;
 };
 
 /**
  * hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.normalize = function() {
+b9.Vector2D.prototype.normalize = function() {
     var norm = this.norm();
 
     if (norm < b9.Math.EPSILON) {
@@ -194,45 +194,45 @@ b9.Vector.prototype.normalize = function() {
 /**
  * hoge
  * @param {Number} deg hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.rotateFloat = function(deg) {
+b9.Vector2D.prototype.rotateFloat = function(deg) {
     var sin = b9.Math.sinFloat(deg);
     var cos = b9.Math.cosFloat(deg);
 
-    b9.Vector._vec1.x = this.x * cos - this.y * sin;
-    b9.Vector._vec1.y = this.y * cos + this.x * sin;
+    b9.Vector2D._vec1.x = this.x * cos - this.y * sin;
+    b9.Vector2D._vec1.y = this.y * cos + this.x * sin;
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector2D._vec1);
 };
 
 /**
  * hoge
  * @param {Number} deg hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.rotateInt = function(deg) {
+b9.Vector2D.prototype.rotateInt = function(deg) {
     var sin = b9.Math.sinInt(deg);
     var cos = b9.Math.cosInt(deg);
 
-    b9.Vector._vec1.x = this.x * cos - this.y * sin;
-    b9.Vector._vec1.y = this.y * cos + this.x * sin;
+    b9.Vector2D._vec1.x = this.x * cos - this.y * sin;
+    b9.Vector2D._vec1.y = this.y * cos + this.x * sin;
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector2D._vec1);
 };
 
 /**
  * hoge
- * @param {b9.Vector} to hoge
+ * @param {b9.Vector2D} to hoge
  * @param {Number} ratio hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.interp = function(to, ratio) {
+b9.Vector2D.prototype.interp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        b9.Vector._vec1.set(to).mul(ratio);
-        this.mul(1.0 - ratio).add(b9.Vector._vec1);
+        b9.Vector2D._vec1.set(to).mul(ratio);
+        this.mul(1.0 - ratio).add(b9.Vector2D._vec1);
     }
 
     return this;
@@ -240,58 +240,58 @@ b9.Vector.prototype.interp = function(to, ratio) {
 
 /**
  * hoge
- * @param {b9.Matrix} mat hoge
- * @return {b9.Vector} hoge
+ * @param {b9.Matrix2D} mat hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.toLocal = function(mat) {
-    b9.Vector._vec1.set(this).sub(mat._trans);
+b9.Vector2D.prototype.toLocal = function(mat) {
+    b9.Vector2D._vec1.set(this).sub(mat._trans);
 
-    return this.set(b9.Vector._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
-            b9.Vector._vec1.dot(mat._y_axis) / mat._y_axis.sqNorm());
+    return this.set(b9.Vector2D._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
+            b9.Vector2D._vec1.dot(mat._y_axis) / mat._y_axis.sqNorm());
 };
 
 /**
  * hoge
- * @param {b9.Matrix} mat hoge
- * @return {b9.Vector} hoge
+ * @param {b9.Matrix2D} mat hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.toGlobal = function(mat) {
-    b9.Vector._vec1.set(mat._x_axis).mul(this.x);
-    b9.Vector._vec2.set(mat._y_axis).mul(this.y);
+b9.Vector2D.prototype.toGlobal = function(mat) {
+    b9.Vector2D._vec1.set(mat._x_axis).mul(this.x);
+    b9.Vector2D._vec2.set(mat._y_axis).mul(this.y);
 
-    return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(mat._trans);
+    return this.set(b9.Vector2D._vec1).add(b9.Vector2D._vec2).add(mat._trans);
 };
 
 /**
  * hoge
- * @param {b9.Matrix} mat hoge
- * @return {b9.Vector} hoge
+ * @param {b9.Matrix2D} mat hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.toLocalNoTrans = function(mat) {
-    b9.Vector._vec1.x = this.dot(mat._x_axis) / mat._x_axis.sqNorm();
-    b9.Vector._vec1.y = this.dot(mat._y_axis) / mat._y_axis.sqNorm();
+b9.Vector2D.prototype.toLocalNoTrans = function(mat) {
+    b9.Vector2D._vec1.x = this.dot(mat._x_axis) / mat._x_axis.sqNorm();
+    b9.Vector2D._vec1.y = this.dot(mat._y_axis) / mat._y_axis.sqNorm();
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector2D._vec1);
 };
 
 /**
  * hoge
- * @param {b9.Matrix} mat hoge
- * @return {b9.Vector} hoge
+ * @param {b9.Matrix2D} mat hoge
+ * @return {b9.Vector2D} hoge
  */
-b9.Vector.prototype.toGlobalNoTrans = function(mat) {
-    b9.Vector._vec1.set(mat._x_axis).mul(this.x);
-    b9.Vector._vec2.set(mat._y_axis).mul(this.y);
+b9.Vector2D.prototype.toGlobalNoTrans = function(mat) {
+    b9.Vector2D._vec1.set(mat._x_axis).mul(this.x);
+    b9.Vector2D._vec2.set(mat._y_axis).mul(this.y);
 
-    return this.set(b9.Vector._vec1).add(b9.Vector._vec2);
+    return this.set(b9.Vector2D._vec1).add(b9.Vector2D._vec2);
 };
 
 /**
  * hoge
- * @param {b9.Vector} vec hoge
+ * @param {b9.Vector2D} vec hoge
  * @return {Boolean} hoge
  */
-b9.Vector.prototype.isEqual = function(vec) {
+b9.Vector2D.prototype.isEqual = function(vec) {
     return (b9.Math.isEqualFloat(this.x, vec.x) && b9.Math.isEqualFloat(this.y, vec.y));
 };
 
@@ -299,7 +299,7 @@ b9.Vector.prototype.isEqual = function(vec) {
  * hoge
  * @return {String} hoge
  */
-b9.Vector.prototype.toString = function() {
+b9.Vector2D.prototype.toString = function() {
     var str = "(";
     str += this.x;
     str += ", ";
@@ -311,21 +311,21 @@ b9.Vector.prototype.toString = function() {
 
 /**
  * hoge
- * @return {b9.Vector}
+ * @return {b9.Vector2D}
  */
-b9.Vector.ZERO = new b9.Vector(0.0, 0.0);
+b9.Vector2D.ZERO = new b9.Vector2D(0.0, 0.0);
 
 /**
  * hoge
- * @return {b9.Vector}
+ * @return {b9.Vector2D}
  */
-b9.Vector.X_UNIT = new b9.Vector(1.0, 0.0);
+b9.Vector2D.X_UNIT = new b9.Vector2D(1.0, 0.0);
 
 /**
  * hoge
- * @return {b9.Vector}
+ * @return {b9.Vector2D}
  */
-b9.Vector.Y_UNIT = new b9.Vector(0.0, 1.0);
+b9.Vector2D.Y_UNIT = new b9.Vector2D(0.0, 1.0);
 
-b9.Vector._vec1 = new b9.Vector();
-b9.Vector._vec2 = new b9.Vector();
+b9.Vector2D._vec1 = new b9.Vector2D();
+b9.Vector2D._vec2 = new b9.Vector2D();

@@ -32,11 +32,11 @@ b9.Element = b9.createClass();
 b9.Element.prototype.initialize = function(parent) {
     this._elem_type = b9.Element.TYPE_ELEMENT;
     this._elem_flag = b9.Element.FLAG_VISIBLE;
-    this._local = new b9.Matrix(b9.Matrix.UNIT);
+    this._local = new b9.Matrix2D(b9.Matrix2D.UNIT);
     this._filter_color = new b9.Color(b9.Color.FULL);
     this._elem_tree = new b9.Tree(this);
 
-    this._world = new b9.Matrix();
+    this._world = new b9.Matrix2D();
     this._final_filter_color = new b9.Color();
 
     if (parent) {
@@ -90,7 +90,7 @@ b9.Element.prototype.setElementFlag = function(elem_flag, is_on) {
 
 /**
  * hoge
- * @return {b9.Matrix} hoge
+ * @return {b9.Matrix2D} hoge
  */
 b9.Element.prototype.local = function() {
     return this._local;

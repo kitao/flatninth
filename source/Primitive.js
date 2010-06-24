@@ -82,7 +82,7 @@ b9.Primitive.prototype.setCurVertNum = function(cur_vert_num) {
 /**
  * hoge
  * @param {Number} vert_index hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
 b9.Primitive.prototype.vertPos = function(vert_index) {
     // TODO
@@ -100,7 +100,7 @@ b9.Primitive.prototype.vertColor = function(vert_index) {
 /**
  * hoge
  * @param {Number} vert_index hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
 b9.Primitive.prototype.vertUV = function(vert_index) {
     // TODO

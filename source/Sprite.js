@@ -40,7 +40,7 @@ b9.Sprite.prototype.initialize = function(max_rect_num, parent) {
     this._rect = new Array(max_rect_num);
 
     for (var i = 0; i < max_rect_num; i++) {
-        this._rect[i] = { pos: new b9.Vector(), size: new b9.Vector(), rot: new b9.Sprite.Angle(),
+        this._rect[i] = { pos: new b9.Vector2D(), size: new b9.Vector2D(), rot: new b9.Sprite.Angle(),
             color: new b9.Color(b9.Color.FULL), uv: new b9.Sprite.TexCoord() };
     }
 };
@@ -79,7 +79,7 @@ b9.Sprite.prototype.setCurRectNum = function(cur_rect_num) {
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
 b9.Sprite.prototype.rectPos = function(rect_index) {
     return this._rect[rect_index].pos;
@@ -88,7 +88,7 @@ b9.Sprite.prototype.rectPos = function(rect_index) {
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @return {b9.Vector} hoge
+ * @return {b9.Vector2D} hoge
  */
 b9.Sprite.prototype.rectSize = function(rect_index) {
     return this._rect[rect_index].size;
@@ -137,7 +137,7 @@ b9.Sprite.prototype._render = function(canvas_ctx) {
     }
 };
 
-b9.Sprite._vec1 = new b9.Vector();
+b9.Sprite._vec1 = new b9.Vector2D();
 b9.Sprite._color1 = new b9.Color();
 
 /**
