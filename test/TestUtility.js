@@ -26,13 +26,13 @@ function assertEqualsFloat(expected, actual) {
     }
 }
 
-function assertEqualsVector(expected, actual) {
+function assertEqualsVector2D(expected, actual) {
     if (!expected.isEqual(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
 }
 
-function assertEqualsMatrix(expected, actual) {
+function assertEqualsMatrix2D(expected, actual) {
     if (!expected.isEqual(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
