@@ -63,7 +63,7 @@ b9.Vector2D.prototype.getX = function() {
 /**
  * hoge
  * @param {Number} x hoge
- * @return hoge
+ * @return {b9.Vector2D} hoge
  */
 b9.Vector2D.prototype.setX = function(x) {
     this._x = x;
@@ -82,7 +82,7 @@ b9.Vector2D.prototype.getY = function() {
 /**
  * hoge
  * @param {Number} x hoge
- * @return hoge
+ * @return {b9.Vector2D} hoge
  */
 b9.Vector2D.prototype.setY = function(y) {
     this._y = y;

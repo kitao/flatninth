@@ -22,14 +22,22 @@
 
 function testVector2D() {
     /* initialize */
+    /* getX */
+    /* getY */
     var vec1 = new b9.Vector2D();
-    assertTrue(vec1.x === 0.0 && vec1.y === 0.0);
+    assertTrue(vec1.getX() === 0.0 && vec1.getY() === 0.0);
 
     var vec2 = new b9.Vector2D(1.0, 2.0);
-    assertTrue(vec2.x === 1.0 && vec2.y === 2.0);
+    assertTrue(vec2.getX() === 1.0 && vec2.getY() === 2.0);
 
     var vec3 = new b9.Vector2D(vec2);
-    assertTrue(vec2.x === 1.0 && vec2.y === 2.0);
+    assertTrue(vec2.getX() === 1.0 && vec2.getY() === 2.0);
+
+    /* setX */
+    assertEquals(0.1, vec1.setX(0.1).getX());
+
+    /* setY */
+    assertEquals(0.2, vec1.setY(0.2).getY());
 
     /* set */
     assertEqualsVector2D(new b9.Vector2D(3.0, 4.0), vec1.set(3.0, 4.0));

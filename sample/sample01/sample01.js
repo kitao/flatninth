@@ -33,7 +33,9 @@ Sample.prototype.initialize = function(x, y) {
 };
 
 Sample.prototype.onUpdate = function() {
-    this._sprt.rectPos(0).x += 1.0;
+    var pos = this._sprt.rectPos(0);
+
+    pos.setX(pos.getX() + 1.0);
 };
 
 Sample.create= function(x, y) {
