@@ -22,47 +22,23 @@
 
 function testColor() {
     /* initialize */
-    /* getR */
-    /* getG */
-    /* getB */
-    /* getA */
     var color1 = new b9.Color();
-    assertTrue(color1.getR() === 0.0 && color1.getG() === 0.0 && color1.getB() === 0.0 && color1.getA() === 0.0);
+    assertTrue(color1.r === 0.0 && color1.g === 0.0 && color1.b === 0.0 && color1.a === 0.0);
 
     var color2 = new b9.Color(0.1, 0.2, 0.3);
-    assertTrue(color2.getR() === 0.1 && color2.getG() === 0.2 && color2.getB() === 0.3 && color2.getA() === 1.0);
+    assertTrue(color2.r === 0.1 && color2.g === 0.2 && color2.b === 0.3 && color2.a === 1.0);
 
     var color3 = new b9.Color(0.1, 0.2, 0.3, 0.4);
-    assertTrue(color3.getR() === 0.1 && color3.getG() === 0.2 && color3.getB() === 0.3 && color3.getA() === 0.4);
+    assertTrue(color3.r === 0.1 && color3.g === 0.2 && color3.b === 0.3 && color3.a === 0.4);
 
     var color4 = new b9.Color(-0.1, -0.2, -0.3, -0.4);
-    assertTrue(color4.getR() === 0.0 && color4.getG() === 0.0 && color4.getB() === 0.0 && color4.getA() === 0.0);
+    assertTrue(color4.r === 0.0 && color4.g === 0.0 && color4.b === 0.0 && color4.a === 0.0);
 
     var color5 = new b9.Color(2.0, 3.0, 4.0, 5.0);
-    assertTrue(color5.getR() === 1.0 && color5.getG() === 1.0 && color5.getB() === 1.0 && color5.getA() === 1.0);
+    assertTrue(color5.r === 1.0 && color5.g === 1.0 && color5.b === 1.0 && color5.a === 1.0);
 
     var color6 = new b9.Color(color3);
-    assertTrue(color6.getR() === 0.1 && color6.getG() === 0.2 && color6.getB() === 0.3 && color6.getA() === 0.4);
-
-    /* setR */
-    assertEquals(0.5, color1.setR(0.5).getR());
-    assertEquals(0.0, color1.setR(-0.5).getR());
-    assertEquals(1.0, color1.setR(2.0).getR());
-
-    /* setG */
-    assertEquals(0.5, color1.setG(0.5).getG());
-    assertEquals(0.0, color1.setG(-0.5).getG());
-    assertEquals(1.0, color1.setG(2.0).getG());
-
-    /* setB */
-    assertEquals(0.5, color1.setB(0.5).getB());
-    assertEquals(0.0, color1.setB(-0.5).getB());
-    assertEquals(1.0, color1.setB(2.0).getB());
-
-    /* setA */
-    assertEquals(0.5, color1.setA(0.5).getA());
-    assertEquals(0.0, color1.setA(-0.5).getA());
-    assertEquals(1.0, color1.setA(2.0).getA());
+    assertTrue(color6.r === 0.1 && color6.g === 0.2 && color6.b === 0.3 && color6.a === 0.4);
 
     /* set */
     assertEqualsColor(new b9.Color(0.1, 0.2, 0.3, 1.0), color1.set(0.1, 0.2, 0.3));
