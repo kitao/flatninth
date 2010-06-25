@@ -239,11 +239,11 @@ b9.Color.prototype.toString = function() {
  */
 b9.Color.prototype.toRGB = function() {
     var rgb = "rgb(";
-    rgb += b9.Math.floor(this.r * 255.0 + 0.5);
+    rgb += b9.Math.clamp(b9.Math.floor(this.r * 255.0 + 0.5), 0, 255);
     rgb += ",";
-    rgb += b9.Math.floor(this.g * 255.0 + 0.5);
+    rgb += b9.Math.clamp(b9.Math.floor(this.g * 255.0 + 0.5), 0, 255);
     rgb += ",";
-    rgb += b9.Math.floor(this.b * 255.0 + 0.5);
+    rgb += b9.Math.clamp(b9.Math.floor(this.b * 255.0 + 0.5), 0, 255);
     rgb += ")";
 
     return rgb;
@@ -255,13 +255,13 @@ b9.Color.prototype.toRGB = function() {
  */
 b9.Color.prototype.toRGBA = function() {
     var rgba = "rgba(";
-    rgba += b9.Math.floor(this.r * 255.0 + 0.5);
+    rgba += b9.Math.clamp(b9.Math.floor(this.r * 255.0 + 0.5), 0, 255);
     rgba += ",";
-    rgba += b9.Math.floor(this.g * 255.0 + 0.5);
+    rgba += b9.Math.clamp(b9.Math.floor(this.g * 255.0 + 0.5), 0, 255);
     rgba += ",";
-    rgba += b9.Math.floor(this.b * 255.0 + 0.5);
+    rgba += b9.Math.clamp(b9.Math.floor(this.b * 255.0 + 0.5), 0, 255);
     rgba += ",";
-    rgba += b9.Math.floor(this.a * 255.0 + 0.5);
+    rgba += b9.Math.clamp(b9.Math.floor(this.a * 255.0 + 0.5), 0, 255);
     rgba += ")";
 
     return rgba;
