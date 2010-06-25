@@ -350,7 +350,8 @@ b9.View.prototype._render = function() {
     if (this._canvas_ctx) {
         if (this._view_flag & b9.View.FLAG_CLEAR) {
             this._canvas_ctx.fillStyle = this._clear_color.toRGB();
-            this._canvas_ctx.fillRect(this._final_pos.x, this._final_pos.y, this._final_size.x, this._final_size.y);
+            this._canvas_ctx.fillRect(
+                    this._final_pos._x, this._final_pos._y, this._final_size._x, this._final_size._y);
         }
     }
 
