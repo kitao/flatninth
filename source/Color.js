@@ -33,9 +33,28 @@ b9.Color = b9.createClass();
  * @param {Number} [arg4] hoge
  */
 b9.Color.prototype.initialize = function(arg1, arg2, arg3, arg4) {
+    /**
+     * hoge
+     * @return {Number}
+     */
     this.r = 0.0;
+
+    /**
+     * hoge
+     * @return {Number}
+     */
     this.g = 0.0;
+
+    /**
+     * hoge
+     * @return {Number}
+     */
     this.b = 0.0;
+
+    /**
+     * hoge
+     * @return {Number}
+     */
     this.a = 0.0;
 
     if (arguments.length === 1) {
