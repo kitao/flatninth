@@ -126,14 +126,16 @@ b9.Sprite.prototype._render = function(canvas_ctx) {
 
     for (var i = 0; i < this._cur_rect_num; i++) {
         var rect = this._rect[i];
-        b9.Sprite._vec1.set(rect.pos);
-        b9.Sprite._vec1.toGlobal(this._world);
 
-        b9.Sprite._color1.set(rect.color);
-        b9.Sprite._color1.mul(this._final_filter_color);
+        b9.Sprite._vec1.set(rect.pos).toGlobal(this._world);
+        b9.Sprite._color1.set(rect.color).mul(this._final_filter_color);
+
+        var x = (canvas_ctx.width - rect.size.x) / 2.0 + b9.Sprite._vec1.x;
+        var y = (canvas_ctx.height - rect.size.y) / 2.0 - b9.Sprite._vec1.y;
 
         canvas_ctx.fillStyle = b9.Sprite._color1.toRGBA();
-        canvas_ctx.fillRect(b9.Sprite._vec1._x, b9.Sprite._vec1._y, rect.size._x, rect.size._y);
+        canvas_ctx.fillRect(x, y, rect.size.x, rect.size.y);
+        canvas_ctx.fillRect(b9.Sprite._vec1.x, b9.Sprite._vec1.y, rect.size.x, rect.size.y);
     }
 };
 

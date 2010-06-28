@@ -336,8 +336,7 @@ b9.View.prototype._calcFinal = function() {
         this._final_size.x *= this._final_scale.x;
         this._final_size.y *= this._final_scale.y;
 
-        this._final_filter_color.set(this._filter_color);
-        this._final_filter_color.mul(parent._final_filter_color);
+        this._final_filter_color.set(this._filter_color).mul(parent._final_filter_color);
     }
 };
 
@@ -347,12 +346,13 @@ b9.View.prototype._render = function() {
     /*
      * clear view
      */
-    if (this._canvas_ctx) {
-        if (this._view_flag & b9.View.FLAG_CLEAR) {
-            this._canvas_ctx.fillStyle = this._clear_color.toRGB();
-            this._canvas_ctx.fillRect(
-                    this._final_pos._x, this._final_pos._y, this._final_size._x, this._final_size._y);
-        }
+    if (this._view_flag & b9.View.FLAG_CLEAR) {
+        var x = this._canvas_ctx.width / 2.0 + this._final_pos.x;
+        var y = this._canvas_ctx.height / 2.0 - this._final_pos.y;
+alert(x + " " + y);
+        this._canvas_ctx.fillStyle = this._clear_color.toRGB();
+        this._canvas_ctx.fillRect(x, y, this._final_size.x, this._final_size.y);
+        this._canvas_ctx.fillRect(this._final_pos.x, this._final_pos.y, this._final_size.x, this._final_size.y);
     }
 
     /*
