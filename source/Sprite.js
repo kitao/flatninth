@@ -135,7 +135,6 @@ b9.Sprite.prototype._render = function(canvas, canvas_ctx) {
 
         canvas_ctx.fillStyle = b9.Sprite._color1.toRGBA();
         canvas_ctx.fillRect(x, y, rect.size.x, rect.size.y);
-        canvas_ctx.fillRect(b9.Sprite._vec1.x, b9.Sprite._vec1.y, rect.size.x, rect.size.y);
     }
 };
 
