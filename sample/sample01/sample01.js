@@ -29,14 +29,14 @@ Sample.prototype.initialize = function(x, y) {
 
     this._sprt.rectPos(0).set(x, y);
     this._sprt.rectSize(0).set(30.0, 20.0);
-    this._sprt.rectColor(0).set(1.0, 0.0, 0.0);
+    this._sprt.rectColor(0).set(1.0, 1.0, 0.0);
 };
 
 Sample.prototype.onUpdate = function() {
     this._sprt.rectPos(0).x += 1.0;
 };
 
-Sample.create= function(x, y) {
+Sample.create = function(x, y) {
     return new Sample(x, y);
 };
 
