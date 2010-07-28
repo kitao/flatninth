@@ -121,7 +121,7 @@ b9.Sprite.prototype.rectUV = function(rect_index) {
     return this._rect[rect_index].uv;
 };
 
-b9.Sprite.prototype._render = function(canvas_ctx) {
+b9.Sprite.prototype._render = function(canvas, canvas_ctx) {
     this._calcFinal();
 
     for (var i = 0; i < this._cur_rect_num; i++) {
@@ -130,8 +130,8 @@ b9.Sprite.prototype._render = function(canvas_ctx) {
         b9.Sprite._vec1.set(rect.pos).toGlobal(this._world);
         b9.Sprite._color1.set(rect.color).mul(this._final_filter_color);
 
-        var x = (canvas_ctx.width - rect.size.x) / 2.0 + b9.Sprite._vec1.x;
-        var y = (canvas_ctx.height - rect.size.y) / 2.0 - b9.Sprite._vec1.y;
+        var x = (canvas.width - rect.size.x) / 2.0 + b9.Sprite._vec1.x;
+        var y = (canvas.height - rect.size.y) / 2.0 - b9.Sprite._vec1.y;
 
         canvas_ctx.fillStyle = b9.Sprite._color1.toRGBA();
         canvas_ctx.fillRect(x, y, rect.size.x, rect.size.y);

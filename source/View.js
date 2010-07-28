@@ -45,6 +45,8 @@ b9.View.prototype.initialize = function(parent) {
     this._elem_root = new b9.Element();
     this._elem_root.setElementFlag(b9.Element._FLAG_ROOT, true);
 
+    this._final_canvas = null;
+    this._final_canvas_ctx = null;
     this._final_pos = new b9.Vector2D();
     this._final_size = new b9.Vector2D();
     this._final_scale = new b9.Vector2D();
@@ -125,7 +127,7 @@ b9.View.prototype.attachCanvas = function(canvas_id) {
  */
 b9.View.prototype.detatchCanvas = function() {
     this._canvas = null;
-    tihs._canvas_ctx = null;
+    this._canvas_ctx = null;
 };
 
 /**
@@ -314,6 +316,9 @@ b9.View.prototype.elementRoot = function() {
 
 b9.View.prototype._calcFinal = function() {
     if (this._canvas) {
+        this._final_canvas = this._canvas;
+        this._final_canvas_ctx = this._canvas_ctx;
+
         this._final_pos.set(b9.Vector2D.ZERO);
         this._final_size.set(this._size);
         this._final_scale.set(1.0, 1.0);
@@ -321,7 +326,8 @@ b9.View.prototype._calcFinal = function() {
     } else {
         var parent = this.getParent();
 
-        this._canvas_ctx = parent._canvas_ctx;
+        this._final_canvas = parent._final_canvas;
+        this._final_canvas_ctx = parent._final_canvas_ctx;
 
         this._final_pos.set(this._pos);
         this._final_pos.x *= parent._final_scale.x;
@@ -347,12 +353,12 @@ b9.View.prototype._render = function() {
      * clear view
      */
     if (this._view_flag & b9.View.FLAG_CLEAR) {
-        var x = this._canvas_ctx.width / 2.0 + this._final_pos.x;
-        var y = this._canvas_ctx.height / 2.0 - this._final_pos.y;
-alert(x + " " + y);
-        this._canvas_ctx.fillStyle = this._clear_color.toRGB();
-        this._canvas_ctx.fillRect(x, y, this._final_size.x, this._final_size.y);
-        this._canvas_ctx.fillRect(this._final_pos.x, this._final_pos.y, this._final_size.x, this._final_size.y);
+        var x = this._final_canvas.width / 2.0 + this._final_pos.x;
+        var y = this._final_canvas.height / 2.0 - this._final_pos.y;
+
+        this._final_canvas_ctx.fillStyle = this._clear_color.toRGB();
+        this._final_canvas_ctx.fillRect(x, y, this._final_size.x, this._final_size.y);
+        this._final_canvas_ctx.fillRect(this._final_pos.x, this._final_pos.y, this._final_size.x, this._final_size.y);
     }
 
     /*
@@ -360,7 +366,7 @@ alert(x + " " + y);
      */
     for (var elem = this._elem_root; elem; elem = elem.getNextAsList()) {
         if (elem.isElementFlagOn(b9.Element.FLAG_VISIBLE)) {
-            elem._render(this._canvas_ctx);
+            elem._render(this._final_canvas, this._final_canvas_ctx);
         } else {
             elem = elem.getLastDescendant();
         }
