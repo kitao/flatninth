@@ -25,7 +25,7 @@
  */
 b9.System = {};
 
-b9.System._initialize = function(canvas_id, aim_fps) {
+b9.System._initialize = function(aim_fps, canvas_id) {
     this._aim_fps = b9.Math.max(aim_fps, 1);
 
     this._task_root = new b9.Task();
@@ -73,11 +73,14 @@ b9.System._finalize = function() {
 
 /**
  * hoge
+ * @param {Number} aim_fps hoge
  * @param {String} canvas_id hoge
- * @param {Number} fps hoge
+ * @param {String} asset_dir
  */
-b9.System.setup = function(canvas_id, aim_fps) {
-    this._initialize(canvas_id, aim_fps);
+b9.System.setup = function(aim_fps, canvas_id, asset_dir) {
+    this._initialize(aim_fps, canvas_id);
+    b9.Asset._initialize(asset_dir);
+    b9.Debug._initialize();
 };
 
 /**
@@ -102,14 +105,6 @@ b9.System.start = function() {
  * hoge
  */
 b9.System.exit = function() {
-};
-
-/**
- * hoge
- * @param {String} msg hoge
- */
-b9.System.trace = function(msg) {
-    // TODO
 };
 
 /**

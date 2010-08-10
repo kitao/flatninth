@@ -135,6 +135,10 @@ b9.Sprite.prototype._render = function(canvas, canvas_ctx) {
 
         canvas_ctx.fillStyle = b9.Sprite._color1.toRGBA();
         canvas_ctx.fillRect(x, y, rect.size.x, rect.size.y);
+
+//var test_image = new Image();
+//test_image.src = "../asset/flatninth_font.png";
+//test_image.onload = hoge;
     }
 };
 

@@ -34,6 +34,7 @@ b9.Element.prototype.initialize = function(parent) {
     this._elem_flag = b9.Element.FLAG_VISIBLE;
     this._local = new b9.Matrix2D(b9.Matrix2D.UNIT);
     this._filter_color = new b9.Color(b9.Color.FULL);
+    this._image = null;
     this._elem_tree = new b9.Tree(this);
 
     this._world = new b9.Matrix2D();
@@ -102,6 +103,22 @@ b9.Element.prototype.local = function() {
  */
 b9.Element.prototype.filterColor = function() {
     return this._filter_color;
+};
+
+/**
+ * hoge
+ * @return {String} hoge
+ */
+b9.Element.prototype.getImage = function() {
+    return this._image;
+};
+
+/**
+ * hoge
+ * @param {String} name hoge
+ */
+b9.Element.prototype.setImage = function(name) {
+    this._image = name;
 };
 
 /**
