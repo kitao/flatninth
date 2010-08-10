@@ -34,7 +34,7 @@ b9.Element.prototype.initialize = function(parent) {
     this._elem_flag = b9.Element.FLAG_VISIBLE;
     this._local = new b9.Matrix2D(b9.Matrix2D.UNIT);
     this._filter_color = new b9.Color(b9.Color.FULL);
-    this._image = null;
+    this._image = "";
     this._elem_tree = new b9.Tree(this);
 
     this._world = new b9.Matrix2D();
