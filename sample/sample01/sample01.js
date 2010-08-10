@@ -30,6 +30,7 @@ Sample.prototype.initialize = function(x, y) {
     this._sprt.rectPos(0).set(x, y);
     this._sprt.rectSize(0).set(30.0, 20.0);
     this._sprt.rectColor(0).set(1.0, 1.0, 0.0);
+    this._sprt.setImage("flatninth_font.png");
 };
 
 Sample.prototype.onUpdate = function() {
@@ -44,7 +45,7 @@ Sample.create = function(x, y) {
  *
  */
 function main() {
-    b9.System.setup("sample01_canvas", 60);
+    b9.System.setup(60, "sample01_canvas", "../asset");
 
     for (var i = 0; i < 200; i++) {
         Sample.create(i * 2, i * 2);
