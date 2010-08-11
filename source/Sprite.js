@@ -124,6 +124,8 @@ b9.Sprite.prototype.rectUV = function(rect_index) {
 b9.Sprite.prototype._render = function(canvas, canvas_ctx) {
     this._calcFinal();
 
+    var image = b9.Asset.getAsset(this._image);
+
     for (var i = 0; i < this._cur_rect_num; i++) {
         var rect = this._rect[i];
 
@@ -133,13 +135,16 @@ b9.Sprite.prototype._render = function(canvas, canvas_ctx) {
         var x = (canvas.width - rect.size.x) / 2.0 + b9.Sprite._vec1.x;
         var y = (canvas.height - rect.size.y) / 2.0 - b9.Sprite._vec1.y;
 
-        canvas_ctx.fillStyle = b9.Sprite._color1.toRGBA();
-        canvas_ctx.fillRect(x, y, rect.size.x, rect.size.y);
-
         // TODO
-        //var test_image = new Image();
-        //test_image.src = "../asset/flatninth_font.png";
-        //test_image.onload = hoge;
+        if (image) {
+            if (image.is_ready) {
+                // TODO: branch by UV
+                canvas_ctx.drawImage(image, x, y, rect.size.x, rect.size.y);
+            }
+        } else {
+            canvas_ctx.fillStyle = b9.Sprite._color1.toRGBA();
+            canvas_ctx.fillRect(x, y, rect.size.x, rect.size.y);
+        }
     }
 };
 

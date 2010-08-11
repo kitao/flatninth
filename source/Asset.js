@@ -27,12 +27,14 @@ b9.Asset = {};
 
 b9.Asset._initialize = function(asset_dir) {
     this._asset_dir = asset_dir + "/";
-    this._asset_list = null;
+    this._asset_list = {};
 
     // TODO
 };
 
 b9.Asset._finalize = function() {
+    this._asset_list = null;
+
     // TODO
 };
 
@@ -41,16 +43,12 @@ b9.Asset._finalize = function() {
  * @param {String} name hoge
  */
 b9.Asset.loadImage = function(name) {
-    var asset = { type: b9.Asset.TYPE_IMAGE, data: new Image(), is_ready: false };
-    this._asset_list[name] = asset;
+    var image = new Image();
+    image.is_ready = false;
+    image.src = this._asset_dir + name;
+    image.onload = function() { image.is_ready = true; };
 
-    asset.image.src = this._asset_dir + name;
-
-    asset.image.onload = function() {
-        asset.image.is_ready = true;
-        asset.image.onload = null;
-    };
-
+    this._asset_list[name] = image;
 };
 
 /**
@@ -58,9 +56,7 @@ b9.Asset.loadImage = function(name) {
  * @param {String} name hoge
  */
 b9.Asset.getAsset = function(name) {
-    var asset = this._asset_list[name];
-
-    return (asset && asset.is_ready) ? asset.data : null;
+    return this._asset_list[name];
 };
 
 /**
