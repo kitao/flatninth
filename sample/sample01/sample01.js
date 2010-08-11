@@ -46,6 +46,7 @@ Sample.create = function(x, y) {
  */
 function main() {
     b9.System.setup(60, "sample01_canvas", "../asset");
+    b9.Asset.loadImage("flatninth_font.png");
 
     for (var i = 0; i < 200; i++) {
         Sample.create(i * 2, i * 2);
