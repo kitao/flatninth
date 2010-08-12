@@ -52,6 +52,9 @@ b9.View.prototype.initialize = function(parent) {
     this._final_scale = new b9.Vector2D();
     this._final_filter_color = new b9.Color();
 
+    this._clip_lt_pos = new b9.Vector2D();
+    this._clip_rb_pos = new b9.Vector2D();
+
     if (parent) {
         parent.addChildLast(this);
     }
@@ -323,6 +326,9 @@ b9.View.prototype._calcFinal = function() {
         this._final_size.set(this._size);
         this._final_scale.set(1.0, 1.0);
         this._final_filter_color.set(this._filter_color);
+
+        this._clip_lt_pos.set(b9.Vector2D.ZERO);
+        this._clip_rb_pos.set(this._size);
     } else {
         var parent = this.getParent();
 
@@ -343,11 +349,37 @@ b9.View.prototype._calcFinal = function() {
         this._final_size.y *= this._final_scale.y;
 
         this._final_filter_color.set(this._filter_color).mul(parent._final_filter_color);
+
+        this._clip_lt_pos.set(
+                b9.Math.max(this._final_pos.x, parent._clip_lt_pos.x),
+                b9.Math.max(this._final_pos.y, parent._clip_lt_pos.y));
+        this._clip_rb_pos.set( // TODO: should add 1?
+                b9.Math.min(this._final_pos.x + this._final_size.x, parent._clip_rb_pos.x),
+                b9.Math.min(this._final_pos.y + this._final_size.y, parent._clip_rb_pos.y));
+
+        if (this._clip_lt_pos.x > this._clip_rb_pos.x) { this._clip_rb_pos.x = this._clip_lt_pos.x; }
+        if (this._clip_lt_pos.y > this._clip_rb_pos.y) { this._clip_rb_pos.y = this._clip_lt_pos.y; }
     }
 };
 
 b9.View.prototype._render = function() {
     this._calcFinal();
+
+    if (this._clip_lt_pos.x === this._clip_rb_pos.x && this._clip_lt_pos.y === this._clip_rb_pos.y) {
+        return;
+    }
+
+    this._final_canvas_ctx.save();
+
+    /*
+     * set clip area
+     */
+    this._final_canvas_ctx.beginPath();
+    this._final_canvas_ctx.rect(
+            this._clip_lt_pos.x, this._clip_lt_pos.y,
+            this._clip_rb_pos.x - this._clip_lt_pos.x + 1,
+            this._clip_rb_pos.y - this._clip_lt_pos.y + 1);
+    this._final_canvas_ctx.clip();
 
     /*
      * clear view
@@ -371,6 +403,8 @@ b9.View.prototype._render = function() {
             elem = elem.getLastDescendant();
         }
     }
+
+    this._final_canvas_ctx.restore();
 };
 
 /**
