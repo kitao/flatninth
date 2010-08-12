@@ -22,23 +22,32 @@
 
 var Sample = b9.createClass(b9.Task);
 
-Sample.prototype.initialize = function(x, y) {
+Sample.prototype.initialize = function(view, x, y) {
     this.initializeSuper(b9.System.defaultTaskNormal());
 
-    this._sprt = new b9.Sprite(1, b9.System.defaultViewNormal().elementRoot());
+    this._sprt = new b9.Sprite(1, view.elementRoot());
 
     this._sprt.rectPos(0).set(x, y);
     this._sprt.rectSize(0).set(30.0, 20.0);
     this._sprt.rectColor(0).set(1.0, 1.0, 0.0);
     this._sprt.setImage("flatninth_font.png");
+
+    this._speed = new b9.Vector2D();
+    this._speed.x = b9.Math.randomInt(-4, 4);
+    this._speed.y = b9.Math.randomInt(-2, 2);
 };
 
 Sample.prototype.onUpdate = function() {
-    this._sprt.rectPos(0).x += 1.0;
-};
+    this._sprt.rectPos(0).add(this._speed);
+    this._speed.y -= 0.1;
 
-Sample.create = function(x, y) {
-    return new Sample(x, y);
+    if (this._sprt.rectPos(0).y < -240) {
+        this._speed.y = -this._speed.y;
+    }
+
+    if (b9.Math.abs(this._sprt.rectPos(0).x) >= 320) {
+        this._speed.x = -this._speed.x;
+    }
 };
 
 /**
@@ -48,8 +57,14 @@ function main() {
     b9.System.setup(60, "sample01_canvas", "../asset");
     b9.Asset.loadImage("flatninth_font.png");
 
+    var view = new b9.View(b9.System.defaultViewNormal());
+    view.setViewFlag(b9.View.FLAG_CLEAR, true);
+    view.pos().set(100, 100);
+    view.size().set(200, 150);
+    view.clearColor().set(1, 0, 0);
+
     for (var i = 0; i < 200; i++) {
-        Sample.create(i * 2, i * 2);
+        var dummy = new Sample((i % 5 === 0) ? view : b9.System.defaultViewNormal(), i * 2, i * 2);
     }
 
     b9.System.start();
