@@ -42,7 +42,7 @@ Sample.prototype.onUpdate = function() {
     this._speed.y -= 0.1;
 
     if (this._sprt.rectPos(0).y < -240) {
-        this._speed.y = -this._speed.y;
+        this._speed.y = -this._speed.y * 0.95;
     }
 
     if (b9.Math.abs(this._sprt.rectPos(0).x) >= 320) {
@@ -61,6 +61,7 @@ function main() {
     view.setViewFlag(b9.View.FLAG_CLEAR, true);
     view.pos().set(100, 100);
     view.size().set(200, 150);
+    view.scale().set(0.7, 0.5);
     view.clearColor().set(1, 0, 0);
 
     for (var i = 0; i < 200; i++) {
