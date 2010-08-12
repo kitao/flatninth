@@ -398,7 +398,7 @@ b9.View.prototype._render = function() {
      */
     for (var elem = this._elem_root; elem; elem = elem.getNextAsList()) {
         if (elem.isElementFlagOn(b9.Element.FLAG_VISIBLE)) {
-            elem._render(this._final_canvas, this._final_canvas_ctx);
+            elem._render(this._final_canvas, this._final_canvas_ctx, this._final_scale);
         } else {
             elem = elem.getLastDescendant();
         }

@@ -38,6 +38,7 @@ b9.System._initialize = function(aim_fps, canvas_id) {
     this._view_root.attachCanvas(canvas_id);
 
     this._timer_id = null;
+    this._next_update_time = 0;
 
     this._default_task = new Array(this._ORDER_NUM);
     this._default_view = new Array(this._ORDER_NUM);
@@ -87,15 +88,29 @@ b9.System.setup = function(aim_fps, canvas_id, asset_dir) {
  * hoge
  */
 b9.System.start = function() {
+    this._next_update_time = (new Date()).getTime();
+
     function onTimer() {
         if (b9.System._timer_id) {
             clearTimeout(b9.System._timer_id);
         }
 
-        b9.System._update();
+        var cur_time = (new Date()).getTime();
+        var update_count = (cur_time - b9.System._next_update_time) * b9.System._aim_fps / 1000.0;
+        update_count = b9.Math.min(b9.Math.floor(update_count), 1);
+
+        b9.System._next_update_time += (1000.0 / b9.System._aim_fps) * update_count;
+
+        for (var i = 0; i < update_count; i++) {
+            b9.System._update();
+        }
+
         b9.System._render();
 
-        b9.System._timer_id = setTimeout(onTimer, 1000 / b9.System._aim_fps);
+        cur_time = (new Date()).getTime();
+        var wait_time = b9.Math.max(b9.System._next_update_time - cur_time, 0);
+
+        b9.System._timer_id = setTimeout(onTimer, wait_time);
     }
 
     onTimer();
