@@ -376,7 +376,7 @@ b9.View.prototype._render = function() {
      */
     if (this._view_flag & b9.View.FLAG_CLEAR) {
         b9.LowLevelAPI.fillRect(this._final_canvas_proxy, this._final_pos.x, this._final_pos.y,
-               this._final_size.x, this._final_size.y, this._clear_color.toRGB());
+                this._final_size.x, this._final_size.y, this._clear_color.toRGB());
     }
 
     /*
