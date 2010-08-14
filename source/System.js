@@ -88,14 +88,14 @@ b9.System.setup = function(aim_fps, canvas_id, asset_dir) {
  * hoge
  */
 b9.System.start = function() {
-    this._next_update_time = (new Date()).getTime();
+    this._next_update_time = this.getTime();
 
     function onTimer() {
         if (b9.System._timer_id) {
             clearTimeout(b9.System._timer_id);
         }
 
-        var cur_time = (new Date()).getTime();
+        var cur_time = b9.System.getTime();
         var update_count = (cur_time - b9.System._next_update_time) * b9.System._aim_fps / 1000.0;
         update_count = b9.Math.min(b9.Math.floor(update_count), 1);
 
@@ -107,10 +107,10 @@ b9.System.start = function() {
 
         b9.System._render();
 
-        cur_time = (new Date()).getTime();
+        cur_time = b9.System.getTime();
         var wait_time = b9.Math.max(b9.System._next_update_time - cur_time, 0);
 
-        b9.System._timer_id = setTimeout(onTimer, wait_time);
+        b9.System._timer_id = b9.LowLevelAPI.setTimeout(onTimer, wait_time);
     }
 
     onTimer();
@@ -129,6 +129,12 @@ b9.System.exit = function() {
 b9.System.error = function(msg) {
     throw new Error(msg);
 };
+
+/**
+ * hoge
+ * @return {Number} hoge
+ */
+b9.System.getTime = b9.LowLevelAPI.getTime;
 
 /**
  * hoge

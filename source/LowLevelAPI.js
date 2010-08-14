@@ -44,9 +44,22 @@ b9.LowLevelAPI.atan2 = Math.atan2;
 
 b9.LowLevelAPI.random = Math.random;
 
-b9.LowLevelAPI.EPSILON = 0.0001;
-
 b9.LowLevelAPI.PI = Math.PI;
+
+/*
+ * System
+ */
+b9.LowLevelAPI.getTime = function() {
+    return (new Date()).getTime();
+};
+
+b9.LowLevelAPI.setTimeout = function(func, time) {
+    setTimeout(func, time);
+};
+
+b9.LowLevelAPI.clearTimeout = function(timer_id) {
+    clearTimeout(timer_id);
+};
 
 /*
  * Graphics

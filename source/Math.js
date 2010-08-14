@@ -30,9 +30,7 @@ b9.Math = {};
  * @param {Number} x hoge
  * @return {Number} hoge
  */
-b9.Math.floor = function(x) {
-    return b9.LowLevelAPI.floor(x);
-};
+b9.Math.floor = b9.LowLevelAPI.floor;
 
 /**
  * hoge
@@ -76,12 +74,10 @@ b9.Math.clamp = function(x, min, max) {
 
 /**
  * hoge
- * @param {Number} s hoge
+ * @param {Number} x hoge
  * @return {Number} hoge
  */
-b9.Math.sqrt = function(s) {
-    return b9.LowLevelAPI.sqrt(s);
-};
+b9.Math.sqrt = b9.LowLevelAPI.sqrt;
 
 /**
  * hoge
@@ -228,7 +224,7 @@ b9.Math.isEqualFloat = function(a, b) {
  * hoge
  * @return {Number}
  */
-b9.Math.EPSILON = b9.LowLevelAPI.EPSILON;
+b9.Math.EPSILON = 0.0001;
 
 /**
  * hoge
