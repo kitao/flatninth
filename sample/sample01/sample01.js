@@ -39,13 +39,14 @@ Sample.prototype.initialize = function(view, x, y) {
 
 Sample.prototype.onUpdate = function() {
     this._sprt.rectPos(0).add(this._speed);
-    this._speed.y -= 0.1;
+    this._speed.y += 0.1;
 
-    if (this._sprt.rectPos(0).y < -240) {
-        this._speed.y = -this._speed.y * 0.95;
+    if (this._sprt.rectPos(0).y > 480 - this._sprt.rectSize(0).y) {
+        //this._sprt.rectPos(0).y = 460 - this._sprt.rectSize(0).y;
+        this._speed.y = -this._speed.y * 0.98;
     }
 
-    if (b9.Math.abs(this._sprt.rectPos(0).x) >= 320) {
+    if (this._sprt.rectPos(0).x < 0 || this._sprt.rectPos(0).x > 640 - this._sprt.rectSize(0).x) {
         this._speed.x = -this._speed.x;
     }
 };
@@ -61,10 +62,10 @@ function main() {
     view.setViewFlag(b9.View.FLAG_CLEAR, true);
     view.pos().set(100, 100);
     view.size().set(200, 150);
-    view.scale().set(0.7, 0.5);
+    view.scale().set(2, 0.5);
     view.clearColor().set(1, 0, 0);
 
-    for (var i = 0; i < 200; i++) {
+    for (var i = 0; i < 100; i++) {
         var dummy = new Sample((i % 5 === 0) ? view : b9.System.defaultViewNormal(), i * 2, i * 2);
     }
 
