@@ -121,7 +121,7 @@ b9.Sprite.prototype.rectUV = function(rect_index) {
     return this._rect[rect_index].uv;
 };
 
-b9.Sprite.prototype._render = function(canvas_proxy, scale) {
+b9.Sprite.prototype._render = function(canvas_proxy) {
     this._calcFinal();
 
     var image = b9.Asset.getAsset(this._image);
@@ -130,15 +130,13 @@ b9.Sprite.prototype._render = function(canvas_proxy, scale) {
         var rect = this._rect[i];
 
         b9.Sprite._vec1.set(rect.pos).toGlobal(this._world);
+        b9.Sprite._vec2.set(rect.size).toGlobalNoTrans(this._world);
         b9.Sprite._color1.set(rect.color).mul(this._final_filter_color);
 
-        var canvas_width = b9.LowLevelAPI.getCanvasWidth(canvas_proxy);
-        var canvas_height = b9.LowLevelAPI.getCanvasHeight(canvas_proxy);
-
-        var x = ((canvas_width - rect.size.x) / 2.0 + b9.Sprite._vec1.x) * scale.x;
-        var y = ((canvas_height - rect.size.y) / 2.0 - b9.Sprite._vec1.y) * scale.y;
-        var w = rect.size.x * scale.x;
-        var h = rect.size.y * scale.y;
+        var x = b9.Sprite._vec1.x;
+        var y = b9.Sprite._vec1.y;
+        var w = b9.Sprite._vec2.x;
+        var h = b9.Sprite._vec2.y;
 
         // TODO
         if (image) {
@@ -153,6 +151,7 @@ b9.Sprite.prototype._render = function(canvas_proxy, scale) {
 };
 
 b9.Sprite._vec1 = new b9.Vector2D();
+b9.Sprite._vec2 = new b9.Vector2D();
 b9.Sprite._color1 = new b9.Color();
 
 /**

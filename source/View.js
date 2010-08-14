@@ -43,6 +43,7 @@ b9.View.prototype.initialize = function(parent) {
 
     this._elem_root = new b9.Element();
     this._elem_root.setElementFlag(b9.Element._FLAG_ROOT, true);
+    this._elem_root._view = this;
 
     this._final_canvas_proxy = null;
     this._final_pos = new b9.Vector2D();
@@ -384,7 +385,7 @@ b9.View.prototype._render = function() {
      */
     for (var elem = this._elem_root; elem; elem = elem.getNextAsList()) {
         if (elem.isElementFlagOn(b9.Element.FLAG_VISIBLE)) {
-            elem._render(this._final_canvas_proxy, this._final_scale);
+            elem._render(this._final_canvas_proxy);
         } else {
             elem = elem.getLastDescendant();
         }

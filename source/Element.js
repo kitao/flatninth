@@ -239,7 +239,9 @@ b9.Element.prototype._calcFinal = function() {
     this._world.set(this._local);
     this._final_filter_color.set(this._filter_color);
 
-    if (!this.isRoot()) {
+    if (this.isRoot()) {
+        this._world.scale(this._view._scale.x, this._view._scale.y);
+    } else {
         var parent = this.getParent();
 
         this._world.toGlobal(parent._local);
@@ -247,7 +249,7 @@ b9.Element.prototype._calcFinal = function() {
     }
 };
 
-b9.Element.prototype._render = function(canvas_proxy, scale) {
+b9.Element.prototype._render = function(canvas_proxy) {
     this._calcFinal();
 };
 
