@@ -247,7 +247,7 @@ b9.Element.prototype._calcFinal = function() {
     }
 };
 
-b9.Element.prototype._render = function(canvas, canvas_ctx, scale) {
+b9.Element.prototype._render = function(canvas_proxy, scale) {
     this._calcFinal();
 };
 

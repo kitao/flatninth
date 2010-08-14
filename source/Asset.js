@@ -43,12 +43,7 @@ b9.Asset._finalize = function() {
  * @param {String} name hoge
  */
 b9.Asset.loadImage = function(name) {
-    var image = new Image();
-    image.is_ready = false;
-    image.src = this._asset_dir + name;
-    image.onload = function() { image.is_ready = true; };
-
-    this._asset_list[name] = image;
+    this._asset_list[name] = b9.LowLevelAPI.loadImage(this._asset_dir + name);
 };
 
 /**

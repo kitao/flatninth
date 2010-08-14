@@ -121,7 +121,7 @@ b9.Sprite.prototype.rectUV = function(rect_index) {
     return this._rect[rect_index].uv;
 };
 
-b9.Sprite.prototype._render = function(canvas, canvas_ctx, scale) {
+b9.Sprite.prototype._render = function(canvas_proxy, scale) {
     this._calcFinal();
 
     var image = b9.Asset.getAsset(this._image);
@@ -132,8 +132,11 @@ b9.Sprite.prototype._render = function(canvas, canvas_ctx, scale) {
         b9.Sprite._vec1.set(rect.pos).toGlobal(this._world);
         b9.Sprite._color1.set(rect.color).mul(this._final_filter_color);
 
-        var x = ((canvas.width - rect.size.x) / 2.0 + b9.Sprite._vec1.x) * scale.x;
-        var y = ((canvas.height - rect.size.y) / 2.0 - b9.Sprite._vec1.y) * scale.y;
+        var canvas_width = b9.LowLevelAPI.getCanvasWidth(canvas_proxy);
+        var canvas_height = b9.LowLevelAPI.getCanvasHeight(canvas_proxy);
+
+        var x = ((canvas_width - rect.size.x) / 2.0 + b9.Sprite._vec1.x) * scale.x;
+        var y = ((canvas_height - rect.size.y) / 2.0 - b9.Sprite._vec1.y) * scale.y;
         var w = rect.size.x * scale.x;
         var h = rect.size.y * scale.y;
 
@@ -141,11 +144,10 @@ b9.Sprite.prototype._render = function(canvas, canvas_ctx, scale) {
         if (image) {
             if (image.is_ready) {
                 // TODO: branch by UV
-                canvas_ctx.drawImage(image, x, y, w, h);
+                b9.LowLevelAPI.drawImage(canvas_proxy, image, x, y, w, h);
             }
         } else {
-            canvas_ctx.fillStyle = b9.Sprite._color1.toRGBA();
-            canvas_ctx.fillRect(x, y, w, h);
+            b9.LowLevelAPI.fillRect(canvas_proxy, x, y, w, h, b9.Sprite._color1.toRGBA());
         }
     }
 };

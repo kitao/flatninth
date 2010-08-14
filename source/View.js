@@ -32,8 +32,7 @@ b9.View = b9.createClass();
 b9.View.prototype.initialize = function(parent) {
     this._id = b9.generateID();
     this._name = "";
-    this._canvas = null;
-    this._canvas_ctx = null;
+    this._canvas_proxy = null;
     this._view_flag = b9.View.FLAG_VISIBLE;
     this._pos = new b9.Vector2D();
     this._size = new b9.Vector2D();
@@ -45,8 +44,7 @@ b9.View.prototype.initialize = function(parent) {
     this._elem_root = new b9.Element();
     this._elem_root.setElementFlag(b9.Element._FLAG_ROOT, true);
 
-    this._final_canvas = null;
-    this._final_canvas_ctx = null;
+    this._final_canvas_proxy = null;
     this._final_pos = new b9.Vector2D();
     this._final_size = new b9.Vector2D();
     this._final_scale = new b9.Vector2D();
@@ -104,8 +102,8 @@ b9.View.prototype.setName = function(name) {
  * hoge
  * @return {Canvas} hoge
  */
-b9.View.prototype.getCanvas = function() {
-    return this._canvas;
+b9.View.prototype.getCanvasID = function() {
+    return this._canvas_proxy ? b9.LowLevelAPI.getCanvasID(this._canvas_proxy) : null;
 };
 
 /**
@@ -113,14 +111,13 @@ b9.View.prototype.getCanvas = function() {
  * @param {String} canvas_id hoge
  */
 b9.View.prototype.attachCanvas = function(canvas_id) {
-    var canvas = document.getElementById(canvas_id);
+    this._canvas_proxy = b9.LowLevelAPI.getCanvasProxy(canvas_id);
 
-    if (canvas && canvas.getContext) {
-        this._canvas = canvas;
-        this._canvas_ctx = canvas.getContext("2d");
-
+    if (this._canvas_proxy) {
         this.pos().set(b9.Vector2D.ZERO);
-        this.size().set(canvas.width, canvas.height);
+        this.size().set(
+                b9.LowLevelAPI.getCanvasWidth(this._canvas_proxy),
+                b9.LowLevelAPI.getCanvasHeight(this._canvas_proxy));
         this.setViewFlag(b9.View.FLAG_CLEAR, true);
     }
 };
@@ -129,8 +126,7 @@ b9.View.prototype.attachCanvas = function(canvas_id) {
  * hoge
  */
 b9.View.prototype.detatchCanvas = function() {
-    this._canvas = null;
-    this._canvas_ctx = null;
+    this._canvas_proxy = null;
 };
 
 /**
@@ -318,9 +314,8 @@ b9.View.prototype.elementRoot = function() {
 };
 
 b9.View.prototype._calcFinal = function() {
-    if (this._canvas) {
-        this._final_canvas = this._canvas;
-        this._final_canvas_ctx = this._canvas_ctx;
+    if (this._canvas_proxy) {
+        this._final_canvas_proxy = this._canvas_proxy;
 
         this._final_pos.set(b9.Vector2D.ZERO);
         this._final_size.set(this._size);
@@ -332,8 +327,7 @@ b9.View.prototype._calcFinal = function() {
     } else {
         var parent = this.getParent();
 
-        this._final_canvas = parent._final_canvas;
-        this._final_canvas_ctx = parent._final_canvas_ctx;
+        this._final_canvas_proxy = parent._final_canvas_proxy;
 
         this._final_pos.set(this._pos);
         this._final_pos.x *= parent._final_scale.x;
@@ -369,28 +363,20 @@ b9.View.prototype._render = function() {
         return;
     }
 
-    this._final_canvas_ctx.save();
+    b9.LowLevelAPI.saveCanvasContext(this._final_canvas_proxy);
 
     /*
      * set clip area
      */
-    this._final_canvas_ctx.beginPath();
-    this._final_canvas_ctx.rect(
-            this._clip_lt_pos.x, this._clip_lt_pos.y,
-            this._clip_rb_pos.x - this._clip_lt_pos.x + 1,
-            this._clip_rb_pos.y - this._clip_lt_pos.y + 1);
-    this._final_canvas_ctx.clip();
+    b9.LowLevelAPI.setClipArea(this._final_canvas_proxy, this._clip_lt_pos.x, this._clip_lt_pos.y,
+            this._clip_rb_pos.x - this._clip_lt_pos.x + 1, this._clip_rb_pos.y - this._clip_lt_pos.y + 1);
 
     /*
      * clear view
      */
     if (this._view_flag & b9.View.FLAG_CLEAR) {
-        var x = this._final_canvas.width / 2.0 + this._final_pos.x;
-        var y = this._final_canvas.height / 2.0 - this._final_pos.y;
-
-        this._final_canvas_ctx.fillStyle = this._clear_color.toRGB();
-        this._final_canvas_ctx.fillRect(x, y, this._final_size.x, this._final_size.y);
-        this._final_canvas_ctx.fillRect(this._final_pos.x, this._final_pos.y, this._final_size.x, this._final_size.y);
+        b9.LowLevelAPI.fillRect(this._final_canvas_proxy, this._final_pos.x, this._final_pos.y,
+               this._final_size.x, this._final_size.y, this._clear_color.toRGB());
     }
 
     /*
@@ -398,13 +384,13 @@ b9.View.prototype._render = function() {
      */
     for (var elem = this._elem_root; elem; elem = elem.getNextAsList()) {
         if (elem.isElementFlagOn(b9.Element.FLAG_VISIBLE)) {
-            elem._render(this._final_canvas, this._final_canvas_ctx, this._final_scale);
+            elem._render(this._final_canvas_proxy, this._final_scale);
         } else {
             elem = elem.getLastDescendant();
         }
     }
 
-    this._final_canvas_ctx.restore();
+    b9.LowLevelAPI.restoreCanvasContext(this._final_canvas_proxy);
 };
 
 /**

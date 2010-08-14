@@ -62,5 +62,66 @@ b9.LowLevelAPI.clearTimeout = function(timer_id) {
 };
 
 /*
+ * Asset
+ */
+b9.LowLevelAPI.loadImage = function(name) { // TODO: name?
+    var image = new Image();
+    image.is_ready = false;
+    image.src = name;
+    image.onload = function() { image.is_ready = true; };
+
+    return image;
+};
+
+/*
  * Graphics
  */
+b9.LowLevelAPI.getCanvasProxy = function(canvas_id) {
+    var canvas = document.getElementById(canvas_id);
+
+    if (canvas && canvas.getContext) {
+        return { _canvas: canvas, _context: canvas.getContext("2d") };
+    } else {
+        return null;
+    }
+};
+
+b9.LowLevelAPI.getCanvasID = function(canvas_proxy) {
+    return canvas_proxy._id;
+};
+
+b9.LowLevelAPI.getCanvasWidth = function(canvas_proxy) {
+    return canvas_proxy._canvas.width;
+};
+
+b9.LowLevelAPI.getCanvasHeight = function(canvas_proxy) {
+    return canvas_proxy._canvas.height;
+};
+
+b9.LowLevelAPI.saveCanvasContext = function(canvas_proxy) {
+    canvas_proxy._context.save();
+};
+
+b9.LowLevelAPI.restoreCanvasContext = function(canvas_proxy) {
+    canvas_proxy._context.restore();
+};
+
+b9.LowLevelAPI.setClipArea = function(canvas_proxy, x, y, width, height) {
+    var ctx = canvas_proxy._context;
+
+    ctx.beginPath();
+    ctx.rect(x, y, width, height);
+    ctx.clip();
+};
+
+b9.LowLevelAPI.fillRect = function(canvas_proxy, x, y, width, height, color) {
+    var ctx = canvas_proxy._context;
+
+    // TODO
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+};
+
+b9.LowLevelAPI.drawImage = function(canvas_proxy, image, x, y, width, height) {
+    canvas_proxy._context.drawImage(image, x, y, width, height); // TODO
+};
