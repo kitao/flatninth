@@ -42,16 +42,19 @@ b9.Asset._finalize = function() {
  * hoge
  * @param {String} name hoge
  */
-b9.Asset.loadImage = function(name) {
-    this._asset_list[name] = b9.LowLevelAPI.loadImage(this._asset_dir + name);
-};
+b9.Asset.getImage = function(name) {
+    var image = this._asset_list[name];
 
-/**
- * hoge
- * @param {String} name hoge
- */
-b9.Asset.getAsset = function(name) {
-    return this._asset_list[name];
+    if (!image) {
+        image = new Image();
+        image.is_ready = false;
+        image.src = this._asset_dir + name;
+        image.onload = function() { image.is_ready = true; };
+
+        this._asset_list[name] = image;
+    }
+
+    return image;
 };
 
 /**
