@@ -56,7 +56,6 @@ Sample.prototype.onUpdate = function() {
  */
 function main() {
     b9.System.setup(60, "sample01_canvas", "../asset");
-    b9.Asset.loadImage("flatninth_font.png");
 
     var view = new b9.View(b9.System.defaultViewNormal());
     view.setViewFlag(b9.View.FLAG_CLEAR, true);
