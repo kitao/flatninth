@@ -30,7 +30,7 @@ b9.Math = {};
  * @param {Number} x hoge
  * @return {Number} hoge
  */
-b9.Math.floor = b9.LowLevelAPI.floor;
+b9.Math.floor = Math.floor;
 
 /**
  * hoge
@@ -77,7 +77,7 @@ b9.Math.clamp = function(x, min, max) {
  * @param {Number} x hoge
  * @return {Number} hoge
  */
-b9.Math.sqrt = b9.LowLevelAPI.sqrt;
+b9.Math.sqrt = Math.sqrt;
 
 /**
  * hoge
@@ -85,7 +85,7 @@ b9.Math.sqrt = b9.LowLevelAPI.sqrt;
  * @return {Number} hoge
  */
 b9.Math.sinFloat = function(deg) {
-    return b9.LowLevelAPI.sin(deg * this.DEG_TO_RAD);
+    return Math.sin(deg * this.DEG_TO_RAD);
 };
 
 /**
@@ -94,7 +94,7 @@ b9.Math.sinFloat = function(deg) {
  * @return {Number} hoge
  */
 b9.Math.cosFloat = function(deg) {
-    return b9.LowLevelAPI.cos(deg * this.DEG_TO_RAD);
+    return Math.cos(deg * this.DEG_TO_RAD);
 };
 
 /**
@@ -129,7 +129,7 @@ b9.Math.cosInt = function(deg) {
  * @return {Number} hoge
  */
 b9.Math.asin = function(x) {
-    return b9.LowLevelAPI.asin(x) * this.RAD_TO_DEG;
+    return Math.asin(x) * this.RAD_TO_DEG;
 };
 
 /**
@@ -138,7 +138,7 @@ b9.Math.asin = function(x) {
  * @return {Number} hoge
  */
 b9.Math.acos = function(x) {
-    return b9.LowLevelAPI.acos(x) * this.RAD_TO_DEG;
+    return Math.acos(x) * this.RAD_TO_DEG;
 };
 
 /**
@@ -148,7 +148,7 @@ b9.Math.acos = function(x) {
  * @return {Number} hoge
  */
 b9.Math.atan2 = function(y, x) {
-    return b9.LowLevelAPI.atan2(y, x) * this.RAD_TO_DEG;
+    return Math.atan2(y, x) * this.RAD_TO_DEG;
 };
 
 /**
@@ -165,10 +165,10 @@ b9.Math.randomInt = function(from, to) {
 
     if (to >= from) {
         range = to - from + 1;
-        return from + this.floor(b9.LowLevelAPI.random() * range);
+        return from + this.floor(Math.random() * range);
     } else {
         range = from - to + 1;
-        return from - this.floor(b9.LowLevelAPI.random() * range);
+        return from - this.floor(Math.random() * range);
     }
 };
 
@@ -186,10 +186,10 @@ b9.Math.randomFloat = function(from, to, interval) {
 
     if (to >= from) {
         range = this.floor((to - from) / interval) + 1;
-        return from + this.floor(b9.LowLevelAPI.random() * range) * interval;
+        return from + this.floor(Math.random() * range) * interval;
     } else {
         range = this.floor((from - to) / interval) + 1;
-        return from - this.floor(b9.LowLevelAPI.random() * range) * interval;
+        return from - this.floor(Math.random() * range) * interval;
     }
 };
 
@@ -230,7 +230,7 @@ b9.Math.EPSILON = 0.0001;
  * hoge
  * @return {Number}
  */
-b9.Math.PI = b9.LowLevelAPI.PI;
+b9.Math.PI = Math.PI;
 
 /**
  * hoge
