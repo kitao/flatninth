@@ -110,7 +110,7 @@ b9.System.start = function() {
         cur_time = b9.System.getTime();
         var wait_time = b9.Math.max(b9.System._next_update_time - cur_time, 0);
 
-        b9.System._timer_id = b9.LowLevelAPI.setTimeout(onTimer, wait_time);
+        b9.System._timer_id = setTimeout(onTimer, wait_time);
     }
 
     onTimer();
@@ -134,7 +134,9 @@ b9.System.error = function(msg) {
  * hoge
  * @return {Number} hoge
  */
-b9.System.getTime = b9.LowLevelAPI.getTime;
+b9.System.getTime = function() {
+    return (new Date()).getTime();
+};
 
 /**
  * hoge
