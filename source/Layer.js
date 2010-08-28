@@ -34,11 +34,11 @@ b9.Layer.prototype.initialize = function(order) {
     this._name = "";
     this._order = order;
     this._is_visible = true;
-    this._is_clear = false;
+    this._is_clear = true;
     this._pos = new b9.Vector2D();
     this._size = new b9.Vector2D(1.0, 1.0);
     this._filter_color = new b9.Color(b9.Color.FULL);
-    this._clear_color = new b9.Color(b9.Color.ZERO);
+    this._clear_color = new b9.Color(1.0, 0.0, 1.0);
     this._local_canvas = null;
     this._list_item = new b9.ListItem(this);
 
@@ -206,7 +206,7 @@ b9.Layer.prototype.getPrev = function() {
  * @return {b9.Layer} hoge
  */
 b9.Layer.prototype.getNext = function() {
-    var item = this._lite_item.getNext();
+    var item = this._list_item.getNext();
     return item ? item.getSelf() : null;
 };
 
@@ -220,7 +220,7 @@ b9.Layer.prototype.elementRoot = function() {
 
 b9.Layer.prototype._render = function() {
     var canvas = this._local_canvas ? this._local_canvas : b9.System.getMainCanvas();
-    var context = this.canvas.context;
+    var context = canvas.context;
 
     context.save();
 

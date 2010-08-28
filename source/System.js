@@ -26,15 +26,18 @@
 b9.System = {};
 
 b9.System._initialize = function(canvas_id, target_fps) {
-    this._main_canvas = document.getElementById(canvas_id);
+    var canvas = document.getElementById(canvas_id);
+
+    if (canvas && canvas.getContext) {
+        canvas.context = canvas.getContext("2d");
+    }
+
+    this._main_canvas = canvas;
     this._target_fps = b9.Math.max(target_fps, 1);
-
     this._layer_list = new b9.List();
-
     this._task_root = new b9.Task();
     this._task_root.setName("TASK_ROOT");
     this._task_root._is_root = true;
-
     this._timer_id = null;
     this._next_update_time = 0;
 
@@ -44,9 +47,13 @@ b9.System._initialize = function(canvas_id, target_fps) {
     for (var i = 0; i < this._ORDER_NUM; i++) {
         this._default_layer[i] = new b9.Layer(i * 100);
         this._default_layer[i].size().set(this._main_canvas.width, this._main_canvas.height);
+        this._default_layer[i].setClear(false);
+        this._default_layer[i].clearColor().set(b9.Color.ZERO);
 
         this._default_task[i] = new b9.Task(this._task_root);
     }
+
+    this._default_layer[this._ORDER_FIRST].setClear(true);
 
     this._default_layer[this._ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
     this._default_layer[this._ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
