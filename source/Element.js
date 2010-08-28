@@ -31,7 +31,8 @@ b9.Element = b9.createClass();
  */
 b9.Element.prototype.initialize = function(parent) {
     this._elem_type = b9.Element.TYPE_ELEMENT;
-    this._elem_flag = b9.Element.FLAG_VISIBLE;
+    this._is_root = false;
+    this._is_visible = true;
     this._local = new b9.Matrix2D(b9.Matrix2D.UNIT);
     this._filter_color = new b9.Color(b9.Color.FULL);
     this._image = "";
@@ -54,14 +55,6 @@ b9.Element.prototype.finalize = function() {
 
 /**
  * hoge
- * @return {Boolean} hoge
- */
-b9.Element.prototype.isRoot = function() {
-    return (this._elem_flag & b9.Element._FLAG_ROOT) ? true : false;
-};
-
-/**
- * hoge
  * @return {Number} hoge
  */
 b9.Element.prototype.getElementType = function() {
@@ -70,23 +63,26 @@ b9.Element.prototype.getElementType = function() {
 
 /**
  * hoge
- * @param {Number} elem_flag hoge
+ * @return {Boolean} hoge
  */
-b9.Element.prototype.isElementFlagOn = function(elem_flag) {
-    return (this._elem_flag & elem_flag) ? true : false;
+b9.Element.prototype.isRoot = function() {
+    return this._is_root;
 };
 
 /**
  * hoge
- * @param {Number} elem_flag hoge
- * @param {Boolean} is_on hoge
+ * @return {Boolean} hoge
  */
-b9.Element.prototype.setElementFlag = function(elem_flag, is_on) {
-    if (is_on) {
-        this._elem_flag |= elem_flag;
-    } else {
-        this._elem_flag &= ~elem_flag;
-    }
+b9.Element.prototype.isVisible = function() {
+    return this._is_visible;
+};
+
+/**
+ * hoge
+ * @param {Boolean} is_visible hoge
+ */
+b9.Element.prototype.setVisible = function(is_visible) {
+    this._is_visible = is_visible;
 };
 
 /**
@@ -239,9 +235,7 @@ b9.Element.prototype._calcFinal = function() {
     this._world.set(this._local);
     this._final_filter_color.set(this._filter_color);
 
-    if (this.isRoot()) {
-        this._world.scale(this._view._scale.x, this._view._scale.y);
-    } else {
+    if (!this.isRoot()) {
         var parent = this.getParent();
 
         this._world.toGlobal(parent._local);
@@ -270,11 +264,3 @@ b9.Element.TYPE_SPRITE = 1;
  * @return {Number}
  */
 b9.Element.TYPE_PRIMITIVE = 2;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Element.FLAG_VISIBLE = 0x8000;
-
-b9.Element._FLAG_ROOT = 0x0001;

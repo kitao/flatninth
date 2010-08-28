@@ -25,29 +25,34 @@
  */
 b9.System = {};
 
-b9.System._initialize = function(aim_fps, canvas_id) {
-    this._aim_fps = b9.Math.max(aim_fps, 1);
+b9.System._initialize = function(canvas_id, target_fps) {
+    this._main_canvas = document.getElementById(canvas_id);
+    this._target_fps = b9.Math.max(target_fps, 1);
+
+    this._layer_list = new b9.List();
 
     this._task_root = new b9.Task();
     this._task_root.setName("TASK_ROOT");
-    this._task_root.setTaskFlag(b9.Task._FLAG_ROOT);
-
-    this._view_root = new b9.View();
-    this._view_root.setName("VIEW_ROOT");
-    this._view_root.setViewFlag(b9.View._FLAG_ROOT, true);
-    this._view_root.attachCanvas(canvas_id);
+    this._task_root._is_root = true;
 
     this._timer_id = null;
     this._next_update_time = 0;
 
+    this._default_layer = new Array(this._ORDER_NUM);
     this._default_task = new Array(this._ORDER_NUM);
-    this._default_view = new Array(this._ORDER_NUM);
 
     for (var i = 0; i < this._ORDER_NUM; i++) {
+        this._default_layer[i] = new b9.Layer(i * 100);
+//        this._default_layer[i].size().set(this._main_canvas.width, this._main_canvas.height);
+
         this._default_task[i] = new b9.Task(this._task_root);
-        this._default_view[i] = new b9.View(this._view_root);
-        this._default_view[i].size().set(this._view_root.size());
     }
+
+    this._default_layer[this._ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
+    this._default_layer[this._ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
+    this._default_layer[this._ORDER_NORMAL].setName("DEFAULT_TASK_NORMAL");
+    this._default_layer[this._ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
+    this._default_layer[this._ORDER_LAST].setName("DEFAULT_TASK_LAST");
 
     this._default_task[this._ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
     this._default_task[this._ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
@@ -55,33 +60,38 @@ b9.System._initialize = function(aim_fps, canvas_id) {
     this._default_task[this._ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
     this._default_task[this._ORDER_LAST].setName("DEFAULT_TASK_LAST");
 
-    this._default_view[this._ORDER_FIRST].setName("DEFAULT_TASK_FIRST");
-    this._default_view[this._ORDER_BEFORE].setName("DEFAULT_TASK_BEFORE");
-    this._default_view[this._ORDER_NORMAL].setName("DEFAULT_TASK_NORMAL");
-    this._default_view[this._ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
-    this._default_view[this._ORDER_LAST].setName("DEFAULT_TASK_LAST");
+    b9.Asset._initialize();
+    b9.Graphics._initialize();
+    b9.Debug._initialize();
 };
 
 b9.System._finalize = function() {
-    for (var i = 0; i < this._ORDER_NUM; i++) {
-        this._default_task[i].finalize();
-        this._default_view[i].finalize();
+    if (this._timer_id) {
+        clearTimeout(this._timer_id);
     }
 
+    b9.Debug._finalize();
+    b9.Graphics._finalize();
+    b9.Asset._finalize();
+
+    for (var i = 0; i < this._ORDER_NUM; i++) {
+        this._default_layer[i].finalize();
+        this._default_task[i].finalize();
+    }
+
+    // TODO: stop timer
+
+    this._layer_list.finalize();
     this._task_root.finalize();
-    this._view_root.finalize();
 };
 
 /**
  * hoge
- * @param {Number} aim_fps hoge
  * @param {String} canvas_id hoge
- * @param {String} asset_dir
+ * @param {Number} target_fps hoge
  */
-b9.System.setup = function(aim_fps, canvas_id, asset_dir) {
-    this._initialize(aim_fps, canvas_id);
-    b9.Asset._initialize(asset_dir);
-    b9.Debug._initialize();
+b9.System.setup = function(canvas_id, target_fps) {
+    this._initialize(canvas_id, target_fps);
 };
 
 /**
@@ -96,10 +106,10 @@ b9.System.start = function() {
         }
 
         var cur_time = b9.System.getTime();
-        var update_count = (cur_time - b9.System._next_update_time) * b9.System._aim_fps / 1000.0;
+        var update_count = (cur_time - b9.System._next_update_time) * b9.System._target_fps / 1000.0;
         update_count = b9.Math.min(b9.Math.floor(update_count), 1);
 
-        b9.System._next_update_time += (1000.0 / b9.System._aim_fps) * update_count;
+        b9.System._next_update_time += (1000.0 / b9.System._target_fps) * update_count;
 
         for (var i = 0; i < update_count; i++) {
             b9.System._update();
@@ -119,7 +129,8 @@ b9.System.start = function() {
 /**
  * hoge
  */
-b9.System.exit = function() {
+b9.System.teardown = function() {
+    b9.System._finalize();
 };
 
 /**
@@ -132,10 +143,44 @@ b9.System.error = function(msg) {
 
 /**
  * hoge
+ * @param {Canvas} hoge
+ */
+b9.System.getMainCanvas = function() {
+    return this._main_canvas;
+};
+
+/**
+ * hoge
+ * @return {Number} hoge
+ */
+b9.System.getTargetFPS = function() {
+    return this._target_fps;
+};
+
+/**
+ * hoge
  * @return {Number} hoge
  */
 b9.System.getTime = function() {
     return (new Date()).getTime();
+};
+
+/**
+ * hoge
+ * @return {b9.Layer} hoge
+ */
+b9.System.getFirstLayer = function() {
+    var item = this._layer_list.getFirstItem();
+    return item ? item.getSelf() : null;
+};
+
+/**
+ * hoge
+ * @return {b9.Layer} hoge
+ */
+b9.System.getLastLayer = function() {
+    var item = this._layer_list.getLastItem();
+    return item ? item.getSelf() : null;
 };
 
 /**
@@ -148,10 +193,42 @@ b9.System.taskRoot = function() {
 
 /**
  * hoge
- * @return {b9.View} hoge
+ * @return {b9.Layer} hoge
  */
-b9.System.viewRoot = function() {
-    return this._view_root;
+b9.System.defaultLayerFirst = function() {
+    return this._default_layer[this._ORDER_FIRST];
+};
+
+/**
+ * hoge
+ * @return {b9.Layer} hoge
+ */
+b9.System.defaultLayerBefore = function() {
+    return this._default_layer[this._ORDER_BEFORE];
+};
+
+/**
+ * hoge
+ * @return {b9.Layer} hoge
+ */
+b9.System.defaultLayerNormal = function() {
+    return this._default_layer[this._ORDER_NORMAL];
+};
+
+/**
+ * hoge
+ * @return {b9.Layer} hoge
+ */
+b9.System.defaultLayerAfter = function() {
+    return this._default_layer[this._ORDER_AFTER];
+};
+
+/**
+ * hoge
+ * @return {b9.Layer} hoge
+ */
+b9.System.defaultLayerLast = function() {
+    return this._default_layer[this._ORDER_LAST];
 };
 
 /**
@@ -194,53 +271,13 @@ b9.System.defaultTaskLast = function() {
     return this._default_task[this._ORDER_LAST];
 };
 
-/**
- * hoge
- * @return {b9.View} hoge
- */
-b9.System.defaultViewFirst = function() {
-    return this._default_view[this._ORDER_FIRST];
-};
-
-/**
- * hoge
- * @return {b9.View} hoge
- */
-b9.System.defaultViewBefore = function() {
-    return this._default_view[this._ORDER_BEFORE];
-};
-
-/**
- * hoge
- * @return {b9.View} hoge
- */
-b9.System.defaultViewNormal = function() {
-    return this._default_view[this._ORDER_NORMAL];
-};
-
-/**
- * hoge
- * @return {b9.View} hoge
- */
-b9.System.defaultViewAfter = function() {
-    return this._default_view[this._ORDER_AFTER];
-};
-
-/**
- * hoge
- * @return {b9.View} hoge
- */
-b9.System.defaultViewLast = function() {
-    return this._default_view[this._ORDER_LAST];
-};
-
 b9.System._update = function() {
     var next_task;
 
     for (var task = this._task_root; task; task = next_task) {
         next_task = task.getNextAsList();
 
-        if (task.isTaskFlagOn(b9.Task.FLAG_ACTIVE)) {
+        if (task._is_active) {
             task.onUpdate();
         } else {
             next_task = task.getLastDescendant().getNextAsList();
@@ -249,12 +286,29 @@ b9.System._update = function() {
 };
 
 b9.System._render = function() {
-    for (var view = this._view_root; view; view = view.getNextAsList()) {
-        if (view.isViewFlagOn(b9.View.FLAG_VISIBLE)) {
-            view._render();
-        } else {
-            view = view.getLastDescendant();
+    for (var layer = this.getFirstLayer(); layer; layer = layer.getNext()) {
+        if (layer._is_visible) {
+            layer._render();
         }
+    }
+};
+
+b9.System._registerLayer = function(layer) {
+    this._unregisterLayer(layer);
+
+    for (var layer2 = this.getLastLayer(); layer2; layer2 = layer2.getPrev()) {
+        if (layer.getOrder() >= layer2.getOrder()) {
+            this._layer_list.addItemAfter(layer._list_item, layer2._list_item);
+            return;
+        }
+    }
+
+    this._layer_list.addItemFirst(layer._list_item);
+};
+
+b9.System._unregisterLayer = function(layer) {
+    if (layer._list_item.getList()) {
+        this._layer_list.removeItem(layer._list_item);
     }
 };
 

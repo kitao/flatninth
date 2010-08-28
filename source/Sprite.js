@@ -40,7 +40,7 @@ b9.Sprite.prototype.initialize = function(max_rect_num, parent) {
     this._rect = new Array(max_rect_num);
 
     for (var i = 0; i < max_rect_num; i++) {
-        this._rect[i] = { pos: new b9.Vector2D(), size: new b9.Vector2D(), rot: new b9.Sprite.Angle(),
+        this._rect[i] = { pos: new b9.Vector2D(), size: new b9.Vector2D(),
             color: new b9.Color(b9.Color.FULL), uv: new b9.Sprite.TexCoord() };
     }
 };
@@ -97,15 +97,6 @@ b9.Sprite.prototype.rectSize = function(rect_index) {
 /**
  * hoge
  * @param {Number} rect_index hoge
- * @return {b9.Sprite.Angle} hoge
- */
-b9.Sprite.prototype.rectRot = function(rect_index) {
-    return this._rect[rect_index].rot;
-};
-
-/**
- * hoge
- * @param {Number} rect_index hoge
  * @return {b9.Color} hoge
  */
 b9.Sprite.prototype.rectColor = function(rect_index) {
@@ -155,17 +146,6 @@ b9.Sprite.prototype._render = function(canvas) {
 b9.Sprite._vec1 = new b9.Vector2D();
 b9.Sprite._vec2 = new b9.Vector2D();
 b9.Sprite._color1 = new b9.Color();
-
-/**
- * @class hoge
- */
-b9.Sprite.Angle = b9.createClass();
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Sprite.Angle.prototype.deg = 0.0;
 
 /**
  * @class hoge

@@ -32,7 +32,8 @@ b9.Task = b9.createClass();
 b9.Task.prototype.initialize = function(parent) {
     this._id = b9.generateID();
     this._name = "";
-    this._task_flag = b9.Task.FLAG_ACTIVE;
+    this._is_root = false;
+    this._is_active = true;
     this._task_tree = new b9.Tree(this);
 
     if (parent) {
@@ -45,14 +46,6 @@ b9.Task.prototype.initialize = function(parent) {
  */
 b9.Task.prototype.finalize = function() {
     this._task_tree.finalize();
-};
-
-/**
- * hoge
- * @return {Boolean} hoge
- */
-b9.Task.prototype.isRoot = function() {
-    return (this._task_flag & b9.Task._FLAG_ROOT) ? true : false;
 };
 
 /**
@@ -81,24 +74,26 @@ b9.Task.prototype.setName = function(name) {
 
 /**
  * hoge
- * @param {Number} task_flag hoge
  * @return {Boolean} hoge
  */
-b9.Task.prototype.isTaskFlagOn = function(task_flag) {
-    return (this._task_flag & task_flag) ? true : false;
+b9.Task.prototype.isRoot = function() {
+    return this._is_root;
 };
 
 /**
  * hoge
- * @param {Number} task_flag hoge
- * @param {Boolean} is_on hoge
+ * @return {Boolean} hoge
  */
-b9.Task.prototype.setTaskFlag = function(task_flag, is_on) {
-    if (is_on) {
-        this._task_flag |= task_flag;
-    } else {
-        this._task_flag &= ~task_flag;
-    }
+b9.Task.prototype.isActive = function() {
+    return this._is_active;
+};
+
+/**
+ * hoge
+ * @param {Boolean} is_active hoge
+ */
+b9.Task.prototype.setActive = function(is_active) {
+    this._is_active = is_active;
 };
 
 /**
@@ -219,11 +214,3 @@ b9.Task.prototype.removeChild = function(child) {
  * hoge
  */
 b9.Task.prototype.onUpdate = function() {};
-
-/**
- * hoge
- * @return {Number} hoge
- */
-b9.Task.FLAG_ACTIVE = 0x8000;
-
-b9.Task._FLAG_ROOT = 0x0001;

@@ -21,12 +21,11 @@
  */
 
 /**
- * @class An ID based on a string.
+ * @class hoge
  */
 b9.Asset = {};
 
-b9.Asset._initialize = function(asset_dir) {
-    this._asset_dir = asset_dir + "/";
+b9.Asset._initialize = function() {
     this._asset_list = {};
 
     // TODO
@@ -48,7 +47,7 @@ b9.Asset.getImage = function(name) {
     if (!image) {
         image = new Image();
         image.is_ready = false;
-        image.src = this._asset_dir + name;
+        image.src = name;
         image.onload = function() { image.is_ready = true; };
 
         this._asset_list[name] = image;
@@ -64,9 +63,3 @@ b9.Asset.getImage = function(name) {
 b9.Asset.removeAsset = function(name) {
     // TODO
 };
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Asset.TYPE_IMAGE = 0;
