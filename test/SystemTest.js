@@ -24,5 +24,8 @@ function testSystem() {
     /* setup */
     b9.System.setup("test_canvas", 60);
 
+    /* teardown */
+    b9.System.teardown();
+
     // TODO
 }

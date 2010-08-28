@@ -20,12 +20,16 @@
  * THE SOFTWARE.
  */
 
-function testView() {
+function testLayer() {
+    b9.System.setup("test_canvas", 60);
+
     /* initialize */
-    var view1 = new b9.View();
+    var layer1 = new b9.Layer(10);
 
     /* finalize */
-    view1.finalize();
+    layer1.finalize();
 
     // TODO
+
+    b9.System.teardown();
 }
