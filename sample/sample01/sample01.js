@@ -22,15 +22,15 @@
 
 var Sample = b9.createClass(b9.Task);
 
-Sample.prototype.initialize = function(view, x, y) {
+Sample.prototype.initialize = function(layer, x, y) {
     this.initializeSuper(b9.System.defaultTaskNormal());
 
-    this._sprt = new b9.Sprite(1, view.elementRoot());
+    this._sprt = new b9.Sprite(1, layer.elementRoot());
 
     this._sprt.rectPos(0).set(x, y);
     this._sprt.rectSize(0).set(30.0, 20.0);
     this._sprt.rectColor(0).set(1.0, 1.0, 0.0);
-    this._sprt.setImage("flatninth_font.png");
+    this._sprt.setImage("../asset/flatninth_font.png");
 
     this._speed = new b9.Vector2D();
     this._speed.x = b9.Math.randomInt(-4, 4);
@@ -55,17 +55,16 @@ Sample.prototype.onUpdate = function() {
  *
  */
 function main() {
-    b9.System.setup(60, "sample01_canvas", "../asset");
+    b9.System.setup("sample01_canvas", 60);
 
-    var view = new b9.View(b9.System.defaultViewNormal());
-    view.setViewFlag(b9.View.FLAG_CLEAR, true);
-    view.pos().set(100, 100);
-    view.size().set(200, 150);
-    view.scale().set(2, 0.5);
-    view.clearColor().set(1, 0, 0);
+    var layer = new b9.Layer(10);
+    layer.setClear(true);
+    layer.pos().set(100, 100);
+    layer.size().set(200, 150);
+    layer.clearColor().set(1, 0, 0);
 
     for (var i = 0; i < 100; i++) {
-        var dummy = new Sample((i % 5 === 0) ? view : b9.System.defaultViewNormal(), i * 2, i * 2);
+        var dummy = new Sample((i % 5 === 0) ? layer : b9.System.defaultLayerNormal(), i * 2, i * 2);
     }
 
     b9.System.start();
