@@ -43,7 +43,7 @@ b9.System._initialize = function(canvas_id, target_fps) {
 
     for (var i = 0; i < this._ORDER_NUM; i++) {
         this._default_layer[i] = new b9.Layer(i * 100);
-//        this._default_layer[i].size().set(this._main_canvas.width, this._main_canvas.height);
+        this._default_layer[i].size().set(this._main_canvas.width, this._main_canvas.height);
 
         this._default_task[i] = new b9.Task(this._task_root);
     }
@@ -78,8 +78,6 @@ b9.System._finalize = function() {
         this._default_layer[i].finalize();
         this._default_task[i].finalize();
     }
-
-    // TODO: stop timer
 
     this._layer_list.finalize();
     this._task_root.finalize();
