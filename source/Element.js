@@ -243,7 +243,7 @@ b9.Element.prototype._calcFinal = function() {
     }
 };
 
-b9.Element.prototype._render = function(canvas_proxy) {
+b9.Element.prototype._render = function(canvas) {
     this._calcFinal();
 };
 
@@ -264,3 +264,9 @@ b9.Element.TYPE_SPRITE = 1;
  * @return {Number}
  */
 b9.Element.TYPE_PRIMITIVE = 2;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Element.TYPE_USER = 3;

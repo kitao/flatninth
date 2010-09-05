@@ -36,11 +36,49 @@ b9.Graphics._finalize = function() {
  * @param {Canvas.Context} context hoge
  * @param {Number} x hoge
  * @param {Number} y hoge
- * @param {Number} width hoge
- * @param {Number} height hoge
+ * @param {Number} w hoge
+ * @param {Number} h hoge
  * @param {b9.Color} color hoge
  */
-b9.Graphics.fillRect = function(context, x, y, width, height, color) {
-    context.fillStyle = color;
-    context.fillRect(x, y, width, height, color.toRGB());
+b9.Graphics.fillRect = function(context, x, y, w, h, color) {
+    context.fillStyle = color.toRGB();
+    context.globalAlpha = color.getA();
+
+    context.fillRect(x, y, w, h);
+};
+
+/**
+ * hoge
+ * @param {Canvas.Context} context hoge
+ * @param {Number} x hoge
+ * @param {Number} y hoge
+ * @param {Number} w hoge
+ * @param {Number} h hoge
+ * @param {Number} u1 hoge
+ * @param {Number} v1 hoge
+ * @param {Number} u2 hoge
+ * @param {Number} v2 hoge
+ * @param {Image} image hoge
+ * @param {b9.Color} color hoge
+ */
+b9.Graphics.drawImage = function(context, x, y, w, h, u1, v1, u2, v2, image, color) {
+    if (image.is_ready) {
+        //context.fillStyle = color.toRGB(); // TODO
+        context.globalAlpha = color.getA();
+
+        if (u1 === 0.0 && v1 === 0.0 && u2 === 1.0 && v2 === 0.0) {
+            if (w === image.width && h === image.height) {
+                context.drawImage(image, x, y);
+            } else {
+                context.drawImage(image, x, y, w, h);
+            }
+        } else {
+            var sx = u1 * image.width;
+            var sy = v1 * image.height;
+            var sw = (u2 - u1) * image.width;
+            var sh = (v2 - v1) * image.height;
+
+            context.drawImage(image, sx, sy, sw, sh, x, y, w, h);
+        }
+    }
 };

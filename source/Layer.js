@@ -235,8 +235,7 @@ b9.Layer.prototype._render = function() {
      * clear layer
      */
     if (this._is_clear) {
-        context.fillStyle = this._clear_color.toRGB();
-        context.fillRect(this._pos.x, this._pos.y, this._size.x, this._size.y);
+        b9.Graphics.fillRect(context, this._pos.x, this._pos.y, this._size.x, this._size.y, this._clear_color);
     }
 
     /*

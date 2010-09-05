@@ -118,27 +118,36 @@ b9.Sprite.prototype._render = function(canvas) {
     var context = canvas.context;
     var image = b9.Asset.getImage(this._image);
 
-    for (var i = 0; i < this._cur_rect_num; i++) {
-        var rect = this._rect[i];
+    var i, rect;
+    var x, y, w, h;
 
-        b9.Sprite._vec1.set(rect.pos).toGlobal(this._world);
-        b9.Sprite._vec2.set(rect.size).toGlobalNoTrans(this._world);
-        b9.Sprite._color1.set(rect.color).mul(this._final_filter_color);
+    if (this._world.xAxis().y === 0.0 && this._world.yAxis().x === 0.0) { // not rotated
+        for (i = 0; i < this._cur_rect_num; i++) {
+            rect = this._rect[i];
 
-        var x = b9.Sprite._vec1.x;
-        var y = b9.Sprite._vec1.y;
-        var w = b9.Sprite._vec2.x;
-        var h = b9.Sprite._vec2.y;
+            b9.Sprite._vec1.set(rect.pos).toGlobal(this._world);
+            b9.Sprite._vec2.set(rect.size).toGlobalNoTrans(this._world);
+            b9.Sprite._color1.set(rect.color).mul(this._final_filter_color);
 
-        // TODO
-        if (image) {
-            if (image.is_ready) {
-                // TODO: branch by UV
-                context.drawImage(image, x, y, w, h);
+            x = b9.Sprite._vec1.x;
+            y = b9.Sprite._vec1.y;
+            w = b9.Sprite._vec2.x;
+            h = b9.Sprite._vec2.y;
+
+            if (image) {
+                b9.Graphics.drawImage(
+                        context, x, y, w, h,
+                        rect.uv.u1, rect.uv.v1, rect.uv.u2, rect.uv.v2,
+                        image, b9.Sprite._color1);
+            } else {
+                b9.Graphics.fillRect(context, x, y, w, h, b9.Sprite._color1);
             }
-        } else {
-            context.fillStyle = b9.Sprite._color1.toRGBA();
-            context.fillRect(x, y, w, h);
+        }
+    } else { // rotated
+        for (i = 0; i < this._cur_rect_num; i++) {
+            rect = this._rect[i];
+
+            // TODO
         }
     }
 };
@@ -168,13 +177,13 @@ b9.Sprite.TexCoord.prototype.v1 = 0.0;
  * hoge
  * @return {Number}
  */
-b9.Sprite.TexCoord.prototype.u2 = 0.0;
+b9.Sprite.TexCoord.prototype.u2 = 1.0;
 
 /**
  * hoge
  * @return {Number}
  */
-b9.Sprite.TexCoord.prototype.v2 = 0.0;
+b9.Sprite.TexCoord.prototype.v2 = 1.0;
 
 /**
  * hoge
