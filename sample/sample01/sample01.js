@@ -32,6 +32,8 @@ Sample.prototype.initialize = function(layer, x, y) {
     this._sprt.rectColor(0).set(1.0, 1.0, 0.0);
     this._sprt.setImage("../asset/flatninth_font.png");
 
+    this._sprt.rectUV(0).set(0.125, 0.125, 0.25, 0.25);
+
     this._speed = new b9.Vector2D();
     this._speed.x = b9.Math.randomInt(-4, 4);
     this._speed.y = b9.Math.randomInt(-2, 2);
@@ -61,7 +63,7 @@ function main() {
     layer.setClear(true);
     layer.pos().set(100, 100);
     layer.size().set(200, 150);
-    layer.clearColor().set(1, 0, 0);
+    layer.clearColor().set(1.0, 0.0, 0.0);
 
     for (var i = 0; i < 100; i++) {
         var dummy = new Sample((i % 5 === 0) ? layer : b9.System.defaultLayerNormal(), i * 2, i * 2);
