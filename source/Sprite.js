@@ -116,7 +116,7 @@ b9.Sprite.prototype._render = function(canvas) {
     this._calcFinal();
 
     var context = canvas.context;
-    var image = b9.Asset.getImage(this._image);
+    var image = b9.AssetManager.getImageAsset(this._image);
 
     var i, rect;
     var x, y, w, h;
@@ -135,12 +135,12 @@ b9.Sprite.prototype._render = function(canvas) {
             h = b9.Sprite._vec2.y;
 
             if (image) {
-                b9.Graphics.drawImage(
+                b9.DrawUtility.drawImage(
                         context, x, y, w, h,
                         rect.uv.u1, rect.uv.v1, rect.uv.u2, rect.uv.v2,
                         image, b9.Sprite._color1);
             } else {
-                b9.Graphics.fillRect(context, x, y, w, h, b9.Sprite._color1);
+                b9.DrawUtility.fillRect(context, x, y, w, h, b9.Sprite._color1);
             }
         }
     } else { // rotated

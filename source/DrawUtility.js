@@ -23,13 +23,7 @@
 /**
  * @class hoge
  */
-b9.Graphics = {};
-
-b9.Graphics._initialize = function() {
-};
-
-b9.Graphics._finalize = function() {
-};
+b9.DrawUtility = {};
 
 /**
  * hoge
@@ -40,7 +34,7 @@ b9.Graphics._finalize = function() {
  * @param {Number} h hoge
  * @param {b9.Color} color hoge
  */
-b9.Graphics.fillRect = function(context, x, y, w, h, color) {
+b9.DrawUtility.fillRect = function(context, x, y, w, h, color) {
     context.fillStyle = color.toRGB();
     context.globalAlpha = color.getA();
 
@@ -61,7 +55,7 @@ b9.Graphics.fillRect = function(context, x, y, w, h, color) {
  * @param {Image} image hoge
  * @param {b9.Color} color hoge
  */
-b9.Graphics.drawImage = function(context, x, y, w, h, u1, v1, u2, v2, image, color) {
+b9.DrawUtility.drawImage = function(context, x, y, w, h, u1, v1, u2, v2, image, color) {
     if (image.is_ready) {
         //context.fillStyle = color.toRGB(); // TODO
         context.globalAlpha = color.getA();

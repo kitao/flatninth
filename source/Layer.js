@@ -235,7 +235,7 @@ b9.Layer.prototype._render = function() {
      * clear layer
      */
     if (this._is_clear) {
-        b9.Graphics.fillRect(context, this._pos.x, this._pos.y, this._size.x, this._size.y, this._clear_color);
+        b9.DrawUtility.fillRect(context, this._pos.x, this._pos.y, this._size.x, this._size.y, this._clear_color);
     }
 
     /*

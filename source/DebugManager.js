@@ -23,13 +23,13 @@
 /**
  * @class hoge
  */
-b9.Debug = {};
+b9.DebugManager = {};
 
-b9.Debug._initialize = function() {
+b9.DebugManager._initialize = function() {
     // TODO
 };
 
-b9.Debug._finalize = function() {
+b9.DebugManager._finalize = function() {
     // TODO
 };
 
@@ -37,6 +37,6 @@ b9.Debug._finalize = function() {
  * hoge
  * @param {String} msg hoge
  */
-b9.Debug.trace = function(msg) {
+b9.DebugManager.trace = function(msg) {
     // TODO
 };

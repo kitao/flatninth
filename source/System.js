@@ -67,9 +67,8 @@ b9.System._initialize = function(canvas_id, target_fps) {
     this._default_task[this._ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
     this._default_task[this._ORDER_LAST].setName("DEFAULT_TASK_LAST");
 
-    b9.Asset._initialize();
-    b9.Graphics._initialize();
-    b9.Debug._initialize();
+    b9.AssetManager._initialize();
+    b9.DebugManager._initialize();
 };
 
 b9.System._finalize = function() {
@@ -77,9 +76,8 @@ b9.System._finalize = function() {
         clearTimeout(this._timer_id);
     }
 
-    b9.Debug._finalize();
-    b9.Graphics._finalize();
-    b9.Asset._finalize();
+    b9.DebugManager._finalize();
+    b9.AssetManager._finalize();
 
     for (var i = 0; i < this._ORDER_NUM; i++) {
         this._default_layer[i].finalize();

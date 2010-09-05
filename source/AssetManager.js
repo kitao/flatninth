@@ -23,15 +23,15 @@
 /**
  * @class hoge
  */
-b9.Asset = {};
+b9.AssetManager = {};
 
-b9.Asset._initialize = function() {
+b9.AssetManager._initialize = function() {
     this._asset_list = {};
 
     // TODO
 };
 
-b9.Asset._finalize = function() {
+b9.AssetManager._finalize = function() {
     this._asset_list = null;
 
     // TODO
@@ -41,7 +41,7 @@ b9.Asset._finalize = function() {
  * hoge
  * @param {String} name hoge
  */
-b9.Asset.getImage = function(name) {
+b9.AssetManager.getImageAsset = function(name) {
     var image = this._asset_list[name];
 
     if (!image) {
@@ -60,6 +60,6 @@ b9.Asset.getImage = function(name) {
  * hoge
  * @param {String} name hoge
  */
-b9.Asset.removeAsset = function(name) {
+b9.AssetManager.removeAsset = function(name) {
     // TODO
 };
