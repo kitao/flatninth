@@ -48,7 +48,7 @@ b9.System._initialize = function(canvas_id, target_fps) {
         this._default_layer[i] = new b9.Layer(i * 100);
         this._default_layer[i].size().set(this._main_canvas.width, this._main_canvas.height);
         this._default_layer[i].setClear(false);
-        this._default_layer[i].clearColor().set(b9.Color.ZERO);
+        this._default_layer[i].clearColor().set(0.0, 0.0, 0.0);
 
         this._default_task[i] = new b9.Task(this._task_root);
     }
