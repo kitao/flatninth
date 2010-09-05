@@ -20,6 +20,6 @@
  * THE SOFTWARE.
  */
 
-function testDebug() {
+function testDebugManager() {
     // TODO
 }

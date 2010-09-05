@@ -20,6 +20,6 @@
  * THE SOFTWARE.
  */
 
-function testAsset() {
+function testDrawUtility() {
     // TODO
 }
