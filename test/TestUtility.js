@@ -20,25 +20,25 @@
  * THE SOFTWARE.
  */
 
-function assertEqualsFloat(expected, actual) {
+function assertEquals_float(expected, actual) {
     if (!b9.Math.isEqualFloat(expected, actual)) {
         fail("Expected " + expected + " but was " + actual);
     }
 }
 
-/*function assertEqualsVector2D(expected, actual) {
+/*function assertEquals_Vector(expected, actual) {
     if (!expected.isEqual(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
 }*/
 
-/*function assertEqualsMatrix2D(expected, actual) {
+/*function assertEquals_Matrix(expected, actual) {
     if (!expected.isEqual(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
 }*/
 
-/*function assertEqualsColor(expected, actual) {
+/*function assertEquals_Color(expected, actual) {
     if (!expected.isEqual(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
