@@ -21,7 +21,7 @@
  */
 
 /**
- * @namespace Flatninth package.
+ * @namespace Flatninth package.For your information, b means flat and 9 means ninth. :)
  */
 var b9 = {};
 
@@ -35,8 +35,8 @@ b9.VERSION = 0.01;
  * Creates a new class which provides constructor/destructor mechanism.
  * The method named initialize is called when an instance is created,
  * and the method named finalize is called when an instance is deleted by calling the finalize method.
- * If the created class has a base class, it has the initializeSuper method and the finalizeSuper method.
- * These methods can call the constructor and destructor of the base class respectively.
+ * If the created class has a base class, it also provides the initializeSuper method and the finalizeSuper method.
+ * The constructor and destructor of the base class can be called with these methods respectively.
  * @param {Object} [super_class] A base class.
  * @return {Object} A class object.
  */

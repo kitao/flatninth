@@ -306,9 +306,9 @@ b9.Vector.prototype.interp = function(to, ratio) {
 };
 
 /**
- * hoge
- * @param {b9.Matrix2D} mat hoge
- * @return {b9.Vector} hoge
+ * Converts this object from in the world coordinate system to the local coordinate system of a b9.Matrix.
+ * @param {b9.Matrix2D} mat A b9.Matrix.
+ * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.toLocal = function(mat) {
     b9.Vector._vec1.set(this).sub(mat._trans);
@@ -318,9 +318,9 @@ b9.Vector.prototype.toLocal = function(mat) {
 };
 
 /**
- * hoge
- * @param {b9.Matrix2D} mat hoge
- * @return {b9.Vector} hoge
+ * Converts this object from in the local coordinate system of a b9.Matrix to in the world coordinate system.
+ * @param {b9.Matrix2D} mat A b9.Matrix.
+ * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.toGlobal = function(mat) {
     b9.Vector._vec1.set(mat._x_axis).mul(this.x);
@@ -330,9 +330,10 @@ b9.Vector.prototype.toGlobal = function(mat) {
 };
 
 /**
- * TODO
- * @param {b9.Matrix2D} mat TODO
- * @return {b9.Vector} TODO
+ * Converts this object from in the world coordinate system to the local coordinate system of a b9.Matrix.
+ * However, unlike the toLocal method, the translation of a b9.Matrix is regarded as the zero vector.
+ * @param {b9.Matrix2D} mat A b9.Matrix.
+ * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.toLocal_noTrans = function(mat) {
     b9.Vector._vec1.x = this.dot(mat._x_axis) / mat._x_axis.sqNorm();
@@ -342,9 +343,10 @@ b9.Vector.prototype.toLocal_noTrans = function(mat) {
 };
 
 /**
- * TODO
- * @param {b9.Matrix2D} mat TODO
- * @return {b9.Vector} TODO
+ * Converts this object from in the local coordinate system of a b9.Matrix to in the world coordinate system.
+ * However, unlike the toGlobal method, the translation of a b9.Matrix is regarded as the zero vector.
+ * @param {b9.Matrix2D} mat A b9.Matrix.
+ * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.toGlobal_noTrans = function(mat) {
     b9.Vector._vec1.set(mat._x_axis).mul(this.x);
@@ -354,17 +356,19 @@ b9.Vector.prototype.toGlobal_noTrans = function(mat) {
 };
 
 /**
- * TODO
- * @param {b9.Vector} vec TODO
- * @return {Boolean} TODO
+ * Returns whether this object equals a b9.Vector.
+ * @param {b9.Vector} vec A b9.Vector.
+ * @return {Boolean} true if the two vectors are equal; false otherwise;
  */
-b9.Vector.prototype.isEqual = function(vec) {
-    return (b9.Math.isEqualFloat(this.x, vec.x) && b9.Math.isEqualFloat(this.y, vec.y));
+b9.Vector.prototype.equals = function(vec) {
+    return (b9.Math.equals_float(this.x, vec.x) &&
+            b9.Math.equals_float(this.y, vec.y) &&
+            b9.Math.equals_float(this.z, vec.z));
 };
 
 /**
- * TODO
- * @return {String} TODO
+ * Returns a string representation of this object.
+ * @return {String} A string representation of this object.
  */
 b9.Vector.prototype.toString = function() {
     var str = "(";

@@ -64,8 +64,8 @@ b9.Math.max = function(a, b) {
 /**
  * Clamps a value within an inclusive range.
  * @param {Number} x A value to be clamped.
- * @param {Number} min The maximum value of the range.
- * @param {Number} max The minimum value of the range.
+ * @param {Number} min The minimum value of the range.
+ * @param {Number} max The maximum value of the range.
  * @return {Number} A clamped value.
  */
 b9.Math.clamp = function(x, min, max) {
@@ -75,14 +75,14 @@ b9.Math.clamp = function(x, min, max) {
 /**
  * Returns the square root of a value.
  * @param {Number} x A value.
- * @return {Number} A square root of a value.
+ * @return {Number} The positive square root of the value.
  */
 b9.Math.sqrt = Math.sqrt;
 
 /**
  * Returns the trigonometric sine of a float angle.
  * @param {Number} deg A float angle in degrees.
- * @return {Number} The sine of an angle.
+ * @return {Number} The sine of the angle.
  */
 b9.Math.sin_float = function(deg) {
     return Math.sin(deg * this.DEG_TO_RAD);
@@ -91,7 +91,7 @@ b9.Math.sin_float = function(deg) {
 /**
  * Returns the trigonometric cosine of a float angle.
  * @param {Number} deg A float angle in degrees.
- * @return {Number} The cosine of a angle.
+ * @return {Number} The cosine of the angle.
  */
 b9.Math.cos_float = function(deg) {
     return Math.cos(deg * this.DEG_TO_RAD);
@@ -213,10 +213,10 @@ b9.Math.interp = function(from, to, ratio) {
 };
 
 /**
- * Returns whether the two values almost equal to each other.
+ * Returns whether the two values are almost equal.
  * @param {Number} a A value.
  * @param {Number} b An another value.
- * @return {Boolean} Whether the two values almost equal to each other.
+ * @return {Boolean} true if the two values are equal; false otherwise.
  */
 b9.Math.equals_float = function(a, b) {
     return (this.abs(a - b) < this.EPSILON);
