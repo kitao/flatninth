@@ -26,15 +26,19 @@
 var b9 = {};
 
 /**
- * hoge
+ * The string of the version number of Flatninth.
  * @return {String}
  */
 b9.VERSION = 0.01;
 
 /**
- * hoge
- * @param {Object} [super_class] hoge
- * @return {Object} hoge
+ * Creates a new class which provides constructor/destructor mechanism.
+ * The method named initialize is called when an instance is created,
+ * and the method named finalize is called when an instance is deleted by calling the finalize method.
+ * If the created class has a base class, it has the initializeSuper method and the finalizeSuper method.
+ * These methods can call the constructor and destructor of the base class respectively.
+ * @param {Object} [super_class] A base class.
+ * @return {Object} A class object.
  */
 b9.createClass = function(super_class) {
     var sub_class = function() {
@@ -82,14 +86,3 @@ b9.createClass = function(super_class) {
 
     return sub_class;
 };
-
-/**
- * hoge
- * @return {Number} hoge
- */
-b9.generateID = function() {
-    this._cur_id--;
-    return this._cur_id;
-};
-
-b9._cur_id = 0;

@@ -21,88 +21,89 @@
  */
 
 /**
- * @class hoge
+ * @class Provides mathematical functions.
  */
 b9.Math = {};
 
 /**
- * hoge
- * @param {Number} x hoge
- * @return {Number} hoge
+ * Returns the integer value that is less than or equal to the argument.
+ * @param {Number} x A value.
+ * @return {Number} The integer value.
  */
 b9.Math.floor = Math.floor;
 
 /**
- * hoge
- * @param {Number} x hoge
- * @return {Number} hoge
+ * Returns the absolute value of the argument.
+ * @param {Number} x A value.
+ * @return {Number} The absolute value.
  */
 b9.Math.abs = function(x) {
     return (x >= 0.0) ? x : -x;
 };
 
 /**
- * hoge
- * @param {Number} a hoge
- * @param {Number} b hoge
- * @return {Number} hoge
+ * Returns the smaller of the two values.
+ * @param {Number} a A value.
+ * @param {Number} b An another value.
+ * @return {Number} The smaller value.
  */
 b9.Math.min = function(a, b) {
     return (a < b) ? a : b;
 };
 
 /**
- * hoge
- * @param {Number} a hoge
- * @param {Number} b hoge
- * @return {Number} hoge
+ * Returns the greater of the two values.
+ * @param {Number} a A value.
+ * @param {Number} b An another value.
+ * @return {Number} The greater value.
  */
 b9.Math.max = function(a, b) {
     return (a > b) ? a : b;
 };
 
 /**
- * hoge
- * @param {Number} x hoge
- * @param {Number} min hoge
- * @param {Number} max hoge
- * @return {Number} hoge
+ * Clamps a value within an inclusive range.
+ * @param {Number} x A value to be clamped.
+ * @param {Number} min The maximum value of the range.
+ * @param {Number} max The minimum value of the range.
+ * @return {Number} A clamped value.
  */
 b9.Math.clamp = function(x, min, max) {
     return (x < min) ? min : ((x > max) ? max : x);
 };
 
 /**
- * hoge
- * @param {Number} x hoge
- * @return {Number} hoge
+ * Returns the square root of a value.
+ * @param {Number} x A value.
+ * @return {Number} A square root of a value.
  */
 b9.Math.sqrt = Math.sqrt;
 
 /**
- * hoge
- * @param {Number} deg hoge
- * @return {Number} hoge
+ * Returns the trigonometric sine of a float angle.
+ * @param {Number} deg A float angle in degrees.
+ * @return {Number} The sine of an angle.
  */
-b9.Math.sinFloat = function(deg) {
+b9.Math.sin_float = function(deg) {
     return Math.sin(deg * this.DEG_TO_RAD);
 };
 
 /**
- * hoge
- * @param {Number} deg hoge
- * @return {Number} hoge
+ * Returns the trigonometric cosine of a float angle.
+ * @param {Number} deg A float angle in degrees.
+ * @return {Number} The cosine of a angle.
  */
-b9.Math.cosFloat = function(deg) {
+b9.Math.cos_float = function(deg) {
     return Math.cos(deg * this.DEG_TO_RAD);
 };
 
 /**
- * hoge
- * @param {Number} deg hoge
- * @return {Number} hoge
+ * Returns the trigonometric sine of an integer angle.
+ * This function allows only an integer angle, but is faster than the sin_float function.
+ * @param {Number} deg An integer angle in degrees.
+ * @return {Number} The sine of an angle.
  */
-b9.Math.sinInt = function(deg) {
+b9.Math.sin_int = function(deg) {
     deg = this.floor(deg);
 
     if (deg < 0) {
@@ -115,49 +116,50 @@ b9.Math.sinInt = function(deg) {
 };
 
 /**
- * hoge
- * @param {Number} deg hoge
- * @return {Number} hoge
+ * Returns the trigonometric cosine of an integer angle.
+ * This function allows only an integer angle, but is faster than the cos_float function.
+ * @param {Number} deg An integer angle in degrees.
+ * @return {Number} The cosine of an angle.
  */
-b9.Math.cosInt = function(deg) {
+b9.Math.cos_int = function(deg) {
     return this.sinInt(deg + 90);
 };
 
 /**
- * hoge
- * @param {Number} x hoge
- * @return {Number} hoge
+ * Returns the arc sine of a value.
+ * @param {Number} x A value.
+ * @return {Number} The arc sine of a value.
  */
 b9.Math.asin = function(x) {
     return Math.asin(x) * this.RAD_TO_DEG;
 };
 
 /**
- * hoge
- * @param {Number} x hoge
- * @return {Number} hoge
+ * Returns the arc cosine of a value.
+ * @param {Number} x A value.
+ * @return {Number} The arc cosine of a value.
  */
 b9.Math.acos = function(x) {
     return Math.acos(x) * this.RAD_TO_DEG;
 };
 
 /**
- * hoge
- * @param {Number} y hoge
- * @param {Number} x hoge
- * @return {Number} hoge
+ * Returns the arc tangent of an x, y coordinate.
+ * @param {Number} y A y-coordinate.
+ * @param {Number} x A x-coordinate.
+ * @return {Number} The arc tangent of y/x.
  */
 b9.Math.atan2 = function(y, x) {
     return Math.atan2(y, x) * this.RAD_TO_DEG;
 };
 
 /**
- * hoge
- * @param {Number} from hoge
- * @param {Number} to hoge
- * @return {Number} hoge
+ * Returns a random integer value within an inclusive range.
+ * @param {Number} from The beginning of the range.
+ * @param {Number} to The end of the range.
+ * @return {Number} A random integer value.
  */
-b9.Math.randomInt = function(from, to) {
+b9.Math.random_int = function(from, to) {
     from = this.floor(from);
     to = this.floor(to);
 
@@ -173,13 +175,13 @@ b9.Math.randomInt = function(from, to) {
 };
 
 /**
- * hoge
- * @param {Number} from hoge
- * @param {Number} to hoge
- * @param {Number} interval hoge
- * @return {Number} hoge
+ * Returns a random float value within an inclusive range.
+ * @param {Number} from The beginning of the range.
+ * @param {Number} to The end of the range.
+ * @param {Number} interval The interval of the random values.
+ * @return {Number} A random float value.
  */
-b9.Math.randomFloat = function(from, to, interval) {
+b9.Math.random_float = function(from, to, interval) {
     interval = this.abs(interval);
 
     var range;
@@ -194,11 +196,11 @@ b9.Math.randomFloat = function(from, to, interval) {
 };
 
 /**
- * hoge
- * @param {Number} from hoge
- * @param {Number} to hoge
- * @param {Number} ratio hoge
- * @return {Number} hoge
+ * Returns the interporated value between the two values by a ratio.
+ * @param {Number} from A source value.
+ * @param {Number} to A destination value.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two values.
+ * @return {Number} The interpolated value between the two values.
  */
 b9.Math.interp = function(from, to, ratio) {
     if (ratio < this.EPSILON) {
@@ -211,35 +213,36 @@ b9.Math.interp = function(from, to, ratio) {
 };
 
 /**
- * hoge
- * @param {Number} a hoge
- * @param {Number} b hoge
- * @return {Boolean} hoge
+ * Returns whether the two values almost equal to each other.
+ * @param {Number} a A value.
+ * @param {Number} b An another value.
+ * @return {Boolean} Whether the two values almost equal to each other.
  */
-b9.Math.isEqualFloat = function(a, b) {
+b9.Math.equals_float = function(a, b) {
     return (this.abs(a - b) < this.EPSILON);
 };
 
 /**
- * hoge
+ * An extremely small positive quantity.
+ * If the difference of two numbers is less than this value, two numbers are considered equal.
  * @return {Number}
  */
 b9.Math.EPSILON = 0.0001;
 
 /**
- * hoge
+ * Pi.
  * @return {Number}
  */
 b9.Math.PI = Math.PI;
 
 /**
- * hoge
+ * Pi/180.
  * @return {Number}
  */
 b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
 
 /**
- * hoge
+ * 180/Pi.
  * @return {Number}
  */
 b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
