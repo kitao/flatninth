@@ -31,9 +31,9 @@ TEST_DIR    = $(BASE_DIR)/test
 SAMPLE_DIR  = $(BASE_DIR)/sample
 REF_DIR     = $(BASE_DIR)/doc/reference
 
-SRCS1       = b9.js Math.js Vector2D.js Matrix2D.js Color.js List.js ListItem.js Tree.js
-SRCS2       = Task.js Layer.js Element.js Sprite.js Primitive.js UserElement.js
-SRCS3       = DrawUtility.js AssetManager.js DebugManager.js System.js
+SRCS1       = b9.js Math.js
+SRCS2       =
+SRCS3       =
 
 SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS1) $(SRCS2) $(SRCS3))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
@@ -48,15 +48,13 @@ clean:
 	rm -f $(TARGET)
 	rm -rf $(REF_DIR)
 
-test:
+check:
+	java -jar $(JSLINT_DIR)/jslint4java.jar $(SRCS)
 	java -jar $(JSLINT_DIR)/jslint4java.jar $(TEST_SRCS)
-
-sample:
 	java -jar $(JSLINT_DIR)/jslint4java.jar $(SAMPLE_SRCS)
 
 reference:
 	java -jar $(JSDOC_DIR)/jsrun.jar $(JSDOC_DIR)/app/run.js -a -r -t=$(JSDOC_DIR)/templates/jsdoc -d=$(REF_DIR) $(SRC_DIR)
 
 $(TARGET): $(SRCS)
-	java -jar $(JSLINT_DIR)/jslint4java.jar $(SRCS)
-	java -jar $(CLOSURE_DIR)/compiler.jar $(addprefix --js , $(SRCS)) --js_output_file $(TARGET)
+	java -jar $(CLOSURE_DIR)/compiler.jar --compilation_level WHITESPACE_ONLY $(addprefix --js , $(SRCS)) --js_output_file $(TARGET)
