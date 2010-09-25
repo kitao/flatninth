@@ -21,7 +21,7 @@
  */
 
 function assertEquals_float(expected, actual) {
-    if (!b9.Math.isEqualFloat(expected, actual)) {
+    if (!b9.Math.equals_float(expected, actual)) {
         fail("Expected " + expected + " but was " + actual);
     }
 }
