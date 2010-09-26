@@ -27,11 +27,11 @@ b9.Vector = b9.createClass();
 
 /**
  * Constructs a b9.Vector.
- * @param {b9.Vector|Number} [arg1] A b9.Vector to be cloned or a x-coordinate.
- * @param {Number} [arg2] A y-coordinate.
- * @param {Number} [arg3] A z-coordinate
+ * @param {b9.Vector|Number} [vec_or_x] A b9.Vector to be cloned or a x-coordinate.
+ * @param {Number} [y] A y-coordinate.
+ * @param {Number} [z] A z-coordinate.
  */
-b9.Vector.prototype.initialize = function(arg1, arg2, arg3) {
+b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
     /**
      * The x-coordinate.
      * @return {Number}
@@ -50,34 +50,41 @@ b9.Vector.prototype.initialize = function(arg1, arg2, arg3) {
      */
     this.z = 0.0;
 
-    if (arguments.length === 1) {
-        this.x = arg1.x;
-        this.y = arg1.y;
-        this.z = arg1.z;
-    } else {
-        this.x = arg1;
-        this.y = arg2;
-        this.z = arg3;
+    if (arguments.length >= 3) {
+        this.x = vec_or_x;
+        this.y = y;
+        this.z = z;
+    } else if (arguments.length === 2) {
+        this.x = vec_or_x;
+        this.y = y;
+    } else if (arguments.length === 1) {
+        this.x = vec_or_x.x;
+        this.y = vec_or_x.y;
+        this.z = vec_or_x.z;
     }
 };
 
 /**
  * Sets all components to this object.
- * @param {b9.Vector|Number} A b9.Vector to be cloned or a x-coordinate.
- * @param {Number} [arg2] A y-coordinate.
- * @param {Number} [arg3] A z-coordinate.
+ * @param {b9.Vector|Number} [vec_or_x] A b9.Vector to be cloned or a x-coordinate.
+ * @param {Number} [y] A y-coordinate.
+ * @param {Number} [z] A z-coordinate.
  * @return {b9.Vector} This object.
  */
-b9.Vector.prototype.set = function(arg1, arg2, arg3)
+b9.Vector.prototype.set = function(vec_or_x, y, z)
 {
-    if (arguments.length === 1) {
-        this.x = arg1.x;
-        this.y = arg1.y;
-        this.z = arg1.z;
-    } else {
-        this.x = arg1;
-        this.y = arg2;
-        this.z = arg3;
+    if (arguments.length >= 3) {
+        this.x = vec_or_x;
+        this.y = y;
+        this.z = z;
+    } else if (arguments.length === 2) {
+        this.x = vec_or_x;
+        this.y = y;
+        this.z = 0.0;
+    } else if (arguments.length === 1) {
+        this.x = vec_or_x.x;
+        this.y = vec_or_x.y;
+        this.z = vec_or_x.z;
     }
 
     return this;
@@ -96,8 +103,8 @@ b9.Vector.prototype.neg = function() {
 };
 
 /**
- * Adds a b9.Vector to this object.
- * @param {b9.Vector} vec A b9.Vector.
+ * Adds a vector to this object.
+ * @param {b9.Vector} vec A vector.
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.add = function(vec) {
@@ -109,8 +116,8 @@ b9.Vector.prototype.add = function(vec) {
 };
 
 /**
- * Subtracts a b9.Vector from this object.
- * @param {b9.Vector} vec A b9.Vector.
+ * Subtracts a vector from this object.
+ * @param {b9.Vector} vec A vector.
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.sub = function(vec) {
@@ -167,27 +174,27 @@ b9.Vector.prototype.sqNorm = function() {
 };
 
 /**
- * Returns the distance between this object and a b9.Vector.
- * @param {b9.Vector} vec A b9.Vector.
- * @return {Number} The distance between the two points.
+ * Returns the distance between this object and a vector.
+ * @param {b9.Vector} vec A vector.
+ * @return {Number} The distance between the two vectors.
  */
 b9.Vector.prototype.dist = function(vec) {
     return b9.Vector._vec1.set(this).sub(vec).norm();
 };
 
 /**
- * Returns the squared distance between this object and a b9.Vector.
+ * Returns the squared distance between this object and a vector.
  * This method is faster than the dist method.
- * @param {b9.Vector} vec A b9.Vector.
- * @return {Number} The sqared distance between the two points.
+ * @param {b9.Vector} vec A vector.
+ * @return {Number} The sqared distance between the two vectors.
  */
 b9.Vector.prototype.sqDist = function(vec) {
     return b9.Vector._vec1.set(this).sub(vec).sqNorm();
 };
 
 /**
- * Returns the inner product of this object and a b9.Vector.
- * @param {b9.Vector} vec A b9.Vector.
+ * Returns the inner product of this object and a vector.
+ * @param {b9.Vector} vec A vector.
  * @return {Number} The inner product of the two vectors.
  */
 b9.Vector.prototype.dot = function(vec) {
@@ -195,12 +202,12 @@ b9.Vector.prototype.dot = function(vec) {
 };
 
 /**
- * Obtains the outer product of this object an a b9.Vector.
- * @param {b9.Vector} vec A b9.Vector.
- * @param {b9.Vector} result A destination of the outer product of the two vectors.
+ * Obtains the outer product of this object an a vector.
+ * @param {b9.Vector} vec A vector.
+ * @param {b9.Vector} result A vector to be written the outer product of the two vectors.
  */
 b9.Vector.prototype.cross = function(vec, result) {
-    // TODO
+    result.set(this.y * vec.z - this.z * vec.y, this.z * vec.x - this.x * vec.z, this.x * vec.y - this.y * vec.x);
 };
 
 /**
@@ -225,11 +232,10 @@ b9.Vector.prototype.normalize = function() {
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.rotateX_float = function(deg) {
-    var sin = b9.Math.sinFloat(deg);
-    var cos = b9.Math.cosFloat(deg);
+    var sin = b9.Math.sin_float(deg);
+    var cos = b9.Math.cos_float(deg);
 
-    b9.Vector._vec1.x = this.x * cos - this.y * sin;
-    b9.Vector._vec1.y = this.y * cos + this.x * sin;
+    b9.Vector._vec1.set(this.x, this.y * cos - this.z * sin, this.z * cos + this.y * sin);
 
     return this.set(b9.Vector._vec1);
 };
@@ -240,7 +246,12 @@ b9.Vector.prototype.rotateX_float = function(deg) {
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.rotateY_float = function(deg) {
-    // TODO
+    var sin = b9.Math.sin_float(deg);
+    var cos = b9.Math.cos_float(deg);
+
+    b9.Vector._vec1.set(this.x * cos + this.z * sin, this.y, this.z * cos - this.x * sin);
+
+    return this.set(b9.Vector._vec1);
 };
 
 /**
@@ -249,48 +260,62 @@ b9.Vector.prototype.rotateY_float = function(deg) {
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.rotateZ_float = function(deg) {
-    // TODO
-};
+    var sin = b9.Math.sin_float(deg);
+    var cos = b9.Math.cos_float(deg);
 
-/**
- * Rotates this object around the orthonormal x-axis.
- * This method allows only a integer angle, but is faster than the rotateX_float method.
- * @param {Number} deg A integer angle in degrees.
- * @return {b9.Vector} This object.
- */
-b9.Vector.prototype.rotateX_int = function(deg) {
-    // TODO
-};
-
-/**
- * Rotates this object around the orthonormal y-axis.
- * This method allows only a integer angle, but is faster than the rotateY_float method.
- * @param {Number} deg A integer angle in degrees.
- * @return {b9.Vector} This object.
- */
-b9.Vector.prototype.rotateY_int = function(deg) {
-    // TODO
-};
-
-/**
- * Rotates this object around the orthonormal z-axis.
- * This method allows only a integer angle, but is faster than the rotateZ_float method.
- * @param {Number} deg A integer angle in degrees.
- * @return {b9.Vector} This object.
- */
-b9.Vector.prototype.rotateZ_int = function(deg) {
-    var sin = b9.Math.sinInt(deg);
-    var cos = b9.Math.cosInt(deg);
-
-    b9.Vector._vec1.x = this.x * cos - this.y * sin;
-    b9.Vector._vec1.y = this.y * cos + this.x * sin;
+    b9.Vector._vec1.set(this.x * cos - this.y * sin, this.y * cos + this.x * sin, this.z);
 
     return this.set(b9.Vector._vec1);
 };
 
 /**
- * Interpolates this object to a b9.Vector by a ratio.
- * @param {b9.Vector} to A destination b9.Vector.
+ * Rotates this object around the orthonormal x-axis.
+ * This method allows only an integer angle, but is faster than the rotateX_float method.
+ * @param {Number} deg A integer angle in degrees.
+ * @return {b9.Vector} This object.
+ */
+b9.Vector.prototype.rotateX_int = function(deg) {
+    var sin = b9.Math.sin_int(deg);
+    var cos = b9.Math.cos_int(deg);
+
+    b9.Vector._vec1.set(this.x, this.y * cos - this.z * sin, this.z * cos + this.y * sin);
+
+    return this.set(b9.Vector._vec1);
+};
+
+/**
+ * Rotates this object around the orthonormal y-axis.
+ * This method allows only an integer angle, but is faster than the rotateY_float method.
+ * @param {Number} deg A integer angle in degrees.
+ * @return {b9.Vector} This object.
+ */
+b9.Vector.prototype.rotateY_int = function(deg) {
+    var sin = b9.Math.sin_int(deg);
+    var cos = b9.Math.cos_int(deg);
+
+    b9.Vector._vec1.set(this.x * cos + this.z * sin, this.y, this.z * cos - this.x * sin);
+
+    return this.set(b9.Vector._vec1);
+};
+
+/**
+ * Rotates this object around the orthonormal z-axis.
+ * This method allows only an integer angle, but is faster than the rotateZ_float method.
+ * @param {Number} deg A integer angle in degrees.
+ * @return {b9.Vector} This object.
+ */
+b9.Vector.prototype.rotateZ_int = function(deg) {
+    var sin = b9.Math.sin_int(deg);
+    var cos = b9.Math.cos_int(deg);
+
+    b9.Vector._vec1.set(this.x * cos - this.y * sin, this.y * cos + this.x * sin, this.z);
+
+    return this.set(b9.Vector._vec1);
+};
+
+/**
+ * Interpolates this object to a vector by a ratio.
+ * @param {b9.Vector} to A destination vector.
  * @param {Number} ratio The value which indicates how far to interpolate between the two vectors.
  * @return {b9.Vector} This object.
  */
@@ -306,8 +331,8 @@ b9.Vector.prototype.interp = function(to, ratio) {
 };
 
 /**
- * Converts this object from in the world coordinate system to the local coordinate system of a b9.Matrix.
- * @param {b9.Matrix2D} mat A b9.Matrix.
+ * Converts this object from in the world coordinate system to the local coordinate system of a matrix.
+ * @param {b9.Matrix2D} mat A matrix.
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.toLocal = function(mat) {
@@ -318,8 +343,8 @@ b9.Vector.prototype.toLocal = function(mat) {
 };
 
 /**
- * Converts this object from in the local coordinate system of a b9.Matrix to in the world coordinate system.
- * @param {b9.Matrix2D} mat A b9.Matrix.
+ * Converts this object from in the local coordinate system of a matrix to in the world coordinate system.
+ * @param {b9.Matrix2D} mat A matrix.
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.toGlobal = function(mat) {
@@ -330,9 +355,9 @@ b9.Vector.prototype.toGlobal = function(mat) {
 };
 
 /**
- * Converts this object from in the world coordinate system to the local coordinate system of a b9.Matrix.
- * However, unlike the toLocal method, the translation of a b9.Matrix is regarded as the zero vector.
- * @param {b9.Matrix2D} mat A b9.Matrix.
+ * Converts this object from in the world coordinate system to the local coordinate system of a matrix.
+ * However, unlike the toLocal method, the translation of the matrix is regarded as the zero vector.
+ * @param {b9.Matrix2D} mat A matrix.
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.toLocal_noTrans = function(mat) {
@@ -343,9 +368,9 @@ b9.Vector.prototype.toLocal_noTrans = function(mat) {
 };
 
 /**
- * Converts this object from in the local coordinate system of a b9.Matrix to in the world coordinate system.
- * However, unlike the toGlobal method, the translation of a b9.Matrix is regarded as the zero vector.
- * @param {b9.Matrix2D} mat A b9.Matrix.
+ * Converts this object from in the local coordinate system of a matrix to in the world coordinate system.
+ * However, unlike the toGlobal method, the translation of the matrix is regarded as the zero vector.
+ * @param {b9.Matrix2D} mat A matrix.
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.toGlobal_noTrans = function(mat) {
@@ -356,9 +381,9 @@ b9.Vector.prototype.toGlobal_noTrans = function(mat) {
 };
 
 /**
- * Returns whether this object equals a b9.Vector.
- * @param {b9.Vector} vec A b9.Vector.
- * @return {Boolean} true if the two vectors are equal; false otherwise;
+ * Returns whether this object equals a vector.
+ * @param {b9.Vector} vec A vector.
+ * @return {Boolean} true if the two vectors are equal; false otherwise.
  */
 b9.Vector.prototype.equals = function(vec) {
     return (b9.Math.equals_float(this.x, vec.x) &&

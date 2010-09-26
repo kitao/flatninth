@@ -160,10 +160,10 @@ b9.Math.atan2 = function(y, x) {
  * @return {Number} A random integer value.
  */
 b9.Math.random_int = function(from, to) {
+    var range;
+
     from = this.floor(from);
     to = this.floor(to);
-
-    var range;
 
     if (to >= from) {
         range = to - from + 1;
@@ -182,9 +182,9 @@ b9.Math.random_int = function(from, to) {
  * @return {Number} A random float value.
  */
 b9.Math.random_float = function(from, to, interval) {
-    interval = this.abs(interval);
-
     var range;
+
+    interval = this.abs(interval);
 
     if (to >= from) {
         range = this.floor((to - from) / interval) + 1;
@@ -249,6 +249,10 @@ b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 
 b9.Math._sin_table = new Array(180);
 
-for (var i = 0; i < 180; i++) {
-    b9.Math._sin_table[i] = b9.Math.sinFloat(i);
-}
+function() {
+    var i;
+
+    for (i = 0; i < 180; i++) {
+        b9.Math._sin_table[i] = b9.Math.sinFloat(i);
+    }
+}();
