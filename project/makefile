@@ -31,7 +31,7 @@ TEST_DIR    = $(BASE_DIR)/test
 SAMPLE_DIR  = $(BASE_DIR)/sample
 REF_DIR     = $(BASE_DIR)/doc/reference
 
-SRCS1       = b9.js Math.js
+SRCS1       = b9.js Math.js Vector.js
 SRCS2       =
 SRCS3       =
 
