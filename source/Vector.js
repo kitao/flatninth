@@ -26,7 +26,7 @@
 b9.Vector = b9.createClass();
 
 /**
- * Constructs a b9.Vector.
+ * Constructs a vector.
  * @param {b9.Vector|Number} [vec_or_x] A b9.Vector to be cloned or a x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
