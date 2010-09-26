@@ -26,11 +26,11 @@ function assertEquals_float(expected, actual) {
     }
 }
 
-/*function assertEquals_Vector(expected, actual) {
-    if (!expected.isEqual(actual)) {
+function assertEquals_Vector(expected, actual) {
+    if (!expected.equals(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
-}*/
+}
 
 /*function assertEquals_Matrix(expected, actual) {
     if (!expected.isEqual(actual)) {
