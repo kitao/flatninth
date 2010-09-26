@@ -196,9 +196,10 @@ b9.Matrix.prototype.rotateZ_int = function(deg) {
  * hoge
  * @param {Number} scale_x hoge
  * @param {Number} scale_y hoge
+ * @param {Number} scale_z hoge
  * @return {b9.Matrix} hoge
  */
-b9.Matrix.prototype.scale = function(scale_x, scale_y) {
+b9.Matrix.prototype.scale = function(scale_x, scale_y, scale_z) {
     this._x_axis.mul(scale_x);
     this._y_axis.mul(scale_y);
 
@@ -209,9 +210,10 @@ b9.Matrix.prototype.scale = function(scale_x, scale_y) {
  * hoge
  * @param {Number} offset_x hoge
  * @param {Number} offset_y hoge
+ * @param {Number} offset_z hoge
  * @return {b9.Matrix} hoge
  */
-b9.Matrix.prototype.translate = function(offset_x, offset_y) {
+b9.Matrix.prototype.translate = function(offset_x, offset_y, offset_z) {
     b9.Vector._vec1.set(this._x_axis).mul(offset_x);
     b9.Vector._vec2.set(this._y_axis).mul(offset_y);
 
@@ -243,7 +245,7 @@ b9.Matrix.prototype.slerp = function(to, ratio) {
  * @param {Number} ratio hoge
  * @return {b9.Matrix} hoge
  */
-b9.Matrix.prototype.slert_noTrans = function(to, ratio) {
+b9.Matrix.prototype.slerp_noTrans = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
@@ -334,17 +336,17 @@ b9.Matrix.prototype.lookAt = function(from, to) {
 };
 
 /**
- * hoge
- * @param {b9.Matrix} mat hoge
- * @return {Boolean} hoge
+ * Returns whether this object equals a matrix.
+ * @param {b9.Matrix} vec A matrix.
+ * @return {Boolean} true if the two matrices are equal; false otherwise.
  */
 b9.Matrix.prototype.equals = function(mat) {
     return (this._x_axis.equals(mat._x_axis) && this._y_axis.equals(mat._y_axis) && this._trans.equals(mat._trans));
 };
 
 /**
- * hoge
- * @return {String} hoge
+ * Returns a string representation of this object.
+ * @return {String} A string representation of this object.
  */
 b9.Matrix.prototype.toString = function() {
     var str = "(";
