@@ -338,8 +338,10 @@ b9.Vector.prototype.interp = function(to, ratio) {
 b9.Vector.prototype.toLocal = function(mat) {
     b9.Vector._vec1.set(this).sub(mat._trans);
 
-    return this.set(b9.Vector._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
+    return this.set(
+            b9.Vector._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
             b9.Vector._vec1.dot(mat._y_axis) / mat._y_axis.sqNorm());
+            b9.Vector._vec1.dot(mat._z_axis) / mat._z_axis.sqNorm());
 };
 
 /**
@@ -350,8 +352,9 @@ b9.Vector.prototype.toLocal = function(mat) {
 b9.Vector.prototype.toGlobal = function(mat) {
     b9.Vector._vec1.set(mat._x_axis).mul(this.x);
     b9.Vector._vec2.set(mat._y_axis).mul(this.y);
+    b9.Vector._vec3.set(mat._z_axis).mul(this.z);
 
-    return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(mat._trans);
+    return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(b9.Vector._vec3).add(mat._trans);
 };
 
 /**
@@ -361,8 +364,11 @@ b9.Vector.prototype.toGlobal = function(mat) {
  * @return {b9.Vector} This object.
  */
 b9.Vector.prototype.toLocal_noTrans = function(mat) {
-    b9.Vector._vec1.x = this.dot(mat._x_axis) / mat._x_axis.sqNorm();
-    b9.Vector._vec1.y = this.dot(mat._y_axis) / mat._y_axis.sqNorm();
+    b9.Vector._vec1.set(
+            this.dot(mat._x_axis) / mat._x_axis.sqNorm(),
+            this.dot(mat._y_axis) / mat._y_axis.sqNorm(),
+            this.dot(mat._z_axis) / mat._z_axis.sqNorm());
+
 
     return this.set(b9.Vector._vec1);
 };
@@ -376,8 +382,9 @@ b9.Vector.prototype.toLocal_noTrans = function(mat) {
 b9.Vector.prototype.toGlobal_noTrans = function(mat) {
     b9.Vector._vec1.set(mat._x_axis).mul(this.x);
     b9.Vector._vec2.set(mat._y_axis).mul(this.y);
+    b9.Vector._vec3.set(mat._z_axis).mul(this.z);
 
-    return this.set(b9.Vector._vec1).add(b9.Vector._vec2);
+    return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(b9.Vector._vec3);
 };
 
 /**
@@ -431,3 +438,4 @@ b9.Vector.Z_UNIT = new b9.Vector(0.0, 0.0, 1.0);
 
 b9.Vector._vec1 = new b9.Vector();
 b9.Vector._vec2 = new b9.Vector();
+b9.Vector._vec3 = new b9.Vector();
