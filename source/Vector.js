@@ -65,7 +65,7 @@ b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
 /**
  * Sets the all components to this object.
  * The number of the arguments must be 0, 1, or 3.
- * @param {b9.Vector|Number} [vec_or_x] A b9.Vector to be cloned or a x-coordinate.
+ * @param {b9.Vector|Number} [vec_or_x] A vector to be copied or a x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @return {b9.Vector} This object.
