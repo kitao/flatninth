@@ -27,6 +27,7 @@ b9.Vector = b9.createClass();
 
 /**
  * Constructs a vector.
+ * The number of the arguments must be 0, 1, or 3.
  * @param {b9.Vector|Number} [vec_or_x] A b9.Vector to be cloned or a x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
@@ -50,13 +51,10 @@ b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
      */
     this.z = 0.0;
 
-    if (arguments.length >= 3) {
+    if (arguments.length === 3) {
         this.x = vec_or_x;
         this.y = y;
         this.z = z;
-    } else if (arguments.length === 2) {
-        this.x = vec_or_x;
-        this.y = y;
     } else if (arguments.length === 1) {
         this.x = vec_or_x.x;
         this.y = vec_or_x.y;
@@ -65,7 +63,8 @@ b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
 };
 
 /**
- * Sets all components to this object.
+ * Sets the all components to this object.
+ * The number of the arguments must be 0, 1, or 3.
  * @param {b9.Vector|Number} [vec_or_x] A b9.Vector to be cloned or a x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
@@ -73,14 +72,10 @@ b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
  */
 b9.Vector.prototype.set = function(vec_or_x, y, z)
 {
-    if (arguments.length >= 3) {
+    if (arguments.length === 3) {
         this.x = vec_or_x;
         this.y = y;
         this.z = z;
-    } else if (arguments.length === 2) {
-        this.x = vec_or_x;
-        this.y = y;
-        this.z = 0.0;
     } else if (arguments.length === 1) {
         this.x = vec_or_x.x;
         this.y = vec_or_x.y;
