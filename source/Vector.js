@@ -63,12 +63,12 @@ b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
 };
 
 /**
- * Sets the all components to this object.
+ * Sets the all components to this vector.
  * The number of the arguments must be 0, 1, or 3.
  * @param {b9.Vector|Number} [vec_or_x] A vector to be copied or a x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.set = function(vec_or_x, y, z)
 {
@@ -86,8 +86,8 @@ b9.Vector.prototype.set = function(vec_or_x, y, z)
 };
 
 /**
- * Changes the arithmetic sign of this object.
- * @return {b9.Vector} This object.
+ * Changes the arithmetic sign of this vector.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.neg = function() {
     this.x = -this.x;
@@ -98,9 +98,9 @@ b9.Vector.prototype.neg = function() {
 };
 
 /**
- * Adds a vector to this object.
+ * Adds a vector to this vector.
  * @param {b9.Vector} vec A vector.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.add = function(vec) {
     this.x += vec.x;
@@ -111,9 +111,9 @@ b9.Vector.prototype.add = function(vec) {
 };
 
 /**
- * Subtracts a vector from this object.
+ * Subtracts a vector from this vector.
  * @param {b9.Vector} vec A vector.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.sub = function(vec) {
     this.x -= vec.x;
@@ -124,9 +124,9 @@ b9.Vector.prototype.sub = function(vec) {
 };
 
 /**
- * Multiplies this object with a scalar value.
+ * Multiplies this vector with a scalar value.
  * @param {Number} s A scalar value.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.mul = function(s) {
     this.x *= s;
@@ -137,9 +137,9 @@ b9.Vector.prototype.mul = function(s) {
 };
 
 /**
- * Divides this object by a scalar value.
+ * Divides this vector by a scalar value.
  * @param {Number} s A scalar value.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.div = function(s) {
     var rs = 1.0 / s;
@@ -152,24 +152,24 @@ b9.Vector.prototype.div = function(s) {
 };
 
 /**
- * Returns the norm of this object.
- * @return {Number} The norm of this object.
+ * Returns the norm of this vector.
+ * @return {Number} The norm of this vector.
  */
 b9.Vector.prototype.norm = function() {
     return b9.Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
 };
 
 /**
- * Returns the squared norm of this object.
+ * Returns the squared norm of this vector.
  * This method is faster than the norm method.
- * @return {Number} The squared norm of this object.
+ * @return {Number} The squared norm of this vector.
  */
 b9.Vector.prototype.sqNorm = function() {
     return this.x * this.x + this.y * this.y + this.z * this.z;
 };
 
 /**
- * Returns the distance between this object and a vector.
+ * Returns the distance between this vector and a vector.
  * @param {b9.Vector} vec A vector.
  * @return {Number} The distance between the two vectors.
  */
@@ -178,7 +178,7 @@ b9.Vector.prototype.dist = function(vec) {
 };
 
 /**
- * Returns the squared distance between this object and a vector.
+ * Returns the squared distance between this vector and a vector.
  * This method is faster than the dist method.
  * @param {b9.Vector} vec A vector.
  * @return {Number} The sqared distance between the two vectors.
@@ -188,7 +188,7 @@ b9.Vector.prototype.sqDist = function(vec) {
 };
 
 /**
- * Returns the inner product of this object and a vector.
+ * Returns the inner product of this vector and a vector.
  * @param {b9.Vector} vec A vector.
  * @return {Number} The inner product of the two vectors.
  */
@@ -197,7 +197,7 @@ b9.Vector.prototype.dot = function(vec) {
 };
 
 /**
- * Obtains the outer product of this object an a vector.
+ * Obtains the outer product of this vector an a vector.
  * @param {b9.Vector} vec A vector.
  * @param {b9.Vector} result A vector to be written the outer product of the two vectors.
  */
@@ -206,8 +206,8 @@ b9.Vector.prototype.cross = function(vec, result) {
 };
 
 /**
- * Normalizes this object.
- * @return {b9.Vector} This object.
+ * Normalizes this vector.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.normalize = function() {
     var norm = this.norm();
@@ -222,9 +222,9 @@ b9.Vector.prototype.normalize = function() {
 };
 
 /**
- * Rotates this object around the orthonormal x-axis.
+ * Rotates this vector around the orthonormal x-axis.
  * @param {Number} deg A float angle in degrees.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.rotateX_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
@@ -236,9 +236,9 @@ b9.Vector.prototype.rotateX_float = function(deg) {
 };
 
 /**
- * Rotates this object around the orthonormal y-axis.
+ * Rotates this vector around the orthonormal y-axis.
  * @param {Number} deg A float angle in degrees.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.rotateY_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
@@ -250,9 +250,9 @@ b9.Vector.prototype.rotateY_float = function(deg) {
 };
 
 /**
- * Rotates this object around the orthonormal z-axis.
+ * Rotates this vector around the orthonormal z-axis.
  * @param {Number} deg A float angle in degrees.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.rotateZ_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
@@ -264,10 +264,10 @@ b9.Vector.prototype.rotateZ_float = function(deg) {
 };
 
 /**
- * Rotates this object around the orthonormal x-axis.
+ * Rotates this vector around the orthonormal x-axis.
  * This method allows only an integer angle, but is faster than the rotateX_float method.
  * @param {Number} deg A integer angle in degrees.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.rotateX_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
@@ -279,10 +279,10 @@ b9.Vector.prototype.rotateX_int = function(deg) {
 };
 
 /**
- * Rotates this object around the orthonormal y-axis.
+ * Rotates this vector around the orthonormal y-axis.
  * This method allows only an integer angle, but is faster than the rotateY_float method.
  * @param {Number} deg A integer angle in degrees.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.rotateY_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
@@ -294,10 +294,10 @@ b9.Vector.prototype.rotateY_int = function(deg) {
 };
 
 /**
- * Rotates this object around the orthonormal z-axis.
+ * Rotates this vector around the orthonormal z-axis.
  * This method allows only an integer angle, but is faster than the rotateZ_float method.
  * @param {Number} deg A integer angle in degrees.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.rotateZ_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
@@ -309,10 +309,10 @@ b9.Vector.prototype.rotateZ_int = function(deg) {
 };
 
 /**
- * Interpolates this object to a vector by a ratio.
+ * Interpolates this vector to a vector by a ratio.
  * @param {b9.Vector} to A destination vector.
  * @param {Number} ratio The value which indicates how far to interpolate between the two vectors.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.interp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
@@ -326,9 +326,9 @@ b9.Vector.prototype.interp = function(to, ratio) {
 };
 
 /**
- * Converts this object from in the world coordinate system to the local coordinate system of a matrix.
+ * Converts this vector from in the world coordinate system to the local coordinate system of a matrix.
  * @param {b9.Matrix2D} mat A matrix.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.toLocal = function(mat) {
     b9.Vector._vec1.set(this).sub(mat._trans);
@@ -340,9 +340,9 @@ b9.Vector.prototype.toLocal = function(mat) {
 };
 
 /**
- * Converts this object from in the local coordinate system of a matrix to in the world coordinate system.
+ * Converts this vector from in the local coordinate system of a matrix to in the world coordinate system.
  * @param {b9.Matrix2D} mat A matrix.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.toGlobal = function(mat) {
     b9.Vector._vec1.set(mat._x_axis).mul(this.x);
@@ -353,10 +353,10 @@ b9.Vector.prototype.toGlobal = function(mat) {
 };
 
 /**
- * Converts this object from in the world coordinate system to the local coordinate system of a matrix.
+ * Converts this vector from in the world coordinate system to the local coordinate system of a matrix.
  * However, unlike the toLocal method, the translation of the matrix is regarded as the zero vector.
  * @param {b9.Matrix2D} mat A matrix.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.toLocal_noTrans = function(mat) {
     b9.Vector._vec1.set(
@@ -369,10 +369,10 @@ b9.Vector.prototype.toLocal_noTrans = function(mat) {
 };
 
 /**
- * Converts this object from in the local coordinate system of a matrix to in the world coordinate system.
+ * Converts this vector from in the local coordinate system of a matrix to in the world coordinate system.
  * However, unlike the toGlobal method, the translation of the matrix is regarded as the zero vector.
  * @param {b9.Matrix2D} mat A matrix.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.toGlobal_noTrans = function(mat) {
     b9.Vector._vec1.set(mat._x_axis).mul(this.x);
@@ -383,7 +383,7 @@ b9.Vector.prototype.toGlobal_noTrans = function(mat) {
 };
 
 /**
- * Returns whether this object equals a vector.
+ * Returns whether this vector equals a vector.
  * @param {b9.Vector} vec A vector.
  * @return {Boolean} true if the two vectors are equal; false otherwise.
  */
@@ -394,8 +394,8 @@ b9.Vector.prototype.equals = function(vec) {
 };
 
 /**
- * Returns a string representation of this object.
- * @return {String} A string representation of this object.
+ * Returns a string representation of this vector.
+ * @return {String} A string representation of this vector.
  */
 b9.Vector.prototype.toString = function() {
     var str = "(";

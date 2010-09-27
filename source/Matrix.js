@@ -86,13 +86,13 @@ b9.Matrix.prototype.refTrans = function() {
 };
 
 /**
- * Sets the all components to this object.
+ * Sets the all components to this matrix.
  * The number of the arguments must be 0, 1, or 4.
  * @param {b9.Matrix|b9.Vector} [mat_or_x_axis] A matrix to be copied or an x-axis.
  * @param {b9.Vector} [y_axis] A y-axis.
  * @param {b9.Vector} [z_axis] A z-axis.
  * @param {b9.Vector} [trans] A translation.
- * @return This object.
+ * @return This matrix.
  */
 b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
     if (arguments.length === 1) {
@@ -109,8 +109,8 @@ b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
 };
 
 /**
- * Orthonormalizes this object.
- * @return {b9.Matrix} This object.
+ * Orthonormalizes this matrix.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.orthonormalize = function() {
     this._x_axis.normalize();
@@ -121,27 +121,27 @@ b9.Matrix.prototype.orthonormalize = function() {
 };
 
 /**
- * Rotates this object around its x-axis.
+ * Rotates this matrix around its x-axis.
  * @param {Number} deg A float angle in degrees.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.rotateX_float = function(deg) {
     // TODO
 };
 
 /**
- * Rotates this object around its y-axis.
+ * Rotates this matrix around its y-axis.
  * @param {Number} deg A float angle in degrees.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.rotateY_float = function(deg) {
     // TODO
 };
 
 /**
- * Rotates this object around its z-axis.
+ * Rotates this matrix around its z-axis.
  * @param {Number} deg A float angle in degrees.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.rotateZ_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
@@ -156,30 +156,30 @@ b9.Matrix.prototype.rotateZ_float = function(deg) {
 };
 
 /**
- * Rotates this object around its x-axis.
+ * Rotates this matrix around its x-axis.
  * This method allows only an integer angle, but is faster than the rotateX_float method.
  * @param {Number} deg A integer angle in degrees.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This matrix.
  */
 b9.Matrix.prototype.rotateX_int = function(deg) {
     // TODO
 };
 
 /**
- * Rotates this object around its y-axis.
+ * Rotates this matrix around its y-axis.
  * This method allows only an integer angle, but is faster than the rotateY_float method.
  * @param {Number} deg A integer angle in degrees.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This matrix.
  */
 b9.Matrix.prototype.rotateY_int = function(deg) {
     // TODO
 };
 
 /**
- * Rotates this object around its z-axis.
+ * Rotates this matrix around its z-axis.
  * This method allows only an integer angle, but is faster than the rotateZ_float method.
  * @param {Number} deg A integer angle in degrees.
- * @return {b9.Vector} This object.
+ * @return {b9.Vector} This matrix.
  */
 b9.Matrix.prototype.rotateZ_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
@@ -194,11 +194,11 @@ b9.Matrix.prototype.rotateZ_int = function(deg) {
 };
 
 /**
- * Scales this object.
+ * Scales this matrix.
  * @param {Number} scale_x An x-axis scale factor.
  * @param {Number} scale_y A y-axis scale factor.
  * @param {Number} scale_z A z-axis scale factor.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.scale = function(scale_x, scale_y, scale_z) {
     this._x_axis.mul(scale_x);
@@ -208,11 +208,11 @@ b9.Matrix.prototype.scale = function(scale_x, scale_y, scale_z) {
 };
 
 /**
- * Translates this object along its axes.
+ * Translates this matrix along its axes.
  * @param {Number} offset_x A length of translation along the x-axis.
  * @param {Number} offset_y A length of translation along the y-axis.
  * @param {Number} offset_z A length of translation along the z-axis.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.translate = function(offset_x, offset_y, offset_z) {
     b9.Vector._vec1.set(this._x_axis).mul(offset_x);
@@ -224,10 +224,10 @@ b9.Matrix.prototype.translate = function(offset_x, offset_y, offset_z) {
 };
 
 /**
- * Interpolates this object to a matrix by a ratio, using spherical linear interpolation.
+ * Interpolates this matrix to a matrix by a ratio, using spherical linear interpolation.
  * @param {Number} to A destination matrix.
  * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.slerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
@@ -241,11 +241,11 @@ b9.Matrix.prototype.slerp = function(to, ratio) {
 };
 
 /**
- * Interpolates this object to a matrix by a ratio, using spherical linear interpolation.
+ * Interpolates this matrix to a matrix by a ratio, using spherical linear interpolation.
  * However, unlike the slerp method, the translation of the matrix is ignored.
  * @param {Number} to A destination matrix.
  * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.slerp_noTrans = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
@@ -264,9 +264,9 @@ b9.Matrix.prototype.slerp_noTrans = function(to, ratio) {
 };
 
 /**
- * Converts this object from in the world coordinate system to in the local coordinate system of a matrix.
+ * Converts this matrix from in the world coordinate system to in the local coordinate system of a matrix.
  * @param {b9.Matrix} mat A matrix.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.toLocal = function(mat) {
     var rsq_xa = 1.0 / mat._x_axis.sqNorm();
@@ -282,9 +282,9 @@ b9.Matrix.prototype.toLocal = function(mat) {
 };
 
 /**
- * Converts this object from in the local coordinate system of a matrix to in the world coordinate system.
+ * Converts this matrix from in the local coordinate system of a matrix to in the world coordinate system.
  * @param {b9.Matrix} mat A Matrix.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.toGlobal = function(mat) {
     this._x_axis.toGlobalNoTrans(mat);
@@ -295,10 +295,10 @@ b9.Matrix.prototype.toGlobal = function(mat) {
 };
 
 /**
- * Converts this object from in the world coordinate system to in the local coordinate system of a matrix.
+ * Converts this matrix from in the world coordinate system to in the local coordinate system of a matrix.
  * However, unlike the toLocal method, the translation of the matrix is regarded as the zero vector.
  * @param {b9.Matrix} mat A matrix.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.toLocal_noTrans = function(mat) {
     var rsq_xa = 1.0 / mat._x_axis.sqNorm();
@@ -312,10 +312,10 @@ b9.Matrix.prototype.toLocal_noTrans = function(mat) {
 };
 
 /**
- * Converts this object from in the local coordinate system of a matrix to in the world coordinate system.
+ * Converts this matrix from in the local coordinate system of a matrix to in the world coordinate system.
  * However, unlike the tGlobal method, the translation of the matrix is regarded as the zero vector.
  * @param {b9.Matrix} mat A Matrix.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.toGlobal_noTrans = function(mat) {
     this._x_axis.toGlobalNoTrans(mat);
@@ -326,11 +326,11 @@ b9.Matrix.prototype.toGlobal_noTrans = function(mat) {
 };
 
 /**
- * Builds the look-at matrix and sets to this object.
+ * Builds the look-at matrix and sets to this matrix.
  * @param {b9.Vector} from The position of a camera.
  * @param {b9.Vector} to The position of a camera look-at target.
  * @param {b9.Vector} up The up direction of a camera.
- * @return {b9.Matrix} This object.
+ * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.lookAt = function(from, to, up) {
     this._y_axis.set(to).sub(from).normalize();
@@ -341,7 +341,7 @@ b9.Matrix.prototype.lookAt = function(from, to, up) {
 };
 
 /**
- * Returns whether this object equals a matrix.
+ * Returns whether this matrix equals a matrix.
  * @param {b9.Matrix} vec A matrix.
  * @return {Boolean} true if the two matrices are equal; false otherwise.
  */
@@ -350,8 +350,8 @@ b9.Matrix.prototype.equals = function(mat) {
 };
 
 /**
- * Returns a string representation of this object.
- * @return {String} A string representation of this object.
+ * Returns a string representation of this matrix.
+ * @return {String} A string representation of this matrix.
  */
 b9.Matrix.prototype.toString = function() {
     var str = "(";
