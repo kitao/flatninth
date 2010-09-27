@@ -92,6 +92,7 @@ b9.Matrix.prototype.refTrans = function() {
  * @param {b9.Vector} [y_axis] A y-axis.
  * @param {b9.Vector} [z_axis] A z-axis.
  * @param {b9.Vector} [trans] A translation.
+ * @return This object.
  */
 b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
     if (arguments.length === 1) {
@@ -108,7 +109,7 @@ b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
 };
 
 /**
- * Orthonormalizes thie object.
+ * Orthonormalizes this object.
  * @return {b9.Matrix} This object.
  */
 b9.Matrix.prototype.orthonormalize = function() {
@@ -120,7 +121,7 @@ b9.Matrix.prototype.orthonormalize = function() {
 };
 
 /**
- * Rotates this objects around its x-axis.
+ * Rotates this object around its x-axis.
  * @param {Number} deg A float angle in degrees.
  * @return {b9.Matrix} This object.
  */
@@ -129,7 +130,7 @@ b9.Matrix.prototype.rotateX_float = function(deg) {
 };
 
 /**
- * Rotates this objects around its y-axis.
+ * Rotates this object around its y-axis.
  * @param {Number} deg A float angle in degrees.
  * @return {b9.Matrix} This object.
  */
@@ -138,7 +139,7 @@ b9.Matrix.prototype.rotateY_float = function(deg) {
 };
 
 /**
- * Rotates this objects around its z-axis.
+ * Rotates this object around its z-axis.
  * @param {Number} deg A float angle in degrees.
  * @return {b9.Matrix} This object.
  */
@@ -155,7 +156,7 @@ b9.Matrix.prototype.rotateZ_float = function(deg) {
 };
 
 /**
- * Rotates this objects around its x-axis.
+ * Rotates this object around its x-axis.
  * This method allows only an integer angle, but is faster than the rotateX_float method.
  * @param {Number} deg A integer angle in degrees.
  * @return {b9.Vector} This object.
@@ -165,7 +166,7 @@ b9.Matrix.prototype.rotateX_int = function(deg) {
 };
 
 /**
- * Rotates this objects around its y-axis.
+ * Rotates this object around its y-axis.
  * This method allows only an integer angle, but is faster than the rotateY_float method.
  * @param {Number} deg A integer angle in degrees.
  * @return {b9.Vector} This object.
@@ -175,7 +176,7 @@ b9.Matrix.prototype.rotateY_int = function(deg) {
 };
 
 /**
- * Rotates this objects around its z-axis.
+ * Rotates this object around its z-axis.
  * This method allows only an integer angle, but is faster than the rotateZ_float method.
  * @param {Number} deg A integer angle in degrees.
  * @return {b9.Vector} This object.
@@ -193,11 +194,11 @@ b9.Matrix.prototype.rotateZ_int = function(deg) {
 };
 
 /**
- * hoge
- * @param {Number} scale_x hoge
- * @param {Number} scale_y hoge
- * @param {Number} scale_z hoge
- * @return {b9.Matrix} hoge
+ * Scales this object.
+ * @param {Number} scale_x An x-axis scale factor.
+ * @param {Number} scale_y A y-axis scale factor.
+ * @param {Number} scale_z A z-axis scale factor.
+ * @return {b9.Matrix} This object.
  */
 b9.Matrix.prototype.scale = function(scale_x, scale_y, scale_z) {
     this._x_axis.mul(scale_x);
@@ -207,11 +208,11 @@ b9.Matrix.prototype.scale = function(scale_x, scale_y, scale_z) {
 };
 
 /**
- * hoge
- * @param {Number} offset_x hoge
- * @param {Number} offset_y hoge
- * @param {Number} offset_z hoge
- * @return {b9.Matrix} hoge
+ * Translates this object along its axes.
+ * @param {Number} offset_x A length of translation along the x-axis.
+ * @param {Number} offset_y A length of translation along the y-axis.
+ * @param {Number} offset_z A length of translation along the z-axis.
+ * @return {b9.Matrix} This object.
  */
 b9.Matrix.prototype.translate = function(offset_x, offset_y, offset_z) {
     b9.Vector._vec1.set(this._x_axis).mul(offset_x);
@@ -223,10 +224,10 @@ b9.Matrix.prototype.translate = function(offset_x, offset_y, offset_z) {
 };
 
 /**
- * hoge
- * @param {Number} to hoge
- * @param {Number} ratio hoge
- * @return {b9.Matrix} hoge
+ * Interpolates this object to a matrix by a ratio, using spherical linear interpolation.
+ * @param {Number} to A destination matrix.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
+ * @return {b9.Matrix} This object.
  */
 b9.Matrix.prototype.slerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
@@ -240,10 +241,11 @@ b9.Matrix.prototype.slerp = function(to, ratio) {
 };
 
 /**
- * hoge
- * @param {Number} to hoge
- * @param {Number} ratio hoge
- * @return {b9.Matrix} hoge
+ * Interpolates this object to a matrix by a ratio, using spherical linear interpolation.
+ * However, unlike the slerp method, the translation of the matrix is ignored.
+ * @param {Number} to A destination matrix.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
+ * @return {b9.Matrix} This object.
  */
 b9.Matrix.prototype.slerp_noTrans = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
@@ -262,9 +264,9 @@ b9.Matrix.prototype.slerp_noTrans = function(to, ratio) {
 };
 
 /**
- * hoge
- * @param {b9.Matrix} mat hoge
- * @return {b9.Matrix} hoge
+ * Converts this object from in the world coordinate system to in the local coordinate system of a matrix.
+ * @param {b9.Matrix} mat A matrix.
+ * @return {b9.Matrix} This object.
  */
 b9.Matrix.prototype.toLocal = function(mat) {
     var rsq_xa = 1.0 / mat._x_axis.sqNorm();
@@ -280,9 +282,9 @@ b9.Matrix.prototype.toLocal = function(mat) {
 };
 
 /**
- * hoge
- * @param {b9.Matrix} mat hoge
- * @return {b9.Matrix} hoge
+ * Converts this object from in the local coordinate system of a matrix to in the world coordinate system.
+ * @param {b9.Matrix} mat A Matrix.
+ * @return {b9.Matrix} This object.
  */
 b9.Matrix.prototype.toGlobal = function(mat) {
     this._x_axis.toGlobalNoTrans(mat);
@@ -293,9 +295,10 @@ b9.Matrix.prototype.toGlobal = function(mat) {
 };
 
 /**
- * hoge
- * @param {b9.Matrix} mat hoge
- * @return {b9.Matrix} hoge
+ * Converts this object from in the world coordinate system to in the local coordinate system of a matrix.
+ * However, unlike the toLocal method, the translation of the matrix is regarded as the zero vector.
+ * @param {b9.Matrix} mat A matrix.
+ * @return {b9.Matrix} This object.
  */
 b9.Matrix.prototype.toLocal_noTrans = function(mat) {
     var rsq_xa = 1.0 / mat._x_axis.sqNorm();
@@ -309,9 +312,10 @@ b9.Matrix.prototype.toLocal_noTrans = function(mat) {
 };
 
 /**
- * hoge
- * @param {b9.Matrix} mat hoge
- * @return {b9.Matrix} hoge
+ * Converts this object from in the local coordinate system of a matrix to in the world coordinate system.
+ * However, unlike the tGlobal method, the translation of the matrix is regarded as the zero vector.
+ * @param {b9.Matrix} mat A Matrix.
+ * @return {b9.Matrix} This object.
  */
 b9.Matrix.prototype.toGlobal_noTrans = function(mat) {
     this._x_axis.toGlobalNoTrans(mat);
@@ -322,12 +326,13 @@ b9.Matrix.prototype.toGlobal_noTrans = function(mat) {
 };
 
 /**
- * hoge
- * @param {b9.Vector} from hoge
- * @param {b9.Vector} to hoge
- * @return {b9.Matrix} hoge
+ * Builds the look-at matrix and sets to this object.
+ * @param {b9.Vector} from The position of a camera.
+ * @param {b9.Vector} to The position of a camera look-at target.
+ * @param {b9.Vector} up The up direction of a camera.
+ * @return {b9.Matrix} This object.
  */
-b9.Matrix.prototype.lookAt = function(from, to) {
+b9.Matrix.prototype.lookAt = function(from, to, up) {
     this._y_axis.set(to).sub(from).normalize();
     this._x_axis.set(this._x_axis).rotateInt(-90);
     this._trans.set(from);
