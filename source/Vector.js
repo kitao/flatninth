@@ -266,7 +266,7 @@ b9.Vector.prototype.rotateZ_float = function(deg) {
 /**
  * Rotates this vector around the orthonormal x-axis.
  * This method allows only an integer angle, but is faster than the rotateX_float method.
- * @param {Number} deg A integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.rotateX_int = function(deg) {
@@ -281,7 +281,7 @@ b9.Vector.prototype.rotateX_int = function(deg) {
 /**
  * Rotates this vector around the orthonormal y-axis.
  * This method allows only an integer angle, but is faster than the rotateY_float method.
- * @param {Number} deg A integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.rotateY_int = function(deg) {
@@ -296,7 +296,7 @@ b9.Vector.prototype.rotateY_int = function(deg) {
 /**
  * Rotates this vector around the orthonormal z-axis.
  * This method allows only an integer angle, but is faster than the rotateZ_float method.
- * @param {Number} deg A integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.rotateZ_int = function(deg) {

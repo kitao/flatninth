@@ -54,7 +54,6 @@ b9.Matrix.prototype.initialize = function(mat_or_x_axis, y_axis, z_axis, trans) 
 
 /**
  * Returns the reference of the x-axis.
- * The number of the arguments must be 0, 1, or 4.
  * @return {b9.Vector} The reference of the x-axis.
  */
 b9.Matrix.prototype.refXAxis = function() {
@@ -87,7 +86,7 @@ b9.Matrix.prototype.refTrans = function() {
 
 /**
  * Sets the all components to this matrix.
- * The number of the arguments must be 0, 1, or 4.
+ * The number of the arguments must be 1 or 4.
  * @param {b9.Matrix|b9.Vector} [mat_or_x_axis] A matrix to be copied or an x-axis.
  * @param {b9.Vector} [y_axis] A y-axis.
  * @param {b9.Vector} [z_axis] A z-axis.
@@ -96,13 +95,15 @@ b9.Matrix.prototype.refTrans = function() {
  */
 b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
     if (arguments.length === 1) {
-        this._x_axis.set(arg1._x_axis);
-        this._y_axis.set(arg1._y_axis);
-        this._trans.set(arg1._trans);
-    } else if (arguments.length === 3) {
-        this._x_axis.set(arg1);
-        this._y_axis.set(arg2);
-        this._trans.set(arg3);
+        this._x_axis.set(mat_or_x_axis._x_axis);
+        this._y_axis.set(mat_or_x_axis._y_axis);
+        this._z_axis.set(mat_or_x_axis._z_axis);
+        this._trans.set(mat_or_x_axis._trans);
+    } else if (arguments.length === 4) {
+        this._x_axis.set(mat_or_x_axis);
+        this._y_axis.set(y_axis);
+        this._z_axis.set(z_axis);
+        this._trans.set(trans);
     }
 
     return this;
@@ -116,6 +117,7 @@ b9.Matrix.prototype.orthonormalize = function() {
     this._x_axis.normalize();
     this._y_axis.set(this._x_axis);
     this._y_axis.rotateInt(90);
+    // TODO
 
     return this;
 };
@@ -158,7 +160,7 @@ b9.Matrix.prototype.rotateZ_float = function(deg) {
 /**
  * Rotates this matrix around its x-axis.
  * This method allows only an integer angle, but is faster than the rotateX_float method.
- * @param {Number} deg A integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector} This matrix.
  */
 b9.Matrix.prototype.rotateX_int = function(deg) {
@@ -168,7 +170,7 @@ b9.Matrix.prototype.rotateX_int = function(deg) {
 /**
  * Rotates this matrix around its y-axis.
  * This method allows only an integer angle, but is faster than the rotateY_float method.
- * @param {Number} deg A integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector} This matrix.
  */
 b9.Matrix.prototype.rotateY_int = function(deg) {
@@ -178,7 +180,7 @@ b9.Matrix.prototype.rotateY_int = function(deg) {
 /**
  * Rotates this matrix around its z-axis.
  * This method allows only an integer angle, but is faster than the rotateZ_float method.
- * @param {Number} deg A integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector} This matrix.
  */
 b9.Matrix.prototype.rotateZ_int = function(deg) {
@@ -203,6 +205,7 @@ b9.Matrix.prototype.rotateZ_int = function(deg) {
 b9.Matrix.prototype.scale = function(scale_x, scale_y, scale_z) {
     this._x_axis.mul(scale_x);
     this._y_axis.mul(scale_y);
+    this._z_axis.mul(scale_z);
 
     return this;
 };
@@ -217,8 +220,9 @@ b9.Matrix.prototype.scale = function(scale_x, scale_y, scale_z) {
 b9.Matrix.prototype.translate = function(offset_x, offset_y, offset_z) {
     b9.Vector._vec1.set(this._x_axis).mul(offset_x);
     b9.Vector._vec2.set(this._y_axis).mul(offset_y);
+    b9.Vector._vec3.set(this._z_axis).mul(offset_z);
 
-    this._trans.add(b9.Vector._vec1).add(b9.Vector._vec2);
+    this._trans.add(b9.Vector._vec1).add(b9.Vector._vec2).add(b9.Vector._vec3);
 
     return this;
 };
@@ -242,7 +246,7 @@ b9.Matrix.prototype.slerp = function(to, ratio) {
 
 /**
  * Interpolates this matrix to a matrix by a ratio, using spherical linear interpolation.
- * However, unlike the slerp method, the translation of the matrix is ignored.
+ * However, unlike the slerp method, the translation of this matrix doesn't change.
  * @param {Number} to A destination matrix.
  * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
  * @return {b9.Matrix} This matrix.
