@@ -23,13 +23,13 @@
 /**
  * @class hoge
  */
-b9.LinkedTree = b9.createClass();
+b9.Tree = b9.createClass();
 
 /**
  * hoge
  * @param {Object} self hoge
  */
-b9.LinkedTree.prototype.initialize = function(self) {
+b9.Tree.prototype.initialize = function(self) {
     this._self = self;
     this._parent = null;
     this._last_child = null;
@@ -40,7 +40,7 @@ b9.LinkedTree.prototype.initialize = function(self) {
 /**
  * hoge
  */
-b9.LinkedTree.prototype.finalize = function() {
+b9.Tree.prototype.finalize = function() {
     this.clear();
 
     if (this._parent) {
@@ -54,39 +54,39 @@ b9.LinkedTree.prototype.finalize = function() {
  * hoge
  * @return {Object} hoge
  */
-b9.LinkedTree.prototype.getSelf = function() {
+b9.Tree.prototype.getSelf = function() {
     return this._self;
 };
 
 /**
  * hoge
- * @return {b9.LinkedTree} hoge
+ * @return {b9.Tree} hoge
  */
-b9.LinkedTree.prototype.getPrevAsList = function() {
+b9.Tree.prototype.getPrevAsList = function() {
     return this._prev;
 };
 
 /**
  * hoge
- * @return {b9.LinkedTree} hoge
+ * @return {b9.Tree} hoge
  */
-b9.LinkedTree.prototype.getNextAsList = function() {
+b9.Tree.prototype.getNextAsList = function() {
     return this._next;
 };
 
 /**
  * hoge
- * @return {b9.LinkedTree} hoge
+ * @return {b9.Tree} hoge
  */
-b9.LinkedTree.prototype.getParent = function() {
+b9.Tree.prototype.getParent = function() {
     return this._parent;
 };
 
 /**
  * hoge
- * @return {b9.LinkedTree} hoge
+ * @return {b9.Tree} hoge
  */
-b9.LinkedTree.prototype.getPrevSibling = function() {
+b9.Tree.prototype.getPrevSibling = function() {
     if (this._parent && this._prev !== this._parent) {
         var prev = this._prev;
 
@@ -102,9 +102,9 @@ b9.LinkedTree.prototype.getPrevSibling = function() {
 
 /**
  * hoge
- * @return {b9.LinkedTree} hoge
+ * @return {b9.Tree} hoge
  */
-b9.LinkedTree.prototype.getNextSibling = function() {
+b9.Tree.prototype.getNextSibling = function() {
     if (this._parent) {
         var next = this.getLastDescendant()._next;
 
@@ -118,25 +118,25 @@ b9.LinkedTree.prototype.getNextSibling = function() {
 
 /**
  * hoge
- * @return {b9.LinkedTree} hoge
+ * @return {b9.Tree} hoge
  */
-b9.LinkedTree.prototype.getFirstChild = function() {
+b9.Tree.prototype.getFirstChild = function() {
     return this._last_child ? this._next : null;
 };
 
 /**
  * hoge
- * @return {b9.LinkedTree} hoge
+ * @return {b9.Tree} hoge
  */
-b9.LinkedTree.prototype.getLastChild = function() {
+b9.Tree.prototype.getLastChild = function() {
     return this._last_child;
 };
 
 /**
  * hoge
- * @return {b9.LinkedTree} hoge
+ * @return {b9.Tree} hoge
  */
-b9.LinkedTree.prototype.getLastDescendant = function() {
+b9.Tree.prototype.getLastDescendant = function() {
     var desc = this;
 
     while (desc._last_child) {
@@ -148,9 +148,9 @@ b9.LinkedTree.prototype.getLastDescendant = function() {
 
 /**
  * hoge
- * @param {b9.LinkedTree} child hoge
+ * @param {b9.Tree} child hoge
  */
-b9.LinkedTree.prototype.addChildFirst = function(child) {
+b9.Tree.prototype.addChildFirst = function(child) {
     if (child._parent) {
         child._parent.removeChild(child);
     }
@@ -174,9 +174,9 @@ b9.LinkedTree.prototype.addChildFirst = function(child) {
 
 /**
  * hoge
- * @param {b9.LinkedTree} child hoge
+ * @param {b9.Tree} child hoge
  */
-b9.LinkedTree.prototype.addChildLast = function(child) {
+b9.Tree.prototype.addChildLast = function(child) {
     if (child._parent) {
         child._parent.removeChild(child);
     }
@@ -199,10 +199,10 @@ b9.LinkedTree.prototype.addChildLast = function(child) {
 
 /**
  * hoge
- * @param {b9.LinkedTree} child hoge
- * @param {b9.LinkedTree} next_child hoge
+ * @param {b9.Tree} child hoge
+ * @param {b9.Tree} next_child hoge
  */
-b9.LinkedTree.prototype.addChildBefore = function(child, next_child) {
+b9.Tree.prototype.addChildBefore = function(child, next_child) {
     if (next_child._parent === this) {
         if (child._parent) {
             child._parent.removeChild(child);
@@ -221,10 +221,10 @@ b9.LinkedTree.prototype.addChildBefore = function(child, next_child) {
 
 /**
  * hoge
- * @param {b9.LinkedTree} child hoge
- * @param {b9.LinkedTree} prev_child hoge
+ * @param {b9.Tree} child hoge
+ * @param {b9.Tree} prev_child hoge
  */
-b9.LinkedTree.prototype.addChildAfter = function(child, prev_child)
+b9.Tree.prototype.addChildAfter = function(child, prev_child)
 {
     if (prev_child._parent === this) {
         if (child._parent) {
@@ -252,9 +252,9 @@ b9.LinkedTree.prototype.addChildAfter = function(child, prev_child)
 
 /**
  * hoge
- * @param {b9.LinkedTree} child hoge
+ * @param {b9.Tree} child hoge
  */
-b9.LinkedTree.prototype.removeChild = function(child) {
+b9.Tree.prototype.removeChild = function(child) {
     if (child._parent === this) {
         var child_desc = child.getLastDescendant();
 
@@ -277,7 +277,7 @@ b9.LinkedTree.prototype.removeChild = function(child) {
 /**
  * hoge
  */
-b9.LinkedTree.prototype.clear = function() {
+b9.Tree.prototype.clear = function() {
     while (this._last_child) {
         this.removeChild(this._last_child);
     }

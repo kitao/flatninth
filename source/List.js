@@ -23,16 +23,16 @@
 /**
  * @class hoge
  */
-b9.LinkedList = b9.createClass();
+b9.List = b9.createClass();
 
 /**
  * hoge
  */
-b9.LinkedList.prototype.initialize = function() {
-    this._start = new b9.LinkedListItem(null);
+b9.List.prototype.initialize = function() {
+    this._start = new b9.ListItem(null);
     this._start._list = this;
 
-    this._end = new b9.LinkedListItem(null);
+    this._end = new b9.ListItem(null);
     this._end._list = this;
 
     this._item_num = 0;
@@ -44,7 +44,7 @@ b9.LinkedList.prototype.initialize = function() {
 /**
  * hoge
  */
-b9.LinkedList.prototype.finalize = function() {
+b9.List.prototype.finalize = function() {
     this.clear();
 };
 
@@ -52,48 +52,48 @@ b9.LinkedList.prototype.finalize = function() {
  * hoge
  * @return {Number} hoge
  */
-b9.LinkedList.prototype.getItemNum = function() {
+b9.List.prototype.getItemNum = function() {
     return this._item_num;
 };
 
 /**
  * hoge
- * @return {b9.LinkedListItem} hoge
+ * @return {b9.ListItem} hoge
  */
-b9.LinkedList.prototype.getFirstItem = function() {
+b9.List.prototype.getFirstItem = function() {
     return (this._item_num > 0) ? this._start._next : null;
 };
 
 /**
  * hoge
- * @return {b9.LinkedListItem} hoge
+ * @return {b9.ListItem} hoge
  */
-b9.LinkedList.prototype.getLastItem = function() {
+b9.List.prototype.getLastItem = function() {
     return (this._item_num > 0) ? this._end._prev : null;
 };
 
 /**
  * hoge
- * @param {b9.LinkedListItem} item hoge
+ * @param {b9.ListItem} item hoge
  */
-b9.LinkedList.prototype.addItemFirst = function(item) {
+b9.List.prototype.addItemFirst = function(item) {
     this.addItemAfter(item, this._start);
 };
 
 /**
  * hoge
- * @param {b9.LinkedListItem} item hoge
+ * @param {b9.ListItem} item hoge
  */
-b9.LinkedList.prototype.addItemLast = function(item) {
+b9.List.prototype.addItemLast = function(item) {
     this.addItemBefore(item, this._end);
 };
 
 /**
  * hoge
- * @param {b9.LinkedListItem} item hoge
- * @param {b9.LinkedListItem} next_item hoge
+ * @param {b9.ListItem} item hoge
+ * @param {b9.ListItem} next_item hoge
  */
-b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
+b9.List.prototype.addItemBefore = function(item, next_item) {
     if (next_item._list === this) {
         if (item._list) {
             item._list.removeItem(item);
@@ -112,10 +112,10 @@ b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
 
 /**
  * hoge
- * @param {b9.LinkedListItem} item hoge
- * @param {b9.LinkedListItem} prev_item hoge
+ * @param {b9.ListItem} item hoge
+ * @param {b9.ListItem} prev_item hoge
  */
-b9.LinkedList.prototype.addItemAfter = function(item, prev_item) {
+b9.List.prototype.addItemAfter = function(item, prev_item) {
     if (prev_item._list === this) {
         if (item._list) {
             item._list.removeItem(item);
@@ -134,9 +134,9 @@ b9.LinkedList.prototype.addItemAfter = function(item, prev_item) {
 
 /**
  * hoge
- * @param {b9.LinkedListItem} item hoge
+ * @param {b9.ListItem} item hoge
  */
-b9.LinkedList.prototype.removeItem = function(item) {
+b9.List.prototype.removeItem = function(item) {
     if (item._list === this) {
         item._prev._next = item._next;
         item._next._prev = item._prev;
@@ -152,7 +152,7 @@ b9.LinkedList.prototype.removeItem = function(item) {
 /**
  * hoge
  */
-b9.LinkedList.prototype.clear = function() {
+b9.List.prototype.clear = function() {
     while (this._item_num > 0) {
         this.removeItem(this._start._next);
     }

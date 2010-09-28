@@ -23,13 +23,13 @@
 /**
  * @class hoge
  */
-b9.LinkedListItem = b9.createClass();
+b9.ListItem = b9.createClass();
 
 /**
  * hoge
  * @param {Object} self hoge
  */
-b9.LinkedListItem.prototype.initialize = function(self) {
+b9.ListItem.prototype.initialize = function(self) {
     this._self = self;
     this._list = null;
     this._prev = null;
@@ -39,7 +39,7 @@ b9.LinkedListItem.prototype.initialize = function(self) {
 /**
  * hoge
  */
-b9.LinkedListItem.prototype.finalize = function() {
+b9.ListItem.prototype.finalize = function() {
     if (this._list) {
         this._list.removeItem(this);
     }
@@ -51,30 +51,30 @@ b9.LinkedListItem.prototype.finalize = function() {
  * hoge
  * @return {Object} hoge
  */
-b9.LinkedListItem.prototype.getSelf = function() {
+b9.ListItem.prototype.getSelf = function() {
     return this._self;
 };
 
 /**
  * hoge
- * @return {b9.LinkedList} hoge
+ * @return {b9.List} hoge
  */
-b9.LinkedListItem.prototype.getList = function() {
+b9.ListItem.prototype.getList = function() {
     return this._list;
 };
 
 /**
  * hoge
- * @return {b9.LinkedListItem} hoge
+ * @return {b9.ListItem} hoge
  */
-b9.LinkedListItem.prototype.getPrev = function() {
+b9.ListItem.prototype.getPrev = function() {
     return (this._list && this._prev === this._list._start) ? null : this._prev;
 };
 
 /**
  * hoge
- * @return {b9.LinkedListItem} hoge
+ * @return {b9.ListItem} hoge
  */
-b9.LinkedListItem.prototype.getNext = function() {
+b9.ListItem.prototype.getNext = function() {
     return (this._list && this._next === this._list._end) ? null : this._next;
 };
