@@ -70,8 +70,7 @@ b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
  * @param {Number} [z] A z-coordinate.
  * @return {b9.Vector} This vector.
  */
-b9.Vector.prototype.set = function(vec_or_x, y, z)
-{
+b9.Vector.prototype.set = function(vec_or_x, y, z) {
     if (arguments.length === 3) {
         this.x = vec_or_x;
         this.y = y;

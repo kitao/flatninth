@@ -110,6 +110,31 @@ b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
 };
 
 /**
+ *
+ */
+b9.Matrix.prototype.fromQuaternion = function(quat) {
+    // TODO
+    r32 x2 = x + x;
+    r32 y2 = y + y;
+    r32 z2 = z + z;
+    r32 wx2 = w * x2;
+    r32 wy2 = w * y2;
+    r32 wz2 = w * z2;
+    r32 xx2 = x * x2;
+    r32 xy2 = x * y2;
+    r32 xz2 = x * z2;
+    r32 yy2 = y * y2;
+    r32 yz2 = y * z2;
+    r32 zz2 = z * z2;
+
+    return ckMat( //
+        ckVec(1.0f - (yy2 + zz2), xy2 + wz2, xz2 - wy2), //
+        ckVec(xy2 - wz2, 1.0f - (xx2 + zz2), yz2 + wx2), //
+        ckVec(xz2 + wy2, yz2 - wx2, 1.0f - (xx2 + yy2)), //
+        trans);
+};
+
+/**
  * Orthonormalizes this matrix.
  * @return {b9.Matrix} This matrix.
  */
