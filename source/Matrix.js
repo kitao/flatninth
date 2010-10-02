@@ -110,28 +110,31 @@ b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
 };
 
 /**
- *
+ * Builds the matrix from a quaternion.
+ * @param {b9.Quaternion} quat A quaternion.
+ * @param {b9.Vector} The translation of the built matrix.
+ * @return This matrix.
  */
-b9.Matrix.prototype.fromQuaternion = function(quat) {
-    // TODO
-    r32 x2 = x + x;
-    r32 y2 = y + y;
-    r32 z2 = z + z;
-    r32 wx2 = w * x2;
-    r32 wy2 = w * y2;
-    r32 wz2 = w * z2;
-    r32 xx2 = x * x2;
-    r32 xy2 = x * y2;
-    r32 xz2 = x * z2;
-    r32 yy2 = y * y2;
-    r32 yz2 = y * z2;
-    r32 zz2 = z * z2;
+b9.Matrix.prototype.fromQuaternion = function(quat, trans) {
+    var x2 = quat.x + quat.x;
+    var y2 = quat.y + quat.y;
+    var z2 = quat.z + quat.z;
+    var wx2 = quat.w * x2;
+    var wy2 = quat.w * y2;
+    var wz2 = quat.w * z2;
+    var xx2 = quat.x * x2;
+    var xy2 = quat.x * y2;
+    var xz2 = quat.x * z2;
+    var yy2 = quat.y * y2;
+    var yz2 = quat.y * z2;
+    var zz2 = quat.z * z2;
 
-    return ckMat( //
-        ckVec(1.0f - (yy2 + zz2), xy2 + wz2, xz2 - wy2), //
-        ckVec(xy2 - wz2, 1.0f - (xx2 + zz2), yz2 + wx2), //
-        ckVec(xz2 + wy2, yz2 - wx2, 1.0f - (xx2 + yy2)), //
-        trans);
+    this._x_axis.set(1.0 - (yy2 + zz2), xy2 + wz2, xz2 - wy2);
+    this._y_axis.set(xy2 - wz2, 1.0 - (xx2 + zz2), yz2 + wx2);
+    this._z_axis.set(xz2 + wy2, yz2 - wx2, 1.0 - (xx2 + yy2));
+    this._trans.set(trans);
+
+    return this;
 };
 
 /**
