@@ -39,16 +39,16 @@ b9.Matrix.prototype.initialize = function(mat_or_x_axis, y_axis, z_axis, trans) 
     this._z_axis = new b9.Vector();
     this._trans = new b9.Vector();
 
-    if (arguments.length === 4) {
-        this._x_axis.set(mat_or_x_axis);
-        this._y_axis.set(y_axis);
-        this._z_axis.set(z_axis);
-        this._trans.set(trans);
-    } else if (arguments.length === 1) {
+    if (arguments.length === 1) {
         this._x_axis.set(mat_or_x_axis._x_axis);
         this._y_axis.set(mat_or_x_axis._y_axis);
         this._z_axis.set(mat_or_x_axis._y_axis);
         this._trans.set(mat_or_x_axis._trans);
+    } else if (arguments.length === 4) {
+        this._x_axis.set(mat_or_x_axis);
+        this._y_axis.set(y_axis);
+        this._z_axis.set(z_axis);
+        this._trans.set(trans);
     }
 };
 
@@ -114,12 +114,11 @@ b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
  * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.orthonormalize = function() {
-    this._x_axis.normalize();
-    this._y_axis.set(this._x_axis);
-    this._y_axis.rotateInt(90);
-    // TODO
+    b9.Matrix._vec3.set(this._z_axis).normalize;
+    b9.Matrix._vec1.set(this._y_axis).cross(this._z_axis).normalize();
+    b9.Matrix._vec2.set(b9.Matrix._vec3).cross(b9.Vector._x_axis);
 
-    return this;
+    return this.set(b9.Matrix._vec1, b9.Matrix._vec2, b9.Matrix._vec3, this.trans);
 };
 
 /**
@@ -128,7 +127,16 @@ b9.Matrix.prototype.orthonormalize = function() {
  * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.rotateX_float = function(deg) {
-    // TODO
+    var sin = b9.Math.sin_float(deg);
+    var cos = b9.Math.cos_float(deg);
+
+    b9.Matrix._mat1.set(
+            b9.Vector.X_UNIT,
+            b9.Matrix._vec1.set(0.0, cos, sin),
+            b9.Matrix._vec2.set(0.0, -sin, cos),
+            b9.Vector.ZERO).toGlobal(this);
+
+    return this.set(b9.Matrix._mat1);
 };
 
 /**
@@ -137,7 +145,16 @@ b9.Matrix.prototype.rotateX_float = function(deg) {
  * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.rotateY_float = function(deg) {
-    // TODO
+    var sin = b9.Math.sin_float(deg);
+    var cos = b9.Math.cos_float(deg);
+
+    b9.Matrix._mat1.set(
+            b9.Matrix._vec1.set(cos, 0.0, -sin),
+            b9.Vector.Y_UNIT,
+            b9.Matrix._vec2.set(sin, 0.0, cos),
+            b9.Vector.ZERO).toGlobal(this);
+
+    return this.set(b9.Matrix._mat1);
 };
 
 /**
@@ -149,12 +166,13 @@ b9.Matrix.prototype.rotateZ_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    // TODO
-    b9.Matrix._mat1._x_axis.set(cos, sin);
-    b9.Matrix._mat1._y_axis.set(-sin, cos);
-    b9.Matrix._mat1._trans.set(b9.Vector.ZERO);
+    b9.Matrix._mat1.set(
+            b9.Matrix._vec1.set(cos, sin, 0.0),
+            b9.Matrix._vec2.set(-sin, cos, 0.0),
+            b9.Vector.Z_UNIT,
+            b9.Vector.ZERO).toGlobal(this);
 
-    return this.set(b9.Matrix._mat1.toGlobal(this));
+    return this.set(b9.Matrix._mat1);
 };
 
 /**
@@ -164,7 +182,16 @@ b9.Matrix.prototype.rotateZ_float = function(deg) {
  * @return {b9.Vector} This matrix.
  */
 b9.Matrix.prototype.rotateX_int = function(deg) {
-    // TODO
+    var sin = b9.Math.sin_int(deg);
+    var cos = b9.Math.cos_int(deg);
+
+    b9.Matrix._mat1.set(
+            b9.Vector.X_UNIT,
+            b9.Matrix._vec1.set(0.0, cos, sin),
+            b9.Matrix._vec2.set(0.0, -sin, cos),
+            b9.Vector.ZERO).toGlobal(this);
+
+    return this.set(b9.Matrix._mat1);
 };
 
 /**
@@ -174,7 +201,16 @@ b9.Matrix.prototype.rotateX_int = function(deg) {
  * @return {b9.Vector} This matrix.
  */
 b9.Matrix.prototype.rotateY_int = function(deg) {
-    // TODO
+    var sin = b9.Math.sin_int(deg);
+    var cos = b9.Math.cos_int(deg);
+
+    b9.Matrix._mat1.set(
+            b9.Matrix._vec1.set(cos, 0.0, -sin),
+            b9.Vector.Y_UNIT,
+            b9.Matrix._vec2.set(sin, 0.0, cos),
+            b9.Vector.ZERO).toGlobal(this);
+
+    return this.set(b9.Matrix._mat1);
 };
 
 /**
@@ -187,12 +223,13 @@ b9.Matrix.prototype.rotateZ_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    // TODO
-    b9.Matrix._mat1._x_axis.set(cos, sin);
-    b9.Matrix._mat1._y_axis.set(-sin, cos);
-    b9.Matrix._mat1._trans.set(b9.Vector.ZERO);
+    b9.Matrix._mat1.set(
+            b9.Matrix._vec1.set(cos, sin, 0.0),
+            b9.Matrix._vec2.set(-sin, cos, 0.0),
+            b9.Vector.Z_UNIT,
+            b9.Vector.ZERO).toGlobal(this);
 
-    return this.set(b9.Matrix._mat1.toGlobal(this));
+    return this.set(b9.Matrix._mat1);
 };
 
 /**
@@ -218,13 +255,11 @@ b9.Matrix.prototype.scale = function(scale_x, scale_y, scale_z) {
  * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.translate = function(offset_x, offset_y, offset_z) {
-    b9.Vector._vec1.set(this._x_axis).mul(offset_x);
-    b9.Vector._vec2.set(this._y_axis).mul(offset_y);
-    b9.Vector._vec3.set(this._z_axis).mul(offset_z);
+    b9.Matrix._vec1.set(this._x_axis).mul(offset_x);
+    b9.Matrix._vec2.set(this._y_axis).mul(offset_y);
+    b9.Matrix._vec3.set(this._z_axis).mul(offset_z);
 
-    this._trans.add(b9.Vector._vec1).add(b9.Vector._vec2).add(b9.Vector._vec3);
-
-    return this;
+    return this._trans.add(b9.Matrix._vec1).add(b9.Matrix._vec2).add(b9.Matrix._vec3);
 };
 
 /**
@@ -237,7 +272,7 @@ b9.Matrix.prototype.slerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        this.interpNoTrans(to, ratio);
+        this.slerp_noTrans(to, ratio);
         this._trans.interp(to._trans, ratio);
     }
 
@@ -255,13 +290,10 @@ b9.Matrix.prototype.slerp_noTrans = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        var ang = b9.Math.acos(this._x_axis.dot(to._x_axis));
+        b9.Matrix._quat1.fromMatrix(this);
+        b9.Matrix._quat2.fromMatrix(to);
 
-        if (this._y_axis.dot(to._x_axis) < 0.0) {
-            ang = -ang;
-        }
-
-        this.rotateFloat(ang * ratio);
+        b9.Matrix._mat1.fromQuaternion(b9.Matrix._quat1.slerp(b9.Matrix._quat2, ratio));
     }
 
     return this;
@@ -275,12 +307,29 @@ b9.Matrix.prototype.slerp_noTrans = function(to, ratio) {
 b9.Matrix.prototype.toLocal = function(mat) {
     var rsq_xa = 1.0 / mat._x_axis.sqNorm();
     var rsq_ya = 1.0 / mat._y_axis.sqNorm();
+    var rsq_za = 1.0 / mat._z_axis.sqNorm();
 
-    b9.Vector._vec1.set(this._trans).sub(mat._trans);
+    b9.Matrix._vec1.set(this._trans).sub(mat._trans);
 
-    this._x_axis.set(this._x_axis.dot(mat._x_axis) * rsq_xa, this._x_axis.dot(mat._y_axis) * rsq_ya);
-    this._y_axis.set(this._y_axis.dot(mat._x_axis) * rsq_xa, this._y_axis.dot(mat._y_axis) * rsq_ya);
-    this._trans.set(b9.Vector._vec1.dot(mat._x_axis) * rsq_xa, b9.Vector._vec1.dot(mat._y_axis) * rsq_ya);
+    this._x_axis.set(
+            this._x_axis.dot(mat._x_axis) * rsq_xa,
+            this._x_axis.dot(mat._y_axis) * rsq_ya,
+            this._x_axis.dot(mat._z_axis) * rsq_za);
+
+    this._y_axis.set(
+            this._y_axis.dot(mat._x_axis) * rsq_xa,
+            this._y_axis.dot(mat._y_axis) * rsq_ya,
+            this._y_axis.dot(mat._z_axis) * rsq_za);
+
+    this._z_axis.set(
+            this._z_axis.dot(mat._x_axis) * rsq_xa,
+            this._z_axis.dot(mat._y_axis) * rsq_ya,
+            this._z_axis.dot(mat._z_axis) * rsq_za);
+
+    this._trans.set(
+            b9.Matrix._vec1.dot(mat._x_axis) * rsq_xa,
+            b9.Matrix._vec1.dot(mat._y_axis) * rsq_ya,
+            b9.Matrix._vec1.dot(mat._z_axis) * rsq_za);
 
     return this;
 };
@@ -291,8 +340,9 @@ b9.Matrix.prototype.toLocal = function(mat) {
  * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.toGlobal = function(mat) {
-    this._x_axis.toGlobalNoTrans(mat);
-    this._y_axis.toGlobalNoTrans(mat);
+    this._x_axis.toGlobal_noTrans(mat);
+    this._y_axis.toGlobal_nNoTrans(mat);
+    this._z_axis.toGlobal_nNoTrans(mat);
     this._trans.toGlobal(mat);
 
     return this;
@@ -307,9 +357,23 @@ b9.Matrix.prototype.toGlobal = function(mat) {
 b9.Matrix.prototype.toLocal_noTrans = function(mat) {
     var rsq_xa = 1.0 / mat._x_axis.sqNorm();
     var rsq_ya = 1.0 / mat._y_axis.sqNorm();
+    var rsq_za = 1.0 / mat._z_axis.sqNorm();
 
-    this._x_axis.set(this._x_axis.dot(mat._x_axis) * rsq_xa, this._x_axis.dot(mat._y_axis) * rsq_ya);
-    this._y_axis.set(this._y_axis.dot(mat._x_axis) * rsq_xa, this._y_axis.dot(mat._y_axis) * rsq_ya);
+    this._x_axis.set(
+            this._x_axis.dot(mat._x_axis) * rsq_xa,
+            this._x_axis.dot(mat._y_axis) * rsq_ya,
+            this._x_axis.dot(mat._z_axis) * rsq_za);
+
+    this._y_axis.set(
+            this._y_axis.dot(mat._x_axis) * rsq_xa,
+            this._y_axis.dot(mat._y_axis) * rsq_ya,
+            this._y_axis.dot(mat._z_axis) * rsq_za);
+
+    this._z_axis.set(
+            this._z_axis.dot(mat._x_axis) * rsq_xa,
+            this._z_axis.dot(mat._y_axis) * rsq_ya,
+            this._z_axis.dot(mat._z_axis) * rsq_za);
+
     this._trans.set(b9.Vector.ZERO);
 
     return this;
@@ -322,8 +386,9 @@ b9.Matrix.prototype.toLocal_noTrans = function(mat) {
  * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.toGlobal_noTrans = function(mat) {
-    this._x_axis.toGlobalNoTrans(mat);
-    this._y_axis.toGlobalNoTrans(mat);
+    this._x_axis.toGlobal_noTrans(mat);
+    this._y_axis.toGlobal_noTrans(mat);
+    this._z_axis.toGlobal_noTrans(mat);
     this._trans.set(b9.Vector.ZERO);
 
     return this;
@@ -337,8 +402,9 @@ b9.Matrix.prototype.toGlobal_noTrans = function(mat) {
  * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.lookAt = function(from, to, up) {
-    this._y_axis.set(to).sub(from).normalize();
-    this._x_axis.set(this._x_axis).rotateInt(-90);
+    this._z_axis.set(from).sub(to).normalize();
+    this._x_axis.set(up).cross(this._z_axis).normalize();
+    this._y_axis.set(this._z_axis).cross(this._x_axis);
     this._trans.set(from);
 
     return this;
@@ -350,7 +416,10 @@ b9.Matrix.prototype.lookAt = function(from, to, up) {
  * @return {Boolean} true if the two matrices are equal; false otherwise.
  */
 b9.Matrix.prototype.equals = function(mat) {
-    return (this._x_axis.equals(mat._x_axis) && this._y_axis.equals(mat._y_axis) && this._trans.equals(mat._trans));
+    return (this._x_axis.equals(mat._x_axis) &&
+            this._y_axis.equals(mat._y_axis) &&
+            this._z_axis.equals(mat._z_axis) &&
+            this._trans.equals(mat._trans));
 };
 
 /**
@@ -362,6 +431,8 @@ b9.Matrix.prototype.toString = function() {
     str += this._x_axis.toString();
     str += ", ";
     str += this._y_axis.toString();
+    str += ", ";
+    str += this._z_axis.toString();
     str += ", ";
     str += this._trans.toString();
     str += ")";
@@ -381,6 +452,9 @@ b9.Matrix.ZERO = new b9.Matrix(b9.Vector.ZERO, b9.Vector.ZERO, b9.Vector.ZERO);
  */
 b9.Matrix.UNIT = new b9.Matrix(b9.Vector.X_UNIT, b9.Vector.Y_UNIT, b9.Vector.ZERO);
 
-b9.Vector._vec1 = new b9.Vector();
-b9.Vector._vec2 = new b9.Vector();
+b9.Matrix._vec1 = new b9.Vector();
+b9.Matrix._vec2 = new b9.Vector();
+b9.Matrix._vec3 = new b9.Vector();
 b9.Matrix._mat1 = new b9.Matrix();
+b9.Matrix._quat1 = new b9.Quaternion();
+b9.Matrix._quat2 = new b9.Quaternion();
