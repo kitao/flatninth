@@ -110,7 +110,7 @@ b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
 };
 
 /**
- * Builds the matrix from a quaternion.
+ * Builds the matrix from a quaternion and sets to this matrix.
  * @param {b9.Quaternion} quat A quaternion.
  * @param {b9.Vector} The translation of the built matrix.
  * @return This matrix.
