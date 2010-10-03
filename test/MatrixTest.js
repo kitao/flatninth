@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-function testMatrix2D() {
+function testMatrix() {
     /* initialize */
     /* xAxis */
     /* yAxis */

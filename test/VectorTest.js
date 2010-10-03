@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-function testVector2D() {
+function testVector() {
     /* initialize */
     /* getX */
     /* getY */
