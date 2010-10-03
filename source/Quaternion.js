@@ -97,54 +97,43 @@ b9.Quaternion.prototype.set = function(quat_or_x, y, z, w) {
  * @param {b9.Matrix} mat A matrix.
  * @return This quaternion.
  */
-b9.Quaternion.prototype.fromMatrix = furnished(mat) {
-    r32 trace = mat.x_axis.x + mat.y_axis.y + mat.z_axis.z;
+b9.Quaternion.prototype.fromMatrix = function(mat) {
+    var trace = mat._x_axis.x + mat._y_axis.y + mat._z_axis.z;
+    var root, scale;
+    var i, j, k;
 
-    if (trace > 0.0f)
-    {
-        r32 root = ckMath::sqrt(trace + 1.0f);
-        r32 scale = 0.5f / root;
+    if (trace > 0.0) {
+        root = b9.Math.sqrt(trace + 1.0);
+        scale = 0.5 / root;
 
-        return ckQuat( //
-            (mat.y_axis.z - mat.z_axis.y) * scale, //
-            (mat.z_axis.x - mat.x_axis.z) * scale, //
-            (mat.x_axis.y - mat.y_axis.x) * scale, //
-            root * 0.5f);
-    }
-    else
-    {
-#define MAT(a, b) *(reinterpret_cast<const r32*>(&mat) + a * 3 + b)
-#define QUAT(a) *(reinterpret_cast<r32*>(&quat) + a)
+        return this.set(
+                (mat._y_axis.z - mat._z_axis.y) * scale,
+                (mat._z_axis.x - mat._x_axis.z) * scale,
+                (mat._x_axis.y - mat._y_axis.x) * scale,
+                root * 0.5);
+    } else {
+        i = 0;
 
-        s32 i = 0;
-
-        if (MAT(1, 1) > MAT(i, i))
-        {
+        if (this._MAT(1, 1) > this._MAT(i, i)) {
             i = 1;
         }
 
-        if (MAT(2, 2) > MAT(i, i))
-        {
+        if (this._MAT(2, 2) > this._MAT(i, i)) {
             i = 2;
         }
 
-        s32 j = (i + 1) % 3;
-        s32 k = (i + 2) % 3;
+        j = (i + 1) % 3;
+        k = (i + 2) % 3;
 
-        r32 root = ckMath::sqrt(MAT(i, i) - (MAT(j, j) + MAT(k, k)) + 1.0f);
-        r32 scale = (root != 0.0f) ? 0.5f / root : root;
+        root = b9.Math.sqrt(this._MAT(i, i) - (this._MAT(j, j) + this._MAT(k, k)) + 1.0f);
+        scale = (root !== 0.0) ? 0.5 / root : root;
 
-        ckQuat quat;
+        this._QUAT(i, root * 0.5);
+        this._QUAT(j, this._MAT(i, j) + this._MAT(j, i)) * scale);
+        this._QUAT(k, this._MAT(k, i) + this._MAT(i, k)) * scale);
+        this._QUAT(3, this._MAT(j, k) - this._MAT(k, j)) * scale);
 
-        QUAT(i) = root * 0.5f;
-        QUAT(j) = (MAT(i, j) + MAT(j, i)) * scale;
-        QUAT(k) = (MAT(k, i) + MAT(i, k)) * scale;
-        QUAT(3) = (MAT(j, k) - MAT(k, j)) * scale;
-
-        return quat;
-
-#undef MAT
-#undef QUAT
+        return this;
     }
 };
 
@@ -155,49 +144,75 @@ b9.Quaternion.prototype.fromMatrix = furnished(mat) {
  * @return {b9.Matrix} This quaternion.
  */
 b9.Quaternion.prototype.slerp = function(to, ratio) {
-    if (ratio < ckMath::EPSILON)
-    {
-        return *this;
-    }
-    else if (ratio > 1.0f - ckMath::EPSILON)
-    {
-        return to;
-    }
-    else
-    {
-        r32 cos_om = x * to.x + y * to.y + z * to.z + w * to.w;
-        ckQuat quat;
+    var omega;
+    var sin_om, cos_om;
+    var scale0, scale1;
 
-        if (cos_om < 0.0f)
-        {
+    if (ratio > 1.0 - b9.Math.EPSILON) {
+        this.set(to);
+    } else if (ratio >= b9.Math.EPSILON) {
+        cos_om = this.x * to.x + this.y * to.y + this.z * to.z + this.w * to.w;
+
+        if (cos_om < 0.0) {
             cos_om = -cos_om;
 
-            quat.x = -to.x;
-            quat.y = -to.y;
-            quat.z = -to.z;
-            quat.w = -to.w;
-        }
-        else
-        {
-            quat = to;
+            b9.Quaternion._quat1.x = -to.x;
+            b9.Quaternion._quat1.y = -to.y;
+            b9.Quaternion._quat1.z = -to.z;
+            b9.Quaternion._quat1.w = -to.w;
+        } else {
+            b9.Quaternion._quat1.set(to);
         }
 
-        if (cos_om >= 1.0f)
-        {
-            return to;
-        }
-        else
-        {
-            r32 omega = ckMath::acos(cos_om > 1.0f ? 1.0f : cos_om);
-            r32 sin_om = ckMath::sin_r32(omega);
-            r32 scale0 = ckMath::sin_r32(omega * (1.0f - ratio)) / sin_om;
-            r32 scale1 = ckMath::sin_r32(omega * ratio) / sin_om;
+        if (cos_om >= 1.0) {
+            this.set(to);
+        } else {
+            omega = ckMath::acos(cos_om > 1.0 ? 1.0 : cos_om);
+            sin_om = b9.Math.sin_float(omega);
+            scale0 = b9.Math.sin_float(omega * (1.0 - ratio)) / sin_om;
+            scale1 = b9.Math.sin_float(omega * ratio) / sin_om;
 
-            return ckQuat( //
-                x * scale0 + quat.x * scale1, //
-                y * scale0 + quat.y * scale1, //
-                z * scale0 + quat.z * scale1, //
-                w * scale0 + quat.w * scale1);
+            this.set(
+                    this.x * scale0 + b9.Quaternion._quat1.x * scale1,
+                    this.y * scale0 + b9.Quaternion._quat1.y * scale1,
+                    this.z * scale0 + b9.Quaternion._quat1.z * scale1,
+                    this.w * scale0 + b9.Quaternion._quat1.w * scale1);
         }
     }
+
+    return this;
 };
+
+b9.Quaternion.prototype._MAT = function(mat, a, b) {
+    var vec;
+
+    if (a === 0) {
+        vec = mat._x_axis;
+    } else if (a === 1) {
+        vec = mat._y_axis;
+    } else {
+        vec = mat._z_axis;
+    }
+
+    if (b === 0) {
+        return vec.x;
+    } else if (b === 1) {
+        return vec.y;
+    } else {
+        return vec.z;
+    }
+};
+
+b9.Quaternion.prototype._QUAT = function(a, v) {
+    if (a === 0) {
+        this.x = v;
+    } else if (a === 1) {
+        this.y = v;
+    } else if (a === 2) {
+        this.z = v;
+    } else {
+        this.w = v;
+    }
+};
+
+b9.Quaternion._quat1 = new b9.Quaternion();
