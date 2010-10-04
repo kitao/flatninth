@@ -109,16 +109,4 @@ function test_b9() {
     assertEquals(2, dtor_count2);
     assertEquals(1, ctor_count3);
     assertEquals(1, dtor_count3);
-
-    /* generateID */
-/*    var id1 = b9.generateID();
-    var id2 = b9.generateID();
-    var id3 = b9.generateID();
-
-    assertNotEquals(0, id1);
-    assertNotEquals(0, id2);
-    assertNotEquals(0, id3);
-    assertNotEquals(id1, id2);
-    assertNotEquals(id2, id3);
-    assertNotEquals(id3, id1);*/
 }
