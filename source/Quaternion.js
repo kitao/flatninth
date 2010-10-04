@@ -125,13 +125,13 @@ b9.Quaternion.prototype.fromMatrix = function(mat) {
         j = (i + 1) % 3;
         k = (i + 2) % 3;
 
-        root = b9.Math.sqrt(this._MAT(i, i) - (this._MAT(j, j) + this._MAT(k, k)) + 1.0f);
+        root = b9.Math.sqrt(this._MAT(i, i) - (this._MAT(j, j) + this._MAT(k, k)) + 1.0);
         scale = (root !== 0.0) ? 0.5 / root : root;
 
         this._QUAT(i, root * 0.5);
-        this._QUAT(j, this._MAT(i, j) + this._MAT(j, i)) * scale);
-        this._QUAT(k, this._MAT(k, i) + this._MAT(i, k)) * scale);
-        this._QUAT(3, this._MAT(j, k) - this._MAT(k, j)) * scale);
+        this._QUAT(j, (this._MAT(i, j) + this._MAT(j, i)) * scale);
+        this._QUAT(k, (this._MAT(k, i) + this._MAT(i, k)) * scale);
+        this._QUAT(3, (this._MAT(j, k) - this._MAT(k, j)) * scale);
 
         return this;
     }
@@ -167,7 +167,7 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
         if (cos_om >= 1.0) {
             this.set(to);
         } else {
-            omega = ckMath::acos(cos_om > 1.0 ? 1.0 : cos_om);
+            omega = b9.Math.acos(cos_om > 1.0 ? 1.0 : cos_om);
             sin_om = b9.Math.sin_float(omega);
             scale0 = b9.Math.sin_float(omega * (1.0 - ratio)) / sin_om;
             scale1 = b9.Math.sin_float(omega * ratio) / sin_om;

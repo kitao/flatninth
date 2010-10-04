@@ -122,7 +122,7 @@ b9.Math.sin_int = function(deg) {
  * @return {Number} The cosine of an angle.
  */
 b9.Math.cos_int = function(deg) {
-    return this.sinInt(deg + 90);
+    return this.sin_int(deg + 90);
 };
 
 /**
@@ -249,10 +249,10 @@ b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 
 b9.Math._sin_table = new Array(180);
 
-function() {
+(function() {
     var i;
 
     for (i = 0; i < 180; i++) {
-        b9.Math._sin_table[i] = b9.Math.sinFloat(i);
+        b9.Math._sin_table[i] = b9.Math.sin_float(i);
     }
-}();
+})();

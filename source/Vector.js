@@ -334,7 +334,7 @@ b9.Vector.prototype.toLocal = function(mat) {
 
     return this.set(
             b9.Vector._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
-            b9.Vector._vec1.dot(mat._y_axis) / mat._y_axis.sqNorm());
+            b9.Vector._vec1.dot(mat._y_axis) / mat._y_axis.sqNorm(),
             b9.Vector._vec1.dot(mat._z_axis) / mat._z_axis.sqNorm());
 };
 
