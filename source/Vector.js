@@ -196,12 +196,15 @@ b9.Vector.prototype.dot = function(vec) {
 };
 
 /**
- * Obtains the outer product of this vector an a vector.
+ * Computes the outer product of this vector and a vector, and sets it to this vector.
  * @param {b9.Vector} vec A vector.
- * @param {b9.Vector} result A vector to be written the outer product of the two vectors.
+ * @return This vector.
  */
-b9.Vector.prototype.cross = function(vec, result) {
-    result.set(this.y * vec.z - this.z * vec.y, this.z * vec.x - this.x * vec.z, this.x * vec.y - this.y * vec.x);
+b9.Vector.prototype.cross = function(vec) {
+    return this.set(
+            this.y * vec.z - this.z * vec.y,
+            this.z * vec.x - this.x * vec.z,
+            this.x * vec.y - this.y * vec.x);
 };
 
 /**
@@ -401,6 +404,8 @@ b9.Vector.prototype.toString = function() {
     str += this.x;
     str += ", ";
     str += this.y;
+    str += ", ";
+    str += this.z;
     str += ")";
 
     return str;
