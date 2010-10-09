@@ -333,12 +333,12 @@ b9.Vector.prototype.interp = function(to, ratio) {
  * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.toLocal = function(mat) {
-    b9.Vector._vec1.set(this).sub(mat._trans);
+    b9.Vector._vec1.set(this).sub(mat.trans);
 
     return this.set(
-            b9.Vector._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
-            b9.Vector._vec1.dot(mat._y_axis) / mat._y_axis.sqNorm(),
-            b9.Vector._vec1.dot(mat._z_axis) / mat._z_axis.sqNorm());
+            b9.Vector._vec1.dot(mat.x_axis) / mat.x_axis.sqNorm(),
+            b9.Vector._vec1.dot(mat.y_axis) / mat.y_axis.sqNorm(),
+            b9.Vector._vec1.dot(mat.z_axis) / mat.z_axis.sqNorm());
 };
 
 /**
@@ -347,11 +347,11 @@ b9.Vector.prototype.toLocal = function(mat) {
  * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.toGlobal = function(mat) {
-    b9.Vector._vec1.set(mat._x_axis).mul(this.x);
-    b9.Vector._vec2.set(mat._y_axis).mul(this.y);
-    b9.Vector._vec3.set(mat._z_axis).mul(this.z);
+    b9.Vector._vec1.set(mat.x_axis).mul(this.x);
+    b9.Vector._vec2.set(mat.y_axis).mul(this.y);
+    b9.Vector._vec3.set(mat.z_axis).mul(this.z);
 
-    return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(b9.Vector._vec3).add(mat._trans);
+    return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(b9.Vector._vec3).add(mat.trans);
 };
 
 /**
@@ -362,9 +362,9 @@ b9.Vector.prototype.toGlobal = function(mat) {
  */
 b9.Vector.prototype.toLocal_noTrans = function(mat) {
     b9.Vector._vec1.set(
-            this.dot(mat._x_axis) / mat._x_axis.sqNorm(),
-            this.dot(mat._y_axis) / mat._y_axis.sqNorm(),
-            this.dot(mat._z_axis) / mat._z_axis.sqNorm());
+            this.dot(mat.x_axis) / mat.x_axis.sqNorm(),
+            this.dot(mat.y_axis) / mat.y_axis.sqNorm(),
+            this.dot(mat.z_axis) / mat.z_axis.sqNorm());
 
 
     return this.set(b9.Vector._vec1);
@@ -377,9 +377,9 @@ b9.Vector.prototype.toLocal_noTrans = function(mat) {
  * @return {b9.Vector} This vector.
  */
 b9.Vector.prototype.toGlobal_noTrans = function(mat) {
-    b9.Vector._vec1.set(mat._x_axis).mul(this.x);
-    b9.Vector._vec2.set(mat._y_axis).mul(this.y);
-    b9.Vector._vec3.set(mat._z_axis).mul(this.z);
+    b9.Vector._vec1.set(mat.x_axis).mul(this.x);
+    b9.Vector._vec2.set(mat.y_axis).mul(this.y);
+    b9.Vector._vec3.set(mat.z_axis).mul(this.z);
 
     return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(b9.Vector._vec3);
 };
