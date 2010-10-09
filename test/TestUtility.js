@@ -32,14 +32,19 @@ function assertEquals_Vector(expected, actual) {
     }
 }
 
-/*function assertEquals_Matrix(expected, actual) {
-    if (!expected.isEqual(actual)) {
+function assertEquals_Matrix(expected, actual) {
+    if (!expected.equals(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
-}*/
+}
 
-/*function assertEquals_Color(expected, actual) {
-    if (!expected.isEqual(actual)) {
+function assertEquals_Quaternion(expected, actual) {
+    // TODO
+}
+
+function assertEquals_Color(expected, actual) {
+    // TODO
+/*    if (!expected.equals(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
-    }
-}*/
+    }*/
+}

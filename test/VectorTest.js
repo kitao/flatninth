@@ -125,24 +125,40 @@ function testVector() {
     assertEquals_Vector(vec2, vec1.interp(vec2, 2.0));
 
     /* toLocal */
-//    var mat1 = new b9.Matrix2D(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(2.0, 3.0));
-//    vec1.set(1.0, 5.0);
-//    assertEquals_Vector(new b9.Vector(2.0, 1.0), vec1.toLocal(mat1));
+    var mat1 = new b9.Matrix(
+            new b9.Vector(0.0, 0.0, -1.0),
+            new b9.Vector(-1.0, 0.0, 0.0),
+            new b9.Vector(0.0, 1.0, 0.0),
+            new b9.Vector(100.0, 200.0, 300.0));
+    vec1.set(1.0, 2.0, 3.0);
+    assertEquals_Vector(new b9.Vector(297.0, 99.0, -198.0), vec1.toLocal(mat1));
 
     /* toGlobal */
-//    mat1.set(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(2.0, 3.0));
-//    vec1.set(2.0, 1.0);
-//    assertEquals_Vector(new b9.Vector(1.0, 5.0), vec1.toGlobal(mat1));
+    var mat1 = new b9.Matrix(
+            new b9.Vector(0.0, 0.0, -1.0),
+            new b9.Vector(-1.0, 0.0, 0.0),
+            new b9.Vector(0.0, 1.0, 0.0),
+            new b9.Vector(100.0, 200.0, 300.0));
+    vec1.set(297.0, 99.0, -198.0);
+    assertEquals_Vector(new b9.Vector(1.0, 2.0, 3.0), vec1.toGlobal(mat1));
 
     /* toLocal_noTrans */
-//    mat1 = new b9.Matrix2D(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(2.0, 3.0));
-//    vec1.set(1.0, 5.0);
-//    assertEquals_Vector(new b9.Vector(5.0, -1.0), vec1.toLocalNoTrans(mat1));
+    var mat1 = new b9.Matrix(
+            new b9.Vector(0.0, 0.0, -1.0),
+            new b9.Vector(-1.0, 0.0, 0.0),
+            new b9.Vector(0.0, 1.0, 0.0),
+            new b9.Vector(100.0, 200.0, 300.0));
+    vec1.set(1.0, 2.0, 3.0);
+    assertEquals_Vector(new b9.Vector(-3.0, -1.0, 2.0), vec1.toLocal_noTrans(mat1));
 
     /* toGlobal_noTrans */
-//    mat1.set(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(2.0, 3.0));
-//    vec1.set(2.0, 1.0);
-//    assertEquals_Vector(new b9.Vector(-1.0, 2.0), vec1.toGlobalNoTrans(mat1));
+    var mat1 = new b9.Matrix(
+            new b9.Vector(0.0, 0.0, -1.0),
+            new b9.Vector(-1.0, 0.0, 0.0),
+            new b9.Vector(0.0, 1.0, 0.0),
+            new b9.Vector(100.0, 200.0, 300.0));
+    vec1.set(-3.0, -1.0, 2.0);
+    assertEquals_Vector(new b9.Vector(1.0, 2.0, 3.0), vec1.toGlobal_noTrans(mat1));
 
     /* equals */
     vec1.set(1.0, 2.0, 3.0);
