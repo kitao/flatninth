@@ -274,7 +274,9 @@ b9.Matrix.prototype.translate = function(offset_x, offset_y, offset_z) {
     b9.Matrix._vec2.set(this.y_axis).mul(offset_y);
     b9.Matrix._vec3.set(this.z_axis).mul(offset_z);
 
-    return this.trans.add(b9.Matrix._vec1).add(b9.Matrix._vec2).add(b9.Matrix._vec3);
+    this.trans.add(b9.Matrix._vec1).add(b9.Matrix._vec2).add(b9.Matrix._vec3);
+
+    return this;
 };
 
 /**
