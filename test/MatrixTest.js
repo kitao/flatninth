@@ -147,15 +147,32 @@ function testMatrix() {
             mat1.rotateZ_int(90.0));
 
     /* scale */
-//    mat1.set(new b9.Vector(0.5, 0.0), new b9.Vector(0.0, -0.25), new b9.Vector(1.0, 0.0));
-//    assertEquals_Matrix(new b9.Matrix(b9.Vector.X_UNIT, b9.Vector.Y_UNIT, b9.Vector.X_UNIT),
-//            mat1.scale(2.0, -4.0));
+    mat1.set(
+            new b9.Vector(0.0, 0.0, -1.0),
+            new b9.Vector(-1.0, 0.0, 0.0),
+            new b9.Vector(0.0, 1.0, 0.0),
+            new b9.Vector(100.0, 200.0, 300.0));
+    assertEquals_Matrix(
+            new b9.Matrix(
+                new b9.Vector(0.0, 0.0, -2.0),
+                new b9.Vector(-3.0, 0.0, 0.0),
+                new b9.Vector(0.0, -1.0, 0.0),
+                new b9.Vector(100.0, 200.0, 300.0)),
+            mat1.scale(2.0, 3.0, -1.0));
 
     /* translate */
-//    mat1.set(b9.Matrix.UNIT).rotateInt(90);
-//    assertEquals_Matrix(
-//            new b9.Matrix(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(-2.0, 1.0)),
-//            mat1.translate(1.0, 2.0));
+    mat1.set(
+            new b9.Vector(0.0, 0.0, -1.0),
+            new b9.Vector(-1.0, 0.0, 0.0),
+            new b9.Vector(0.0, 1.0, 0.0),
+            new b9.Vector(100.0, 200.0, 300.0));
+    assertEquals_Matrix(
+            new b9.Matrix(
+                new b9.Vector(0.0, 0.0, -1.0),
+                new b9.Vector(-1.0, 0.0, 0.0),
+                new b9.Vector(0.0, 1.0, 0.0),
+                new b9.Vector(120.0, 230.0, 290.0)),
+            mat1.translate(10.0, -20.0, 30.0));
 
     /* slerp */
 //    mat1.set(b9.Matrix.UNIT);
@@ -194,32 +211,73 @@ function testMatrix() {
 //    assertEquals_Matrix(mat3, mat1.interpNoTrans(mat2, 0.5));
 
     /* toLocal */
-//    mat1.set(b9.Matrix.UNIT);
-//    mat2.set(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(-1.0, -2.0));
-//    assertEquals_Matrix(
-//            new b9.Matrix(new b9.Vector(0.0, -1.0), new b9.Vector(1.0, 0.0), new b9.Vector(2.0, -1.0)),
-//            mat1.toLocal(mat2));
+    mat1.set(b9.Vector.X_UNIT, b9.Vector.Y_UNIT, b9.Vector.Z_UNIT, new b9.Vector(3.0, 4.0, 5.0));
+    mat2.set(
+            new b9.Vector(0.0, 0.0, 0.5),
+            new b9.Vector(2.0, 0.0, 0.0),
+            new b9.Vector(0.0, -0.5, 0.0),
+            new b9.Vector(1.0, 2.0, 3.0));
+    assertEquals_Matrix(
+            new b9.Matrix(
+                new b9.Vector(0.0, 0.5, 0.0),
+                new b9.Vector(0.0, 0.0, -2.0),
+                new b9.Vector(2.0, 0.0, 0.0),
+                new b9.Vector(4.0, 1.0, -4.0)),
+            mat1.toLocal(mat2));
 
     /* toGlobal */
-//    mat1.set(new b9.Vector(0.0, -1.0), new b9.Vector(1.0, 0.0), new b9.Vector(2.0, -1.0));
-//    mat2.set(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(-1.0, -2.0));
-//    assertEquals_Matrix(b9.Matrix.UNIT, mat1.toGlobal(mat2));
+    mat1.set(
+            new b9.Vector(0.0, 0.5, 0.0),
+            new b9.Vector(0.0, 0.0, -2.0),
+            new b9.Vector(2.0, 0.0, 0.0),
+            new b9.Vector(4.0, 1.0, -4.0));
+    mat2.set(
+            new b9.Vector(0.0, 0.0, 0.5),
+            new b9.Vector(2.0, 0.0, 0.0),
+            new b9.Vector(0.0, -0.5, 0.0),
+            new b9.Vector(1.0, 2.0, 3.0));
+    assertEquals_Matrix(
+            new b9.Matrix( b9.Vector.X_UNIT, b9.Vector.Y_UNIT, b9.Vector.Z_UNIT, new b9.Vector(3.0, 4.0, 5.0)),
+            mat1.toGlobal(mat2));
 
     /* toLocal_noTrans */
-//    mat1.set(b9.Matrix.UNIT);
-//    mat2.set(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(-1.0, -2.0));
-//    assertEquals_Matrix(new b9.Matrix(new b9.Vector(0.0, -1.0), new b9.Vector(1.0, 0.0), b9.Vector.ZERO),
-//            mat1.toLocalNoTrans(mat2));
+    mat1.set(b9.Vector.X_UNIT, b9.Vector.Y_UNIT, b9.Vector.Z_UNIT, new b9.Vector(3.0, 4.0, 5.0));
+    mat2.set(
+            new b9.Vector(0.0, 0.0, 0.5),
+            new b9.Vector(2.0, 0.0, 0.0),
+            new b9.Vector(0.0, -0.5, 0.0),
+            new b9.Vector(1.0, 2.0, 3.0));
+    assertEquals_Matrix(
+            new b9.Matrix(
+                new b9.Vector(0.0, 0.5, 0.0),
+                new b9.Vector(0.0, 0.0, -2.0),
+                new b9.Vector(2.0, 0.0, 0.0),
+                b9.Vector.ZERO),
+            mat1.toLocal_noTrans(mat2));
 
     /* toGlobal_noTrans */
-//    mat1.set(new b9.Vector(0.0, -1.0), new b9.Vector(1.0, 0.0), new b9.Vector(2.0, -1.0));
-//    mat2.set(new b9.Vector(0.0, 1.0), new b9.Vector(-1.0, 0.0), new b9.Vector(-1.0, -2.0));
-//    assertEquals_Matrix(b9.Matrix.UNIT, mat1.toGlobalNoTrans(mat2));
+    mat1.set(
+            new b9.Vector(0.0, 0.5, 0.0),
+            new b9.Vector(0.0, 0.0, -2.0),
+            new b9.Vector(2.0, 0.0, 0.0),
+            new b9.Vector(0.0, 0.0, 0.0));
+    mat2.set(
+            new b9.Vector(0.0, 0.0, 0.5),
+            new b9.Vector(2.0, 0.0, 0.0),
+            new b9.Vector(0.0, -0.5, 0.0),
+            new b9.Vector(1.0, 2.0, 3.0));
+    assertEquals_Matrix(
+            new b9.Matrix( b9.Vector.X_UNIT, b9.Vector.Y_UNIT, b9.Vector.Z_UNIT, b9.Vector.ZERO),
+            mat1.toGlobal_noTrans(mat2));
 
     /* lookAt */
-//    assertEquals_Matrix(
-//            new b9.Matrix(new b9.Vector(0.0, -1.0), new b9.Vector(1.0, 0.0), new b9.Vector(1.0, 2.0)),
-//            mat1.lookAt(new b9.Vector(1.0, 2.0), new b9.Vector(3.0, 2.0)));
+    assertEquals_Matrix(
+            new b9.Matrix(
+                new b9.Vector(0.0, 1.0, 0.0),
+                new b9.Vector(0.0, 0.0, 1.0),
+                new b9.Vector(1.0, 0.0, 0.0),
+                new b9.Vector(5.0, 2.0, -3.0)),
+            mat1.lookAt(new b9.Vector(5.0, 2.0, -3.0), new b9.Vector(-5.0, 2.0, -3.0), new b9.Vector(1.0, 0.0, 10.0)));
 
     /* equals */
     mat1.set(b9.Matrix.UNIT);

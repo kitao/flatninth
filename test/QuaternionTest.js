@@ -21,5 +21,11 @@
  */
 
 function testQuaternion() {
-    // TODO
+    /* initialize */
+
+    /* set */
+
+    /* fromMatrix */
+
+    /* slerp */
 }
