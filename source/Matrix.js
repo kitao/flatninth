@@ -99,10 +99,9 @@ b9.Matrix.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
 /**
  * Builds the matrix from a quaternion and sets to this matrix.
  * @param {b9.Quaternion} quat A quaternion.
- * @param {b9.Vector} The translation of the built matrix.
  * @return This matrix.
  */
-b9.Matrix.prototype.fromQuaternion = function(quat, trans) {
+b9.Matrix.prototype.fromQuaternion = function(quat) {
     var x2 = quat.x + quat.x;
     var y2 = quat.y + quat.y;
     var z2 = quat.z + quat.z;
@@ -119,7 +118,7 @@ b9.Matrix.prototype.fromQuaternion = function(quat, trans) {
     this.x_axis.set(1.0 - (yy2 + zz2), xy2 + wz2, xz2 - wy2);
     this.y_axis.set(xy2 - wz2, 1.0 - (xx2 + zz2), yz2 + wx2);
     this.z_axis.set(xz2 + wy2, yz2 - wx2, 1.0 - (xx2 + yy2));
-    this.trans.set(trans);
+    this.trans.set(b9.Vector.ZERO);
 
     return this;
 };
@@ -289,8 +288,12 @@ b9.Matrix.prototype.slerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        this.slerp_noTrans(to, ratio);
-        this.trans.interp(to.trans, ratio);
+        b9.Matrix._quat1.fromMatrix(this);
+        b9.Matrix._quat2.fromMatrix(to);
+        b9.Matrix._vec1.set(this.trans).lerp(to.trans, ratio);
+
+        this.fromQuaternion(b9.Matrix._quat1.slerp(b9.Matrix._quat2, ratio));
+        this.trans.set(b9.Matrix._vec1);
     }
 
     return this;
@@ -298,19 +301,24 @@ b9.Matrix.prototype.slerp = function(to, ratio) {
 
 /**
  * Interpolates this matrix to a matrix by a ratio, using spherical linear interpolation.
- * However, unlike the slerp method, the translation of this matrix doesn't change.
+ * However, unlike the slerp method, the translation of this matrix is regarded as the zero vector.
  * @param {Number} to A destination matrix.
  * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
  * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.slerp_noTrans = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
-        this.set(to);
+        this.x_axis.set(to.x_axis);
+        this.y_axis.set(to.y_axis);
+        this.z_axis.set(to.z_axis);
+        this.trans.set(b9.Vector.ZERO);
     } else if (ratio >= b9.Math.EPSILON) {
         b9.Matrix._quat1.fromMatrix(this);
         b9.Matrix._quat2.fromMatrix(to);
 
-        b9.Matrix._mat1.fromQuaternion(b9.Matrix._quat1.slerp(b9.Matrix._quat2, ratio));
+        this.fromQuaternion(b9.Matrix._quat1.slerp(b9.Matrix._quat2, ratio));
+    } else {
+        this.trans.set(b9.Vector.ZERO);
     }
 
     return this;
@@ -467,5 +475,4 @@ b9.Matrix._vec1 = new b9.Vector();
 b9.Matrix._vec2 = new b9.Vector();
 b9.Matrix._vec3 = new b9.Vector();
 b9.Matrix._mat1 = new b9.Matrix();
-b9.Matrix._quat1 = new b9.Quaternion();
-b9.Matrix._quat2 = new b9.Quaternion();
+// _quat1 and _quat2 are defined in Quaternion.js

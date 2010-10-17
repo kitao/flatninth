@@ -316,7 +316,7 @@ b9.Vector.prototype.rotateZ_int = function(deg) {
  * @param {Number} ratio The value which indicates how far to interpolate between the two vectors.
  * @return {b9.Vector} This vector.
  */
-b9.Vector.prototype.interp = function(to, ratio) {
+b9.Vector.prototype.lerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {

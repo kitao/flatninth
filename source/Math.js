@@ -202,7 +202,7 @@ b9.Math.random_float = function(from, to, interval) {
  * @param {Number} ratio The value which indicates how far to interpolate between the two values.
  * @return {Number} The interpolated value between the two values.
  */
-b9.Math.interp = function(from, to, ratio) {
+b9.Math.lerp = function(from, to, ratio) {
     if (ratio < this.EPSILON) {
         return from;
     } else if (ratio > 1.0 - this.EPSILON) {

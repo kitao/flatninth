@@ -98,7 +98,7 @@ b9.Quaternion.prototype.set = function(quat_or_x, y, z, w) {
  * @return This quaternion.
  */
 b9.Quaternion.prototype.fromMatrix = function(mat) {
-    var trace = mat._x_axis.x + mat._y_axis.y + mat._z_axis.z;
+    var trace = mat.x_axis.x + mat.y_axis.y + mat.z_axis.z;
     var root, scale;
     var i, j, k;
 
@@ -107,9 +107,9 @@ b9.Quaternion.prototype.fromMatrix = function(mat) {
         scale = 0.5 / root;
 
         return this.set(
-                (mat._y_axis.z - mat._z_axis.y) * scale,
-                (mat._z_axis.x - mat._x_axis.z) * scale,
-                (mat._x_axis.y - mat._y_axis.x) * scale,
+                (mat.y_axis.z - mat.z_axis.y) * scale,
+                (mat.z_axis.x - mat.x_axis.z) * scale,
+                (mat.x_axis.y - mat.y_axis.x) * scale,
                 root * 0.5);
     } else {
         i = 0;
@@ -183,15 +183,45 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
     return this;
 };
 
+/**
+ * Returns whether this quaternion equals a quaternion.
+ * @param {b9.Quaternion} quat A quaternion.
+ * @return {Boolean} true if the two quaternions are equal; false otherwise.
+ */
+b9.Quaternion.prototype.equals = function(quat) {
+    return (b9.Math.equals_float(this.x, quat.x) &&
+            b9.Math.equals_float(this.y, quat.y) &&
+            b9.Math.equals_float(this.z, quat.z) &&
+            b9.Math.equals_float(this.w, quat.w));
+};
+
+/**
+ * Returns a string representation of this quaternion.
+ * @return {String} A string representation of this quaternion.
+ */
+b9.Quaternion.prototype.toString = function() {
+    var str = "(";
+    str += this.x;
+    str += ", ";
+    str += this.y;
+    str += ", ";
+    str += this.z;
+    str += ", ";
+    str += this.w;
+    str += ")";
+
+    return str;
+};
+
 b9.Quaternion.prototype._MAT = function(mat, a, b) {
     var vec;
 
     if (a === 0) {
-        vec = mat._x_axis;
+        vec = mat.x_axis;
     } else if (a === 1) {
-        vec = mat._y_axis;
+        vec = mat.y_axis;
     } else {
-        vec = mat._z_axis;
+        vec = mat.z_axis;
     }
 
     if (b === 0) {
@@ -216,3 +246,6 @@ b9.Quaternion.prototype._QUAT = function(a, v) {
 };
 
 b9.Quaternion._quat1 = new b9.Quaternion();
+
+b9.Matrix._quat1 = new b9.Quaternion();
+b9.Matrix._quat2 = new b9.Quaternion();
