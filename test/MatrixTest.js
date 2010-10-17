@@ -50,7 +50,7 @@ function testMatrix() {
     assertEquals_Matrix(mat1, mat2.set(mat1));
 
     /* fromQuaternion */
-    // TODO
+    assertEquals_Matrix(b9.Matrix.UNIT, mat1.fromQuaternion(new b9.Quaternion(0.0, 0.0, 0.0, 1.0)));
 
     /* orthonormalize */
     mat1.set(
@@ -175,40 +175,41 @@ function testMatrix() {
             mat1.translate(10.0, -20.0, 30.0));
 
     /* slerp */
-//    mat1.set(b9.Matrix.UNIT);
-//    mat2.set(mat1);
-//    mat2.trans.set(1.0, -1.0);
-//    mat2.rotateInt(40);
-//    mat3.set(mat1);
-//    mat3.trans.set(0.5, -0.5);
-//    mat3.rotateInt(20);
-//    assertEquals_Matrix(mat3, mat1.interp(mat2, 0.5));
-//
-//    mat1.set(b9.Matrix.UNIT);
-//    mat2.set(mat1);
-//    mat2.trans.set(1.0, -1.0);
-//    mat2.rotateInt(-40);
-//    mat3.set(mat1);
-//    mat3.trans.set(0.5, -0.5);
-//    mat3.rotateInt(-20);
-//    assertEquals_Matrix(mat3, mat1.interp(mat2, 0.5));
+    var ratio;
+    for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
+        mat1.set(b9.Matrix.UNIT);
+        mat2.set(b9.Matrix.UNIT).translate(2.0, 4.0, 6.0).rotateX_int(90);
+        mat3.set(b9.Matrix.UNIT).translate(2.0 * ratio, 4.0 * ratio, 6.0 * ratio).rotateX_float(90.0 * ratio);
+        assertEquals_Matrix(mat3, mat1.slerp(mat2, ratio));
+
+        mat1.set(b9.Matrix.UNIT);
+        mat2.set(b9.Matrix.UNIT).translate(2.0, 4.0, 6.0).rotateY_int(90);
+        mat3.set(b9.Matrix.UNIT).translate(2.0 * ratio, 4.0 * ratio, 6.0 * ratio).rotateY_float(90.0 * ratio);
+        assertEquals_Matrix(mat3, mat1.slerp(mat2, ratio));
+
+        mat1.set(b9.Matrix.UNIT);
+        mat2.set(b9.Matrix.UNIT).translate(2.0, 4.0, 6.0).rotateZ_int(90);
+        mat3.set(b9.Matrix.UNIT).translate(2.0 * ratio, 4.0 * ratio, 6.0 * ratio).rotateZ_float(90.0 * ratio);
+        assertEquals_Matrix(mat3, mat1.slerp(mat2, ratio));
+    }
 
     /* slerp_noTrans */
-//    mat1.set(b9.Matrix.UNIT);
-//    mat2.set(mat1);
-//    mat2.trans.set(1.0, 1.0);
-//    mat2.rotateInt(40);
-//    mat3.set(mat1);
-//    mat3.rotateInt(20);
-//    assertEquals_Matrix(mat3, mat1.interpNoTrans(mat2, 0.5));
-//
-//    mat1.set(b9.Matrix.UNIT);
-//    mat2.set(mat1);
-//    mat2.trans.set(1.0, 1.0);
-//    mat2.rotateInt(-40);
-//    mat3.set(mat1);
-//    mat3.rotateInt(-20);
-//    assertEquals_Matrix(mat3, mat1.interpNoTrans(mat2, 0.5));
+    for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
+        mat1.set(b9.Matrix.UNIT).translate(1.0, 2.0, 3.0);
+        mat2.set(b9.Matrix.UNIT).translate(2.0, 4.0, 6.0).rotateX_int(90);
+        mat3.set(b9.Matrix.UNIT).rotateX_float(90.0 * ratio);
+        assertEquals_Matrix(mat3, mat1.slerp_noTrans(mat2, ratio));
+
+        mat1.set(b9.Matrix.UNIT).translate(1.0, 2.0, 3.0);
+        mat2.set(b9.Matrix.UNIT).translate(2.0, 4.0, 6.0).rotateY_int(90);
+        mat3.set(b9.Matrix.UNIT).rotateY_float(90.0 * ratio);
+        assertEquals_Matrix(mat3, mat1.slerp_noTrans(mat2, ratio));
+
+        mat1.set(b9.Matrix.UNIT).translate(1.0, 2.0, 3.0);
+        mat2.set(b9.Matrix.UNIT).translate(2.0, 4.0, 6.0).rotateZ_int(90);
+        mat3.set(b9.Matrix.UNIT).rotateZ_float(90.0 * ratio);
+        assertEquals_Matrix(mat3, mat1.slerp_noTrans(mat2, ratio));
+    }
 
     /* toLocal */
     mat1.set(b9.Vector.X_UNIT, b9.Vector.Y_UNIT, b9.Vector.Z_UNIT, new b9.Vector(3.0, 4.0, 5.0));

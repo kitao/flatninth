@@ -39,7 +39,9 @@ function assertEquals_Matrix(expected, actual) {
 }
 
 function assertEquals_Quaternion(expected, actual) {
-    // TODO
+    if (!expected.equals(actual)) {
+        fail("Expected " + expected.toString() + " but was " + actual.toString());
+    }
 }
 
 function assertEquals_Color(expected, actual) {

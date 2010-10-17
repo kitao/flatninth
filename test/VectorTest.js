@@ -113,16 +113,16 @@ function testVector() {
     vec1.set(1.0, 2.0, 3.0);
     assertEquals_Vector(new b9.Vector(-2.0, 1.0, 3.0), vec1.rotateZ_int(90.0));
 
-    /* interp */
+    /* lerp */
     vec1.set(1.0, 2.0, 3.0);
     vec2.set(-1.0, -2.0, -3.0);
-    assertEquals_Vector(new b9.Vector(1.0, 2.0, 3.0), vec1.interp(vec2, -1.0));
+    assertEquals_Vector(new b9.Vector(1.0, 2.0, 3.0), vec1.lerp(vec2, -1.0));
 
     vec1.set(1.0, 2.0, 3.0);
-    assertEquals_Vector(new b9.Vector(0.0, 0.0, 0.0), vec1.interp(vec2, 0.5));
+    assertEquals_Vector(new b9.Vector(0.0, 0.0, 0.0), vec1.lerp(vec2, 0.5));
 
     vec1.set(1.0, 2.0, 3.0);
-    assertEquals_Vector(vec2, vec1.interp(vec2, 2.0));
+    assertEquals_Vector(vec2, vec1.lerp(vec2, 2.0));
 
     /* toLocal */
     var mat1 = new b9.Matrix(
@@ -134,7 +134,7 @@ function testVector() {
     assertEquals_Vector(new b9.Vector(297.0, 99.0, -198.0), vec1.toLocal(mat1));
 
     /* toGlobal */
-    var mat1 = new b9.Matrix(
+    mat1 = new b9.Matrix(
             new b9.Vector(0.0, 0.0, -1.0),
             new b9.Vector(-1.0, 0.0, 0.0),
             new b9.Vector(0.0, 1.0, 0.0),
@@ -143,7 +143,7 @@ function testVector() {
     assertEquals_Vector(new b9.Vector(1.0, 2.0, 3.0), vec1.toGlobal(mat1));
 
     /* toLocal_noTrans */
-    var mat1 = new b9.Matrix(
+    mat1 = new b9.Matrix(
             new b9.Vector(0.0, 0.0, -1.0),
             new b9.Vector(-1.0, 0.0, 0.0),
             new b9.Vector(0.0, 1.0, 0.0),
@@ -152,7 +152,7 @@ function testVector() {
     assertEquals_Vector(new b9.Vector(-3.0, -1.0, 2.0), vec1.toLocal_noTrans(mat1));
 
     /* toGlobal_noTrans */
-    var mat1 = new b9.Matrix(
+    mat1 = new b9.Matrix(
             new b9.Vector(0.0, 0.0, -1.0),
             new b9.Vector(-1.0, 0.0, 0.0),
             new b9.Vector(0.0, 1.0, 0.0),
