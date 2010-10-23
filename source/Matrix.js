@@ -361,7 +361,7 @@ b9.Matrix.prototype.toLocal = function(mat) {
 
 /**
  * Converts this matrix from in the local coordinate system of a matrix to in the world coordinate system.
- * @param {b9.Matrix} mat A Matrix.
+ * @param {b9.Matrix} mat A matrix.
  * @return {b9.Matrix} This matrix.
  */
 b9.Matrix.prototype.toGlobal = function(mat) {

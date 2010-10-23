@@ -28,7 +28,7 @@ b9.Vector = b9.createClass();
 /**
  * Constructs a vector.
  * The number of the arguments must be 0, 1, or 3.
- * @param {b9.Vector|Number} [vec_or_x] A vector to be cloned or a x-coordinate.
+ * @param {b9.Vector|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  */
@@ -65,7 +65,7 @@ b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
 /**
  * Sets the all components to this vector.
  * The number of the arguments must be 0, 1, or 3.
- * @param {b9.Vector|Number} [vec_or_x] A vector to be copied or a x-coordinate.
+ * @param {b9.Vector|Number} [vec_or_x] A vector to be copied or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @return {b9.Vector} This vector.
@@ -180,7 +180,7 @@ b9.Vector.prototype.dist = function(vec) {
  * Returns the squared distance between this vector and a vector.
  * This method is faster than the dist method.
  * @param {b9.Vector} vec A vector.
- * @return {Number} The sqared distance between the two vectors.
+ * @return {Number} The squared distance between the two vectors.
  */
 b9.Vector.prototype.sqDist = function(vec) {
     return b9.Vector._vec1.set(this).sub(vec).sqNorm();
@@ -365,7 +365,6 @@ b9.Vector.prototype.toLocal_noTrans = function(mat) {
             this.dot(mat.x_axis) / mat.x_axis.sqNorm(),
             this.dot(mat.y_axis) / mat.y_axis.sqNorm(),
             this.dot(mat.z_axis) / mat.z_axis.sqNorm());
-
 
     return this.set(b9.Vector._vec1);
 };
