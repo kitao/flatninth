@@ -144,11 +144,11 @@ b9.Matrix.prototype.rotateX_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Matrix._mat1.set(
-            b9.Vector.X_UNIT,
-            b9.Matrix._vec1.set(0.0, cos, sin),
-            b9.Matrix._vec2.set(0.0, -sin, cos),
-            b9.Vector.ZERO).toGlobal(this);
+    b9.Matrix._mat1.x_axis.set(b9.Vector.X_UNIT);
+    b9.Matrix._mat1.y_axis.set(0.0, cos, sin);
+    b9.Matrix._mat1.z_axis.set(0.0, -sin, cos);
+    b9.Matrix._mat1.trans.set(b9.Vector.ZERO);
+    b9.Matrix._mat1.toGlobal(this);
 
     return this.set(b9.Matrix._mat1);
 };
@@ -162,11 +162,11 @@ b9.Matrix.prototype.rotateY_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Matrix._mat1.set(
-            b9.Matrix._vec1.set(cos, 0.0, -sin),
-            b9.Vector.Y_UNIT,
-            b9.Matrix._vec2.set(sin, 0.0, cos),
-            b9.Vector.ZERO).toGlobal(this);
+    b9.Matrix._mat1.x_axis.set(cos, 0.0, -sin);
+    b9.Matrix._mat1.y_axis.set(b9.Vector.Y_UNIT);
+    b9.Matrix._mat1.z_axis.set(sin, 0.0, cos);
+    b9.Matrix._mat1.trans.set(b9.Vector.ZERO);
+    b9.Matrix._mat1.toGlobal(this);
 
     return this.set(b9.Matrix._mat1);
 };
@@ -180,11 +180,11 @@ b9.Matrix.prototype.rotateZ_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Matrix._mat1.set(
-            b9.Matrix._vec1.set(cos, sin, 0.0),
-            b9.Matrix._vec2.set(-sin, cos, 0.0),
-            b9.Vector.Z_UNIT,
-            b9.Vector.ZERO).toGlobal(this);
+    b9.Matrix._mat1.x_axis.set(cos, sin, 0.0);
+    b9.Matrix._mat1.y_axis.set(-sin, cos, 0.0);
+    b9.Matrix._mat1.z_axis.set(b9.Vector.Z_UNIT);
+    b9.Matrix._mat1.trans.set(b9.Vector.ZERO);
+    b9.Matrix._mat1.toGlobal(this);
 
     return this.set(b9.Matrix._mat1);
 };
@@ -199,11 +199,11 @@ b9.Matrix.prototype.rotateX_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Matrix._mat1.set(
-            b9.Vector.X_UNIT,
-            b9.Matrix._vec1.set(0.0, cos, sin),
-            b9.Matrix._vec2.set(0.0, -sin, cos),
-            b9.Vector.ZERO).toGlobal(this);
+    b9.Matrix._mat1.x_axis.set(b9.Vector.X_UNIT);
+    b9.Matrix._mat1.y_axis.set(0.0, cos, sin);
+    b9.Matrix._mat1.z_axis.set(0.0, -sin, cos);
+    b9.Matrix._mat1.trans.set(b9.Vector.ZERO);
+    b9.Matrix._mat1.toGlobal(this);
 
     return this.set(b9.Matrix._mat1);
 };
@@ -218,11 +218,11 @@ b9.Matrix.prototype.rotateY_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Matrix._mat1.set(
-            b9.Matrix._vec1.set(cos, 0.0, -sin),
-            b9.Vector.Y_UNIT,
-            b9.Matrix._vec2.set(sin, 0.0, cos),
-            b9.Vector.ZERO).toGlobal(this);
+    b9.Matrix._mat1.x_axis.set(cos, 0.0, -sin);
+    b9.Matrix._mat1.y_axis.set(b9.Vector.Y_UNIT);
+    b9.Matrix._mat1.z_axis.set(sin, 0.0, cos);
+    b9.Matrix._mat1.trans.set(b9.Vector.ZERO);
+    b9.Matrix._mat1.toGlobal(this);
 
     return this.set(b9.Matrix._mat1);
 };
@@ -237,11 +237,11 @@ b9.Matrix.prototype.rotateZ_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Matrix._mat1.set(
-            b9.Matrix._vec1.set(cos, sin, 0.0),
-            b9.Matrix._vec2.set(-sin, cos, 0.0),
-            b9.Vector.Z_UNIT,
-            b9.Vector.ZERO).toGlobal(this);
+    b9.Matrix._mat1.x_axis.set(cos, sin, 0.0);
+    b9.Matrix._mat1.y_axis.set(-sin, cos, 0.0);
+    b9.Matrix._mat1.z_axis.set(b9.Vector.Z_UNIT);
+    b9.Matrix._mat1.trans.set(b9.Vector.ZERO);
+    b9.Matrix._mat1.toGlobal(this);
 
     return this.set(b9.Matrix._mat1);
 };

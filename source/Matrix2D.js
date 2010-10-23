@@ -104,10 +104,10 @@ b9.Matrix2D.prototype.rotate_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Matrix2D._mat1.set(
-            b9.Matrix2D._vec1.set(cos, sin, 0.0),
-            b9.Matrix2D._vec2.set(-sin, cos, 0.0),
-            b9.Vector2D.ZERO).toGlobal(this);
+    b9.Matrix2D._mat1.x_axis.set(cos, sin);
+    b9.Matrix2D._mat1.y_axis.set(-sin, cos);
+    b9.Matrix2D._mat1.trans.set(b9.Vector2D.ZERO);
+    b9.Matrix2D._mat1.toGlobal(this);
 
     return this.set(b9.Matrix2D._mat1);
 };
@@ -122,10 +122,10 @@ b9.Matrix2D.prototype.rotate_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Matrix2D._mat1.set(
-            b9.Matrix2D._vec1.set(cos, sin, 0.0),
-            b9.Matrix2D._vec2.set(-sin, cos, 0.0),
-            b9.Vector2D.ZERO).toGlobal(this);
+    b9.Matrix2D._mat1.x_axis.set(cos, sin);
+    b9.Matrix2D._mat1.y_axis.set(-sin, cos);
+    b9.Matrix2D._mat1.trans.set(b9.Vector2D.ZERO);
+    b9.Matrix2D._mat1.toGlobal(this);
 
     return this.set(b9.Matrix2D._mat1);
 };
@@ -177,7 +177,7 @@ b9.Matrix2D.prototype.slerp = function(to, ratio) {
         }
 
         this.rotate_float(ang * ratio);
-        this.trans.lerp(to, ratio);
+        this.trans.lerp(to.trans, ratio);
     }
 
     return this;
