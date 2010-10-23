@@ -63,7 +63,7 @@ b9.Matrix2D.prototype.initialize = function(mat_or_x_axis, y_axis, trans) {
 };
 
 /**
- * Sets the all components to this matrix.
+ * Sets all of the components to this matrix.
  * The number of the arguments must be 1 or 3.
  * @param {b9.Matrix2D|b9.Vector2D} [mat_or_x_axis] A matrix to be copied or an x-axis.
  * @param {b9.Vector2D} [y_axis] A y-axis.

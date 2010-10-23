@@ -72,7 +72,7 @@ b9.Matrix3D.prototype.initialize = function(mat_or_x_axis, y_axis, z_axis, trans
 };
 
 /**
- * Sets the all components to this matrix.
+ * Sets all of the components to this matrix.
  * The number of the arguments must be 1 or 4.
  * @param {b9.Matrix3D|b9.Vector3D} [mat_or_x_axis] A matrix to be copied or an x-axis.
  * @param {b9.Vector3D} [y_axis] A y-axis.

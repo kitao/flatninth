@@ -68,7 +68,7 @@ b9.Quaternion.prototype.initialize = function(quat_or_x, y, z, w) {
 };
 
 /**
- * Sets the all components to this quaternion.
+ * Sets all of the components to this quaternion.
  * The number of the arguments must be 1 or 4.
  * @param {b9.Quaternion|Number} [quat_or_x] A quaternion to be copied or a x-coordinate.
  * @param {Number} [y] A y-coordinate.

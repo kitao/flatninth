@@ -21,12 +21,12 @@
  */
 
 /**
- * @class hoge
+ * @class A sequence of elements stored in a linked list.
  */
 b9.LinkedList = b9.createClass();
 
 /**
- * hoge
+ * Constructs a list without an item.
  */
 b9.LinkedList.prototype.initialize = function() {
     this._start = new b9.LinkedListItem(null);
@@ -35,63 +35,63 @@ b9.LinkedList.prototype.initialize = function() {
     this._end = new b9.LinkedListItem(null);
     this._end._list = this;
 
-    this._item_num = 0;
+    this._item_count = 0;
 
     this._start._next = this._end;
     this._end._prev = this._start;
 };
 
 /**
- * hoge
+ * Destructs this list. All of the items in this list will be removed.
  */
 b9.LinkedList.prototype.finalize = function() {
     this.clear();
 };
 
 /**
- * hoge
- * @return {Number} hoge
+ * Returns the number of items in this list.
+ * @return {Number} The number of the items.
  */
-b9.LinkedList.prototype.getItemNum = function() {
-    return this._item_num;
+b9.LinkedList.prototype.getItemCount = function() {
+    return this._item_count;
 };
 
 /**
- * hoge
- * @return {b9.LinkedListItem} hoge
+ * Returns the first item in this list.
+ * @return {b9.LinkedListItem} The first item.
  */
 b9.LinkedList.prototype.getFirstItem = function() {
-    return (this._item_num > 0) ? this._start._next : null;
+    return (this._item_count > 0) ? this._start._next : null;
 };
 
 /**
- * hoge
- * @return {b9.LinkedListItem} hoge
+ * Returns the last item in this list.
+ * @return {b9.LinkedListItem} The last item.
  */
 b9.LinkedList.prototype.getLastItem = function() {
-    return (this._item_num > 0) ? this._end._prev : null;
+    return (this._item_count > 0) ? this._end._prev : null;
 };
 
 /**
- * hoge
- * @param {b9.LinkedListItem} item hoge
+ * Add an item to this list as the first.
+ * @param {b9.LinkedListItem} item An item.
  */
 b9.LinkedList.prototype.addItemFirst = function(item) {
     this.addItemAfter(item, this._start);
 };
 
 /**
- * hoge
- * @param {b9.LinkedListItem} item hoge
+ * Add an item to this list as the last.
+ * @param {b9.LinkedListItem} item An item.
  */
 b9.LinkedList.prototype.addItemLast = function(item) {
     this.addItemBefore(item, this._end);
 };
 
 /**
- * hoge
- * @param {b9.LinkedListItem} item hoge
- * @param {b9.LinkedListItem} next_item hoge
+ * Inserts an item before the specified item.
+ * @param {b9.LinkedListItem} item An item.
+ * @param {b9.LinkedListItem} next_item The item to be the next. This item must be in this list.
  */
 b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
     if (next_item._list === this) {
@@ -106,14 +106,14 @@ b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
         item._prev._next = item;
         item._next._prev = item;
 
-        this._item_num++;
+        this._item_count++;
     }
 };
 
 /**
- * hoge
- * @param {b9.LinkedListItem} item hoge
- * @param {b9.LinkedListItem} prev_item hoge
+ * Inserts an item after the specified item.
+ * @param {b9.LinkedListItem} item An item.
+ * @param {b9.LinkedListItem} prev_item The item to be the previous. This item must be in this list.
  */
 b9.LinkedList.prototype.addItemAfter = function(item, prev_item) {
     if (prev_item._list === this) {
@@ -128,13 +128,13 @@ b9.LinkedList.prototype.addItemAfter = function(item, prev_item) {
         item._prev._next = item;
         item._next._prev = item;
 
-        this._item_num++;
+        this._item_count++;
     }
 };
 
 /**
- * hoge
- * @param {b9.LinkedListItem} item hoge
+ * Removes an item from this list.
+ * @param {b9.LinkedListItem} item An item to be removed. This item must be in this list.
  */
 b9.LinkedList.prototype.removeItem = function(item) {
     if (item._list === this) {
@@ -145,15 +145,15 @@ b9.LinkedList.prototype.removeItem = function(item) {
         item._prev = null;
         item._next = null;
 
-        this._item_num--;
+        this._item_count--;
     }
 };
 
 /**
- * hoge
+ * Removes all of the items from this list.
  */
 b9.LinkedList.prototype.clear = function() {
-    while (this._item_num > 0) {
+    while (this._item_count > 0) {
         this.removeItem(this._start._next);
     }
 };

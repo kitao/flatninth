@@ -21,13 +21,13 @@
  */
 
 /**
- * @class hoge
+ * @class An element of the b9.LinkedList.
  */
 b9.LinkedListItem = b9.createClass();
 
 /**
- * hoge
- * @param {Object} self hoge
+ * Constructs an item and links an object with it.
+ * @param {Object} self An object.
  */
 b9.LinkedListItem.prototype.initialize = function(self) {
     this._self = self;
@@ -37,7 +37,7 @@ b9.LinkedListItem.prototype.initialize = function(self) {
 };
 
 /**
- * hoge
+ * Destructs this item.
  */
 b9.LinkedListItem.prototype.finalize = function() {
     if (this._list) {
@@ -48,7 +48,7 @@ b9.LinkedListItem.prototype.finalize = function() {
 };
 
 /**
- * hoge
+ * Returns the object which is linked with this item.
  * @return {Object} hoge
  */
 b9.LinkedListItem.prototype.getSelf = function() {
@@ -56,24 +56,24 @@ b9.LinkedListItem.prototype.getSelf = function() {
 };
 
 /**
- * hoge
- * @return {b9.LinkedList} hoge
+ * Returns the list which this item is in. If no such list exists, returns null.
+ * @return {b9.LinkedList} The list.
  */
 b9.LinkedListItem.prototype.getList = function() {
     return this._list;
 };
 
 /**
- * hoge
- * @return {b9.LinkedListItem} hoge
+ * Returns the previous item of this item. If no such item exists, returns null.
+ * @return {b9.LinkedListItem} The previous item.
  */
 b9.LinkedListItem.prototype.getPrev = function() {
     return (this._list && this._prev === this._list._start) ? null : this._prev;
 };
 
 /**
- * hoge
- * @return {b9.LinkedListItem} hoge
+ * Returns the next item of this item. If no such item exists, returns null.
+ * @return {b9.LinkedListItem} The next item.
  */
 b9.LinkedListItem.prototype.getNext = function() {
     return (this._list && this._next === this._list._end) ? null : this._next;
