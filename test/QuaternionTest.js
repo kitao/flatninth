@@ -35,25 +35,25 @@ function testQuaternion() {
     assertEquals_object(new b9.Quaternion(3.0, 4.0, 5.0, 6.0), quat1.set(3.0, 4.0, 5.0, 6.0));
     assertEquals_object(quat1, quat2.set(quat1));
 
-    /* fromMatrix */
-    assertEquals_object(new b9.Quaternion(0.0, 0.0, 0.0, 1.0), quat1.fromMatrix(b9.Matrix.UNIT));
+    /* fromMatrix3D */
+    assertEquals_object(new b9.Quaternion(0.0, 0.0, 0.0, 1.0), quat1.fromMatrix3D(b9.Matrix3D.UNIT));
 
     /* slerp */
     var ratio;
     for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
-        quat1.fromMatrix(new b9.Matrix(b9.Matrix.UNIT));
-        quat2.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateX_int(90));
-        quat3.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateX_float(90.0 * ratio));
+        quat1.fromMatrix3D(new b9.Matrix3D(b9.Matrix3D.UNIT));
+        quat2.fromMatrix3D((new b9.Matrix3D(b9.Matrix3D.UNIT)).rotateX_int(90));
+        quat3.fromMatrix3D((new b9.Matrix3D(b9.Matrix3D.UNIT)).rotateX_float(90.0 * ratio));
         assertEquals_object(quat3, quat1.slerp(quat2, ratio));
 
-        quat1.fromMatrix(new b9.Matrix(b9.Matrix.UNIT));
-        quat2.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateY_int(90));
-        quat3.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateY_float(90.0 * ratio));
+        quat1.fromMatrix3D(new b9.Matrix3D(b9.Matrix3D.UNIT));
+        quat2.fromMatrix3D((new b9.Matrix3D(b9.Matrix3D.UNIT)).rotateY_int(90));
+        quat3.fromMatrix3D((new b9.Matrix3D(b9.Matrix3D.UNIT)).rotateY_float(90.0 * ratio));
         assertEquals_object(quat3, quat1.slerp(quat2, ratio));
 
-        quat1.fromMatrix(new b9.Matrix(b9.Matrix.UNIT));
-        quat2.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateZ_int(90));
-        quat3.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateZ_float(90.0 * ratio));
+        quat1.fromMatrix3D(new b9.Matrix3D(b9.Matrix3D.UNIT));
+        quat2.fromMatrix3D((new b9.Matrix3D(b9.Matrix3D.UNIT)).rotateZ_int(90));
+        quat3.fromMatrix3D((new b9.Matrix3D(b9.Matrix3D.UNIT)).rotateZ_float(90.0 * ratio));
         assertEquals_object(quat3, quat1.slerp(quat2, ratio));
     }
 
