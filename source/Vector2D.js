@@ -53,7 +53,7 @@ b9.Vector2D.prototype.initialize = function(vec_or_x, y) {
 };
 
 /**
- * Sets the all components to this vector.
+ * Sets all of the components to this vector.
  * @param {b9.Vector2D|Number} [vec_or_x] A vector to be copied or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @return {b9.Vector2D} This vector.
