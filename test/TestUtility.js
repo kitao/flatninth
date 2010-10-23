@@ -26,27 +26,8 @@ function assertEquals_float(expected, actual) {
     }
 }
 
-function assertEquals_Vector(expected, actual) {
+function assertEquals_object(expected, actual) {
     if (!expected.equals(actual)) {
         fail("Expected " + expected.toString() + " but was " + actual.toString());
     }
-}
-
-function assertEquals_Matrix(expected, actual) {
-    if (!expected.equals(actual)) {
-        fail("Expected " + expected.toString() + " but was " + actual.toString());
-    }
-}
-
-function assertEquals_Quaternion(expected, actual) {
-    if (!expected.equals(actual)) {
-        fail("Expected " + expected.toString() + " but was " + actual.toString());
-    }
-}
-
-function assertEquals_Color(expected, actual) {
-    // TODO
-/*    if (!expected.equals(actual)) {
-        fail("Expected " + expected.toString() + " but was " + actual.toString());
-    }*/
 }

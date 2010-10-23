@@ -32,11 +32,11 @@ function testQuaternion() {
     assertTrue(quat3.x === 1.0 && quat3.y === 2.0 && quat3.z === 3.0 && quat3.w === 4.0);
 
     /* set */
-    assertEquals_Quaternion(new b9.Quaternion(3.0, 4.0, 5.0, 6.0), quat1.set(3.0, 4.0, 5.0, 6.0));
-    assertEquals_Quaternion(quat1, quat2.set(quat1));
+    assertEquals_object(new b9.Quaternion(3.0, 4.0, 5.0, 6.0), quat1.set(3.0, 4.0, 5.0, 6.0));
+    assertEquals_object(quat1, quat2.set(quat1));
 
     /* fromMatrix */
-    assertEquals_Quaternion(new b9.Quaternion(0.0, 0.0, 0.0, 1.0), quat1.fromMatrix(b9.Matrix.UNIT));
+    assertEquals_object(new b9.Quaternion(0.0, 0.0, 0.0, 1.0), quat1.fromMatrix(b9.Matrix.UNIT));
 
     /* slerp */
     var ratio;
@@ -44,17 +44,17 @@ function testQuaternion() {
         quat1.fromMatrix(new b9.Matrix(b9.Matrix.UNIT));
         quat2.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateX_int(90));
         quat3.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateX_float(90.0 * ratio));
-        assertEquals_Quaternion(quat3, quat1.slerp(quat2, ratio));
+        assertEquals_object(quat3, quat1.slerp(quat2, ratio));
 
         quat1.fromMatrix(new b9.Matrix(b9.Matrix.UNIT));
         quat2.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateY_int(90));
         quat3.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateY_float(90.0 * ratio));
-        assertEquals_Quaternion(quat3, quat1.slerp(quat2, ratio));
+        assertEquals_object(quat3, quat1.slerp(quat2, ratio));
 
         quat1.fromMatrix(new b9.Matrix(b9.Matrix.UNIT));
         quat2.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateZ_int(90));
         quat3.fromMatrix((new b9.Matrix(b9.Matrix.UNIT)).rotateZ_float(90.0 * ratio));
-        assertEquals_Quaternion(quat3, quat1.slerp(quat2, ratio));
+        assertEquals_object(quat3, quat1.slerp(quat2, ratio));
     }
 
     /* equals */
