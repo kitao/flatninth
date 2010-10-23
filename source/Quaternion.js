@@ -94,10 +94,10 @@ b9.Quaternion.prototype.set = function(quat_or_x, y, z, w) {
 
 /**
  * Builds the quaternion from a matrix and sets to this quaternion.
- * @param {b9.Matrix} mat A matrix.
+ * @param {b9.Matrix3D} mat A matrix.
  * @return This quaternion.
  */
-b9.Quaternion.prototype.fromMatrix = function(mat) {
+b9.Quaternion.prototype.fromMatrix3D = function(mat) {
     var trace = mat.x_axis.x + mat.y_axis.y + mat.z_axis.z;
     var root, scale;
     var i, j, k;
@@ -141,7 +141,7 @@ b9.Quaternion.prototype.fromMatrix = function(mat) {
  * Interpolates this quaternion to a quaternion by a ratio, using spherical linear interpolation.
  * @param {Number} to A destination quaternion.
  * @param {Number} ratio The value which indicates how far to interpolate between the two quaternions.
- * @return {b9.Matrix} This quaternion.
+ * @return {b9.Matrix3D} This quaternion.
  */
 b9.Quaternion.prototype.slerp = function(to, ratio) {
     var omega;
@@ -247,5 +247,5 @@ b9.Quaternion.prototype._QUAT = function(a, v) {
 
 b9.Quaternion._quat1 = new b9.Quaternion();
 
-b9.Matrix._quat1 = new b9.Quaternion();
-b9.Matrix._quat2 = new b9.Quaternion();
+b9.Matrix3D._quat1 = new b9.Quaternion();
+b9.Matrix3D._quat2 = new b9.Quaternion();

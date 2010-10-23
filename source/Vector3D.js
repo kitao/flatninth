@@ -23,16 +23,16 @@
 /**
  * @class A 3-element vector which is represented by xyz coordinates.
  */
-b9.Vector = b9.createClass();
+b9.Vector3D = b9.createClass();
 
 /**
  * Constructs a vector.
  * The number of the arguments must be 0, 1, or 3.
- * @param {b9.Vector|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
+ * @param {b9.Vector3D|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  */
-b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
+b9.Vector3D.prototype.initialize = function(vec_or_x, y, z) {
     /**
      * The x-coordinate.
      * @return {Number}
@@ -65,12 +65,12 @@ b9.Vector.prototype.initialize = function(vec_or_x, y, z) {
 /**
  * Sets the all components to this vector.
  * The number of the arguments must be 0, 1, or 3.
- * @param {b9.Vector|Number} [vec_or_x] A vector to be copied or an x-coordinate.
+ * @param {b9.Vector3D|Number} [vec_or_x] A vector to be copied or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.set = function(vec_or_x, y, z) {
+b9.Vector3D.prototype.set = function(vec_or_x, y, z) {
     if (arguments.length === 1) {
         this.x = vec_or_x.x;
         this.y = vec_or_x.y;
@@ -86,9 +86,9 @@ b9.Vector.prototype.set = function(vec_or_x, y, z) {
 
 /**
  * Changes the arithmetic sign of this vector.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.neg = function() {
+b9.Vector3D.prototype.neg = function() {
     this.x = -this.x;
     this.y = -this.y;
     this.z = -this.z;
@@ -98,10 +98,10 @@ b9.Vector.prototype.neg = function() {
 
 /**
  * Adds a vector to this vector.
- * @param {b9.Vector} vec A vector.
- * @return {b9.Vector} This vector.
+ * @param {b9.Vector3D} vec A vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.add = function(vec) {
+b9.Vector3D.prototype.add = function(vec) {
     this.x += vec.x;
     this.y += vec.y;
     this.z += vec.z;
@@ -111,10 +111,10 @@ b9.Vector.prototype.add = function(vec) {
 
 /**
  * Subtracts a vector from this vector.
- * @param {b9.Vector} vec A vector.
- * @return {b9.Vector} This vector.
+ * @param {b9.Vector3D} vec A vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.sub = function(vec) {
+b9.Vector3D.prototype.sub = function(vec) {
     this.x -= vec.x;
     this.y -= vec.y;
     this.z -= vec.z;
@@ -125,9 +125,9 @@ b9.Vector.prototype.sub = function(vec) {
 /**
  * Multiplies this vector with a scalar value.
  * @param {Number} s A scalar value.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.mul = function(s) {
+b9.Vector3D.prototype.mul = function(s) {
     this.x *= s;
     this.y *= s;
     this.z *= s;
@@ -138,9 +138,9 @@ b9.Vector.prototype.mul = function(s) {
 /**
  * Divides this vector by a scalar value.
  * @param {Number} s A scalar value.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.div = function(s) {
+b9.Vector3D.prototype.div = function(s) {
     var rs = 1.0 / s;
 
     this.x *= rs;
@@ -154,7 +154,7 @@ b9.Vector.prototype.div = function(s) {
  * Returns the norm of this vector.
  * @return {Number} The norm of this vector.
  */
-b9.Vector.prototype.norm = function() {
+b9.Vector3D.prototype.norm = function() {
     return b9.Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
 };
 
@@ -163,44 +163,44 @@ b9.Vector.prototype.norm = function() {
  * This method is faster than the norm method.
  * @return {Number} The squared norm of this vector.
  */
-b9.Vector.prototype.sqNorm = function() {
+b9.Vector3D.prototype.sqNorm = function() {
     return this.x * this.x + this.y * this.y + this.z * this.z;
 };
 
 /**
  * Returns the distance between this vector and a vector.
- * @param {b9.Vector} vec A vector.
+ * @param {b9.Vector3D} vec A vector.
  * @return {Number} The distance between the two vectors.
  */
-b9.Vector.prototype.dist = function(vec) {
-    return b9.Vector._vec1.set(this).sub(vec).norm();
+b9.Vector3D.prototype.dist = function(vec) {
+    return b9.Vector3D._vec1.set(this).sub(vec).norm();
 };
 
 /**
  * Returns the squared distance between this vector and a vector.
  * This method is faster than the dist method.
- * @param {b9.Vector} vec A vector.
+ * @param {b9.Vector3D} vec A vector.
  * @return {Number} The squared distance between the two vectors.
  */
-b9.Vector.prototype.sqDist = function(vec) {
-    return b9.Vector._vec1.set(this).sub(vec).sqNorm();
+b9.Vector3D.prototype.sqDist = function(vec) {
+    return b9.Vector3D._vec1.set(this).sub(vec).sqNorm();
 };
 
 /**
  * Returns the inner product of this vector and a vector.
- * @param {b9.Vector} vec A vector.
+ * @param {b9.Vector3D} vec A vector.
  * @return {Number} The inner product of the two vectors.
  */
-b9.Vector.prototype.dot = function(vec) {
+b9.Vector3D.prototype.dot = function(vec) {
     return this.x * vec.x + this.y * vec.y + this.z * vec.z;
 };
 
 /**
  * Computes the outer product of this vector and a vector, and sets it to this vector.
- * @param {b9.Vector} vec A vector.
+ * @param {b9.Vector3D} vec A vector.
  * @return This vector.
  */
-b9.Vector.prototype.cross = function(vec) {
+b9.Vector3D.prototype.cross = function(vec) {
     return this.set(
             this.y * vec.z - this.z * vec.y,
             this.z * vec.x - this.x * vec.z,
@@ -209,9 +209,9 @@ b9.Vector.prototype.cross = function(vec) {
 
 /**
  * Normalizes this vector.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.normalize = function() {
+b9.Vector3D.prototype.normalize = function() {
     var norm = this.norm();
 
     if (norm < b9.Math.EPSILON) {
@@ -226,102 +226,102 @@ b9.Vector.prototype.normalize = function() {
 /**
  * Rotates this vector around the orthonormal x-axis.
  * @param {Number} deg A float angle in degrees.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.rotateX_float = function(deg) {
+b9.Vector3D.prototype.rotateX_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Vector._vec1.set(this.x, this.y * cos - this.z * sin, this.z * cos + this.y * sin);
+    b9.Vector3D._vec1.set(this.x, this.y * cos - this.z * sin, this.z * cos + this.y * sin);
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector3D._vec1);
 };
 
 /**
  * Rotates this vector around the orthonormal y-axis.
  * @param {Number} deg A float angle in degrees.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.rotateY_float = function(deg) {
+b9.Vector3D.prototype.rotateY_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Vector._vec1.set(this.x * cos + this.z * sin, this.y, this.z * cos - this.x * sin);
+    b9.Vector3D._vec1.set(this.x * cos + this.z * sin, this.y, this.z * cos - this.x * sin);
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector3D._vec1);
 };
 
 /**
  * Rotates this vector around the orthonormal z-axis.
  * @param {Number} deg A float angle in degrees.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.rotateZ_float = function(deg) {
+b9.Vector3D.prototype.rotateZ_float = function(deg) {
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Vector._vec1.set(this.x * cos - this.y * sin, this.y * cos + this.x * sin, this.z);
+    b9.Vector3D._vec1.set(this.x * cos - this.y * sin, this.y * cos + this.x * sin, this.z);
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector3D._vec1);
 };
 
 /**
  * Rotates this vector around the orthonormal x-axis.
  * This method allows only an integer angle, but is faster than the rotateX_float method.
  * @param {Number} deg An integer angle in degrees.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.rotateX_int = function(deg) {
+b9.Vector3D.prototype.rotateX_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Vector._vec1.set(this.x, this.y * cos - this.z * sin, this.z * cos + this.y * sin);
+    b9.Vector3D._vec1.set(this.x, this.y * cos - this.z * sin, this.z * cos + this.y * sin);
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector3D._vec1);
 };
 
 /**
  * Rotates this vector around the orthonormal y-axis.
  * This method allows only an integer angle, but is faster than the rotateY_float method.
  * @param {Number} deg An integer angle in degrees.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.rotateY_int = function(deg) {
+b9.Vector3D.prototype.rotateY_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Vector._vec1.set(this.x * cos + this.z * sin, this.y, this.z * cos - this.x * sin);
+    b9.Vector3D._vec1.set(this.x * cos + this.z * sin, this.y, this.z * cos - this.x * sin);
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector3D._vec1);
 };
 
 /**
  * Rotates this vector around the orthonormal z-axis.
  * This method allows only an integer angle, but is faster than the rotateZ_float method.
  * @param {Number} deg An integer angle in degrees.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.rotateZ_int = function(deg) {
+b9.Vector3D.prototype.rotateZ_int = function(deg) {
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Vector._vec1.set(this.x * cos - this.y * sin, this.y * cos + this.x * sin, this.z);
+    b9.Vector3D._vec1.set(this.x * cos - this.y * sin, this.y * cos + this.x * sin, this.z);
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector3D._vec1);
 };
 
 /**
  * Interpolates this vector to a vector by a ratio.
- * @param {b9.Vector} to A destination vector.
+ * @param {b9.Vector3D} to A destination vector.
  * @param {Number} ratio The value which indicates how far to interpolate between the two vectors.
- * @return {b9.Vector} This vector.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.lerp = function(to, ratio) {
+b9.Vector3D.prototype.lerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        b9.Vector._vec1.set(to).mul(ratio);
-        this.mul(1.0 - ratio).add(b9.Vector._vec1);
+        b9.Vector3D._vec1.set(to).mul(ratio);
+        this.mul(1.0 - ratio).add(b9.Vector3D._vec1);
     }
 
     return this;
@@ -329,66 +329,66 @@ b9.Vector.prototype.lerp = function(to, ratio) {
 
 /**
  * Converts this vector from in the world coordinate system to the local coordinate system of a matrix.
- * @param {b9.Matrix2D} mat A matrix.
- * @return {b9.Vector} This vector.
+ * @param {b9.Matrix3D} mat A matrix.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.toLocal = function(mat) {
-    b9.Vector._vec1.set(this).sub(mat.trans);
+b9.Vector3D.prototype.toLocal = function(mat) {
+    b9.Vector3D._vec1.set(this).sub(mat.trans);
 
     return this.set(
-            b9.Vector._vec1.dot(mat.x_axis) / mat.x_axis.sqNorm(),
-            b9.Vector._vec1.dot(mat.y_axis) / mat.y_axis.sqNorm(),
-            b9.Vector._vec1.dot(mat.z_axis) / mat.z_axis.sqNorm());
+            b9.Vector3D._vec1.dot(mat.x_axis) / mat.x_axis.sqNorm(),
+            b9.Vector3D._vec1.dot(mat.y_axis) / mat.y_axis.sqNorm(),
+            b9.Vector3D._vec1.dot(mat.z_axis) / mat.z_axis.sqNorm());
 };
 
 /**
  * Converts this vector from in the local coordinate system of a matrix to in the world coordinate system.
- * @param {b9.Matrix2D} mat A matrix.
- * @return {b9.Vector} This vector.
+ * @param {b9.Matrix3D} mat A matrix.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.toGlobal = function(mat) {
-    b9.Vector._vec1.set(mat.x_axis).mul(this.x);
-    b9.Vector._vec2.set(mat.y_axis).mul(this.y);
-    b9.Vector._vec3.set(mat.z_axis).mul(this.z);
+b9.Vector3D.prototype.toGlobal = function(mat) {
+    b9.Vector3D._vec1.set(mat.x_axis).mul(this.x);
+    b9.Vector3D._vec2.set(mat.y_axis).mul(this.y);
+    b9.Vector3D._vec3.set(mat.z_axis).mul(this.z);
 
-    return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(b9.Vector._vec3).add(mat.trans);
+    return this.set(b9.Vector3D._vec1).add(b9.Vector3D._vec2).add(b9.Vector3D._vec3).add(mat.trans);
 };
 
 /**
  * Converts this vector from in the world coordinate system to the local coordinate system of a matrix.
  * However, unlike the toLocal method, the translation of the matrix is regarded as the zero vector.
- * @param {b9.Matrix2D} mat A matrix.
- * @return {b9.Vector} This vector.
+ * @param {b9.Matrix3D} mat A matrix.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.toLocal_noTrans = function(mat) {
-    b9.Vector._vec1.set(
+b9.Vector3D.prototype.toLocal_noTrans = function(mat) {
+    b9.Vector3D._vec1.set(
             this.dot(mat.x_axis) / mat.x_axis.sqNorm(),
             this.dot(mat.y_axis) / mat.y_axis.sqNorm(),
             this.dot(mat.z_axis) / mat.z_axis.sqNorm());
 
-    return this.set(b9.Vector._vec1);
+    return this.set(b9.Vector3D._vec1);
 };
 
 /**
  * Converts this vector from in the local coordinate system of a matrix to in the world coordinate system.
  * However, unlike the toGlobal method, the translation of the matrix is regarded as the zero vector.
- * @param {b9.Matrix2D} mat A matrix.
- * @return {b9.Vector} This vector.
+ * @param {b9.Matrix3D} mat A matrix.
+ * @return {b9.Vector3D} This vector.
  */
-b9.Vector.prototype.toGlobal_noTrans = function(mat) {
-    b9.Vector._vec1.set(mat.x_axis).mul(this.x);
-    b9.Vector._vec2.set(mat.y_axis).mul(this.y);
-    b9.Vector._vec3.set(mat.z_axis).mul(this.z);
+b9.Vector3D.prototype.toGlobal_noTrans = function(mat) {
+    b9.Vector3D._vec1.set(mat.x_axis).mul(this.x);
+    b9.Vector3D._vec2.set(mat.y_axis).mul(this.y);
+    b9.Vector3D._vec3.set(mat.z_axis).mul(this.z);
 
-    return this.set(b9.Vector._vec1).add(b9.Vector._vec2).add(b9.Vector._vec3);
+    return this.set(b9.Vector3D._vec1).add(b9.Vector3D._vec2).add(b9.Vector3D._vec3);
 };
 
 /**
  * Returns whether this vector equals a vector.
- * @param {b9.Vector} vec A vector.
+ * @param {b9.Vector3D} vec A vector.
  * @return {Boolean} true if the two vectors are equal; false otherwise.
  */
-b9.Vector.prototype.equals = function(vec) {
+b9.Vector3D.prototype.equals = function(vec) {
     return (b9.Math.equals_float(this.x, vec.x) &&
             b9.Math.equals_float(this.y, vec.y) &&
             b9.Math.equals_float(this.z, vec.z));
@@ -398,7 +398,7 @@ b9.Vector.prototype.equals = function(vec) {
  * Returns a string representation of this vector.
  * @return {String} A string representation of this vector.
  */
-b9.Vector.prototype.toString = function() {
+b9.Vector3D.prototype.toString = function() {
     var str = "(";
     str += this.x;
     str += ", ";
@@ -412,28 +412,28 @@ b9.Vector.prototype.toString = function() {
 
 /**
  * The zero vector.
- * @return {b9.Vector}
+ * @return {b9.Vector3D}
  */
-b9.Vector.ZERO = new b9.Vector(0.0, 0.0, 0.0);
+b9.Vector3D.ZERO = new b9.Vector3D(0.0, 0.0, 0.0);
 
 /**
  * The orthonormal x-axis.
- * @return {b9.Vector}
+ * @return {b9.Vector3D}
  */
-b9.Vector.X_UNIT = new b9.Vector(1.0, 0.0, 0.0);
+b9.Vector3D.X_UNIT = new b9.Vector3D(1.0, 0.0, 0.0);
 
 /**
  * The orthonormal y-axis.
- * @return {b9.Vector}
+ * @return {b9.Vector3D}
  */
-b9.Vector.Y_UNIT = new b9.Vector(0.0, 1.0, 0.0);
+b9.Vector3D.Y_UNIT = new b9.Vector3D(0.0, 1.0, 0.0);
 
 /**
  * The orthonormal z-axis.
- * @return {b9.Vector}
+ * @return {b9.Vector3D}
  */
-b9.Vector.Z_UNIT = new b9.Vector(0.0, 0.0, 1.0);
+b9.Vector3D.Z_UNIT = new b9.Vector3D(0.0, 0.0, 1.0);
 
-b9.Vector._vec1 = new b9.Vector();
-b9.Vector._vec2 = new b9.Vector();
-b9.Vector._vec3 = new b9.Vector();
+b9.Vector3D._vec1 = new b9.Vector3D();
+b9.Vector3D._vec2 = new b9.Vector3D();
+b9.Vector3D._vec3 = new b9.Vector3D();
