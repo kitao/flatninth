@@ -20,21 +20,21 @@
  * THE SOFTWARE.
  */
 
-function testListItem() {
+function testLinkedListItem() {
     /* initialize */
     /* getSelf */
     /* getList */
     /* getPrev */
     /* getNext */
     var dummy1 = 123;
-    var item1 = new b9.ListItem(dummy1);
+    var item1 = new b9.LinkedListItem(dummy1);
 
     assertEquals(123, item1.getSelf());
     assertEquals(null, item1.getList());
     assertEquals(null, item1.getPrev());
     assertEquals(null, item1.getNext());
 
-    var list1 = new b9.List();
+    var list1 = new b9.LinkedList();
     list1.addItemFirst(item1);
 
     assertEquals(dummy1, item1.getSelf());
@@ -43,7 +43,7 @@ function testListItem() {
     assertEquals(null, item1.getNext());
 
     var dummy2 = 456;
-    var item2 = new b9.ListItem(dummy2);
+    var item2 = new b9.LinkedListItem(dummy2);
     list1.addItemLast(item2);
 
     assertEquals(dummy1, item1.getSelf());

@@ -20,22 +20,22 @@
  * THE SOFTWARE.
  */
 
-function testList() {
+function testLinkedList() {
     /* initialize */
-    /* getItemNum */
+    /* getItemCount */
     /* getFirstItem */
     /* getLastItem */
-    var list1 = new b9.List();
+    var list1 = new b9.LinkedList();
 
-    assertEquals(0, list1.getItemNum());
+    assertEquals(0, list1.getItemCount());
     assertEquals(null, list1.getFirstItem());
     assertEquals(null, list1.getLastItem());
 
     /* addItemFirst */
-    var item1 = new b9.ListItem(null);
+    var item1 = new b9.LinkedListItem(null);
     list1.addItemFirst(item1);
 
-    assertEquals(1, list1.getItemNum());
+    assertEquals(1, list1.getItemCount());
     assertEquals(item1, list1.getFirstItem());
     assertEquals(item1, list1.getLastItem());
 
@@ -43,10 +43,10 @@ function testList() {
     assertEquals(null, item1.getPrev());
     assertEquals(null, item1.getNext());
 
-    var item2 = new b9.ListItem(null);
+    var item2 = new b9.LinkedListItem(null);
     list1.addItemLast(item2);
 
-    assertEquals(2, list1.getItemNum());
+    assertEquals(2, list1.getItemCount());
     assertEquals(item1, list1.getFirstItem());
     assertEquals(item2, list1.getLastItem());
 
@@ -60,7 +60,7 @@ function testList() {
 
     list1.addItemFirst(item2, list1);
 
-    assertEquals(2, list1.getItemNum());
+    assertEquals(2, list1.getItemCount());
     assertEquals(item2, list1.getFirstItem());
     assertEquals(item1, list1.getLastItem());
 
@@ -75,7 +75,7 @@ function testList() {
     /* addItemLast */
     list1.addItemLast(item2, list1);
 
-    assertEquals(2, list1.getItemNum());
+    assertEquals(2, list1.getItemCount());
     assertEquals(item1, list1.getFirstItem());
     assertEquals(item2, list1.getLastItem());
 
@@ -90,7 +90,7 @@ function testList() {
     /* addItemBefore */
     list1.addItemBefore(item2, item1);
 
-    assertEquals(2, list1.getItemNum());
+    assertEquals(2, list1.getItemCount());
     assertEquals(item2, list1.getFirstItem());
     assertEquals(item1, list1.getLastItem());
 
@@ -105,7 +105,7 @@ function testList() {
     /* addItemAfter */
     list1.addItemAfter(item2, item1);
 
-    assertEquals(2, list1.getItemNum());
+    assertEquals(2, list1.getItemCount());
     assertEquals(item1, list1.getFirstItem());
     assertEquals(item2, list1.getLastItem());
 
@@ -120,7 +120,7 @@ function testList() {
     /* removeItem */
     list1.removeItem(item1);
 
-    assertEquals(1, list1.getItemNum());
+    assertEquals(1, list1.getItemCount());
     assertEquals(item2, list1.getFirstItem());
     assertEquals(item2, list1.getLastItem());
 
@@ -134,7 +134,7 @@ function testList() {
 
     list1.removeItem(item2);
 
-    assertEquals(0, list1.getItemNum());
+    assertEquals(0, list1.getItemCount());
     assertEquals(null, list1.getFirstItem());
     assertEquals(null, list1.getLastItem());
 
@@ -147,7 +147,7 @@ function testList() {
     list1.addItemLast(item2);
     list1.clear();
 
-    assertEquals(0, list1.getItemNum());
+    assertEquals(0, list1.getItemCount());
     assertEquals(null, list1.getFirstItem());
     assertEquals(null, list1.getLastItem());
 
@@ -164,7 +164,7 @@ function testList() {
     list1.addItemLast(item2);
     list1.finalize();
 
-    assertEquals(0, list1.getItemNum());
+    assertEquals(0, list1.getItemCount());
     assertEquals(null, list1.getFirstItem());
     assertEquals(null, list1.getLastItem());
 

@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-function testTree() {
+function testLinkedTree() {
     /* initialize */
     /* getSelf */
     /* getPrevAsList */
@@ -32,7 +32,7 @@ function testTree() {
     /* getLastChild */
     /* getLastDescendant */
     var dummy1 = 111;
-    var tree1 = new b9.Tree(dummy1);
+    var tree1 = new b9.LinkedTree(dummy1);
 
     assertEquals(dummy1, tree1.getSelf());
     assertEquals(null, tree1.getPrevAsList());
@@ -46,7 +46,7 @@ function testTree() {
 
     /* addChildFirst */
     var dummy2 = 222;
-    var tree2 = new b9.Tree(dummy2);
+    var tree2 = new b9.LinkedTree(dummy2);
     tree1.addChildFirst(tree2);
 
     assertEquals(dummy1, tree1.getSelf());
@@ -70,7 +70,7 @@ function testTree() {
     assertEquals(tree2, tree2.getLastDescendant());
 
     var dummy3 = 333;
-    var tree3 = new b9.Tree(dummy3);
+    var tree3 = new b9.LinkedTree(dummy3);
     tree1.addChildFirst(tree3);
 
     assertEquals(dummy1, tree1.getSelf());
@@ -104,7 +104,7 @@ function testTree() {
     assertEquals(tree3, tree3.getLastDescendant());
 
     var dummy4 = 444;
-    var tree4 = new b9.Tree(dummy4);
+    var tree4 = new b9.LinkedTree(dummy4);
     tree3.addChildFirst(tree4);
 
     assertEquals(dummy1, tree1.getSelf());
