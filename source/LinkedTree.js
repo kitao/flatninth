@@ -38,7 +38,8 @@ b9.LinkedTree.prototype.initialize = function(self) {
 };
 
 /**
- * Destructs this tree. All of the children of this tree will be unlinked.
+ * Destructs this tree. If this tree has the parent, this tree will be unlinked from it.
+ * And all of the children of this tree will be unlinked.
  */
 b9.LinkedTree.prototype.finalize = function() {
     this.clear();
