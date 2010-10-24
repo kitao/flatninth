@@ -42,14 +42,14 @@ b9.LinkedList.prototype.initialize = function() {
 };
 
 /**
- * Destructs this list. All of the items in this list will be removed.
+ * Destructs this list. All of the items belong to this list will be unlinked.
  */
 b9.LinkedList.prototype.finalize = function() {
     this.clear();
 };
 
 /**
- * Returns the number of items in this list.
+ * Returns the number of items belong to this list.
  * @return {Number} The number of the items.
  */
 b9.LinkedList.prototype.getItemCount = function() {
@@ -57,7 +57,7 @@ b9.LinkedList.prototype.getItemCount = function() {
 };
 
 /**
- * Returns the first item in this list. If no such item exists, returns null.
+ * Returns the first item of this list. If no such item exists, returns null.
  * @return {b9.LinkedListItem} The first item.
  */
 b9.LinkedList.prototype.getFirstItem = function() {
@@ -65,7 +65,7 @@ b9.LinkedList.prototype.getFirstItem = function() {
 };
 
 /**
- * Returns the last item in this list. If no such item exists, returns null.
+ * Returns the last item of this list. If no such item exists, returns null.
  * @return {b9.LinkedListItem} The last item.
  */
 b9.LinkedList.prototype.getLastItem = function() {
@@ -73,7 +73,7 @@ b9.LinkedList.prototype.getLastItem = function() {
 };
 
 /**
- * Add an item to this list as the first item.
+ * Links an item with this list as the first item.
  * @param {b9.LinkedListItem} item An item.
  */
 b9.LinkedList.prototype.addItemFirst = function(item) {
@@ -81,7 +81,7 @@ b9.LinkedList.prototype.addItemFirst = function(item) {
 };
 
 /**
- * Add an item to this list as the last item.
+ * Links an item with this list as the last item.
  * @param {b9.LinkedListItem} item An item.
  */
 b9.LinkedList.prototype.addItemLast = function(item) {
@@ -89,9 +89,9 @@ b9.LinkedList.prototype.addItemLast = function(item) {
 };
 
 /**
- * Inserts an item before the specified item.
+ * Links an item with this list as the previous of the specified item.
  * @param {b9.LinkedListItem} item An item.
- * @param {b9.LinkedListItem} next_item The item to be the next. This item must be in this list.
+ * @param {b9.LinkedListItem} next_item The item to be the next. This item must belong to this list.
  */
 b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
     if (next_item._list === this) {
@@ -111,9 +111,9 @@ b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
 };
 
 /**
- * Inserts an item after the specified item.
+ * Links an item with this list as the next of the specified item.
  * @param {b9.LinkedListItem} item An item.
- * @param {b9.LinkedListItem} prev_item The item to be the previous. This item must be in this list.
+ * @param {b9.LinkedListItem} prev_item The item to be the previous. This item must belong to this list.
  */
 b9.LinkedList.prototype.addItemAfter = function(item, prev_item) {
     if (prev_item._list === this) {
@@ -133,8 +133,8 @@ b9.LinkedList.prototype.addItemAfter = function(item, prev_item) {
 };
 
 /**
- * Removes an item from this list.
- * @param {b9.LinkedListItem} item An item to be removed. This item must be in this list.
+ * Unlinks an item from this list.
+ * @param {b9.LinkedListItem} item An item to be unlinked. This item must belong to this list.
  */
 b9.LinkedList.prototype.removeItem = function(item) {
     if (item._list === this) {
@@ -150,7 +150,7 @@ b9.LinkedList.prototype.removeItem = function(item) {
 };
 
 /**
- * Removes all of the items from this list.
+ * Unlinks all of the items from this list.
  */
 b9.LinkedList.prototype.clear = function() {
     while (this._item_count > 0) {

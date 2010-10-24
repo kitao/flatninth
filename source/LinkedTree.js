@@ -21,13 +21,13 @@
  */
 
 /**
- * @class hoge
+ * @class A tree container which can have a parent and children.
  */
 b9.LinkedTree = b9.createClass();
 
 /**
- * hoge
- * @param {Object} self hoge
+ * Constructs a tree and associates an object with it.
+ * @param {Object} self An object.
  */
 b9.LinkedTree.prototype.initialize = function(self) {
     this._self = self;
@@ -38,7 +38,7 @@ b9.LinkedTree.prototype.initialize = function(self) {
 };
 
 /**
- * hoge
+ * Destructs this tree. All of the children of this tree will be unlinked.
  */
 b9.LinkedTree.prototype.finalize = function() {
     this.clear();
@@ -51,40 +51,40 @@ b9.LinkedTree.prototype.finalize = function() {
 };
 
 /**
- * hoge
- * @return {Object} hoge
+ * Returns the object associated with this item.
+ * @return {Object} The associated object.
  */
 b9.LinkedTree.prototype.getSelf = function() {
     return this._self;
 };
 
 /**
- * hoge
- * @return {b9.LinkedTree} hoge
+ * Returns the previous tree, regarding the whole tree as a list. If no such tree exists, returns null.
+ * @return {b9.LinkedTree} The previous tree.
  */
 b9.LinkedTree.prototype.getPrevAsList = function() {
     return this._prev;
 };
 
 /**
- * hoge
- * @return {b9.LinkedTree} hoge
+ * Returns the next tree, regarding the whole tree as a list. If no such tree exists, returns null.
+ * @return {b9.LinkedTree} The next tree.
  */
 b9.LinkedTree.prototype.getNextAsList = function() {
     return this._next;
 };
 
 /**
- * hoge
- * @return {b9.LinkedTree} hoge
+ * Returns the parent tree of this tree. If no such tree exists, returns null.
+ * @return {b9.LinkedTree} The parent tree.
  */
 b9.LinkedTree.prototype.getParent = function() {
     return this._parent;
 };
 
 /**
- * hoge
- * @return {b9.LinkedTree} hoge
+ * Returns the previous sibling of this tree. If no such tree exists, returns null.
+ * @return {b9.LinkedTree} The previous sibling.
  */
 b9.LinkedTree.prototype.getPrevSibling = function() {
     if (this._parent && this._prev !== this._parent) {
@@ -101,8 +101,8 @@ b9.LinkedTree.prototype.getPrevSibling = function() {
 };
 
 /**
- * hoge
- * @return {b9.LinkedTree} hoge
+ * Returns the next sibling of this tree. If no such tree exists, returns null.
+ * @return {b9.LinkedTree} The next sibling.
  */
 b9.LinkedTree.prototype.getNextSibling = function() {
     if (this._parent) {
@@ -117,24 +117,25 @@ b9.LinkedTree.prototype.getNextSibling = function() {
 };
 
 /**
- * hoge
- * @return {b9.LinkedTree} hoge
+ * Returns the first child of this tree. If no such tree exists, returns null.
+ * @return {b9.LinkedTree} The first child.
  */
 b9.LinkedTree.prototype.getFirstChild = function() {
     return this._last_child ? this._next : null;
 };
 
 /**
- * hoge
- * @return {b9.LinkedTree} hoge
+ * Returns the last child of this tree. If no such tree exists, returns null.
+ * @return {b9.LinkedTree} The last child.
  */
 b9.LinkedTree.prototype.getLastChild = function() {
     return this._last_child;
 };
 
 /**
- * hoge
- * @return {b9.LinkedTree} hoge
+ * Returns the last tree of this tree, regarding this tree as a list. If no such tree exists, returns this tree.
+ * This method is mainly used to retrieve the terminator of the list which consists of this tree and its family.
+ * @return {b9.LinkedTree} The last descendant.
  */
 b9.LinkedTree.prototype.getLastDescendant = function() {
     var desc = this;
@@ -147,8 +148,8 @@ b9.LinkedTree.prototype.getLastDescendant = function() {
 };
 
 /**
- * hoge
- * @param {b9.LinkedTree} child hoge
+ * Links a tree with this tree as the first child.
+ * @param {b9.LinkedTree} child A tree.
  */
 b9.LinkedTree.prototype.addChildFirst = function(child) {
     if (child._parent) {
@@ -173,8 +174,8 @@ b9.LinkedTree.prototype.addChildFirst = function(child) {
 };
 
 /**
- * hoge
- * @param {b9.LinkedTree} child hoge
+ * Links a tree with this tree as the last child.
+ * @param {b9.LinkedTree} child A tree.
  */
 b9.LinkedTree.prototype.addChildLast = function(child) {
     if (child._parent) {
@@ -198,9 +199,9 @@ b9.LinkedTree.prototype.addChildLast = function(child) {
 };
 
 /**
- * hoge
- * @param {b9.LinkedTree} child hoge
- * @param {b9.LinkedTree} next_child hoge
+ * Links a tree with this tree as the previous of the specified tree.
+ * @param {b9.LinkedTree} child A tree.
+ * @param {b9.LinkedTree} next_child The tree to be the next. This tree must be a child of this tree.
  */
 b9.LinkedTree.prototype.addChildBefore = function(child, next_child) {
     if (next_child._parent === this) {
@@ -220,9 +221,9 @@ b9.LinkedTree.prototype.addChildBefore = function(child, next_child) {
 };
 
 /**
- * hoge
- * @param {b9.LinkedTree} child hoge
- * @param {b9.LinkedTree} prev_child hoge
+ * Links a tree with this tree as the next of the specified tree.
+ * @param {b9.LinkedTree} child A tree.
+ * @param {b9.LinkedTree} prev_child The tree to be the previous. This tree must be a child of this tree.
  */
 b9.LinkedTree.prototype.addChildAfter = function(child, prev_child)
 {
@@ -251,8 +252,8 @@ b9.LinkedTree.prototype.addChildAfter = function(child, prev_child)
 };
 
 /**
- * hoge
- * @param {b9.LinkedTree} child hoge
+ * Unlinks a child from this tree.
+ * @param {b9.LinkedTree} child A child to be unlinked. This tree must be a child of this tree.
  */
 b9.LinkedTree.prototype.removeChild = function(child) {
     if (child._parent === this) {
@@ -275,7 +276,8 @@ b9.LinkedTree.prototype.removeChild = function(child) {
 };
 
 /**
- * hoge
+ * Unlinks all of the children from this tree.
+ * Note that this method only unlinks the children of this tree, so a child of the children doesn't change.
  */
 b9.LinkedTree.prototype.clear = function() {
     while (this._last_child) {
