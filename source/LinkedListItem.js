@@ -21,7 +21,7 @@
  */
 
 /**
- * @class An element of the b9.LinkedList.
+ * @class An element of the b9.LinkedList class.
  */
 b9.LinkedListItem = b9.createClass();
 
@@ -37,7 +37,7 @@ b9.LinkedListItem.prototype.initialize = function(self) {
 };
 
 /**
- * Destructs this item.
+ * Destructs this item. If this item is in a list, this item will be removed from it.
  */
 b9.LinkedListItem.prototype.finalize = function() {
     if (this._list) {
@@ -48,16 +48,16 @@ b9.LinkedListItem.prototype.finalize = function() {
 };
 
 /**
- * Returns the object which is linked with this item.
- * @return {Object} hoge
+ * Returns the object linked with this item.
+ * @return {Object} The linked object.
  */
 b9.LinkedListItem.prototype.getSelf = function() {
     return this._self;
 };
 
 /**
- * Returns the list which this item is in. If no such list exists, returns null.
- * @return {b9.LinkedList} The list.
+ * Returns the list in which this item is. If no such list exists, returns null.
+ * @return {b9.LinkedList} The list in which this item is.
  */
 b9.LinkedListItem.prototype.getList = function() {
     return this._list;

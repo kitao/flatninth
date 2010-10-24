@@ -21,7 +21,7 @@
  */
 
 /**
- * @class A sequence of elements stored in a linked list.
+ * @class A linked list which stores instances of the b9.LinkedListItem class.
  */
 b9.LinkedList = b9.createClass();
 
@@ -57,7 +57,7 @@ b9.LinkedList.prototype.getItemCount = function() {
 };
 
 /**
- * Returns the first item in this list.
+ * Returns the first item in this list. If no such item exists, returns null.
  * @return {b9.LinkedListItem} The first item.
  */
 b9.LinkedList.prototype.getFirstItem = function() {
@@ -65,7 +65,7 @@ b9.LinkedList.prototype.getFirstItem = function() {
 };
 
 /**
- * Returns the last item in this list.
+ * Returns the last item in this list. If no such item exists, returns null.
  * @return {b9.LinkedListItem} The last item.
  */
 b9.LinkedList.prototype.getLastItem = function() {
@@ -73,7 +73,7 @@ b9.LinkedList.prototype.getLastItem = function() {
 };
 
 /**
- * Add an item to this list as the first.
+ * Add an item to this list as the first item.
  * @param {b9.LinkedListItem} item An item.
  */
 b9.LinkedList.prototype.addItemFirst = function(item) {
@@ -81,7 +81,7 @@ b9.LinkedList.prototype.addItemFirst = function(item) {
 };
 
 /**
- * Add an item to this list as the last.
+ * Add an item to this list as the last item.
  * @param {b9.LinkedListItem} item An item.
  */
 b9.LinkedList.prototype.addItemLast = function(item) {
