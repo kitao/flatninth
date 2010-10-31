@@ -21,38 +21,39 @@
  */
 
 /**
- * @class hoge
+ * @class A color which is represented by red, green, blue and alpha components.
  */
 b9.Color = b9.createClass();
 
 /**
- * hoge
- * @param {b9.Color|Number} [arg1] hoge
- * @param {Number} [arg2] hoge
- * @param {Number} [arg3] hoge
- * @param {Number} [arg4] hoge
+ * Constructs a color.
+ * The number of the arguments must be 0, 1, 3, or 4.
+ * @param {b9.Color|Number} [color_or_r] A color to be cloned or a red component.
+ * @param {Number} [g] A green component.
+ * @param {Number} [b] A blue component.
+ * @param {Number} [a] An alpha component. If not specified, 1.0(=opacity) is used.
  */
-b9.Color.prototype.initialize = function(arg1, arg2, arg3, arg4) {
+b9.Color.prototype.initialize = function(color_or_r, g, b, a) {
     this._r = 0.0;
     this._g = 0.0;
     this._b = 0.0;
     this._a = 0.0;
 
     if (arguments.length === 1) {
-        this._r = arg1._r;
-        this._g = arg1._g;
-        this._b = arg1._b;
-        this._a = arg1._a;
+        this._r = color_or_r._r;
+        this._g = color_or_r._g;
+        this._b = color_or_r._b;
+        this._a = color_or_r._a;
     } else if (arguments.length === 3) {
-        this._r = arg1;
-        this._g = arg2;
-        this._b = arg3;
+        this._r = color_or_r;
+        this._g = g;
+        this._b = b;
         this._a = 1.0;
     } else if (arguments.length === 4) {
-        this._r = arg1;
-        this._g = arg2;
-        this._b = arg3;
-        this._a = arg4;
+        this._r = color_or_r;
+        this._g = g;
+        this._b = b;
+        this._a = a;
     }
 
     this._r = b9.Math.clamp(this._r, 0.0, 1.0);
@@ -62,17 +63,17 @@ b9.Color.prototype.initialize = function(arg1, arg2, arg3, arg4) {
 };
 
 /**
- * hoge
- * @return {Number} hoge
+ * Returns the red component.
+ * @return {Number} The red component.
  */
 b9.Color.prototype.getR = function() {
     return this._r;
 };
 
 /**
- * hoge
- * @param {Number} r hoge
- * @return {b9.Color} hoge
+ * Sets the red component.
+ * @param {Number} r A red component.
+ * @return {b9.Color} This color.
  */
 b9.Color.prototype.setR = function(r) {
     this._r = b9.Math.clamp(r, 0.0, 1.0);
@@ -81,17 +82,17 @@ b9.Color.prototype.setR = function(r) {
 };
 
 /**
- * hoge
- * @return {Number} hoge
+ * Returns the green component.
+ * @return {Number} The green component.
  */
 b9.Color.prototype.getG = function() {
     return this._g;
 };
 
 /**
- * hoge
- * @param {Number} g hoge
- * @return {b9.Color} hoge
+ * Sets the green component.
+ * @param {Number} g A green component.
+ * @return {b9.Color} This color.
  */
 b9.Color.prototype.setG = function(g) {
     this._g = b9.Math.clamp(g, 0.0, 1.0);
@@ -100,17 +101,17 @@ b9.Color.prototype.setG = function(g) {
 };
 
 /**
- * hoge
- * @return {Number} hoge
+ * Returns the blue component.
+ * @return {Number} The blue component.
  */
 b9.Color.prototype.getB = function() {
     return this._b;
 };
 
 /**
- * hoge
- * @param {Number} b hoge
- * @return {b9.Color} hoge
+ * Sets the blue component.
+ * @param {Number} b A blue component.
+ * @return {b9.Color} This color.
  */
 b9.Color.prototype.setB = function(b) {
     this._b = b9.Math.clamp(b, 0.0, 1.0);
@@ -119,17 +120,17 @@ b9.Color.prototype.setB = function(b) {
 };
 
 /**
- * hoge
- * @return {Number} hoge
+ * Returns the alpha component.
+ * @return {Number} The alpha component.
  */
 b9.Color.prototype.getA = function() {
     return this._a;
 };
 
 /**
- * hoge
- * @param {Number} a hoge
- * @return {b9.Color} hoge
+ * Sets the alpha component.
+ * @param {Number} a A alpha component.
+ * @return {b9.Color} This color.
  */
 b9.Color.prototype.setA = function(a) {
     this._a = b9.Math.clamp(a, 0.0, 1.0);
@@ -138,29 +139,30 @@ b9.Color.prototype.setA = function(a) {
 };
 
 /**
- * hoge
- * @param {b9.Color|Number} arg1 hoge
- * @param {Number} [arg2] hoge
- * @param {Number} [arg3] hoge
- * @param {Number} [arg4] hoge
- * @return {b9.Color} hoge
+ * Sets all of the components to this color.
+ * The number of the arguments must be 1, 3, or 4.
+ * @param {b9.Color|Number} [color_or_r] A color to be cloned or a red component.
+ * @param {Number} [g] A green component.
+ * @param {Number} [b] A blue component.
+ * @param {Number} [a] An alpha component. If not specified, 1.0(=opacity) is used.
+ * @return {b9.Color} This color.
  */
-b9.Color.prototype.set = function(arg1, arg2, arg3, arg4) {
+b9.Color.prototype.set = function(color_or_r, g, b, a) {
     if (arguments.length === 1) {
-        this._r = arg1._r;
-        this._g = arg1._g;
-        this._b = arg1._b;
-        this._a = arg1._a;
+        this._r = color_or_r._r;
+        this._g = color_or_r._g;
+        this._b = color_or_r._b;
+        this._a = color_or_r._a;
     } else if (arguments.length === 3) {
-        this._r = arg1;
-        this._g = arg2;
-        this._b = arg3;
+        this._r = color_or_r;
+        this._g = g;
+        this._b = b;
         this._a = 1.0;
     } else if (arguments.length === 4) {
-        this._r = arg1;
-        this._g = arg2;
-        this._b = arg3;
-        this._a = arg4;
+        this._r = color_or_r;
+        this._g = g;
+        this._b = b;
+        this._a = a;
     }
 
     this._r = b9.Math.clamp(this._r, 0.0, 1.0);
@@ -172,9 +174,9 @@ b9.Color.prototype.set = function(arg1, arg2, arg3, arg4) {
 };
 
 /**
- * hoge
- * @param {b9.Color} color hoge
- * @return {b9.Color} hoge
+ * Adds a color to this color.
+ * @param {b9.Color} color A color.
+ * @return {b9.Color} This color.
  */
 b9.Color.prototype.add = function(color) {
     this._r = b9.Math.min(this._r + color._r, 1.0);
@@ -186,9 +188,9 @@ b9.Color.prototype.add = function(color) {
 };
 
 /**
- * hoge
- * @param {b9.Color} color hoge
- * @return {b9.Color} hoge
+ * Subtracts a color from this color.
+ * @param {b9.Color} color A color.
+ * @return {b9.Color} This color.
  */
 b9.Color.prototype.sub = function(color) {
     this._r = b9.Math.max(this._r - color._r, 0.0);
@@ -200,21 +202,21 @@ b9.Color.prototype.sub = function(color) {
 };
 
 /**
- * hoge
- * @param {b9.Color|Number} arg hoge
- * @return {b9.Color} hoge
+ * Multiplies this color with a color or a scalar value.
+ * @param {b9.Color|Number} color_os_s A color or a scalar value.
+ * @return {b9.Color} This color.
  */
-b9.Color.prototype.mul = function(arg) {
-    if (arg._r === undefined) {
-        this._r *= arg;
-        this._g *= arg;
-        this._b *= arg;
-        this._a *= arg;
+b9.Color.prototype.mul = function(color_or_s) {
+    if (color_or_s._r === undefined) {
+        this._r *= color_or_s;
+        this._g *= color_or_s;
+        this._b *= color_or_s;
+        this._a *= color_or_s;
     } else {
-        this._r = this._r * arg._r;
-        this._g = this._g * arg._g;
-        this._b = this._b * arg._b;
-        this._a = this._a * arg._a;
+        this._r = this._r * color_or_s._r;
+        this._g = this._g * color_or_s._g;
+        this._b = this._b * color_or_s._b;
+        this._a = this._a * color_or_s._a;
     }
 
     this._r = b9.Math.clamp(this._r, 0.0, 1.0);
@@ -226,9 +228,9 @@ b9.Color.prototype.mul = function(arg) {
 };
 
 /**
- * hoge
- * @param {Number} s hoge
- * @return {b9.Color} hoge
+ * Divides this color by a scalar value.
+ * @param {Number} s A scalar value.
+ * @return {b9.Color} This color.
  */
 b9.Color.prototype.div = function(s) {
     var rs = 1.0 / s;
@@ -242,12 +244,12 @@ b9.Color.prototype.div = function(s) {
 };
 
 /**
- * hoge
- * @param {b9.Color} to hoge
- * @param {Number} ratio hoge
- * @return {b9.Color} hoge
+ * Interpolates this color to a color by a ratio.
+ * @param {b9.Color} to A destination color.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two colors.
+ * @return {b9.Color} This color.
  */
-b9.Color.prototype.interp = function(to, ratio) {
+b9.Color.prototype.lerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
@@ -263,18 +265,20 @@ b9.Color.prototype.interp = function(to, ratio) {
 };
 
 /**
- * hoge
- * @param {b9.Color} color hoge
- * @return {Boolean} hoge
+ * Returns whether this color equals a color.
+ * @param {b9.Color} vec A color.
+ * @return {Boolean} true if the two colors are equal; false otherwise.
  */
-b9.Color.prototype.isEqual = function(color) {
-    return (b9.Math.isEqualFloat(this._r, color._r) && b9.Math.isEqualFloat(this._g, color._g) &&
-            b9.Math.isEqualFloat(this._b, color._b) && b9.Math.isEqualFloat(this._a, color._a));
+b9.Color.prototype.equals = function(color) {
+    return (b9.Math.equals_float(this._r, color._r) &&
+            b9.Math.equals_float(this._g, color._g) &&
+            b9.Math.equals_float(this._b, color._b) &&
+            b9.Math.equals_float(this._a, color._a));
 };
 
 /**
- * hoge
- * @return {String} hoge
+ * Returns a string representation of this color.
+ * @return {String} A string representation of this color.
  */
 b9.Color.prototype.toString = function() {
     var str = "(";
@@ -291,47 +295,13 @@ b9.Color.prototype.toString = function() {
 };
 
 /**
- * hoge
- * @return {String} hoge
- */
-b9.Color.prototype.toRGB = function() {
-    var rgb = "rgb(";
-    rgb += b9.Math.floor(this._r * 255.0 + 0.5);
-    rgb += ",";
-    rgb += b9.Math.floor(this._g * 255.0 + 0.5);
-    rgb += ",";
-    rgb += b9.Math.floor(this._b * 255.0 + 0.5);
-    rgb += ")";
-
-    return rgb;
-};
-
-/**
- * hoge
- * @return {String} hoge
- */
-b9.Color.prototype.toRGBA = function() {
-    var rgba = "rgba(";
-    rgba += b9.Math.floor(this._r * 255.0 + 0.5);
-    rgba += ",";
-    rgba += b9.Math.floor(this._g * 255.0 + 0.5);
-    rgba += ",";
-    rgba += b9.Math.floor(this._b * 255.0 + 0.5);
-    rgba += ",";
-    rgba += b9.Math.floor(this._a * 255.0 + 0.5);
-    rgba += ")";
-
-    return rgba;
-};
-
-/**
- * hoge
+ * The color whose components are all 0.0.
  * @return {b9.Color}
  */
 b9.Color.ZERO = new b9.Color(0.0, 0.0, 0.0, 0.0);
 
 /**
- * hoge
+ * The color whose compoenents are all 1.0.
  * @return {b9.Color}
  */
 b9.Color.FULL = new b9.Color(1.0, 1.0, 1.0, 1.0);
