@@ -33,7 +33,7 @@ REF_DIR     = $(BASE_DIR)/doc/reference
 
 SRCS1       = b9.js Math.js Vector2D.js Matrix2D.js Vector3D.js Matrix3D.js Quaternion.js Color.js
 SRCS2       = LinkedList.js LinkedListItem.js LinkedTree.js
-SRCS3       =
+SRCS3       = Drawable.js
 
 SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS1) $(SRCS2) $(SRCS3))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
