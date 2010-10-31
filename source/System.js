@@ -26,11 +26,20 @@
 b9.System = {};
 
 b9.System._initialize = function(canvas_id, target_fps) {
-    var canvas = document.getElementById(canvas_id);
+    this._canvas = document.getElementById(canvas_id);
 
-    if (canvas && canvas.getContext) {
-        canvas.context = canvas.getContext("2d");
+    if (!this._canvas) {
+        return;
     }
+
+    this._gl = canvas.getContext("experimental-webgl");
+
+    if (!this._gl) {
+        return;
+    }
+
+    this._gl.viewportWidth = this._canvas.width;
+    this._gl.viewportHeight = this._canvas.height;
 
     this._main_canvas = canvas;
     this._target_fps = b9.Math.max(target_fps, 1);
@@ -168,112 +177,6 @@ b9.System.getTime = function() {
     return (new Date()).getTime();
 };
 
-/**
- * hoge
- * @return {b9.Layer} hoge
- */
-b9.System.getFirstLayer = function() {
-    var item = this._layer_list.getFirstItem();
-    return item ? item.getSelf() : null;
-};
-
-/**
- * hoge
- * @return {b9.Layer} hoge
- */
-b9.System.getLastLayer = function() {
-    var item = this._layer_list.getLastItem();
-    return item ? item.getSelf() : null;
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.taskRoot = function() {
-    return this._task_root;
-};
-
-/**
- * hoge
- * @return {b9.Layer} hoge
- */
-b9.System.defaultLayerFirst = function() {
-    return this._default_layer[this._ORDER_FIRST];
-};
-
-/**
- * hoge
- * @return {b9.Layer} hoge
- */
-b9.System.defaultLayerBefore = function() {
-    return this._default_layer[this._ORDER_BEFORE];
-};
-
-/**
- * hoge
- * @return {b9.Layer} hoge
- */
-b9.System.defaultLayerNormal = function() {
-    return this._default_layer[this._ORDER_NORMAL];
-};
-
-/**
- * hoge
- * @return {b9.Layer} hoge
- */
-b9.System.defaultLayerAfter = function() {
-    return this._default_layer[this._ORDER_AFTER];
-};
-
-/**
- * hoge
- * @return {b9.Layer} hoge
- */
-b9.System.defaultLayerLast = function() {
-    return this._default_layer[this._ORDER_LAST];
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.defaultTaskFirst = function() {
-    return this._default_task[this._ORDER_FIRST];
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.defaultTaskBefore = function() {
-    return this._default_task[this._ORDER_BEFORE];
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.defaultTaskNormal = function() {
-    return this._default_task[this._ORDER_NORMAL];
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.defaultTaskAfter = function() {
-    return this._default_task[this._ORDER_AFTER];
-};
-
-/**
- * hoge
- * @return {b9.Task} hoge
- */
-b9.System.defaultTaskLast = function() {
-    return this._default_task[this._ORDER_LAST];
-};
-
 b9.System._update = function() {
     var next_task;
 
@@ -314,10 +217,3 @@ b9.System._unregisterLayer = function(layer) {
         this._layer_list.removeItem(layer._list_item);
     }
 };
-
-b9.System._ORDER_FIRST = 0;
-b9.System._ORDER_BEFORE = 1;
-b9.System._ORDER_NORMAL = 2;
-b9.System._ORDER_AFTER = 3;
-b9.System._ORDER_LAST = 4;
-b9.System._ORDER_NUM = 5;

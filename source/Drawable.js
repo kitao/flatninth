@@ -27,12 +27,11 @@ b9.Drawable = b9.createClass();
 
 /**
  * Constructs a drawable.
- * @param {b9.Drawable} [parent] hoge
+ * @param {b9.Drawable} [parent] A drawable to be the parent of this drawable.
  */
 b9.Drawable.prototype.initialize = function(parent) {
     this._flag = b9.Drawable.FLAG_VISIBLE;
     this._alpha = 1.0;
-    this._tex_id = 0;
     this._local = new b9.Matrix3D(b9.Matrix3D.UNIT);
 
     this._tree = new b9.LinkedTree(this);
@@ -52,8 +51,8 @@ b9.Drawable.prototype.finalize = function() {
 };
 
 /**
- * TODO
- * @return {Boolean} hoge
+ * Returns whether the specified flag is on.
+ * @return {Boolean} A flag.
  */
 b9.Drawable.prototype.getFlag = function(flag) {
     return (this._flag & flag) ? true : false;
@@ -71,36 +70,24 @@ b9.Drawable.prototype.setFlag = function(flag, is_on) {
 };
 
 /**
- *
+ * Returns the alpha value of this drawable.
+ * @return {Number} The alpha value.
  */
 b9.Drawable.prototype.getAlpha = function() {
     return this._alpha;
 };
 
 /**
- *
+ * Sets the alpha value of this drawable.
+ * @param {Number} alpha An alpha value.
  */
 b9.Drawable.prototype.setAlpha = function(alpha) {
-    this._alpha = alpha;
+    this._alpha = b9.Math.clamp(alpha, 0.0, 1.0);
 };
 
 /**
- *
- */
-b9.Drawable.prototype.getTextureID = function() {
-    return this._tex_id;
-};
-
-/**
- *
- */
-b9.Drawable.prototype.setTextureID = function(tex_id) {
-    this._tex_id = tex_id;
-};
-
-/**
- * hoge
- * @return {b9.Matrix2D} hoge
+ * Returns the local matrix of this drawable.
+ * @return {b9.Matrix3D} The local matrix.
  */
 b9.Drawable.prototype.refLocal = function() {
     return this._local;
@@ -223,14 +210,14 @@ b9.Drawable.prototype.removeChild = function(child) {
 };
 
 b9.Drawable.prototype._calcFinal = function() {
+    var parent = this.getParent();
+
     this._world.set(this._local);
-    this._final_filter_color.set(this._filter_color);
+    this._final_alpha = this._alpha;
 
-    if (!this.isRoot()) {
-        var parent = this.getParent();
-
+    if (parent) {
         this._world.toGlobal(parent._local);
-        this._final_filter_color.mul(parent._filter_color);
+        this._final_alpha *= parent._final_alpha;
     }
 };
 
