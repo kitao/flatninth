@@ -150,7 +150,7 @@ b9.LinkedTree.prototype.getLastDescendant = function() {
 
 /**
  * Links a tree with this tree as the first child.
- * @param {b9.LinkedTree} child A tree.
+ * @param {b9.LinkedTree} child A tree. If this tree already belongs to some tree, the tree gets automatically unlinked with it before the operation.
  */
 b9.LinkedTree.prototype.addChildFirst = function(child) {
     if (child._parent) {
@@ -176,7 +176,7 @@ b9.LinkedTree.prototype.addChildFirst = function(child) {
 
 /**
  * Links a tree with this tree as the last child.
- * @param {b9.LinkedTree} child A tree.
+ * @param {b9.LinkedTree} child A tree. If this tree already belongs to some tree, the tree gets automatically unlinked with it before the operation.
  */
 b9.LinkedTree.prototype.addChildLast = function(child) {
     if (child._parent) {
@@ -201,7 +201,7 @@ b9.LinkedTree.prototype.addChildLast = function(child) {
 
 /**
  * Links a tree with this tree as the previous of the specified tree.
- * @param {b9.LinkedTree} child A tree.
+ * @param {b9.LinkedTree} child A tree. If this tree already belongs to some tree, the tree gets automatically unlinked with it before the operation.
  * @param {b9.LinkedTree} next_child The tree to be the next. This tree must be a child of this tree.
  */
 b9.LinkedTree.prototype.addChildBefore = function(child, next_child) {
@@ -223,7 +223,7 @@ b9.LinkedTree.prototype.addChildBefore = function(child, next_child) {
 
 /**
  * Links a tree with this tree as the next of the specified tree.
- * @param {b9.LinkedTree} child A tree.
+ * @param {b9.LinkedTree} child A tree. If this tree already belongs to some tree, the tree gets automatically unlinked with it before the operation.
  * @param {b9.LinkedTree} prev_child The tree to be the previous. This tree must be a child of this tree.
  */
 b9.LinkedTree.prototype.addChildAfter = function(child, prev_child)

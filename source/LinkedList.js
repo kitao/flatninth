@@ -74,7 +74,7 @@ b9.LinkedList.prototype.getLastItem = function() {
 
 /**
  * Links an item with this list as the first item.
- * @param {b9.LinkedListItem} item An item.
+ * @param {b9.LinkedListItem} item An item. If this item already belongs to some list, the item gets automatically unlinked with it before the operation.
  */
 b9.LinkedList.prototype.addItemFirst = function(item) {
     this.addItemAfter(item, this._start);
@@ -82,7 +82,7 @@ b9.LinkedList.prototype.addItemFirst = function(item) {
 
 /**
  * Links an item with this list as the last item.
- * @param {b9.LinkedListItem} item An item.
+ * @param {b9.LinkedListItem} item An item. If this item already belongs to some list, the item gets automatically unlinked with it before the operation.
  */
 b9.LinkedList.prototype.addItemLast = function(item) {
     this.addItemBefore(item, this._end);
@@ -90,7 +90,7 @@ b9.LinkedList.prototype.addItemLast = function(item) {
 
 /**
  * Links an item with this list as the previous of the specified item.
- * @param {b9.LinkedListItem} item An item.
+ * @param {b9.LinkedListItem} item An item. If this item already belongs to some list, the item gets automatically unlinked with it before the operation.
  * @param {b9.LinkedListItem} next_item The item to be the next. This item must belong to this list.
  */
 b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
@@ -112,7 +112,7 @@ b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
 
 /**
  * Links an item with this list as the next of the specified item.
- * @param {b9.LinkedListItem} item An item.
+ * @param {b9.LinkedListItem} item An item. If this item already belongs to some list, the item gets automatically unlinked with it before the operation.
  * @param {b9.LinkedListItem} prev_item The item to be the previous. This item must belong to this list.
  */
 b9.LinkedList.prototype.addItemAfter = function(item, prev_item) {
