@@ -31,7 +31,7 @@ TEST_DIR    = $(BASE_DIR)/test
 SAMPLE_DIR  = $(BASE_DIR)/sample
 REF_DIR     = $(BASE_DIR)/doc/reference
 
-SRCS1       = b9.js Math.js Vector2D.js Matrix2D.js Vector3D.js Matrix3D.js Quaternion.js
+SRCS1       = b9.js Math.js Vector2D.js Matrix2D.js Vector3D.js Matrix3D.js Quaternion.js Color.js
 SRCS2       = LinkedList.js LinkedListItem.js LinkedTree.js
 SRCS3       =
 
