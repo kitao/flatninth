@@ -23,17 +23,16 @@
 /**
  * @class
  */
-b9.SpriteBuffer = b9.createClass(b9.Element);
+b9.SpriteBuffer = b9.createClass();
 
 /**
  *
- * @param {Number} max_unit_count
+ * @param {Number} max_rect_count
  */
-b9.SpriteBuffer.prototype.initialize = function(max_unit_count) {
+b9.SpriteBuffer.prototype.initialize = function(max_rect_count) {
     this.initializeSuper(parent);
 
-    this._max_unit_count = max_unit_count;
-    this._unit_count = max_unit_count;
+    this._max_rect_count = this._max_rect_count = max_unit_count;
 };
 
 /**

@@ -23,17 +23,16 @@
 /**
  * @class
  */
-b9.PrimitiveBuffer = b9.createClass(b9.Element);
+b9.PrimitiveBuffer = b9.createClass();
 
 /**
  *
- * @param {Number} max_unit_count
+ * @param {Number} max_vert_count
  */
-b9.PrimitiveBuffer.prototype.initialize = function(max_unit_count) {
+b9.PrimitiveBuffer.prototype.initialize = function(max_vert_count) {
     this.initializeSuper(parent);
 
-    this._max_unit_count = max_unit_count;
-    this._unit_count = max_unit_count;
+    this._max_vert_count = this._vert_count = max_vert_count;
 };
 
 /**
