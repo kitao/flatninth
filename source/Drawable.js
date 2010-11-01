@@ -158,7 +158,7 @@ b9.Drawable.prototype.getLastChild = function() {
 
 /**
  * Returns the last drawable of this drawable-tree, regarding this drawable-tree as a list.
- * If no such drawable exists, returns this tree.
+ * If no such drawable exists, returns this tree.<br>
  * This method is mainly used to retrieve the terminator of the list which consists of this drawable and its family.
  * @return {b9.Drawable} The last descendant.
  */

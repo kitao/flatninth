@@ -134,7 +134,7 @@ b9.LinkedTree.prototype.getLastChild = function() {
 };
 
 /**
- * Returns the last tree of this tree, regarding this tree as a list. If no such tree exists, returns this tree.
+ * Returns the last tree of this tree, regarding this tree as a list. If no such tree exists, returns this tree.<br>
  * This method is mainly used to retrieve the terminator of the list which consists of this tree and its family.
  * @return {b9.LinkedTree} The last descendant.
  */

@@ -32,9 +32,9 @@ var b9 = {};
 b9.VERSION = 0.01;
 
 /**
- * Creates a new class which provides constructor/destructor mechanism.
+ * Creates a new class which provides constructor/destructor mechanism.<br>
  * The method named initialize is called when an instance is created,
- * and the method named finalize is called when an instance is deleted by calling the finalize method.
+ * and the method named finalize is called when an instance is deleted by calling the finalize method.<br>
  * If the created class has a base class, it also provides the initializeSuper method and the finalizeSuper method.
  * The constructor and destructor of the base class can be called with these methods respectively.
  * @param {Object} [super_class] A base class.
@@ -54,6 +54,7 @@ b9.createClass = function(super_class) {
         sub_class.prototype.constructor = sub_class;
 
         if (super_class.prototype.initialize) {
+            /** @ignore */
             sub_class.prototype.initializeSuper = function() {
                 var temp_method = this.initializeSuper;
                 this.initializeSuper = super_class.prototype.initializeSuper || null;
@@ -69,6 +70,7 @@ b9.createClass = function(super_class) {
         }
 
         if (super_class.prototype.finalize) {
+            /** @ignore */
             sub_class.prototype.finalizeSuper = function() {
                 var temp_method = this.finalizeSuper;
                 this.finalizeSuper = super_class.prototype.finalizeSuper || null;
