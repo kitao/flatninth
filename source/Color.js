@@ -21,7 +21,7 @@
  */
 
 /**
- * @class A color which is represented by red, green, blue and alpha components.
+ * @class A color which is represented by red, green, blue, and alpha components.
  */
 b9.Color = b9.createClass();
 
@@ -129,7 +129,7 @@ b9.Color.prototype.getA = function() {
 
 /**
  * Sets the alpha component.
- * @param {Number} a A alpha component.
+ * @param {Number} a An alpha component.
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.setA = function(a) {

@@ -52,7 +52,7 @@ b9.Drawable.prototype.finalize = function() {
 
 /**
  * Returns whether the specified flag is on.
- * @return {Boolean} A flag.
+ * @return {Boolean} true the flag is on; false the flag is off.
  */
 b9.Drawable.prototype.getFlag = function(flag) {
     return (this._flag & flag) ? true : false;
@@ -169,7 +169,8 @@ b9.Drawable.prototype.getLastDescendant = function() {
 
 /**
  * Links a drawable with this drawable as the first child.
- * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable, the drawable gets automatically unlinked with it before the operation.
+ * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable,
+ * the drawable gets automatically unlinked with it before the operation.
  */
 b9.Drawable.prototype.addChildFirst = function(cihld) {
     this._tree.addChildFirst(child._tree);
@@ -177,7 +178,8 @@ b9.Drawable.prototype.addChildFirst = function(cihld) {
 
 /**
  * Links a drawable with this drawable as the last child.
- * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable, the drawable gets automatically unlinked with it before the operation.
+ * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable,
+ * the drawable gets automatically unlinked with it before the operation.
  */
 b9.Drawable.prototype.addChildLast = function(child) {
     this._tree.addChildLast(child._tree);
@@ -185,7 +187,8 @@ b9.Drawable.prototype.addChildLast = function(child) {
 
 /**
  * Links a drawable with this drawable as the previous of the specified drawable.
- * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable, the drawable gets automatically unlinked with it before the operation.
+ * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable,
+ * the drawable gets automatically unlinked with it before the operation.
  * @param {b9.Drawable} next_child The drawable to be the next. This drawable must be a child of this drawable.
  */
 b9.Drawable.prototype.addChildBefore = function(child, next_child) {
@@ -194,7 +197,8 @@ b9.Drawable.prototype.addChildBefore = function(child, next_child) {
 
 /**
  * Links a drawable with this drawable as the next of the specified drawable.
- * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable, the drawable gets automatically unlinked with it before the operation.
+ * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable,
+ * the drawable gets automatically unlinked with it before the operation.
  * @param {b9.Drawable} prev_child The drawable to be the previous. This drawable must be a child of this drawable.
  */
 b9.Drawable.prototype.addChildAfter = function(child, prev_child) {

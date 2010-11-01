@@ -41,19 +41,19 @@ b9.System._initialize = function(canvas_id, target_fps) {
     this._gl.viewportWidth = this._canvas.width;
     this._gl.viewportHeight = this._canvas.height;
 
-    this._main_canvas = canvas;
     this._target_fps = b9.Math.max(target_fps, 1);
-    this._layer_list = new b9.List();
-    this._task_root = new b9.Task();
-    this._task_root.setName("TASK_ROOT");
-    this._task_root._is_root = true;
+
+//    this._layer_list = new b9.List();
+//    this._task_root = new b9.Task();
+//    this._task_root.setName("TASK_ROOT");
+//    this._task_root._is_root = true;
     this._timer_id = null;
     this._next_update_time = 0;
 
-    this._default_layer = new Array(this._ORDER_NUM);
-    this._default_task = new Array(this._ORDER_NUM);
+//    this._default_layer = new Array(this._ORDER_NUM);
+//    this._default_task = new Array(this._ORDER_NUM);
 
-    for (var i = 0; i < this._ORDER_NUM; i++) {
+/*    for (var i = 0; i < this._ORDER_NUM; i++) {
         this._default_layer[i] = new b9.Layer(i * 100);
         this._default_layer[i].size().set(this._main_canvas.width, this._main_canvas.height);
         this._default_layer[i].setClear(false);
@@ -75,7 +75,7 @@ b9.System._initialize = function(canvas_id, target_fps) {
     this._default_task[this._ORDER_NORMAL].setName("DEFAULT_TASK_NORMAL");
     this._default_task[this._ORDER_AFTER].setName("DEFAULT_TASK_AFTER");
     this._default_task[this._ORDER_LAST].setName("DEFAULT_TASK_LAST");
-
+*/
     b9.AssetManager._initialize();
     b9.DebugManager._initialize();
 };
