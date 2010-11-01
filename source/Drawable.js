@@ -52,7 +52,7 @@ b9.Drawable.prototype.finalize = function() {
 
 /**
  * Returns whether the specified flag is on.
- * @return {Boolean} true the flag is on; false the flag is off.
+ * @return {Boolean} true the flag is on; false otherwise.
  */
 b9.Drawable.prototype.getFlag = function(flag) {
     return (this._flag & flag) ? true : false;
