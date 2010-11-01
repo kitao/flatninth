@@ -45,7 +45,7 @@ b9.LinkedList.prototype.initialize = function() {
  * Destructs this list. All of the items belong to this list will be unlinked.
  */
 b9.LinkedList.prototype.finalize = function() {
-    this.clear();
+    this.removeAllItems();
 };
 
 /**
@@ -156,7 +156,7 @@ b9.LinkedList.prototype.removeItem = function(item) {
 /**
  * Unlinks all of the items from this list.
  */
-b9.LinkedList.prototype.clear = function() {
+b9.LinkedList.prototype.removeAllItems = function() {
     while (this._item_count > 0) {
         this.removeItem(this._start._next);
     }
