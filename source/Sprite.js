@@ -29,10 +29,9 @@ b9.Sprite = b9.createClass(b9.Drawable);
 /**
  *
  * @param {b9.SpriteBuffer} sprt_buf
- * @param {b9.Element} [parent]
  */
-b9.Sprite.prototype.initialize = function(sprt_buf, parent) {
-    this.initializeSuper(parent);
+b9.Sprite.prototype.initialize = function(sprt_buf) {
+    this.initializeSuper();
 };
 
 /**

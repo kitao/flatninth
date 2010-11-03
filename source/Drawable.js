@@ -27,9 +27,8 @@ b9.Drawable = b9.createClass();
 
 /**
  * Constructs a drawable.
- * @param {b9.Drawable} [parent] A drawable to be the parent of this drawable.
  */
-b9.Drawable.prototype.initialize = function(parent) {
+b9.Drawable.prototype.initialize = function() {
     this._flag = b9.Drawable.FLAG_VISIBLE;
     this._alpha = 1.0;
     this._local = new b9.Matrix3D(b9.Matrix3D.UNIT);
@@ -37,10 +36,6 @@ b9.Drawable.prototype.initialize = function(parent) {
     this._tree = new b9.LinkedTree(this);
     this._world = new b9.Matrix3D();
     this._final_alpha = 1.0;
-
-    if (parent) {
-        parent.addChildLast(this);
-    }
 };
 
 /**

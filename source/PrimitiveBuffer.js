@@ -32,16 +32,11 @@ b9.PrimitiveBuffer = b9.createClass();
 b9.PrimitiveBuffer.prototype.initialize = function(vert_count) {
     var gl = b9.System.getGLContext();
 
-    this.initializeSuper(parent);
+    this.initializeSuper();
 
     this._vert_count = vert_count;
-    this._pos_array = new Float32Array(max_vertex_count * 3);
-    //this._color = new Float32Array(max_vertex_count * 4);
-    //this._texcoord = new Float32Array(max_vertex_count * 2);
-
-    this._pos_buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_buf);
-    gl.bufferData(gl.ARRAY_BUFFER, this._pos, gl.STATIC_DRAW);
+    this._vert_array = new Float32Array(vert_count * 3);
+    this._vert_glbuf = gl.createBuffer();
 };
 
 /**
@@ -55,5 +50,53 @@ b9.PrimitiveBuffer.prototype.finalize = function() {
  *
  * @return {Number}
  */
-b9.PrimitiveBuffer.prototype.getMaxVertexCount = function() {
+b9.PrimitiveBuffer.prototype.getVertexCount = function() {
+    return this._vert_count;
+};
+
+/**
+ *
+ */
+b9.PrimitiveBuffer.prototype.getVertexPos = function(index, vec) {
+    var offset = index * 3;
+
+    vec.set(this._vert_array[offset], this._vert_array[offset + 1], this._vert_array[offset + 2]);
+};
+
+/**
+ *
+ * @param {Number} index
+ * @param {b9.Vector3D|Number} vec_or_x
+ * @param {Number} [y]
+ * @param {Number} [z]
+ */
+b9.PrimitiveBuffer.prototype.setVertexPos = function(index, vec_or_x, y, z) {
+    var offset = index * 3;
+
+    if (arguments.length === 2) {
+        this._vert_array[offset] = vec_or_x.x;
+        this._vert_array[offset + 1] = vec_or_x.y;
+        this._vert_array[offset + 2] = vec_or_x.z;
+    } else {
+        this._vert_array[offset] = vec_or_x;
+        this._vert_array[offset + 1] = y;
+        this._vert_array[offset + 2] = z;
+    }
+};
+
+/**
+ *
+ * @param {Number} [index]
+ */
+b9.PrimitiveBuffer.prototype.updateVertex = function(index) {
+    var gl = b9.System.getGLContext();
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._vert_glbuf);
+
+    if (index) {
+        // TODO
+        //gl.bufferSubData(gl.ARRAY_BUFFER, this._vert_array, gl.STATIC_DRAW); // or gl.DYNAMIC_DRAW
+    } else {
+        gl.bufferData(gl.ARRAY_BUFFER, this._vert_array, gl.STATIC_DRAW); // or gl.DYNAMIC_DRAW
+    }
 };

@@ -29,16 +29,13 @@ b9.Primitive = b9.createClass(b9.Drawable);
 /**
  *
  * @param {b9.PrimitiveBuffer} sprt_buf
- * @param {b9.Element} [parent]
  */
-b9.Primitive.prototype.initialize = function(prim_buf, parent) {
-    this.initializeSuper(parent);
+b9.Primitive.prototype.initialize = function(prim_buf) {
+    this.initializeSuper();
 
     this._tex = null;
     this._shd = null;
     this._prim_buf = prim_buf;
-    this._vert_offset = 0;
-    this._vert_count = prim_buf.getVertexCount();
 };
 
 /**
@@ -54,6 +51,14 @@ b9.Primitive.prototype.finalize = function() {
  */
 b9.Primitive.prototype.getPrimitiveBuffer = function() {
     return this._prim_buf;
+};
+
+/**
+ *
+ * @param {b9.PrimitiveBuffer} prim_buf
+ */
+b9.Primitive.prototype.setPrimitiveBuffer = function(prim_buf) {
+    this._prim_buf = prim_buf;
 };
 
 /**

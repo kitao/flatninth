@@ -27,12 +27,12 @@ b9.SpriteBuffer = b9.createClass();
 
 /**
  *
- * @param {Number} max_rect_count
+ * @param {Number} rect_count
  */
-b9.SpriteBuffer.prototype.initialize = function(max_rect_count) {
-    this.initializeSuper(parent);
+b9.SpriteBuffer.prototype.initialize = function(rect_count) {
+    this.initializeSuper();
 
-    this._max_rect_count = this._max_rect_count = max_unit_count;
+    this._rect_count = rect_count;
 };
 
 /**

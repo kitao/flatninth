@@ -34,69 +34,77 @@ b9.Shader = b9.createClass();
  * @param {Number} tex_count
  */
 b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_count, tex_count) {
+    var i;
     var gl = b9.System.getGLContext();
-    var vert_shader, frag_shader;
+    var vert_glshd, frag_glshd;
 
-    vert_shader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vert_shader, vert_code);
-    gl.compileShader(vert_shader);
+    this._vert_code = vert_code;
+    this._frag_code = frag_code;
+    this._uni_count = uni_count;
+    this._att_count = att_count;
+    this._tex_count = tex_count;
 
-    if (!gl.getShaderParameter(vert_shader, gl.COMPILE_STATUS)) {
-        // TODO: compile error
-        // delete shader
+    vert_glshd = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vert_glshd, vert_code);
+    gl.compileShader(vert_glshd);
+
+    if (!gl.getShaderParameter(vert_glshd, gl.COMPILE_STATUS)) {
+        b9.System.error("vertex shader compile error");
     }
 
-    frag_shader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(frag_shader, frag_code);
-    gl.compileShader(frag_shader);
+    frag_glshd = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(frag_glshd, frag_code);
+    gl.compileShader(frag_glshd);
 
-    if (!gl.getShaderParameter(frag_shader, gl.COMPILE_STATUS)) {
-        // TODO: compile error
-        // delete shader x 2
+    if (!gl.getShaderParameter(frag_glshd, gl.COMPILE_STATUS)) {
+        b9.System.error("fragment shader compile error");
     }
 
-    this._prog = gl.createProgram();
-    gl.attachShader(this._prog, vert_shader);
-    gl.attachShader(this._prog, frag_shader);
-    gl.linkProgram(this._prog);
+    this._glprog = gl.createProgram();
+    gl.attachShader(this._glprog, vert_glshd);
+    gl.attachShader(this._glprog, frag_glshd);
+    gl.linkProgram(this._glprog);
 
-    if (!gl.getProgramParameter(this._prog, gl.LINK_STATUS)) {
-        // TODO: link error
+    if (!gl.getProgramParameter(this._glprog, gl.LINK_STATUS)) {
+        b9.System.error("shader link error");
     }
 
-    gl.deleteShader(vert_shader);
-    gl.deleteShader(frag_shader);
+    gl.deleteShader(vert_glshd);
+    gl.deleteShader(frag_glshd);
 
-    /*
-        m_local_to_screen_loc = ckLowLevelAPI::getUniformLocation(m_shd_obj, "ck_local_to_screen");
-        m_vertex_loc = ckLowLevelAPI::getAttribLocation(m_shd_obj, "ck_vertex");
-        m_color_loc = ckLowLevelAPI::getAttribLocation(m_shd_obj, "ck_color");
-        m_texcoord_loc = ckLowLevelAPI::getAttribLocation(m_shd_obj, "ck_texcoord");
+    this._local_to_screen_loc = gl.getUnitformLocation(this._glprog, "b9_local_to_screen");
+    this._vertex_loc = gl.getUnitformLocation(this._glprog, "b9_vertex");
+    this._color_loc = gl.getUnitformLocation(this._glprog, "b9_color");
+    this._texcoord_loc = gl.getUnitformLocation(this._glprog, "b9_texcoord");
 
-        char buf[16];
+    if (uni_count > 0) {
+        this._uni_loc_table = new Array(uni_count);
 
-        for (s32 i = 0; i < m_uni_num; i++)
-        {
-            ckSysMgr::sprintf(buf, 16, "ck_uni_%02d", i);
-            m_uni_loc_tbl[i] = ckLowLevelAPI::getUniformLocation(m_shd_obj, buf);
+        for (i = 0; i < uni_count; i++) {
+            this._uni_loc_table[i] = gl.getUniformLocation(this._glprog, "b9_uni_" + ("0" + i).substr(-2));
         }
+    }
 
-        for (s32 i = 0; i < m_att_num; i++)
-        {
-            ckSysMgr::sprintf(buf, 16, "ck_att_%02d", i);
-            m_att_loc_tbl[i] = ckLowLevelAPI::getAttribLocation(m_shd_obj, buf);
-        }
+    if (att_count > 0) {
+        this._att_loc_table = new Array(att_count);
 
-        for (s32 i = 0; i < m_tex_num; i++)
-        {
-            ckSysMgr::sprintf(buf, 16, "ck_tex_%02d", i);
-            m_tex_loc_tbl[i] = ckLowLevelAPI::getUniformLocation(m_shd_obj, buf);
+        for (i = 0; i < att_count; i++) {
+            this._att_loc_table[i] = gl.getAttribLocation(this._glprog, "b9_att_" + ("0" + i).substr(-2));
         }
-    */
+    }
+
+    if (tex_count > 0) {
+        this._tex_loc_table = new Array(tex_count);
+
+        for (i = 0; i < tex_count; i++) {
+            this._tex_loc_table[i] = gl.getUniformLocation(this._glprog, "b9_tex_" + ("0" + i).substr(-2));
+        }
+    }
 };
 
 /**
  *
  */
 b9.Shader.prototype.finalize = function() {
+    // TODO
 };
