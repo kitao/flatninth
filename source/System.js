@@ -32,13 +32,13 @@ b9.System.setup = function(canvas_id, update_func, render_func, target_fps) {
     this._canvas = document.getElementById(canvas_id);
 
     if (!this._canvas) {
-        b9.error("can't find the specified canvas.");
+        this.error("can't find the specified canvas.");
     }
 
     this._gl = this._canvas.getContext("experimental-webgl");
 
     if (!this._gl) {
-        b9.error("can't initialize WebGL.");
+        this.error("can't initialize WebGL.");
     }
 
 //    this._gl.viewportWidth = this._canvas.width;
@@ -150,4 +150,15 @@ b9.System.getCurrentFPS = function() {
  */
 b9.System.getTime = function() {
     return (new Date()).getTime();
+};
+
+/**
+ * Notifies an error and throws the Error exception.
+ * @param {String} msg An error message.
+ */
+b9.System.error = function(msg) {
+    var msg2 = "b9.System.error: " + msg;
+
+    alert(msg2);
+    throw new Error(msg2);
 };
