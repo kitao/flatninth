@@ -88,3 +88,14 @@ b9.createClass = function(super_class) {
 
     return sub_class;
 };
+
+/**
+ * Notifies an error and throws the Error exception.
+ * @param {String} msg An error message.
+ */
+b9.error = function(msg) {
+    var msg2 = "b9.error: " + msg;
+
+    alert(msg2);
+    throw new Error(msg2);
+};

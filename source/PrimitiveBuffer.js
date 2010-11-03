@@ -27,12 +27,21 @@ b9.PrimitiveBuffer = b9.createClass();
 
 /**
  *
- * @param {Number} max_vert_count
+ * @param {Number} vert_count
  */
-b9.PrimitiveBuffer.prototype.initialize = function(max_vert_count) {
+b9.PrimitiveBuffer.prototype.initialize = function(vert_count) {
+    var gl = b9.System.getGLContext();
+
     this.initializeSuper(parent);
 
-    this._max_vert_count = this._vert_count = max_vert_count;
+    this._vert_count = vert_count;
+    this._pos_array = new Float32Array(max_vertex_count * 3);
+    //this._color = new Float32Array(max_vertex_count * 4);
+    //this._texcoord = new Float32Array(max_vertex_count * 2);
+
+    this._pos_buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_buf);
+    gl.bufferData(gl.ARRAY_BUFFER, this._pos, gl.STATIC_DRAW);
 };
 
 /**
@@ -40,4 +49,11 @@ b9.PrimitiveBuffer.prototype.initialize = function(max_vert_count) {
  */
 b9.PrimitiveBuffer.prototype.finalize = function() {
     this.finalizeSuper();
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.PrimitiveBuffer.prototype.getMaxVertexCount = function() {
 };

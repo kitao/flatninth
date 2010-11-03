@@ -233,10 +233,10 @@ b9.Drawable.prototype._render = function(canvas) {
  * hoge
  * @return {Number}
  */
-b9.Drawable.FLAG_VISIBLE = 0x8000;
+b9.Drawable.FLAG_VISIBLE = 0x80000000;
 
 /**
  * hoge
  * @return {Number}
  */
-b9.Drawable.FLAG_Z_SORT = 0x4000;
+b9.Drawable.FLAG_Z_SORT = 0x40000000;

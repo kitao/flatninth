@@ -31,8 +31,14 @@ b9.Primitive = b9.createClass(b9.Drawable);
  * @param {b9.PrimitiveBuffer} sprt_buf
  * @param {b9.Element} [parent]
  */
-b9.Primitive.prototype.initialize = function(sprt_buf, parent) {
+b9.Primitive.prototype.initialize = function(prim_buf, parent) {
     this.initializeSuper(parent);
+
+    this._tex = null;
+    this._shd = null;
+    this._prim_buf = prim_buf;
+    this._vert_offset = 0;
+    this._vert_count = prim_buf.getVertexCount();
 };
 
 /**
@@ -41,3 +47,53 @@ b9.Primitive.prototype.initialize = function(sprt_buf, parent) {
 b9.Primitive.prototype.finalize = function() {
     this.finalizeSuper();
 };
+
+/**
+ *
+ * @return {b9.PrimitiveBuffer}
+ */
+b9.Primitive.prototype.getPrimitiveBuffer = function() {
+    return this._prim_buf;
+};
+
+/**
+ *
+ * @return {b9.Texture}
+ */
+b9.Primitive.prototype.getTexture = function() {
+    return this._tex;
+};
+
+/**
+ *
+ * @param {b9.Texture} tex
+ */
+b9.Primitive.prototype.setTexture = function(tex) {
+    this._tex = tex;
+};
+
+/**
+ *
+ * @return {b9.Shader}
+ */
+b9.Primitive.prototype.getShader = function() {
+    return this._shd;
+};
+
+/**
+ *
+ * @param {b9.Shader} shd
+ */
+b9.Primitive.prototype.setShader = function(shd) {
+    this._shd = shd;
+};
+
+b9.Primitive.prototype._render = function() {
+    // TODO
+};
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Primitive.FLAG_XXXX = 0x00800000;
