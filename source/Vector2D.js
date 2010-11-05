@@ -26,7 +26,12 @@
 b9.Vector2D = b9.createClass();
 
 /**
- * Constructs a vector.
+ * Constructs a vector. The following forms are allowed:
+ * <ul>
+ * <li>b9.Vector2D()</li>
+ * <li>b9.Vector2D(b9.Vector2D vector_to_be_cloned)</li>
+ * <li>b9.Vector2D(float x, float y)</li>
+ * </ul>
  * @param {b9.Vector2D|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  */
@@ -53,8 +58,12 @@ b9.Vector2D.prototype.initialize = function(vec_or_x, y) {
 };
 
 /**
- * Sets all of the components to this vector.
- * @param {b9.Vector2D|Number} [vec_or_x] A vector to be copied or an x-coordinate.
+ * Sets all of the components to this vector. The following forms are allowed:
+ * <ul>
+ * <li>set(b9.Vector2D vector_to_be_cloned)</li>
+ * <li>set(float x, float y)</li>
+ * </ul>
+ * @param {b9.Vector2D|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @return {b9.Vector2D} This vector.
  */

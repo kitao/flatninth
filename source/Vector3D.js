@@ -26,8 +26,12 @@
 b9.Vector3D = b9.createClass();
 
 /**
- * Constructs a vector.
- * The number of the arguments must be 0, 1, or 3.
+ * Constructs a vector. The following forms are allowed:
+ * <ul>
+ * <li>b9.Vector3D()</li>
+ * <li>b9.Vector3D(b9.Vector3D vector_to_be_cloned)</li>
+ * <li>b9.Vector3D(float x, float y, float z)</li>
+ * </ul>
  * @param {b9.Vector3D|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
@@ -63,9 +67,12 @@ b9.Vector3D.prototype.initialize = function(vec_or_x, y, z) {
 };
 
 /**
- * Sets all of the components to this vector.
- * The number of the arguments must be 1 or 3.
- * @param {b9.Vector3D|Number} [vec_or_x] A vector to be copied or an x-coordinate.
+ * Sets all of the components to this vector. The following forms are allowed:
+ * <ul>
+ * <li>set(b9.Vector3D vector_to_be_cloned)</li>
+ * <li>set(float x, float y, float z)</li>
+ * </ul>
+ * @param {b9.Vector3D|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @return {b9.Vector3D} This vector.

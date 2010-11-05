@@ -26,9 +26,13 @@
 b9.Matrix3D = b9.createClass();
 
 /**
- * Constructs a matrix.
- * The number of the arguments must be 0, 1, or 4.
- * @param {b9.Matrix3D|b9.Vector3D} [mat_or_x_axis] A matrix to be copied or an x-axis.
+ * Constructs a matrix. The following forms are allowed:
+ * <ul>
+ * <li>b9.Matrix3D()</li>
+ * <li>b9.Matrix3D(b9.Matrix3D matrix_to_be_cloned)</li>
+ * <li>b9.Matrix3D(b9.Vector3D x_axis, b9.Vector3D y_axis, b9.Vector3D z_axis, b9.Vector3D trans)</li>
+ * </ul>
+ * @param {b9.Matrix3D|b9.Vector3D} [mat_or_x_axis] A matrix to be cloned or an x-axis.
  * @param {b9.Vector3D} [y_axis] A y-axis.
  * @param {b9.Vector3D} [z_axis] A z-axis.
  * @param {b9.Vector3D} [trans] A translation.
@@ -72,9 +76,12 @@ b9.Matrix3D.prototype.initialize = function(mat_or_x_axis, y_axis, z_axis, trans
 };
 
 /**
- * Sets all of the components to this matrix.
- * The number of the arguments must be 1 or 4.
- * @param {b9.Matrix3D|b9.Vector3D} [mat_or_x_axis] A matrix to be copied or an x-axis.
+ * Sets all of the components to this matrix. The following forms are allowed:
+ * <ul>
+ * <li>set(b9.Matrix3D matrix_to_be_cloned)</li>
+ * <li>set(b9.Vector3D x_axis, b9.Vector3D y_axis, b9.Vector3D z_axis, b9.Vector3D trans)</li>
+ * </ul>
+ * @param {b9.Matrix3D|b9.Vector3D} [mat_or_x_axis] A matrix to be cloned or an x-axis.
  * @param {b9.Vector3D} [y_axis] A y-axis.
  * @param {b9.Vector3D} [z_axis] A z-axis.
  * @param {b9.Vector3D} [trans] A translation.

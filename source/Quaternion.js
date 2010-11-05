@@ -26,8 +26,12 @@
 b9.Quaternion = b9.createClass();
 
 /**
- * Constructs a quaternion.
- * The number of the arguments must be 0, 1, or 4.
+ * Constructs a quaternion. The following forms are allowed:
+ * <ul>
+ * <li>b9.Quaternion()</li>
+ * <li>b9.Quaternion(b9.Quaternion quaternion_to_be_cloned)</li>
+ * <li>b9.Quaternion(float x, float y, float z, float w)</li>
+ * </ul>
  * @param {b9.Quaternion|Number} [quat_or_x] A quaternion to be cloned or a x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
@@ -68,9 +72,12 @@ b9.Quaternion.prototype.initialize = function(quat_or_x, y, z, w) {
 };
 
 /**
- * Sets all of the components to this quaternion.
- * The number of the arguments must be 1 or 4.
- * @param {b9.Quaternion|Number} [quat_or_x] A quaternion to be copied or a x-coordinate.
+ * Sets all of the components to this quaternion. The following forms are allowed:
+ * <ul>
+ * <li>b9.Quaternion(b9.Quaternion quaternion_to_be_cloned)</li>
+ * <li>b9.Quaternion(float x, float y, float z, float w)</li>
+ * </ul>
+ * @param {b9.Quaternion|Number} [quat_or_x] A quaternion to be cloned or a x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @param {Number} [w] A w-coordinate.
