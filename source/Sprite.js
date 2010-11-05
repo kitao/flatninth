@@ -21,14 +21,17 @@
  */
 
 /**
+ *
+ *
  * @class
  * @extends b9.Drawable
+ *
+ * @param {b9.SpriteBuffer} sprt_buf
  */
 b9.Sprite = b9.createClass(b9.Drawable);
 
 /**
- *
- * @param {b9.SpriteBuffer} sprt_buf
+ * @ignore
  */
 b9.Sprite.prototype.initialize = function(sprt_buf) {
     this.initializeSuper();

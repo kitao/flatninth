@@ -21,20 +21,23 @@
  */
 
 /**
- * @class A 3-element vector which is represented by xyz coordinates.
- */
-b9.Vector3D = b9.createClass();
-
-/**
  * Constructs a vector. The following forms are allowed:
  * <ul>
  * <li>b9.Vector3D()</li>
  * <li>b9.Vector3D(b9.Vector3D vector_to_be_cloned)</li>
  * <li>b9.Vector3D(float x, float y, float z)</li>
  * </ul>
+ *
+ * @class A 3-element vector which is represented by xyz coordinates.
+ *
  * @param {b9.Vector3D|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
+ */
+b9.Vector3D = b9.createClass();
+
+/**
+ * @ignore
  */
 b9.Vector3D.prototype.initialize = function(vec_or_x, y, z) {
     /**

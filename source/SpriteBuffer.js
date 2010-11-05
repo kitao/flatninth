@@ -21,13 +21,16 @@
  */
 
 /**
+ *
+ *
  * @class
+ *
+ * @param {Number} rect_count
  */
 b9.SpriteBuffer = b9.createClass();
 
 /**
- *
- * @param {Number} rect_count
+ * @ignore
  */
 b9.SpriteBuffer.prototype.initialize = function(rect_count) {
     this.initializeSuper();

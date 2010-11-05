@@ -21,17 +21,20 @@
  */
 
 /**
+ *
+ *
  * @class
- */
-b9.Shader = b9.createClass();
-
-/**
  *
  * @param {String} vert_code
  * @param {String} frag_code
  * @param {Number} uni_count
  * @param {Number} att_count
  * @param {Number} tex_count
+ */
+b9.Shader = b9.createClass();
+
+/**
+ * @ignore
  */
 b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_count, tex_count) {
     var i;

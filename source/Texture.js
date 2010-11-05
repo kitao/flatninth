@@ -26,7 +26,7 @@
 b9.Texture = b9.createClass();
 
 /**
- *
+ * @ignore
  */
 b9.Texture.prototype.initialize = function(filename_or_width, height, format) {
     var gl = b9.System.getGLContext();

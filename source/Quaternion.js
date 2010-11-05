@@ -21,21 +21,24 @@
  */
 
 /**
- * @class A quaternion which is represented by xyzw coordinates.
- */
-b9.Quaternion = b9.createClass();
-
-/**
  * Constructs a quaternion. The following forms are allowed:
  * <ul>
  * <li>b9.Quaternion()</li>
  * <li>b9.Quaternion(b9.Quaternion quaternion_to_be_cloned)</li>
  * <li>b9.Quaternion(float x, float y, float z, float w)</li>
  * </ul>
+ *
+ * @class A quaternion which is represented by xyzw coordinates.
+ *
  * @param {b9.Quaternion|Number} [quat_or_x] A quaternion to be cloned or a x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @param {Number} [w] A w-coordinate.
+ */
+b9.Quaternion = b9.createClass();
+
+/**
+ * @ignore
  */
 b9.Quaternion.prototype.initialize = function(quat_or_x, y, z, w) {
     /**

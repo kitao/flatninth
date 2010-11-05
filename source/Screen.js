@@ -21,13 +21,16 @@
  */
 
 /**
+ *
+ *
  * @class hoge
+ *
+ * @param {Number} order hoge
  */
 b9.Layer = b9.createClass();
 
 /**
- * hoge
- * @param {Number} order hoge
+ * @ignore
  */
 b9.Layer.prototype.initialize = function(order) {
     this._is_visible = true;

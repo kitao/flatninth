@@ -21,19 +21,22 @@
  */
 
 /**
- * @class A 2-element vector which is represented by xy coordinates.
- */
-b9.Vector2D = b9.createClass();
-
-/**
  * Constructs a vector. The following forms are allowed:
  * <ul>
  * <li>b9.Vector2D()</li>
  * <li>b9.Vector2D(b9.Vector2D vector_to_be_cloned)</li>
  * <li>b9.Vector2D(float x, float y)</li>
  * </ul>
+ *
+ * @class A 2-element vector which is represented by xy coordinates.
+ *
  * @param {b9.Vector2D|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
+ */
+b9.Vector2D = b9.createClass();
+
+/**
+ * @ignore
  */
 b9.Vector2D.prototype.initialize = function(vec_or_x, y) {
     /**
