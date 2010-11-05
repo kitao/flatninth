@@ -64,7 +64,7 @@ b9.Vector3D.prototype.initialize = function(vec_or_x, y, z) {
 
 /**
  * Sets all of the components to this vector.
- * The number of the arguments must be 0, 1, or 3.
+ * The number of the arguments must be 1 or 3.
  * @param {b9.Vector3D|Number} [vec_or_x] A vector to be copied or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
