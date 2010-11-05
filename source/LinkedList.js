@@ -21,12 +21,14 @@
  */
 
 /**
+ * Constructs a list without an item.
+ *
  * @class A linked list which stores instances of the b9.LinkedListItem class.
  */
 b9.LinkedList = b9.createClass();
 
 /**
- * Constructs a list without an item.
+ * @ignore
  */
 b9.LinkedList.prototype.initialize = function() {
     this._start = new b9.LinkedListItem(null);

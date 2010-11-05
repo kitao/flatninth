@@ -21,17 +21,25 @@
  */
 
 /**
+ * Constructs a color. The following forms are allowed:
+ * <ul>
+ * <li>b9.Color()</li>
+ * <li>b9.Color(b9.Color color_to_be_cloned)</li>
+ * <li>b9.Color(float r, float g, float b)</li>
+ * <li>b9.Color(float r, float g, float b, float a)</li>
+ * </ul>
+ *
  * @class A color which is represented by red, green, blue, and alpha components.
- */
-b9.Color = b9.createClass();
-
-/**
- * Constructs a color.
- * The number of the arguments must be 0, 1, 3, or 4.
+ *
  * @param {b9.Color|Number} [color_or_r] A color to be cloned or a red component.
  * @param {Number} [g] A green component.
  * @param {Number} [b] A blue component.
  * @param {Number} [a] An alpha component. If not specified, 1.0(=opacity) is used.
+ */
+b9.Color = b9.createClass();
+
+/**
+ * @ignore
  */
 b9.Color.prototype.initialize = function(color_or_r, g, b, a) {
     this._r = 0.0;
@@ -139,8 +147,12 @@ b9.Color.prototype.setA = function(a) {
 };
 
 /**
- * Sets all of the components to this color.
- * The number of the arguments must be 1, 3, or 4.
+ * Sets all of the components to this color. The following forms are allowed:
+ * <ul>
+ * <li>b9.Color(b9.Color color_to_be_cloned)</li>
+ * <li>b9.Color(float r, float g, float b)</li>
+ * <li>b9.Color(float r, float g, float b, float a)</li>
+ * </ul>
  * @param {b9.Color|Number} [color_or_r] A color to be cloned or a red component.
  * @param {Number} [g] A green component.
  * @param {Number} [b] A blue component.

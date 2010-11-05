@@ -21,12 +21,14 @@
  */
 
 /**
+ * Constructs a drawable.
+ *
  * @class A general abstraction for something that can be drawn.
  */
 b9.Drawable = b9.createClass();
 
 /**
- * Constructs a drawable.
+ * @ignore
  */
 b9.Drawable.prototype.initialize = function() {
     this._flag = b9.Drawable.FLAG_VISIBLE;

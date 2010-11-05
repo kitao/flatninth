@@ -21,13 +21,16 @@
  */
 
 /**
+ * Constructs an item and associates an object with it.
+ *
  * @class An element of the b9.LinkedList class.
+ *
+ * @param {Object} self An object.
  */
 b9.LinkedListItem = b9.createClass();
 
 /**
- * Constructs an item and associates an object with it.
- * @param {Object} self An object.
+ * @ignore
  */
 b9.LinkedListItem.prototype.initialize = function(self) {
     this._self = self;
