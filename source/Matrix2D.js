@@ -21,20 +21,23 @@
  */
 
 /**
- * @class A 2x3 matrix which is represented by four vectors.
- */
-b9.Matrix2D = b9.createClass();
-
-/**
  * Constructs a matrix. The following forms are allowed:
  * <ul>
  * <li>b9.Matrix2D()</li>
  * <li>b9.Matrix2D(b9.Matrix2D matrix_to_be_cloned)</li>
  * <li>b9.Matrix2D(b9.Vector2D x_axis, b9.Vector2D y_axis, b9.Vector2D trans)</li>
  * </ul>
+ *
+ * @class A 2x3 matrix which is represented by four vectors.
+ *
  * @param {b9.Matrix2D|b9.Vector2D} [mat_or_x_axis] A matrix to be cloned or an x-axis.
  * @param {b9.Vector2D} [y_axis] A y-axis.
  * @param {b9.Vector2D} [trans] A translation.
+ */
+b9.Matrix2D = b9.createClass();
+
+/**
+ * @ignore
  */
 b9.Matrix2D.prototype.initialize = function(mat_or_x_axis, y_axis, trans) {
     /**

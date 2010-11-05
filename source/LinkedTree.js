@@ -21,13 +21,16 @@
  */
 
 /**
+ * Constructs a tree and associates an object with it.
+ *
  * @class A tree container which can have a parent and children.
+ *
+ * @param {Object} self An object.
  */
 b9.LinkedTree = b9.createClass();
 
 /**
- * Constructs a tree and associates an object with it.
- * @param {Object} self An object.
+ * @ignore
  */
 b9.LinkedTree.prototype.initialize = function(self) {
     this._self = self;

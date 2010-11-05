@@ -21,21 +21,24 @@
  */
 
 /**
- * @class A 3x4 matrix which is represented by four vectors.
- */
-b9.Matrix3D = b9.createClass();
-
-/**
  * Constructs a matrix. The following forms are allowed:
  * <ul>
  * <li>b9.Matrix3D()</li>
  * <li>b9.Matrix3D(b9.Matrix3D matrix_to_be_cloned)</li>
  * <li>b9.Matrix3D(b9.Vector3D x_axis, b9.Vector3D y_axis, b9.Vector3D z_axis, b9.Vector3D trans)</li>
  * </ul>
+ *
+ * @class A 3x4 matrix which is represented by four vectors.
+ *
  * @param {b9.Matrix3D|b9.Vector3D} [mat_or_x_axis] A matrix to be cloned or an x-axis.
  * @param {b9.Vector3D} [y_axis] A y-axis.
  * @param {b9.Vector3D} [z_axis] A z-axis.
  * @param {b9.Vector3D} [trans] A translation.
+ */
+b9.Matrix3D = b9.createClass();
+
+/**
+ * @ignore
  */
 b9.Matrix3D.prototype.initialize = function(mat_or_x_axis, y_axis, z_axis, trans) {
     /**

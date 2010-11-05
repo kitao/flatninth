@@ -21,13 +21,16 @@
  */
 
 /**
+ *
+ *
  * @class
+ *
+ * @param {Number} vert_count
  */
 b9.PrimitiveBuffer = b9.createClass();
 
 /**
- *
- * @param {Number} vert_count
+ * @ignore
  */
 b9.PrimitiveBuffer.prototype.initialize = function(vert_count) {
     var gl = b9.System.getGLContext();
