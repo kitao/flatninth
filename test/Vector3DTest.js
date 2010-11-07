@@ -22,14 +22,32 @@
 
 function testVector3D() {
     /* initialize */
+    /* getArray */
+    /* getIndex */
+    /* getX */
+    /* getY */
+    /* getZ */
     var vec1 = new b9.Vector3D();
-    assertTrue(vec1.x === 0.0 && vec1.y === 0.0 && vec1.z === 0.0);
 
-    var vec2 = new b9.Vector3D(1.0, 2.0, 3.0);
-    assertTrue(vec2.x === 1.0 && vec2.y === 2.0 && vec2.z === 3.0);
+    var array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0]);
+    var vec2 = new b9.Vector3D(array, 3);
+    assertTrue(vec2.getX() === 4.0 && vec2.getY() === 5.0 && vec2.getZ() === 6.0);
+    assertTrue(vec2.getArray() === array && vec2.getIndex() === 3);
 
-    var vec3 = new b9.Vector3D(vec2);
-    assertTrue(vec3.x === 1.0 && vec3.y === 2.0 && vec3.z === 3.0);
+    var vec3 = new b9.Vector3D(1.0, 2.0, 3.0);
+    assertTrue(vec3.getX() === 1.0 && vec3.getY() === 2.0 && vec3.getZ() === 3.0);
+
+    var vec4 = new b9.Vector3D(vec2);
+    assertTrue(vec4.getX() === 4.0 && vec4.getY() === 5.0 && vec4.getZ() === 6.0);
+
+    /* setX */
+    assertEquals(10.0, vec1.setX(10.0).getX());
+
+    /* setY */
+    assertEquals(20.0, vec1.setY(20.0).getY());
+
+    /* setZ */
+    assertEquals(30.0, vec1.setZ(30.0).getZ());
 
     /* set */
     assertEquals_object(new b9.Vector3D(3.0, 4.0, 5.0), vec1.set(3.0, 4.0, 5.0));

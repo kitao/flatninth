@@ -22,26 +22,39 @@
 
 function testMatrix3D() {
     /* initialize */
+    /* getArray */
+    /* getIndex */
+    /* getXAxis */
+    /* getYAxis */
+    /* getZAxis */
+    /* getTrans */
+    /* getArray */
+    /* getIndex */
     var mat1 = new b9.Matrix3D();
-    assertTrue(
-            b9.Vector3D.ZERO.equals(mat1.x_axis) &&
-            b9.Vector3D.ZERO.equals(mat1.y_axis) &&
-            b9.Vector3D.ZERO.equals(mat1.z_axis) &&
-            b9.Vector3D.ZERO.equals(mat1.trans));
 
-    var mat2 = new b9.Matrix3D(b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT, new b9.Vector3D(1.0, 2.0));
+    var array = new Float32Array(
+            [100.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]);
+    var mat2 = new b9.Matrix3D(array, 1);
     assertTrue(
-            b9.Vector3D.X_UNIT.equals(mat2.x_axis) &&
-            b9.Vector3D.Y_UNIT.equals(mat2.y_axis) &&
-            b9.Vector3D.Z_UNIT.equals(mat2.z_axis) &&
-            (new b9.Vector3D(1.0, 2.0)).equals(mat2.trans));
+            mat2.getXAxis().equals(b9.Vector3D.X_UNIT) &&
+            mat2.getYAxis().equals(b9.Vector3D.Y_UNIT) &&
+            mat2.getZAxis().equals(b9.Vector3D.Z_UNIT) &&
+            mat2.getTrans().equals(b9.Vector3D.ZERO));
+    assertTrue(mat2.getArray() === array && mat2.getIndex() === 1);
 
-    var mat3 = new b9.Matrix3D(mat2);
+    var mat3 = new b9.Matrix3D(b9.Vector3D.ZERO, b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT);
     assertTrue(
-            b9.Vector3D.X_UNIT.equals(mat3.x_axis) &&
-            b9.Vector3D.Y_UNIT.equals(mat3.y_axis) &&
-            b9.Vector3D.Z_UNIT.equals(mat3.z_axis) &&
-            (new b9.Vector3D(1.0, 2.0)).equals(mat3.trans));
+            mat3.getXAxis().equals(b9.Vector3D.ZERO) &&
+            mat3.getYAxis().equals(b9.Vector3D.X_UNIT) &&
+            mat3.getZAxis().equals(b9.Vector3D.Y_UNIT) &&
+            mat3.getTrans().equals(b9.Vector3D.Z_UNIT));
+
+    var mat4 = new b9.Matrix3D(mat2);
+    assertTrue(
+            mat4.getXAxis().equals(b9.Vector3D.X_UNIT) &&
+            mat4.getYAxis().equals(b9.Vector3D.Y_UNIT) &&
+            mat4.getZAxis().equals(b9.Vector3D.Z_UNIT) &&
+            mat4.getTrans().equals(b9.Vector3D.ZERO));
 
     /* set */
     assertEquals_object(
@@ -175,7 +188,7 @@ function testMatrix3D() {
             mat1.translate(10.0, -20.0, 30.0));
 
     /* slerp */
-    var ratio;
+/*    var ratio;
     for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
         mat1.set(b9.Matrix3D.UNIT);
         mat2.set(b9.Matrix3D.UNIT).translate(2.0, 4.0, 6.0).rotateX_int(90);
@@ -192,9 +205,9 @@ function testMatrix3D() {
         mat3.set(b9.Matrix3D.UNIT).translate(2.0 * ratio, 4.0 * ratio, 6.0 * ratio).rotateZ_float(90.0 * ratio);
         assertEquals_object(mat3, mat1.slerp(mat2, ratio));
     }
-
+*/
     /* slerp_noTrans */
-    for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
+/*    for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
         mat1.set(b9.Matrix3D.UNIT).translate(1.0, 2.0, 3.0);
         mat2.set(b9.Matrix3D.UNIT).translate(2.0, 4.0, 6.0).rotateX_int(90);
         mat3.set(b9.Matrix3D.UNIT).rotateX_float(90.0 * ratio);
@@ -210,7 +223,7 @@ function testMatrix3D() {
         mat3.set(b9.Matrix3D.UNIT).rotateZ_float(90.0 * ratio);
         assertEquals_object(mat3, mat1.slerp_noTrans(mat2, ratio));
     }
-
+*/
     /* toLocal */
     mat1.set(b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT, new b9.Vector3D(3.0, 4.0, 5.0));
     mat2.set(
@@ -288,19 +301,19 @@ function testMatrix3D() {
     assertTrue(mat1.equals(mat2));
 
     mat2.set(mat1);
-    mat2.x_axis.set(b9.Vector3D.ZERO);
+    mat2.getXAxis().set(b9.Vector3D.ZERO);
     assertFalse(mat1.equals(mat2));
 
     mat2.set(mat1);
-    mat2.y_axis.set(b9.Vector3D.ZERO);
+    mat2.getYAxis().set(b9.Vector3D.ZERO);
     assertFalse(mat1.equals(mat2));
 
     mat2.set(mat1);
-    mat2.z_axis.set(b9.Vector3D.ZERO);
+    mat2.getZAxis().set(b9.Vector3D.ZERO);
     assertFalse(mat1.equals(mat2));
 
     mat2.set(mat1);
-    mat2.trans.set(b9.Vector3D.X_UNIT);
+    mat2.getTrans().set(b9.Vector3D.X_UNIT);
     assertFalse(mat1.equals(mat2));
 
     /* toString */
