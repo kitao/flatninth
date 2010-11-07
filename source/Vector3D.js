@@ -25,13 +25,15 @@
  * <ul>
  * <li>b9.Vector3D()</li>
  * <li>b9.Vector3D(b9.Vector3D vector_to_be_cloned)</li>
+ * <li>b9.Vector3D(Float32Array array_to_be_referenced, int array_index_of_first_component)</li>
  * <li>b9.Vector3D(float x, float y, float z)</li>
  * </ul>
  *
  * @class A 3-element vector which is represented by xyz coordinates.
  *
- * @param {b9.Vector3D|Number} [vec_or_x] A vector to be cloned or an x-coordinate.
- * @param {Number} [y] A y-coordinate.
+ * @param {b9.Vector3D|Float32Array|Number} [vec_or_array_or_x]
+ * A vector to be cloned, an array to be referenced, or an x-coordinate.
+ * @param {Number} [index_or_y] The array index of the first component, or a y-coordinate.
  * @param {Number} [z] A z-coordinate.
  */
 b9.Vector3D = b9.createClass();
@@ -39,34 +41,96 @@ b9.Vector3D = b9.createClass();
 /**
  * @ignore
  */
-b9.Vector3D.prototype.initialize = function(vec_or_x, y, z) {
-    /**
-     * The x-coordinate.
-     * @return {Number}
-     */
-    this.x = 0.0;
-
-    /**
-     * The y-coordinate.
-     * @return {Number}
-     */
-    this.y = 0.0;
-
-    /**
-     * The z-coordinate.
-     * @return {Number}
-     */
-    this.z = 0.0;
+b9.Vector3D.prototype.initialize = function(vec_or_array_or_x, index_or_y, z) {
+    var array = this._array = (arguments.length === 2) ? vec_or_array_or_x : new Float32Array(3);
+    var index = this._index = (arguments.length === 2) ? index_or_y : 0;
+    var vec_array, vec_index;
 
     if (arguments.length === 1) {
-        this.x = vec_or_x.x;
-        this.y = vec_or_x.y;
-        this.z = vec_or_x.z;
+        vec_array = vec_or_array_or_x._array;
+        vec_index = vec_or_array_or_x._index;
+
+        array[index] = vec_array[vec_index];
+        array[index + 1] = vec_array[vec_index + 1];
+        array[index + 2] = vec_array[vec_index + 2];
     } else if (arguments.length === 3) {
-        this.x = vec_or_x;
-        this.y = y;
-        this.z = z;
+        array[index] = vec_or_array_or_x;
+        array[index + 1] = index_or_y;
+        array[index + 2] = z;
     }
+};
+
+/**
+ * Returns the array of this vector.
+ * @return The array of this vector.
+ */
+b9.Vector3D.prototype.getArray = function() {
+    return this._array;
+};
+
+/**
+ * Returns the array index of the first component.
+ * @return The array index of the first component.
+ */
+b9.Vector3D.prototype.getIndex = function() {
+    return this._index;
+};
+
+/**
+ * Returns the x-coordinate of this vector.
+ * @return The x-coordinate.
+ */
+b9.Vector3D.prototype.getX = function() {
+    return this._array[this._index];
+};
+
+/**
+ * Sets an x-coordinate to this vector.
+ * @param {Number} x An x-coordinate.
+ * @return This vector.
+ */
+b9.Vector3D.prototype.setX = function(x) {
+    this._array[this._index] = x;
+
+    return this;
+};
+
+/**
+ * Returns the y-coordinate of this vector.
+ * @return The y-coordinate.
+ */
+b9.Vector3D.prototype.getY = function() {
+    return this._array[this._index + 1];
+};
+
+/**
+ * Sets an y-coordinate to this vector.
+ * @param {Number} y An y-coordinate.
+ * @return This vector.
+ */
+b9.Vector3D.prototype.setY = function(y) {
+    this._array[this._index + 1] = y;
+
+    return this;
+};
+
+/**
+ * Returns the z-coordinate of this vector.
+ * @return The z-coordinate.
+ */
+b9.Vector3D.prototype.getZ = function() {
+    return this._array[this._index + 2];
+};
+
+/**
+ * Sets an z-coordinate to this vector.
+ * @param {Number} z An z-coordinate.
+ * @return This vector.
+ */
+b9.Vector3D.prototype.setZ = function(z) {
+    this._array[this._index + 2] = z;
+
+    return this;
 };
 
 /**
@@ -81,14 +145,21 @@ b9.Vector3D.prototype.initialize = function(vec_or_x, y, z) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.set = function(vec_or_x, y, z) {
+    var array = this._array;
+    var index = this._index;
+    var vec_array, vec_index;
+
     if (arguments.length === 1) {
-        this.x = vec_or_x.x;
-        this.y = vec_or_x.y;
-        this.z = vec_or_x.z;
+        vec_array = vec_or_x._array;
+        vec_index = vec_or_x._index;
+
+        array[index] = vec_array[vec_index];
+        array[index + 1] = vec_array[vec_index + 1];
+        array[index + 2] = vec_array[vec_index + 2];
     } else if (arguments.length === 3) {
-        this.x = vec_or_x;
-        this.y = y;
-        this.z = z;
+        array[index] = vec_or_x;
+        array[index + 1] = y;
+        array[index + 2] = z;
     }
 
     return this;
@@ -99,9 +170,12 @@ b9.Vector3D.prototype.set = function(vec_or_x, y, z) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.neg = function() {
-    this.x = -this.x;
-    this.y = -this.y;
-    this.z = -this.z;
+    var array = this._array;
+    var index = this._index;
+
+    array[index] = -array[index];
+    array[index + 1] = -array[index + 1];
+    array[index + 2] = -array[index + 2];
 
     return this;
 };
@@ -112,9 +186,14 @@ b9.Vector3D.prototype.neg = function() {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.add = function(vec) {
-    this.x += vec.x;
-    this.y += vec.y;
-    this.z += vec.z;
+    var array = this._array;
+    var index = this._index;
+    var vec_array = vec._array;
+    var vec_index = vec._index;
+
+    array[index] += vec_array[vec_index];
+    array[index + 1] += vec_array[vec_index + 1];
+    array[index + 2] += vec_array[vec_index + 2];
 
     return this;
 };
@@ -125,9 +204,14 @@ b9.Vector3D.prototype.add = function(vec) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.sub = function(vec) {
-    this.x -= vec.x;
-    this.y -= vec.y;
-    this.z -= vec.z;
+    var array = this._array;
+    var index = this._index;
+    var vec_array = vec._array;
+    var vec_index = vec._index;
+
+    array[index] -= vec_array[vec_index];
+    array[index + 1] -= vec_array[vec_index + 1];
+    array[index + 2] -= vec_array[vec_index + 2];
 
     return this;
 };
@@ -138,9 +222,12 @@ b9.Vector3D.prototype.sub = function(vec) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.mul = function(s) {
-    this.x *= s;
-    this.y *= s;
-    this.z *= s;
+    var array = this._array;
+    var index = this._index;
+
+    array[index] *= s;
+    array[index + 1] *= s;
+    array[index + 2] *= s;
 
     return this;
 };
@@ -151,11 +238,13 @@ b9.Vector3D.prototype.mul = function(s) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.div = function(s) {
+    var array = this._array;
+    var index = this._index;
     var rs = 1.0 / s;
 
-    this.x *= rs;
-    this.y *= rs;
-    this.z *= rs;
+    array[index] *= rs;
+    array[index + 1] *= rs;
+    array[index + 2] *= rs;
 
     return this;
 };
@@ -165,7 +254,13 @@ b9.Vector3D.prototype.div = function(s) {
  * @return {Number} The norm of this vector.
  */
 b9.Vector3D.prototype.norm = function() {
-    return b9.Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+    var array = this._array;
+    var index = this._index;
+
+    return b9.Math.sqrt(
+            array[index] * array[index] +
+            array[index + 1] * array[index + 1] +
+            array[index + 2] * array[index + 2]);
 };
 
 /**
@@ -174,7 +269,12 @@ b9.Vector3D.prototype.norm = function() {
  * @return {Number} The squared norm of this vector.
  */
 b9.Vector3D.prototype.sqNorm = function() {
-    return this.x * this.x + this.y * this.y + this.z * this.z;
+    var array = this._array;
+    var index = this._index;
+
+    return array[index] * array[index] +
+        array[index + 1] * array[index + 1] +
+        array[index + 2] * array[index + 2];
 };
 
 /**
@@ -202,7 +302,14 @@ b9.Vector3D.prototype.sqDist = function(vec) {
  * @return {Number} The inner product of the two vectors.
  */
 b9.Vector3D.prototype.dot = function(vec) {
-    return this.x * vec.x + this.y * vec.y + this.z * vec.z;
+    var array = this._array;
+    var index = this._index;
+    var vec_array = vec._array;
+    var vec_index = vec._index;
+
+    return array[index] * vec_array[vec_index] +
+        array[index + 1] * vec_array[vec_index + 1] +
+        array[index + 2] * vec_array[vec_index + 2];
 };
 
 /**
@@ -211,10 +318,15 @@ b9.Vector3D.prototype.dot = function(vec) {
  * @return This vector.
  */
 b9.Vector3D.prototype.cross = function(vec) {
+    var array = this._array;
+    var index = this._index;
+    var vec_array = vec._array;
+    var vec_index = vec._index;
+
     return this.set(
-            this.y * vec.z - this.z * vec.y,
-            this.z * vec.x - this.x * vec.z,
-            this.x * vec.y - this.y * vec.x);
+            array[index + 1] * vec_array[vec_index + 2] - array[index + 2] * vec_array[vec_index + 1],
+            array[index + 2] * vec_array[vec_index] - array[index] * vec_array[vec_index + 2],
+            array[index] * vec_array[vec_index + 1] - array[index + 1] * vec_array[vec_index]);
 };
 
 /**
@@ -239,10 +351,15 @@ b9.Vector3D.prototype.normalize = function() {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateX_float = function(deg) {
+    var array = this._array;
+    var index = this._index;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Vector3D._vec1.set(this.x, this.y * cos - this.z * sin, this.z * cos + this.y * sin);
+    b9.Vector3D._vec1.set(
+            array[index],
+            array[index + 1] * cos - array[index + 2] * sin,
+            array[index + 2] * cos + array[index + 1] * sin);
 
     return this.set(b9.Vector3D._vec1);
 };
@@ -253,10 +370,15 @@ b9.Vector3D.prototype.rotateX_float = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateY_float = function(deg) {
+    var array = this._array;
+    var index = this._index;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Vector3D._vec1.set(this.x * cos + this.z * sin, this.y, this.z * cos - this.x * sin);
+    b9.Vector3D._vec1.set(
+            array[index] * cos + array[index + 2] * sin,
+            array[index + 1],
+            array[index + 2] * cos - array[index] * sin);
 
     return this.set(b9.Vector3D._vec1);
 };
@@ -267,10 +389,15 @@ b9.Vector3D.prototype.rotateY_float = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateZ_float = function(deg) {
+    var array = this._array;
+    var index = this._index;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
-    b9.Vector3D._vec1.set(this.x * cos - this.y * sin, this.y * cos + this.x * sin, this.z);
+    b9.Vector3D._vec1.set(
+            array[index] * cos - array[index + 1] * sin,
+            array[index + 1] * cos + array[index] * sin, 
+            array[index + 2]);
 
     return this.set(b9.Vector3D._vec1);
 };
@@ -282,10 +409,15 @@ b9.Vector3D.prototype.rotateZ_float = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateX_int = function(deg) {
+    var array = this._array;
+    var index = this._index;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Vector3D._vec1.set(this.x, this.y * cos - this.z * sin, this.z * cos + this.y * sin);
+    b9.Vector3D._vec1.set(
+            array[index],
+            array[index + 1] * cos - array[index + 2] * sin,
+            array[index + 2] * cos + array[index + 1] * sin);
 
     return this.set(b9.Vector3D._vec1);
 };
@@ -297,10 +429,15 @@ b9.Vector3D.prototype.rotateX_int = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateY_int = function(deg) {
+    var array = this._array;
+    var index = this._index;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Vector3D._vec1.set(this.x * cos + this.z * sin, this.y, this.z * cos - this.x * sin);
+    b9.Vector3D._vec1.set(
+            array[index] * cos + array[index + 2] * sin,
+            array[index + 1],
+            array[index + 2] * cos - array[index] * sin);
 
     return this.set(b9.Vector3D._vec1);
 };
@@ -312,10 +449,15 @@ b9.Vector3D.prototype.rotateY_int = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateZ_int = function(deg) {
+    var array = this._array;
+    var index = this._index;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
-    b9.Vector3D._vec1.set(this.x * cos - this.y * sin, this.y * cos + this.x * sin, this.z);
+    b9.Vector3D._vec1.set(
+            array[index] * cos - array[index + 1] * sin,
+            array[index + 1] * cos + array[index] * sin,
+            array[index + 2]);
 
     return this.set(b9.Vector3D._vec1);
 };
@@ -343,12 +485,12 @@ b9.Vector3D.prototype.lerp = function(to, ratio) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.toLocal = function(mat) {
-    b9.Vector3D._vec1.set(this).sub(mat.trans);
+    b9.Vector3D._vec1.set(this).sub(mat._trans);
 
     return this.set(
-            b9.Vector3D._vec1.dot(mat.x_axis) / mat.x_axis.sqNorm(),
-            b9.Vector3D._vec1.dot(mat.y_axis) / mat.y_axis.sqNorm(),
-            b9.Vector3D._vec1.dot(mat.z_axis) / mat.z_axis.sqNorm());
+            b9.Vector3D._vec1.dot(mat._x_axis) / mat._x_axis.sqNorm(),
+            b9.Vector3D._vec1.dot(mat._y_axis) / mat._y_axis.sqNorm(),
+            b9.Vector3D._vec1.dot(mat._z_axis) / mat._z_axis.sqNorm());
 };
 
 /**
@@ -357,11 +499,14 @@ b9.Vector3D.prototype.toLocal = function(mat) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.toGlobal = function(mat) {
-    b9.Vector3D._vec1.set(mat.x_axis).mul(this.x);
-    b9.Vector3D._vec2.set(mat.y_axis).mul(this.y);
-    b9.Vector3D._vec3.set(mat.z_axis).mul(this.z);
+    var array = this._array;
+    var index = this._index;
 
-    return this.set(b9.Vector3D._vec1).add(b9.Vector3D._vec2).add(b9.Vector3D._vec3).add(mat.trans);
+    b9.Vector3D._vec1.set(mat._x_axis).mul(array[index]);
+    b9.Vector3D._vec2.set(mat._y_axis).mul(array[index + 1]);
+    b9.Vector3D._vec3.set(mat._z_axis).mul(array[index + 2]);
+
+    return this.set(b9.Vector3D._vec1).add(b9.Vector3D._vec2).add(b9.Vector3D._vec3).add(mat._trans);
 };
 
 /**
@@ -372,9 +517,9 @@ b9.Vector3D.prototype.toGlobal = function(mat) {
  */
 b9.Vector3D.prototype.toLocal_noTrans = function(mat) {
     b9.Vector3D._vec1.set(
-            this.dot(mat.x_axis) / mat.x_axis.sqNorm(),
-            this.dot(mat.y_axis) / mat.y_axis.sqNorm(),
-            this.dot(mat.z_axis) / mat.z_axis.sqNorm());
+            this.dot(mat._x_axis) / mat._x_axis.sqNorm(),
+            this.dot(mat._y_axis) / mat._y_axis.sqNorm(),
+            this.dot(mat._z_axis) / mat._z_axis.sqNorm());
 
     return this.set(b9.Vector3D._vec1);
 };
@@ -386,9 +531,12 @@ b9.Vector3D.prototype.toLocal_noTrans = function(mat) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.toGlobal_noTrans = function(mat) {
-    b9.Vector3D._vec1.set(mat.x_axis).mul(this.x);
-    b9.Vector3D._vec2.set(mat.y_axis).mul(this.y);
-    b9.Vector3D._vec3.set(mat.z_axis).mul(this.z);
+    var array = this._array;
+    var index = this._index;
+
+    b9.Vector3D._vec1.set(mat._x_axis).mul(array[index]);
+    b9.Vector3D._vec2.set(mat._y_axis).mul(array[index + 1]);
+    b9.Vector3D._vec3.set(mat._z_axis).mul(array[index + 2]);
 
     return this.set(b9.Vector3D._vec1).add(b9.Vector3D._vec2).add(b9.Vector3D._vec3);
 };
@@ -399,9 +547,14 @@ b9.Vector3D.prototype.toGlobal_noTrans = function(mat) {
  * @return {Boolean} true if the two vectors are equal; false otherwise.
  */
 b9.Vector3D.prototype.equals = function(vec) {
-    return (b9.Math.equals_float(this.x, vec.x) &&
-            b9.Math.equals_float(this.y, vec.y) &&
-            b9.Math.equals_float(this.z, vec.z));
+    var array = this._array;
+    var index = this._index;
+    var vec_array = vec._array;
+    var vec_index = vec._index;
+
+    return (b9.Math.equals_float(array[index], vec_array[vec_index]) &&
+            b9.Math.equals_float(array[index + 1], vec_array[vec_index + 1]) &&
+            b9.Math.equals_float(array[index + 2], vec_array[vec_index + 2]));
 };
 
 /**
@@ -409,12 +562,15 @@ b9.Vector3D.prototype.equals = function(vec) {
  * @return {String} A string representation of this vector.
  */
 b9.Vector3D.prototype.toString = function() {
+    var array = this._array;
+    var index = this._index;
+
     var str = "(";
-    str += this.x;
+    str += array[index];
     str += ", ";
-    str += this.y;
+    str += array[index + 1];
     str += ", ";
-    str += this.z;
+    str += array[index + 2];
     str += ")";
 
     return str;
