@@ -31,7 +31,7 @@ b9.Drawable = b9.createClass();
  * @ignore
  */
 b9.Drawable.prototype.initialize = function() {
-    this._flag = b9.Drawable.FLAG_VISIBLE;
+    this._draw_flag = b9.Drawable.FLAG_VISIBLE;
     this._alpha = 1.0;
     this._local = new b9.Matrix3D(b9.Matrix3D.UNIT);
 
@@ -48,21 +48,24 @@ b9.Drawable.prototype.finalize = function() {
 };
 
 /**
- * Returns whether the specified flag is on.
- * @return {Boolean} true the flag is on; false otherwise.
+ * Returns whether the specified drawable flag is enabled.
+ * @param {Number} draw_flag A drawable flag.
+ * @return {Boolean} true the flag is enabled; false otherwise.
  */
-b9.Drawable.prototype.getFlag = function(flag) {
-    return (this._flag & flag) ? true : false;
+b9.Drawable.prototype.getDrawableFlag = function(draw_flag) {
+    return (this._draw_flag & draw_flag) ? true : false;
 };
 
 /**
- * TODO
+ * Sets the specified drawable flag.
+ * @param {Number} draw_flag A drawable flag.
+ * @param {Boolean} is_enabled Whether the flag is enabled.
  */
-b9.Drawable.prototype.setFlag = function(flag, is_on) {
-    if (is_on) {
-        this._flag |= flag;
+b9.Drawable.prototype.setDrawableFlag = function(draw_flag, is_enabled) {
+    if (is_enabled) {
+        this._draw_flag |= draw_flag;
     } else {
-        this._flag &= ~flag;
+        this._draw_flag &= ~draw_flag;
     }
 };
 
@@ -83,8 +86,8 @@ b9.Drawable.prototype.setAlpha = function(alpha) {
 };
 
 /**
- * Returns the local matrix of this drawable.
- * @return {b9.Matrix3D} The local matrix.
+ * Returns the reference of the local matrix of this drawable.
+ * @return {b9.Matrix3D} The reference of the local matrix.
  */
 b9.Drawable.prototype.refLocal = function() {
     return this._local;

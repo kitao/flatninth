@@ -33,7 +33,7 @@
  *
  * @param {b9.Quaternion|Float32Array|Number} [quat_or_array_or_x]
  * A quaternion to be cloned, an array to be referenced, or an x-coordinate.
- * @param {Number} [index_or_y] An array index of the first component, or a y-coordinate.
+ * @param {Number} [index_or_y] The array index of the first component, or a y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @param {Number} [w] A w-coordinate.
  */

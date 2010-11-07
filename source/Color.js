@@ -36,7 +36,7 @@
  *
  * @param {b9.Color|Uint8Array|Number} [color_or_array_or_r]
  * A color to be cloned, an array to be referenced, or a red component.
- * @param {Number} [index_or_g] An array index of the first component, or a green component.
+ * @param {Number} [index_or_g] The array index of the first component, or a green component.
  * @param {Number} [b] A blue component.
  * @param {Number} [a] An alpha component. If not specified, 255(=opacity) is used.
  */
