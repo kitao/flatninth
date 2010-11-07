@@ -25,123 +25,124 @@
  * <ul>
  * <li>b9.Color()</li>
  * <li>b9.Color(b9.Color color_to_be_cloned)</li>
+ * <li>b9.Color(Uint8Array array_to_be_referenced, int array_index_of_first_component)</li>
  * <li>b9.Color(float r, float g, float b)</li>
  * <li>b9.Color(float r, float g, float b, float a)</li>
  * </ul>
  *
- * @class A color which is represented by red, green, blue, and alpha components.
+ * @class A color which is represented by red, green, blue, and alpha components.<br>
+ * Each component ranges between 0..255 with 0 meaning no contribution for that component,
+ * and 255 meaning 100% contribution.
  *
- * @param {b9.Color|Number} [color_or_r] A color to be cloned or a red component.
- * @param {Number} [g] A green component.
+ * @param {b9.Color|Uint8Array|Number} [color_or_array_or_r]
+ * A color to be cloned, an array to be referenced, or a red component.
+ * @param {Number} [index_or_g] An array index of the first component, or a green component.
  * @param {Number} [b] A blue component.
- * @param {Number} [a] An alpha component. If not specified, 1.0(=opacity) is used.
+ * @param {Number} [a] An alpha component. If not specified, 255(=opacity) is used.
  */
 b9.Color = b9.createClass();
 
 /**
  * @ignore
  */
-b9.Color.prototype.initialize = function(color_or_r, g, b, a) {
-    this._r = 0.0;
-    this._g = 0.0;
-    this._b = 0.0;
-    this._a = 0.0;
+b9.Color.prototype.initialize = function(color_or_array_or_r, index_or_g, b, a) {
+    var array = this._array = (arguments.length === 2) ? color_or_array_or_r : new Uint8Array(4);
+    var index = this._index = (arguments.length === 2) ? index_or_g : 0;
+    var color_array, color_index;
 
     if (arguments.length === 1) {
-        this._r = color_or_r._r;
-        this._g = color_or_r._g;
-        this._b = color_or_r._b;
-        this._a = color_or_r._a;
-    } else if (arguments.length === 3) {
-        this._r = color_or_r;
-        this._g = g;
-        this._b = b;
-        this._a = 1.0;
-    } else if (arguments.length === 4) {
-        this._r = color_or_r;
-        this._g = g;
-        this._b = b;
-        this._a = a;
-    }
+        color_array = color_or_array_or_r._array;
+        color_index = color_or_array_or_r._index;
 
-    this._r = b9.Math.clamp(this._r, 0.0, 1.0);
-    this._g = b9.Math.clamp(this._g, 0.0, 1.0);
-    this._b = b9.Math.clamp(this._b, 0.0, 1.0);
-    this._a = b9.Math.clamp(this._a, 0.0, 1.0);
+        array[index] = color_array[color_index];
+        array[index + 1] = color_array[color_index + 1];
+        array[index + 2] = color_array[color_index + 2];
+        array[index + 3] = color_array[color_index + 3];
+    } else if (arguments.length === 3) {
+        array[index] = color_or_array_or_r;
+        array[index + 1] = index_or_g;
+        array[index + 2] = b;
+        array[index + 3] = 255;
+    } else if (arguments.length === 4) {
+        array[index] = color_or_array_or_r;
+        array[index + 1] = index_or_g;
+        array[index + 2] = b;
+        array[index + 3] = a;
+    }
 };
 
 /**
- * Returns the red component.
+ * Returns the red component of this color.
  * @return {Number} The red component.
  */
 b9.Color.prototype.getR = function() {
-    return this._r;
+    return this._array[this._index];
 };
 
 /**
- * Sets the red component.
+ * Sets a red component to this color.
  * @param {Number} r A red component.
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.setR = function(r) {
-    this._r = b9.Math.clamp(r, 0.0, 1.0);
+    this._array[this._index] = r;
 
     return this;
 };
 
 /**
- * Returns the green component.
+ * Returns the green component of this color.
  * @return {Number} The green component.
  */
 b9.Color.prototype.getG = function() {
-    return this._g;
+    return this._array[this._index + 1];
 };
 
 /**
- * Sets the green component.
+ * Sets a green component to this color.
  * @param {Number} g A green component.
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.setG = function(g) {
-    this._g = b9.Math.clamp(g, 0.0, 1.0);
+    this._array[this._index + 1] = g;
 
     return this;
 };
 
 /**
- * Returns the blue component.
+ * Returns the blue component of this color.
  * @return {Number} The blue component.
  */
 b9.Color.prototype.getB = function() {
-    return this._b;
+    return this._array[this._index + 2];
 };
 
 /**
- * Sets the blue component.
+ * Sets a blue component to this color.
  * @param {Number} b A blue component.
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.setB = function(b) {
-    this._b = b9.Math.clamp(b, 0.0, 1.0);
+    this._array[this._index + 2] = b;
 
     return this;
 };
 
 /**
- * Returns the alpha component.
+ * Returns the alpha component of this color.
  * @return {Number} The alpha component.
  */
 b9.Color.prototype.getA = function() {
-    return this._a;
+    return this._array[this._index + 3];
 };
 
 /**
- * Sets the alpha component.
+ * Sets an alpha component to this color.
  * @param {Number} a An alpha component.
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.setA = function(a) {
-    this._a = b9.Math.clamp(a, 0.0, 1.0);
+    this._array[this._index + 3] = a;
 
     return this;
 };
@@ -160,29 +161,47 @@ b9.Color.prototype.setA = function(a) {
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.set = function(color_or_r, g, b, a) {
+    var array = this._array;
+    var index = this._index;
+    var color_array, color_index;
+
     if (arguments.length === 1) {
-        this._r = color_or_r._r;
-        this._g = color_or_r._g;
-        this._b = color_or_r._b;
-        this._a = color_or_r._a;
+        color_array = color_or_r._array;
+        color_index = color_or_r._index;
+
+        array[index] = color_array[color_index];
+        array[index + 1] = color_array[color_index + 1];
+        array[index + 2] = color_array[color_index + 2];
+        array[index + 3] = color_array[color_index + 3];
     } else if (arguments.length === 3) {
-        this._r = color_or_r;
-        this._g = g;
-        this._b = b;
-        this._a = 1.0;
+        array[index] = color_or_r;
+        array[index + 1] = g;
+        array[index + 2] = b;
+        array[index + 3] = 255;
     } else if (arguments.length === 4) {
-        this._r = color_or_r;
-        this._g = g;
-        this._b = b;
-        this._a = a;
+        array[index] = color_or_r;
+        array[index + 1] = g;
+        array[index + 2] = b;
+        array[index + 3] = a;
     }
 
-    this._r = b9.Math.clamp(this._r, 0.0, 1.0);
-    this._g = b9.Math.clamp(this._g, 0.0, 1.0);
-    this._b = b9.Math.clamp(this._b, 0.0, 1.0);
-    this._a = b9.Math.clamp(this._a, 0.0, 1.0);
-
     return this;
+};
+
+/**
+ * Returns the array of this color.
+ * @return The array of this color.
+ */
+b9.Color.prototype.getArray = function() {
+    return this._array;
+};
+
+/**
+ * Returns the array index of this color.
+ * @return The array index of this color.
+ */
+b9.Color.prototype.getIndex = function() {
+    return this._index;
 };
 
 /**
@@ -191,10 +210,15 @@ b9.Color.prototype.set = function(color_or_r, g, b, a) {
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.add = function(color) {
-    this._r = b9.Math.min(this._r + color._r, 1.0);
-    this._g = b9.Math.min(this._g + color._g, 1.0);
-    this._b = b9.Math.min(this._b + color._b, 1.0);
-    this._a = b9.Math.min(this._a + color._a, 1.0);
+    var array = this._array;
+    var index = this._index;
+    var color_array = color._array;
+    var color_index = color._index;
+
+    array[index] = b9.Math.min(array[index] + color_array[color_index], 255);
+    array[index + 1] = b9.Math.min(array[index + 1] + color_array[color_index + 1], 255);
+    array[index + 2] = b9.Math.min(array[index + 2] + color_array[color_index + 2], 255);
+    array[index + 3] = b9.Math.min(array[index + 3] + color_array[color_index + 3], 255);
 
     return this;
 };
@@ -205,10 +229,15 @@ b9.Color.prototype.add = function(color) {
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.sub = function(color) {
-    this._r = b9.Math.max(this._r - color._r, 0.0);
-    this._g = b9.Math.max(this._g - color._g, 0.0);
-    this._b = b9.Math.max(this._b - color._b, 0.0);
-    this._a = b9.Math.max(this._a - color._a, 0.0);
+    var array = this._array;
+    var index = this._index;
+    var color_array = color._array;
+    var color_index = color._index;
+
+    array[index] = b9.Math.max(array[index] - color_array[color_index], 0);
+    array[index + 1] = b9.Math.max(array[index + 1] - color_array[color_index + 1], 0);
+    array[index + 2] = b9.Math.max(array[index + 2] - color_array[color_index + 2], 0);
+    array[index + 3] = b9.Math.max(array[index + 3] - color_array[color_index + 3], 0);
 
     return this;
 };
@@ -219,22 +248,24 @@ b9.Color.prototype.sub = function(color) {
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.mul = function(color_or_s) {
-    if (color_or_s._r === undefined) {
-        this._r *= color_or_s;
-        this._g *= color_or_s;
-        this._b *= color_or_s;
-        this._a *= color_or_s;
-    } else {
-        this._r = this._r * color_or_s._r;
-        this._g = this._g * color_or_s._g;
-        this._b = this._b * color_or_s._b;
-        this._a = this._a * color_or_s._a;
-    }
+    var array = this._array;
+    var index = this._index;
+    var color_array, color_index;
 
-    this._r = b9.Math.clamp(this._r, 0.0, 1.0);
-    this._g = b9.Math.clamp(this._g, 0.0, 1.0);
-    this._b = b9.Math.clamp(this._b, 0.0, 1.0);
-    this._a = b9.Math.clamp(this._a, 0.0, 1.0);
+    if (color_or_s._array) {
+        color_array = color_or_s._array;
+        color_index = color_or_s._index;
+
+        array[index] = b9.Math.clamp((array[index] * color_array[color_index]) / 255, 0, 255);
+        array[index + 1] = b9.Math.clamp((array[index + 1] * color_array[color_index + 1]) / 255, 0, 255);
+        array[index + 2] = b9.Math.clamp((array[index + 2] * color_array[color_index + 2]) / 255, 0, 255);
+        array[index + 3] = b9.Math.clamp((array[index + 3] * color_array[color_index + 3]) / 255, 0, 255);
+    } else {
+        array[index] = b9.Math.clamp(array[index] * color_or_s, 0, 255);
+        array[index + 1] = b9.Math.clamp(array[index + 1] * color_or_s, 0, 255);
+        array[index + 2] = b9.Math.clamp(array[index + 2] * color_or_s, 0, 255);
+        array[index + 3] = b9.Math.clamp(array[index + 3] * color_or_s, 0, 255);
+    }
 
     return this;
 };
@@ -245,12 +276,14 @@ b9.Color.prototype.mul = function(color_or_s) {
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.div = function(s) {
+    var array = this._array;
+    var index = this._index;
     var rs = 1.0 / s;
 
-    this._r = b9.Math.clamp(this._r * rs, 0.0, 1.0);
-    this._g = b9.Math.clamp(this._g * rs, 0.0, 1.0);
-    this._b = b9.Math.clamp(this._b * rs, 0.0, 1.0);
-    this._a = b9.Math.clamp(this._a * rs, 0.0, 1.0);
+    array[index] = b9.Math.clamp(array[index] * rs, 0, 255);
+    array[index + 1] = b9.Math.clamp(array[index + 1] * rs, 0, 255);
+    array[index + 2] = b9.Math.clamp(array[index + 2] * rs, 0, 255);
+    array[index + 3] = b9.Math.clamp(array[index + 3] * rs, 0, 255);
 
     return this;
 };
@@ -262,15 +295,21 @@ b9.Color.prototype.div = function(s) {
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.lerp = function(to, ratio) {
+    var array = this._array;
+    var index = this._index;
+    var to_array = to._array;
+    var to_index = to._index;
+    var inv_ratio;
+
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        var inv_ratio = 1.0 - ratio;
+        inv_ratio = 1.0 - ratio;
 
-        this._r = b9.Math.clamp(this._r * inv_ratio + to._r * ratio, 0.0, 1.0);
-        this._g = b9.Math.clamp(this._g * inv_ratio + to._g * ratio, 0.0, 1.0);
-        this._b = b9.Math.clamp(this._b * inv_ratio + to._b * ratio, 0.0, 1.0);
-        this._a = b9.Math.clamp(this._a * inv_ratio + to._a * ratio, 0.0, 1.0);
+        array[index] = b9.Math.clamp(array[index] * inv_ratio + to_array[to_index] * ratio, 0, 255);
+        array[index + 1] = b9.Math.clamp(array[index + 1] * inv_ratio + to_array[to_index + 1] * ratio, 0, 255);
+        array[index + 2] = b9.Math.clamp(array[index + 2] * inv_ratio + to_array[to_index + 2] * ratio, 0, 255);
+        array[index + 3] = b9.Math.clamp(array[index + 3] * inv_ratio + to_array[to_index + 3] * ratio, 0, 255);
     }
 
     return this;
@@ -282,10 +321,15 @@ b9.Color.prototype.lerp = function(to, ratio) {
  * @return {Boolean} true if the two colors are equal; false otherwise.
  */
 b9.Color.prototype.equals = function(color) {
-    return (b9.Math.equals_float(this._r, color._r) &&
-            b9.Math.equals_float(this._g, color._g) &&
-            b9.Math.equals_float(this._b, color._b) &&
-            b9.Math.equals_float(this._a, color._a));
+    var array = this._array;
+    var index = this._index;
+    var color_array = color._array;
+    var color_index = color._index;
+
+    return (array[index] === color_array[color_index] &&
+            array[index + 1] === color_array[color_index + 1] &&
+            array[index + 2] === color_array[color_index + 2] &&
+            array[index + 3] === color_array[color_index + 3]);
 };
 
 /**
@@ -293,27 +337,30 @@ b9.Color.prototype.equals = function(color) {
  * @return {String} A string representation of this color.
  */
 b9.Color.prototype.toString = function() {
+    var array = this._array;
+    var index = this._index;
+
     var str = "(";
-    str += this._r;
+    str += array[index];
     str += ", ";
-    str += this._g;
+    str += array[index + 1];
     str += ", ";
-    str += this._b;
+    str += array[index + 2];
     str += ", ";
-    str += this._a;
+    str += array[index + 3];
     str += ")";
 
     return str;
 };
 
 /**
- * The color whose components are all 0.0.
+ * The color whose components are all 0.
  * @return {b9.Color}
  */
-b9.Color.ZERO = new b9.Color(0.0, 0.0, 0.0, 0.0);
+b9.Color.ZERO = new b9.Color(0, 0, 0, 0);
 
 /**
- * The color whose compoenents are all 1.0.
+ * The color whose compoenents are all 255.
  * @return {b9.Color}
  */
-b9.Color.FULL = new b9.Color(1.0, 1.0, 1.0, 1.0);
+b9.Color.FULL = new b9.Color(255, 255, 255, 255);
