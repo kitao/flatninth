@@ -362,7 +362,7 @@ b9.Matrix3D.prototype.slerp = function(to, ratio) {
     } else if (ratio >= b9.Math.EPSILON) {
         b9.Matrix3D._quat1.fromMatrix3D(this);
         b9.Matrix3D._quat2.fromMatrix3D(to);
-        b9.Matrix3D._vec1.set(this._trans).lerp(to.trans, ratio);
+        b9.Matrix3D._vec1.set(this._trans).lerp(to._trans, ratio);
 
         this.fromQuaternion(b9.Matrix3D._quat1.slerp(b9.Matrix3D._quat2, ratio));
         this._trans.set(b9.Matrix3D._vec1);
@@ -380,9 +380,9 @@ b9.Matrix3D.prototype.slerp = function(to, ratio) {
  */
 b9.Matrix3D.prototype.slerp_noTrans = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
-        this._x_axis.set(to.x_axis);
-        this._y_axis.set(to.y_axis);
-        this._z_axis.set(to.z_axis);
+        this._x_axis.set(to._x_axis);
+        this._y_axis.set(to._y_axis);
+        this._z_axis.set(to._z_axis);
         this._trans.set(b9.Vector3D.ZERO);
     } else if (ratio >= b9.Math.EPSILON) {
         b9.Matrix3D._quat1.fromMatrix3D(this);

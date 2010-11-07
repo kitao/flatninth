@@ -200,6 +200,7 @@ b9.Quaternion.prototype.fromMatrix3D = function(mat) {
     var index = this._index;
     var trace = mat._x_axis.getX() + mat._y_axis.getY() + mat._z_axis.getZ();
     var root, scale;
+    var mat_array, mat_index;
     var i, j, k;
 
     if (trace > 0.0) {
@@ -212,26 +213,30 @@ b9.Quaternion.prototype.fromMatrix3D = function(mat) {
                 (mat._x_axis.getY() - mat._y_axis.getX()) * scale,
                 root * 0.5);
     } else {
+        mat_array = mat._array;
+        mat_index = mat._index;
+
         i = 0;
 
-        if (this._MAT(1, 1) > this._MAT(i, i)) {
+        if (mat_array[mat_index + 5] > mat_array[mat_index + i * 5]) {
             i = 1;
         }
 
-        if (this._MAT(2, 2) > this._MAT(i, i)) {
+        if (mat_array[mat_index + 10] > mat_array[mat_index + i * 5]) {
             i = 2;
         }
 
         j = (i + 1) % 3;
         k = (i + 2) % 3;
 
-        root = b9.Math.sqrt(this._MAT(i, i) - (this._MAT(j, j) + this._MAT(k, k)) + 1.0);
+        root = b9.Math.sqrt(
+                mat_array[mat_index + i * 5] - (mat_array[mat_index + j * 5] + mat_array[mat_index + k * 5]) + 1.0);
         scale = (root !== 0.0) ? 0.5 / root : root;
 
         array[index + i] = root * 0.5;
-        array[index + j] = (this._MAT(i, j) + this._MAT(j, i)) * scale;
-        array[index + k] = (this._MAT(k, i) + this._MAT(i, k)) * scale;
-        array[index + 3] = (this._MAT(j, k) - this._MAT(k, j)) * scale;
+        array[index + j] = (mat_array[mat_index + i * 4 + j] + mat_array[mat_index + j * 4 + i]) * scale;
+        array[index + k] = (mat_array[mat_index + k * 4 + i] + mat_array[mat_index + i * 4 + k]) * scale;
+        array[index + 3] = (mat_array[mat_index + j * 4 + k] - mat_array[mat_index + k * 4 + j]) * scale;
 
         return this;
     }
@@ -272,19 +277,11 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
                     -to_array[to_index + 2],
                     -to_array[to_index + 3]);
         } else {
-            b9.Quaternion._quat1.set(
-                    to_array[to_index],
-                    to_array[to_index + 1],
-                    to_array[to_index + 2],
-                    to_array[to_index + 3]);
+            b9.Quaternion._quat1.set(to);
         }
 
         if (cos_om >= 1.0) {
-            this.set(
-                    to_array[to_index],
-                    to_array[to_index + 1],
-                    to_array[to_index + 2],
-                    to_array[to_index + 3]);
+            this.set(to);
         } else {
             quat_array = b9.Quaternion._quat1._array;
             quat_index = b9.Quaternion._quat1._index;
@@ -340,26 +337,6 @@ b9.Quaternion.prototype.toString = function() {
     str += ")";
 
     return str;
-};
-
-b9.Quaternion.prototype._MAT = function(mat, a, b) {
-    var vec;
-
-    if (a === 0) {
-        vec = mat._x_axis;
-    } else if (a === 1) {
-        vec = mat._y_axis;
-    } else {
-        vec = mat._z_axis;
-    }
-
-    if (b === 0) {
-        return vec.getX();
-    } else if (b === 1) {
-        return vec.getY();
-    } else {
-        return vec.getZ();
-    }
 };
 
 b9.Quaternion._quat1 = new b9.Quaternion();
