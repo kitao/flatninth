@@ -79,22 +79,6 @@ b9.Matrix3D.prototype.initialize = function(mat_or_array_or_x_axis, index_or_y_a
 };
 
 /**
- * Returns the array of this matrix.
- * @return The array of this matrix.
- */
-b9.Matrix3D.prototype.getArray = function() {
-    return this._array;
-};
-
-/**
- * Returns the array index of the first component.
- * @return The array index of the first component.
- */
-b9.Matrix3D.prototype.getIndex = function() {
-    return this._index;
-};
-
-/**
  * Returns the x-axis of this matrix.
  * @return The x-axis.
  */
@@ -160,6 +144,22 @@ b9.Matrix3D.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
     }
 
     return this;
+};
+
+/**
+ * Returns the array of this matrix.
+ * @return The array of this matrix.
+ */
+b9.Matrix3D.prototype.getArray = function() {
+    return this._array;
+};
+
+/**
+ * Returns the array index of the first component.
+ * @return The array index of the first component.
+ */
+b9.Matrix3D.prototype.getIndex = function() {
+    return this._index;
 };
 
 /**

@@ -72,22 +72,6 @@ b9.Color.prototype.initialize = function(color_or_array_or_r, index_or_g, b, a) 
 };
 
 /**
- * Returns the array of this color.
- * @return The array of this color.
- */
-b9.Color.prototype.getArray = function() {
-    return this._array;
-};
-
-/**
- * Returns the array index of the first component.
- * @return The array index of the first component.
- */
-b9.Color.prototype.getIndex = function() {
-    return this._index;
-};
-
-/**
  * Returns the red component of this color.
  * @return {Number} The red component.
  */
@@ -202,6 +186,22 @@ b9.Color.prototype.set = function(color_or_r, g, b, a) {
     }
 
     return this;
+};
+
+/**
+ * Returns the array of this color.
+ * @return The array of this color.
+ */
+b9.Color.prototype.getArray = function() {
+    return this._array;
+};
+
+/**
+ * Returns the array index of the first component.
+ * @return The array index of the first component.
+ */
+b9.Color.prototype.getIndex = function() {
+    return this._index;
 };
 
 /**

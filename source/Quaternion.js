@@ -64,22 +64,6 @@ b9.Quaternion.prototype.initialize = function(quat_or_array_or_x, index_or_y, z,
 };
 
 /**
- * Returns the array of this quaternion.
- * @return The array of this quaternion.
- */
-b9.Quaternion.prototype.getArray = function() {
-    return this._array;
-};
-
-/**
- * Returns the array index of the first component.
- * @return The array index of the first component.
- */
-b9.Quaternion.prototype.getIndex = function() {
-    return this._index;
-};
-
-/**
  * Returns the x-coordinate of this quaternion.
  * @return The x-coordinate.
  */
@@ -188,6 +172,22 @@ b9.Quaternion.prototype.set = function(quat_or_x, y, z, w) {
     }
 
     return this;
+};
+
+/**
+ * Returns the array of this quaternion.
+ * @return The array of this quaternion.
+ */
+b9.Quaternion.prototype.getArray = function() {
+    return this._array;
+};
+
+/**
+ * Returns the array index of the first component.
+ * @return The array index of the first component.
+ */
+b9.Quaternion.prototype.getIndex = function() {
+    return this._index;
 };
 
 /**

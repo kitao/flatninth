@@ -61,22 +61,6 @@ b9.Vector3D.prototype.initialize = function(vec_or_array_or_x, index_or_y, z) {
 };
 
 /**
- * Returns the array of this vector.
- * @return The array of this vector.
- */
-b9.Vector3D.prototype.getArray = function() {
-    return this._array;
-};
-
-/**
- * Returns the array index of the first component.
- * @return The array index of the first component.
- */
-b9.Vector3D.prototype.getIndex = function() {
-    return this._index;
-};
-
-/**
  * Returns the x-coordinate of this vector.
  * @return The x-coordinate.
  */
@@ -163,6 +147,22 @@ b9.Vector3D.prototype.set = function(vec_or_x, y, z) {
     }
 
     return this;
+};
+
+/**
+ * Returns the array of this vector.
+ * @return The array of this vector.
+ */
+b9.Vector3D.prototype.getArray = function() {
+    return this._array;
+};
+
+/**
+ * Returns the array index of the first component.
+ * @return The array index of the first component.
+ */
+b9.Vector3D.prototype.getIndex = function() {
+    return this._index;
 };
 
 /**
