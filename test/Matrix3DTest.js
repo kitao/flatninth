@@ -188,7 +188,7 @@ function testMatrix3D() {
             mat1.translate(10.0, -20.0, 30.0));
 
     /* slerp */
-/*    var ratio;
+    var ratio;
     for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
         mat1.set(b9.Matrix3D.UNIT);
         mat2.set(b9.Matrix3D.UNIT).translate(2.0, 4.0, 6.0).rotateX_int(90);
@@ -205,9 +205,9 @@ function testMatrix3D() {
         mat3.set(b9.Matrix3D.UNIT).translate(2.0 * ratio, 4.0 * ratio, 6.0 * ratio).rotateZ_float(90.0 * ratio);
         assertEquals_object(mat3, mat1.slerp(mat2, ratio));
     }
-*/
+
     /* slerp_noTrans */
-/*    for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
+    for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
         mat1.set(b9.Matrix3D.UNIT).translate(1.0, 2.0, 3.0);
         mat2.set(b9.Matrix3D.UNIT).translate(2.0, 4.0, 6.0).rotateX_int(90);
         mat3.set(b9.Matrix3D.UNIT).rotateX_float(90.0 * ratio);
@@ -223,7 +223,7 @@ function testMatrix3D() {
         mat3.set(b9.Matrix3D.UNIT).rotateZ_float(90.0 * ratio);
         assertEquals_object(mat3, mat1.slerp_noTrans(mat2, ratio));
     }
-*/
+
     /* toLocal */
     mat1.set(b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT, new b9.Vector3D(3.0, 4.0, 5.0));
     mat2.set(
