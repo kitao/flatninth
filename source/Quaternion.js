@@ -24,14 +24,16 @@
  * Constructs a quaternion. The following forms are allowed:
  * <ul>
  * <li>b9.Quaternion()</li>
+ * <li>b9.Quaternion(Float32Array array_to_be_reference, int array_index_of_first_component)</li>
  * <li>b9.Quaternion(b9.Quaternion quaternion_to_be_cloned)</li>
  * <li>b9.Quaternion(float x, float y, float z, float w)</li>
  * </ul>
  *
  * @class A quaternion which is represented by xyzw coordinates.
  *
- * @param {b9.Quaternion|Number} [quat_or_x] A quaternion to be cloned or a x-coordinate.
- * @param {Number} [y] A y-coordinate.
+ * @param {b9.Quaternion|Float32Array|Number} [quat_or_array_or_x]
+ * A quaternion to be cloned, an array to be referenced, or an x-coordinate.
+ * @param {Number} [index_or_y] An array index of the first component, or a y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @param {Number} [w] A w-coordinate.
  */
@@ -40,38 +42,101 @@ b9.Quaternion = b9.createClass();
 /**
  * @ignore
  */
-b9.Quaternion.prototype.initialize = function(quat_or_x, y, z, w) {
-    /**
-     * The x-coordinate.
-     */
-    this.x = 0.0;
-
-    /**
-     * The y-coordinate.
-     */
-    this.y = 0.0;
-
-    /**
-     * The z-coordinate.
-     */
-    this.z = 0.0;
-
-    /**
-     * The w-coordinate.
-     */
-    this.w = 0.0;
+b9.Quaternion.prototype.initialize = function(quat_or_array_or_x, index_or_y, z, w) {
+    var array = this._array = (arguments.length === 2) ? quat_or_array_or_x : new Float32Array(4);
+    var index = this._index = (arguments.length === 2) ? index_or_y : 0;
+    var quat_array, quat_index;
 
     if (arguments.length === 1) {
-        this.x = quat_or_x.x;
-        this.y = quat_or_x.y;
-        this.z = quat_or_x.z;
-        this.w = quat_or_x.w;
+        quat_array = quat_or_array_or_x._array;
+        quat_index = quat_or_array_or_x._index;
+
+        array[index] = quat_array[quat_index];
+        array[index + 1] = quat_array[quat_index + 1];
+        array[index + 2] = quat_array[quat_index + 2];
+        array[index + 3] = quat_array[quat_index + 3];
     } else if (arguments.length === 4) {
-        this.x = quat_or_x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
+        array[index] = quat_or_array_or_x;
+        array[index + 1] = index_or_y;
+        array[index + 2] = z;
+        array[index + 3] = w;
     }
+};
+
+/**
+ * Returns the x-coordinate of this quaternion.
+ * @return The x-coordinate.
+ */
+b9.Quaternion.prototype.getX = function() {
+    return this._array[this._index];
+};
+
+/**
+ * Sets an x-coordinate to this quaternion.
+ * @param {Number} x An x-coordinate.
+ * @return This quaternion;
+ */
+b9.Quaternion.prototype.setX = function(x) {
+    this._array[this._index] = x;
+
+    return this;
+};
+
+/**
+ * Returns the y-coordinate of this quaternion.
+ * @return The y-coordinate of this quaternion.
+ */
+b9.Quaternion.prototype.getY = function() {
+    return this._array[this._index + 1];
+};
+
+/**
+ * Sets a y-coordinate to this quaternion.
+ * @param {Number} y A y-coordinate.
+ * @return This quaternion;
+ */
+b9.Quaternion.prototype.setY = function(y) {
+    this._array[this._index + 1] = y;
+
+    return this;
+};
+
+/**
+ * Returns the z-coordinate of this quaternion.
+ * @return The z-coordinate of this quaternion.
+ */
+b9.Quaternion.prototype.getZ = function() {
+    return this._array[this._index + 2];
+};
+
+/**
+ * Sets a z-coordinate of this quaternion.
+ * @param {Number} z A z-coordinate.
+ * @return This quaternion;
+ */
+b9.Quaternion.prototype.setZ = function(z) {
+    this._array[this._index + 2] = z;
+
+    return this;
+};
+
+/**
+ * Returns the w-coordinate of this quaternion.
+ * @return The w-coordinate of this quaternion.
+ */
+b9.Quaternion.prototype.getW = function() {
+    return this._array[this._index + 3];
+};
+
+/**
+ * Sets a w-coordinate to this quaternion.
+ * @param {Number} w A w-coordinate.
+ * @return This quaternion;
+ */
+b9.Quaternion.prototype.setW = function(w) {
+    this._array[this._index + 3] = w;
+
+    return this;
 };
 
 /**
@@ -80,26 +145,49 @@ b9.Quaternion.prototype.initialize = function(quat_or_x, y, z, w) {
  * <li>b9.Quaternion(b9.Quaternion quaternion_to_be_cloned)</li>
  * <li>b9.Quaternion(float x, float y, float z, float w)</li>
  * </ul>
- * @param {b9.Quaternion|Number} [quat_or_x] A quaternion to be cloned or a x-coordinate.
+ * @param {b9.Quaternion|Number} [quat_or_x] A quaternion to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @param {Number} [w] A w-coordinate.
  * @return {b9.Quaternion} This quaternion.
  */
 b9.Quaternion.prototype.set = function(quat_or_x, y, z, w) {
+    var array = this._array;
+    var index = this._index;
+    var quat_array, quat_index;
+
     if (arguments.length === 1) {
-        this.x = quat_or_x.x;
-        this.y = quat_or_x.y;
-        this.z = quat_or_x.z;
-        this.w = quat_or_x.w;
+        quat_array = quat_or_x._array;
+        quat_index = quat_or_x._index;
+
+        array[index] = quat_array[quat_index];
+        array[index + 1] = quat_array[quat_index + 1];
+        array[index + 2] = quat_array[quat_index + 2];
+        array[index + 3] = quat_array[quat_index + 3];
     } else if (arguments.length === 4) {
-        this.x = quat_or_x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
+        array[index] = quat_or_x;
+        array[index + 1] = y;
+        array[index + 2] = z;
+        array[index + 3] = w;
     }
 
     return this;
+};
+
+/**
+ * Returns the array of this quaternion.
+ * @return The array of this quaternion.
+ */
+b9.Quaternion.prototype.getArray = function() {
+    return this._array;
+};
+
+/**
+ * Returns the array index of this quaternion.
+ * @return The array index of this quaternion.
+ */
+b9.Quaternion.prototype.getIndex = function() {
+    return this._index;
 };
 
 /**
@@ -108,6 +196,8 @@ b9.Quaternion.prototype.set = function(quat_or_x, y, z, w) {
  * @return This quaternion.
  */
 b9.Quaternion.prototype.fromMatrix3D = function(mat) {
+    var array = this._array;
+    var index = this._index;
     var trace = mat.x_axis.x + mat.y_axis.y + mat.z_axis.z;
     var root, scale;
     var i, j, k;
@@ -138,10 +228,10 @@ b9.Quaternion.prototype.fromMatrix3D = function(mat) {
         root = b9.Math.sqrt(this._MAT(i, i) - (this._MAT(j, j) + this._MAT(k, k)) + 1.0);
         scale = (root !== 0.0) ? 0.5 / root : root;
 
-        this._QUAT(i, root * 0.5);
-        this._QUAT(j, (this._MAT(i, j) + this._MAT(j, i)) * scale);
-        this._QUAT(k, (this._MAT(k, i) + this._MAT(i, k)) * scale);
-        this._QUAT(3, (this._MAT(j, k) - this._MAT(k, j)) * scale);
+        array[index + i] = root * 0.5;
+        array[index + j] = (this._MAT(i, j) + this._MAT(j, i)) * scale;
+        array[index + k] = (this._MAT(k, i) + this._MAT(i, k)) * scale;
+        array[index + 3] = (this._MAT(j, k) - this._MAT(k, j)) * scale;
 
         return this;
     }
@@ -154,6 +244,12 @@ b9.Quaternion.prototype.fromMatrix3D = function(mat) {
  * @return {b9.Matrix3D} This quaternion.
  */
 b9.Quaternion.prototype.slerp = function(to, ratio) {
+    var array = this._array;
+    var index = this._index;
+    var to_array = to._array;
+    var to_index = to._index;
+    var quat_array = b9.Quaternion._quat1._array;
+    var quat_index = b9.Quaternion._quat1._index;
     var omega;
     var sin_om, cos_om;
     var scale0, scale1;
@@ -161,32 +257,40 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        cos_om = this.x * to.x + this.y * to.y + this.z * to.z + this.w * to.w;
+        cos_om = array[index] * to_array[to_index] +
+            array[index + 1] * to_array[to_index + 1] +
+            array[index + 2] * to_array[to_index + 2] +
+            array[index + 3] * to_array[to_index + 3];
 
         if (cos_om < 0.0) {
             cos_om = -cos_om;
 
-            b9.Quaternion._quat1.x = -to.x;
-            b9.Quaternion._quat1.y = -to.y;
-            b9.Quaternion._quat1.z = -to.z;
-            b9.Quaternion._quat1.w = -to.w;
+            quat_array[quat_index] = -to_array[to_index];
+            quat_array[quat_index + 1] = -to_array[to_index + 1];
+            quat_array[quat_index + 2] = -to_array[to_index + 2];
+            quat_array[quat_index + 3] = -to_array[to_index + 3];
         } else {
-            b9.Quaternion._quat1.set(to);
+            quat_array[quat_index] = to_array[to_index];
+            quat_array[quat_index + 1] = to_array[to_index + 1];
+            quat_array[quat_index + 2] = to_array[to_index + 2];
+            quat_array[quat_index + 3] = to_array[to_index + 3];
         }
 
         if (cos_om >= 1.0) {
-            this.set(to);
+            array[index] = to_array[to_index];
+            array[index + 1] = to_array[to_index + 1];
+            array[index + 2] = to_array[to_index + 2];
+            array[index + 3] = to_array[to_index + 3];
         } else {
             omega = b9.Math.acos(cos_om > 1.0 ? 1.0 : cos_om);
             sin_om = b9.Math.sin_float(omega);
             scale0 = b9.Math.sin_float(omega * (1.0 - ratio)) / sin_om;
             scale1 = b9.Math.sin_float(omega * ratio) / sin_om;
 
-            this.set(
-                    this.x * scale0 + b9.Quaternion._quat1.x * scale1,
-                    this.y * scale0 + b9.Quaternion._quat1.y * scale1,
-                    this.z * scale0 + b9.Quaternion._quat1.z * scale1,
-                    this.w * scale0 + b9.Quaternion._quat1.w * scale1);
+            array[index] = array[index] * scale0 + quat_array[quat_index] * scale1;
+            array[index + 1] = array[index + 1] * scale0 + quat_array[quat_index + 1] * scale1;
+            array[index + 2] = array[index + 2] * scale0 + quat_array[quat_index + 2] * scale1;
+            array[index + 3] = array[index + 3] * scale0 + quat_array[quat_index + 3] * scale1;
         }
     }
 
@@ -199,10 +303,15 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
  * @return {Boolean} true if the two quaternions are equal; false otherwise.
  */
 b9.Quaternion.prototype.equals = function(quat) {
-    return (b9.Math.equals_float(this.x, quat.x) &&
-            b9.Math.equals_float(this.y, quat.y) &&
-            b9.Math.equals_float(this.z, quat.z) &&
-            b9.Math.equals_float(this.w, quat.w));
+    var array = this._array;
+    var index = this._index;
+    var quat_array = quat._array;
+    var quat_index = quat._index;
+
+    return (b9.Math.equals_float(array[index], quat_array[quat_index]) &&
+            b9.Math.equals_float(array[index + 1], quat_array[quat_index + 1]) &&
+            b9.Math.equals_float(array[index + 2], quat_array[quat_index + 2]) &&
+            b9.Math.equals_float(array[index + 3], quat_array[quat_index + 3]));
 };
 
 /**
@@ -210,14 +319,17 @@ b9.Quaternion.prototype.equals = function(quat) {
  * @return {String} A string representation of this quaternion.
  */
 b9.Quaternion.prototype.toString = function() {
+    var array = this._array;
+    var index = this._index;
+
     var str = "(";
-    str += this.x;
+    str += array[index];
     str += ", ";
-    str += this.y;
+    str += array[index + 1];
     str += ", ";
-    str += this.z;
+    str += array[index + 2];
     str += ", ";
-    str += this.w;
+    str += array[index + 3];
     str += ")";
 
     return str;
@@ -240,18 +352,6 @@ b9.Quaternion.prototype._MAT = function(mat, a, b) {
         return vec.y;
     } else {
         return vec.z;
-    }
-};
-
-b9.Quaternion.prototype._QUAT = function(a, v) {
-    if (a === 0) {
-        this.x = v;
-    } else if (a === 1) {
-        this.y = v;
-    } else if (a === 2) {
-        this.z = v;
-    } else {
-        this.w = v;
     }
 };
 
