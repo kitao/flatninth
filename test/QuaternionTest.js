@@ -22,12 +22,12 @@
 
 function testQuaternion() {
     /* initialize */
-    /* getArray */
-    /* getIndex */
     /* getX */
     /* getY */
     /* getZ */
     /* getW */
+    /* getArray */
+    /* getIndex */
     var quat1 = new b9.Quaternion();
 
     var array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]);

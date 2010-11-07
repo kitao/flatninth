@@ -22,12 +22,12 @@
 
 function testColor() {
     /* initialize */
-    /* getArray */
-    /* getIndex */
     /* getR */
     /* getG */
     /* getB */
     /* getA */
+    /* getArray */
+    /* getIndex */
     var color1 = new b9.Color();
 
     var array = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);

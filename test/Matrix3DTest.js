@@ -22,8 +22,6 @@
 
 function testMatrix3D() {
     /* initialize */
-    /* getArray */
-    /* getIndex */
     /* getXAxis */
     /* getYAxis */
     /* getZAxis */

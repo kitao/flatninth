@@ -22,11 +22,11 @@
 
 function testVector3D() {
     /* initialize */
-    /* getArray */
-    /* getIndex */
     /* getX */
     /* getY */
     /* getZ */
+    /* getArray */
+    /* getIndex */
     var vec1 = new b9.Vector3D();
 
     var array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0]);
