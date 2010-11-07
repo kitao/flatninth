@@ -197,8 +197,8 @@ b9.Color.prototype.getArray = function() {
 };
 
 /**
- * Returns the array index of this color.
- * @return The array index of this color.
+ * Returns the array index of the first component.
+ * @return The array index of the first component.
  */
 b9.Color.prototype.getIndex = function() {
     return this._index;
