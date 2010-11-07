@@ -22,14 +22,36 @@
 
 function testQuaternion() {
     /* initialize */
+    /* getX */
+    /* getY */
+    /* getZ */
+    /* getW */
+    /* getArray */
+    /* getIndex */
     var quat1 = new b9.Quaternion();
-    assertTrue(quat1.x === 0.0 && quat1.y === 0.0 && quat1.z === 0.0 && quat1.w === 0.0);
 
-    var quat2 = new b9.Quaternion(1.0, 2.0, 3.0, 4.0);
-    assertTrue(quat2.x === 1.0 && quat2.y === 2.0 && quat2.z === 3.0 && quat2.w === 4.0);
+    var array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]);
+    var quat2 = new b9.Quaternion(array, 4);
+    assertTrue(quat2.getX() === 5.0 && quat2.getY() === 6.0 && quat2.getZ() === 7.0 && quat2.getW() === 8.0);
+    assertTrue(quat2.getArray() === array && quat2.getIndex() === 4);
 
-    var quat3 = new b9.Quaternion(quat2);
-    assertTrue(quat3.x === 1.0 && quat3.y === 2.0 && quat3.z === 3.0 && quat3.w === 4.0);
+    var quat3 = new b9.Quaternion(1.0, 2.0, 3.0, 4.0);
+    assertTrue(quat3.getX() === 1.0 && quat3.getY() === 2.0 && quat3.getZ() === 3.0 && quat3.getW() === 4.0);
+
+    var quat4 = new b9.Quaternion(quat2);
+    assertTrue(quat4.getX() === 5.0 && quat4.getY() === 6.0 && quat4.getZ() === 7.0 && quat4.getW() === 8.0);
+
+    /* setX */
+    assertEquals(10.0, quat1.setX(10.0).getX());
+
+    /* setY */
+    assertEquals(20.0, quat1.setY(20.0).getY());
+
+    /* setZ */
+    assertEquals(30.0, quat1.setZ(30.0).getZ());
+
+    /* setW */
+    assertEquals(40.0, quat1.setW(40.0).getW());
 
     /* set */
     assertEquals_object(new b9.Quaternion(3.0, 4.0, 5.0, 6.0), quat1.set(3.0, 4.0, 5.0, 6.0));
