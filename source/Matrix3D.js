@@ -168,10 +168,13 @@ b9.Matrix3D.prototype.getIndex = function() {
  * @return This matrix.
  */
 b9.Matrix3D.prototype.fromQuaternion = function(quat) {
-    var quat_x = quat.getX();
-    var quat_y = quat.getY();
-    var quat_z = quat.getZ();
-    var quat_w = quat.getW();
+    var quat_array = quat._array;
+    var quat_index = quat._index;
+
+    var quat_x = quat_array[quat_index];
+    var quat_y = quat_array[quat_index + 1];
+    var quat_z = quat_array[quat_index + 2];
+    var quat_w = quat_array[quat_index + 3];
 
     var x2 = quat_x + quat_x;
     var y2 = quat_y + quat_y;

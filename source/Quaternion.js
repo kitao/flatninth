@@ -198,9 +198,10 @@ b9.Quaternion.prototype.getIndex = function() {
 b9.Quaternion.prototype.fromMatrix3D = function(mat) {
     var array = this._array;
     var index = this._index;
-    var trace = mat._x_axis.getX() + mat._y_axis.getY() + mat._z_axis.getZ();
+    var mat_array = mat._array;
+    var mat_index = mat._index;
+    var trace = mat_array[mat_index] + mat_array[mat_index + 5] + mat_array[mat_index + 10];
     var root, scale;
-    var mat_array, mat_index;
     var i, j, k;
 
     if (trace > 0.0) {
@@ -208,9 +209,9 @@ b9.Quaternion.prototype.fromMatrix3D = function(mat) {
         scale = 0.5 / root;
 
         return this.set(
-                (mat._y_axis.getZ() - mat._z_axis.getY()) * scale,
-                (mat._z_axis.getX() - mat._x_axis.getZ()) * scale,
-                (mat._x_axis.getY() - mat._y_axis.getX()) * scale,
+                (mat_array[mat_index + 6] - mat_array[mat_index + 9]) * scale,
+                (mat_array[mat_index + 8] - mat_array[mat_index + 2]) * scale,
+                (mat_array[mat_index + 1] - mat_array[mat_index + 4]) * scale,
                 root * 0.5);
     } else {
         mat_array = mat._array;
