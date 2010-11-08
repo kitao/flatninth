@@ -107,6 +107,9 @@ function testVector3D() {
     vec1.set(3.0, 4.0, 12.0);
     assertEquals_object((new b9.Vector3D(3.0, 4.0, 12.0)).div(13.0), vec1.normalize());
 
+    vec1.set(0.0, 0.0, 0.0);
+    assertEquals_object(new b9.Vector3D(1.0, 0.0, 0.0), vec1.normalize());
+
     /* rotateX_float */
     vec1.set(1.0, 2.0, 3.0);
     assertEquals_object(new b9.Vector3D(1.0, -3.0, 2.0), vec1.rotateX_float(90.0));
