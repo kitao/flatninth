@@ -36,7 +36,7 @@
  *
  * @param {b9.Color|Uint8Array|Number} [color_or_array_or_r]
  * A color to be cloned, an array to be referenced, or a red component.
- * @param {Number} [index_or_g] The array index of the first component, or a green component.
+ * @param {Number} [index_or_g] The array index of the first component or a green component.
  * @param {Number} [b] A blue component.
  * @param {Number} [a] An alpha component. If not specified, 255(=opacity) is used.
  */
@@ -190,7 +190,7 @@ b9.Color.prototype.set = function(color_or_r, g, b, a) {
 
 /**
  * Returns the array of this color.
- * @return The array of this color.
+ * @return The array.
  */
 b9.Color.prototype.getArray = function() {
     return this._array;
@@ -198,7 +198,7 @@ b9.Color.prototype.getArray = function() {
 
 /**
  * Returns the array index of the first component.
- * @return The array index of the first component.
+ * @return The array index.
  */
 b9.Color.prototype.getIndex = function() {
     return this._index;

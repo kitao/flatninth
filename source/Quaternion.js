@@ -25,7 +25,7 @@
  * <ul>
  * <li>b9.Quaternion()</li>
  * <li>b9.Quaternion(b9.Quaternion quaternion_to_be_cloned)</li>
- * <li>b9.Quaternion(Float32Array array_to_be_reference, int array_index_of_first_component)</li>
+ * <li>b9.Quaternion(Float32Array array_to_be_referenced, int array_index_of_first_component)</li>
  * <li>b9.Quaternion(float x, float y, float z, float w)</li>
  * </ul>
  *
@@ -33,7 +33,7 @@
  *
  * @param {b9.Quaternion|Float32Array|Number} [quat_or_array_or_x]
  * A quaternion to be cloned, an array to be referenced, or an x-coordinate.
- * @param {Number} [index_or_y] The array index of the first component, or a y-coordinate.
+ * @param {Number} [index_or_y] The array index of the first component or a y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @param {Number} [w] A w-coordinate.
  */
@@ -176,7 +176,7 @@ b9.Quaternion.prototype.set = function(quat_or_x, y, z, w) {
 
 /**
  * Returns the array of this quaternion.
- * @return The array of this quaternion.
+ * @return The array.
  */
 b9.Quaternion.prototype.getArray = function() {
     return this._array;
@@ -184,7 +184,7 @@ b9.Quaternion.prototype.getArray = function() {
 
 /**
  * Returns the array index of the first component.
- * @return The array index of the first component.
+ * @return The array index.
  */
 b9.Quaternion.prototype.getIndex = function() {
     return this._index;

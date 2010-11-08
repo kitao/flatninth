@@ -33,7 +33,7 @@
  *
  * @param {b9.Vector3D|Float32Array|Number} [vec_or_array_or_x]
  * A vector to be cloned, an array to be referenced, or an x-coordinate.
- * @param {Number} [index_or_y] The array index of the first component, or a y-coordinate.
+ * @param {Number} [index_or_y] The array index of the first component or a y-coordinate.
  * @param {Number} [z] A z-coordinate.
  */
 b9.Vector3D = b9.createClass();
@@ -88,8 +88,8 @@ b9.Vector3D.prototype.getY = function() {
 };
 
 /**
- * Sets an y-coordinate to this vector.
- * @param {Number} y An y-coordinate.
+ * Sets a y-coordinate to this vector.
+ * @param {Number} y A y-coordinate.
  * @return This vector.
  */
 b9.Vector3D.prototype.setY = function(y) {
@@ -107,8 +107,8 @@ b9.Vector3D.prototype.getZ = function() {
 };
 
 /**
- * Sets an z-coordinate to this vector.
- * @param {Number} z An z-coordinate.
+ * Sets a z-coordinate to this vector.
+ * @param {Number} z A z-coordinate.
  * @return This vector.
  */
 b9.Vector3D.prototype.setZ = function(z) {
@@ -151,7 +151,7 @@ b9.Vector3D.prototype.set = function(vec_or_x, y, z) {
 
 /**
  * Returns the array of this vector.
- * @return The array of this vector.
+ * @return The array.
  */
 b9.Vector3D.prototype.getArray = function() {
     return this._array;
@@ -159,7 +159,7 @@ b9.Vector3D.prototype.getArray = function() {
 
 /**
  * Returns the array index of the first component.
- * @return The array index of the first component.
+ * @return The array index.
  */
 b9.Vector3D.prototype.getIndex = function() {
     return this._index;
@@ -337,7 +337,7 @@ b9.Vector3D.prototype.normalize = function() {
     var norm = this.norm();
 
     if (norm < b9.Math.EPSILON) {
-        this.set(b9.Math.X_UNIT);
+        this.set(b9.Vector3D.X_UNIT);
     } else {
         this.div(norm);
     }

@@ -29,11 +29,11 @@
  * <li>b9.Matrix3D(b9.Vector3D x_axis, b9.Vector3D y_axis, b9.Vector3D z_axis, b9.Vector3D trans)</li>
  * </ul>
  *
- * @class A 3x4 matrix which is represented by four vectors.
+ * @class A 4x4 matrix which is represented by four vectors.
  *
  * @param {b9.Matrix3D|Float32Array|b9.Vector3D} [mat_or_array_or_x_axis]
  * A matrix to be cloned, an array to be referenced, or an x-axis.
- * @param {Number|b9.Vector3D} [index_or_y_axis] The array index of the first component, or a y-axis.
+ * @param {Number|b9.Vector3D} [index_or_y_axis] The array index of the first component or a y-axis.
  * @param {b9.Vector3D} [z_axis] A z-axis.
  * @param {b9.Vector3D} [trans] A translation.
  */
@@ -148,7 +148,7 @@ b9.Matrix3D.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
 
 /**
  * Returns the array of this matrix.
- * @return The array of this matrix.
+ * @return The array.
  */
 b9.Matrix3D.prototype.getArray = function() {
     return this._array;
@@ -156,7 +156,7 @@ b9.Matrix3D.prototype.getArray = function() {
 
 /**
  * Returns the array index of the first component.
- * @return The array index of the first component.
+ * @return The array index.
  */
 b9.Matrix3D.prototype.getIndex = function() {
     return this._index;
