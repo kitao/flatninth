@@ -107,10 +107,10 @@ b9.Math.sin_int = function(deg) {
     deg = this.floor(deg);
 
     if (deg < 0) {
-        deg -= (this.floor(deg / 360) - 1) * 360;
+        deg -= this.floor(deg / 360) * 360;
+    } else if (deg >= 360) {
+        deg %= 360;
     }
-
-    deg %= 360;
 
     return (deg < 180) ? this._sin_table[deg] : -this._sin_table[deg - 180];
 };
@@ -146,7 +146,7 @@ b9.Math.acos = function(x) {
 /**
  * Returns the arc tangent of an x, y coordinate.
  * @param {Number} y A y-coordinate.
- * @param {Number} x A x-coordinate.
+ * @param {Number} x An x-coordinate.
  * @return {Number} The arc tangent of y/x.
  */
 b9.Math.atan2 = function(y, x) {
@@ -216,7 +216,7 @@ b9.Math.lerp = function(from, to, ratio) {
  * Returns whether the two values are almost equal.
  * @param {Number} a A value.
  * @param {Number} b An another value.
- * @return {Boolean} true if the two values are equal; false otherwise.
+ * @return {Boolean} true if the two values are almost equal; false otherwise.
  */
 b9.Math.equals_float = function(a, b) {
     return (this.abs(a - b) < this.EPSILON);

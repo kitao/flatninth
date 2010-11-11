@@ -21,7 +21,7 @@
  */
 
 /**
- * @namespace Flatninth package.For your information, b means flat and 9 means ninth. :)
+ * @namespace Flatninth package. For your information, "b" means flat and "9" means ninth. :)
  */
 var b9 = {};
 
@@ -61,7 +61,7 @@ b9.createClass = function(super_class) {
 
                 super_class.prototype.initialize.apply(this, arguments);
 
-                if (this.constructor == sub_class) {
+                if (this.constructor === sub_class) {
                     delete this.initializeSuper;
                 } else {
                     this.initializeSuper = temp_method;
@@ -77,7 +77,7 @@ b9.createClass = function(super_class) {
 
                 super_class.prototype.finalize.apply(this, arguments);
 
-                if (this.constructor == sub_class) {
+                if (this.constructor === sub_class) {
                     delete this.finalizeSuper;
                 } else {
                     this.finalizeSuper = temp_method;
