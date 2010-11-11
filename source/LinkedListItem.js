@@ -25,7 +25,7 @@
  *
  * @class An element of the b9.LinkedList class.
  *
- * @param {Object} self An object.
+ * @param {Object} self An object to be associated.
  */
 b9.LinkedListItem = b9.createClass();
 
@@ -40,7 +40,7 @@ b9.LinkedListItem.prototype.initialize = function(self) {
 };
 
 /**
- * Destructs this item. If this item belongs to a list, this item will be unlinked from it.
+ * Destructs this item. If this item belongs to a list, this item gets unlinked from it.
  */
 b9.LinkedListItem.prototype.finalize = function() {
     if (this._list) {
@@ -60,7 +60,7 @@ b9.LinkedListItem.prototype.getSelf = function() {
 
 /**
  * Returns the list to which this item belongs. If no such list exists, returns null.
- * @return {b9.LinkedList} The list to which this item belongs.
+ * @return {b9.LinkedList} The list this item belongs to.
  */
 b9.LinkedListItem.prototype.getList = function() {
     return this._list;
