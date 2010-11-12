@@ -41,7 +41,8 @@ b9.Drawable.prototype.initialize = function() {
 };
 
 /**
- * Destructs this drawable.
+ * Destructs this drawable. If this drawable has the parent, this drawable gets unlinked from it.
+ * And all of the children of this drawable get unlinked.
  */
 b9.Drawable.prototype.finalize = function() {
     this._tree.finalize();
@@ -86,10 +87,10 @@ b9.Drawable.prototype.setAlpha = function(alpha) {
 };
 
 /**
- * Returns the reference of the local matrix of this drawable.
- * @return {b9.Matrix3D} The reference of the local matrix.
+ * Returns the local matrix of this drawable.
+ * @return {b9.Matrix3D} The local matrix.
  */
-b9.Drawable.prototype.refLocal = function() {
+b9.Drawable.prototype.getLocal = function() {
     return this._local;
 };
 
@@ -112,8 +113,8 @@ b9.Drawable.prototype.getNextAsList = function() {
 };
 
 /**
- * Returns the parent drawable of this drawable. If no such drawable exists, returns null.
- * @return {b9.Drawable} The parent drawable.
+ * Returns the parent of this drawable. If no such drawable exists, returns null.
+ * @return {b9.Drawable} The parent.
  */
 b9.Drawable.prototype.getParent = function() {
     var tree = this._tree.getParent();
@@ -159,7 +160,8 @@ b9.Drawable.prototype.getLastChild = function() {
 /**
  * Returns the last drawable of this drawable-tree, regarding this drawable-tree as a list.
  * If no such drawable exists, returns this tree.<br>
- * This method is mainly used to retrieve the terminator of the list which consists of this drawable and its family.
+ * This method is mainly used to retrieve the terminator of the list
+ * which consists of this drawable and its descendants.
  * @return {b9.Drawable} The last descendant.
  */
 b9.Drawable.prototype.getLastDescendant = function() {
@@ -168,8 +170,8 @@ b9.Drawable.prototype.getLastDescendant = function() {
 };
 
 /**
- * Links a drawable with this drawable as the first child.
- * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable,
+ * Links a drawable as the first child with this drawable.
+ * @param {b9.Drawable} child A drawable. If the drawable already belongs to some drawable,
  * the drawable gets automatically unlinked with it before the operation.
  */
 b9.Drawable.prototype.addChildFirst = function(cihld) {
@@ -177,8 +179,8 @@ b9.Drawable.prototype.addChildFirst = function(cihld) {
 };
 
 /**
- * Links a drawable with this drawable as the last child.
- * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable,
+ * Links a drawable as the last child with this drawable.
+ * @param {b9.Drawable} child A drawable. If the drawable already belongs to some drawable,
  * the drawable gets automatically unlinked with it before the operation.
  */
 b9.Drawable.prototype.addChildLast = function(child) {
@@ -186,8 +188,8 @@ b9.Drawable.prototype.addChildLast = function(child) {
 };
 
 /**
- * Links a drawable with this drawable as the previous of the specified drawable.
- * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable,
+ * Links a drawable as the previous of the specified drawable with this drawable.
+ * @param {b9.Drawable} child A drawable. If the drawable already belongs to some drawable,
  * the drawable gets automatically unlinked with it before the operation.
  * @param {b9.Drawable} next_child The drawable to be the next. This drawable must be a child of this drawable.
  */
@@ -196,8 +198,8 @@ b9.Drawable.prototype.addChildBefore = function(child, next_child) {
 };
 
 /**
- * Links a drawable with this drawable as the next of the specified drawable.
- * @param {b9.Drawable} child A drawable. If this drawable already belongs to some drawable,
+ * Links a drawable as the next of the specified drawable with this drawable.
+ * @param {b9.Drawable} child A drawable. If the drawable already belongs to some drawable,
  * the drawable gets automatically unlinked with it before the operation.
  * @param {b9.Drawable} prev_child The drawable to be the previous. This drawable must be a child of this drawable.
  */
