@@ -41,6 +41,7 @@ b9.VERSION = 0.01;
  * @return {Object} A class object.
  */
 b9.createClass = function(super_class) {
+    var temp_class;
     var sub_class = function() {
         if (sub_class.prototype.initialize) {
             sub_class.prototype.initialize.apply(this, arguments);
@@ -48,7 +49,7 @@ b9.createClass = function(super_class) {
     };
 
     if (super_class) {
-        var temp_class = function() {};
+        temp_class = function() {};
         temp_class.prototype = super_class.prototype;
         sub_class.prototype = new temp_class();
         sub_class.prototype.constructor = sub_class;
