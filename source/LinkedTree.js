@@ -45,7 +45,7 @@ b9.LinkedTree.prototype.initialize = function(self) {
  * And all of the children of this tree get unlinked.
  */
 b9.LinkedTree.prototype.finalize = function() {
-    this.removeAllChildren();
+    this.clear();
 
     if (this._parent) {
         this._parent.removeChild(this);
@@ -301,7 +301,7 @@ b9.LinkedTree.prototype.removeChild = function(child) {
  * Unlinks all of the children from this tree.
  * Note that this method only unlinks the children of this tree, so the descendants of the children doesn't change.
  */
-b9.LinkedTree.prototype.removeAllChildren = function() {
+b9.LinkedTree.prototype.clear = function() {
     while (this._last_child) {
         this.removeChild(this._last_child);
     }
