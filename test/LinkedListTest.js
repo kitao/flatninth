@@ -87,8 +87,8 @@ function testLinkedList() {
     assertEquals(item1, item2.getPrev());
     assertEquals(null, item2.getNext());
 
-    /* addItemBefore */
-    list1.addItemBefore(item2, item1);
+    /* insertItemBefore */
+    list1.insertItemBefore(item2, item1);
 
     assertEquals(2, list1.getItemCount());
     assertEquals(item2, list1.getFirstItem());
@@ -102,8 +102,8 @@ function testLinkedList() {
     assertEquals(null, item2.getPrev());
     assertEquals(item1, item2.getNext());
 
-    /* addItemAfter */
-    list1.addItemAfter(item2, item1);
+    /* insertItemAfter */
+    list1.insertItemAfter(item2, item1);
 
     assertEquals(2, list1.getItemCount());
     assertEquals(item1, list1.getFirstItem());
