@@ -193,8 +193,8 @@ b9.Drawable.prototype.addChildLast = function(child) {
  * the drawable gets automatically unlinked with it before the operation.
  * @param {b9.Drawable} next_child The drawable to be the next. This drawable must be a child of this drawable.
  */
-b9.Drawable.prototype.addChildBefore = function(child, next_child) {
-    this._tree.addChildBefore(child._tree, next_child._tree);
+b9.Drawable.prototype.insertChildBefore = function(child, next_child) {
+    this._tree.insertChildBefore(child._tree, next_child._tree);
 };
 
 /**
@@ -203,8 +203,8 @@ b9.Drawable.prototype.addChildBefore = function(child, next_child) {
  * the drawable gets automatically unlinked with it before the operation.
  * @param {b9.Drawable} prev_child The drawable to be the previous. This drawable must be a child of this drawable.
  */
-b9.Drawable.prototype.addChildAfter = function(child, prev_child) {
-    this._tree.addChildAfter(child._tree, prev_child._tree);
+b9.Drawable.prototype.insertChildAfter = function(child, prev_child) {
+    this._tree.insertChildAfter(child._tree, prev_child._tree);
 };
 
 /**

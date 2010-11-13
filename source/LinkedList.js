@@ -80,7 +80,7 @@ b9.LinkedList.prototype.getLastItem = function() {
  * the item gets automatically unlinked with it before the operation.
  */
 b9.LinkedList.prototype.addItemFirst = function(item) {
-    this.addItemAfter(item, this._start);
+    this.insertItemAfter(item, this._start);
 };
 
 /**
@@ -89,7 +89,7 @@ b9.LinkedList.prototype.addItemFirst = function(item) {
  * the item gets automatically unlinked with it before the operation.
  */
 b9.LinkedList.prototype.addItemLast = function(item) {
-    this.addItemBefore(item, this._end);
+    this.insertItemBefore(item, this._end);
 };
 
 /**
@@ -98,7 +98,7 @@ b9.LinkedList.prototype.addItemLast = function(item) {
  * the item gets automatically unlinked with it before the operation.
  * @param {b9.LinkedListItem} next_item The item to be the next. This item must belong to this list.
  */
-b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
+b9.LinkedList.prototype.insertItemBefore = function(item, next_item) {
     if (next_item._list === this) {
         if (item._list) {
             item._list.removeItem(item);
@@ -121,7 +121,7 @@ b9.LinkedList.prototype.addItemBefore = function(item, next_item) {
  * the item gets automatically unlinked with it before the operation.
  * @param {b9.LinkedListItem} prev_item The item to be the previous. This item must belong to this list.
  */
-b9.LinkedList.prototype.addItemAfter = function(item, prev_item) {
+b9.LinkedList.prototype.insertItemAfter = function(item, prev_item) {
     if (prev_item._list === this) {
         if (item._list) {
             item._list.removeItem(item);

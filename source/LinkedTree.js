@@ -218,7 +218,7 @@ b9.LinkedTree.prototype.addChildLast = function(child) {
  * the tree gets automatically unlinked with it before the operation.
  * @param {b9.LinkedTree} next_child The tree to be the next. This tree must be a child of this tree.
  */
-b9.LinkedTree.prototype.addChildBefore = function(child, next_child) {
+b9.LinkedTree.prototype.insertChildBefore = function(child, next_child) {
     var child_desc;
 
     if (next_child._parent === this) {
@@ -243,7 +243,7 @@ b9.LinkedTree.prototype.addChildBefore = function(child, next_child) {
  * the tree gets automatically unlinked with it before the operation.
  * @param {b9.LinkedTree} prev_child The tree to be the previous. This tree must be a child of this tree.
  */
-b9.LinkedTree.prototype.addChildAfter = function(child, prev_child)
+b9.LinkedTree.prototype.insertChildAfter = function(child, prev_child)
 {
     var child_desc, prev_child_desc;
 
