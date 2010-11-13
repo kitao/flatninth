@@ -142,10 +142,10 @@ function testLinkedList() {
     assertEquals(null, item2.getPrev());
     assertEquals(null, item2.getNext());
 
-    /* removeAllItems */
+    /* clear */
     list1.addItemLast(item1);
     list1.addItemLast(item2);
-    list1.removeAllItems();
+    list1.clear();
 
     assertEquals(0, list1.getItemCount());
     assertEquals(null, list1.getFirstItem());

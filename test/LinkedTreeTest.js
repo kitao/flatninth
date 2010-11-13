@@ -319,9 +319,9 @@ function testLinkedTree() {
     assertEquals(null, tree4.getLastChild());
     assertEquals(tree4, tree4.getLastDescendant());
 
-    /* removeAllChildren */
+    /* clear */
     tree1.addChildAfter(tree3, tree2);
-    tree1.removeAllChildren();
+    tree1.clear();
 
     assertEquals(dummy1, tree1.getSelf());
     assertEquals(null, tree1.getPrevAsList());
