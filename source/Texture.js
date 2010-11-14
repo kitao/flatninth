@@ -22,6 +22,10 @@
 
 /**
  * @class
+ *
+ * @param {Number} filename_or_width
+ * @param {Number} [height]
+ * @param {Number} [format]
  */
 b9.Texture = b9.createClass();
 
@@ -32,7 +36,8 @@ b9.Texture.prototype.initialize = function(filename_or_width, height, format) {
     var gl = b9.System.getGLContext();
     var that;
 
-    this._is_ready = false;
+    this._is_loaded = false;
+    this._is_uploaded = false;
     this._width = 0.0;
     this._height = 0.0;
 
@@ -44,14 +49,7 @@ b9.Texture.prototype.initialize = function(filename_or_width, height, format) {
         that = this;
 
         this._image.onload = function() {
-            gl.bindTexture(gl.TEXTURE_2D, that._gltex);
-            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, that._image);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-            gl.bindTexture(gl.TEXTURE_2D, null);
-
-            that._is_ready = true;
+            that._is_loaded = true;
             that._width = that._image.width;
             that._height = that._image_height;
         };
@@ -71,8 +69,8 @@ b9.Texture.prototype.finalize = function() {
  *
  * @return {Boolean}
  */
-b9.Texture.prototype.isReady = function() {
-    return this._is_ready;
+b9.Texture.prototype.isLoaded = function() {
+    return this._is_loaded;
 };
 
 /**
@@ -89,6 +87,28 @@ b9.Texture.prototype.getWidth = function() {
  */
 b9.Texture.prototype.getHeight = function() {
     return this._height;
+};
+
+/**
+ *
+ */
+b9.Texture.prototype.updateTexture = function(x, y, width, height) {
+    // TODO
+};
+
+b9.Texture.prototype._setup = function() {
+    if (this._is_loaded) {
+        gl.bindTexture(gl.TEXTURE_2D, that._gltex);
+
+        if (!this._is_uploaded) {
+            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, that._image);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+
+            this._is_uploaded = true;
+        }
+    }
 };
 
 /**
