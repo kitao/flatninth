@@ -31,11 +31,27 @@ TEST_DIR    = $(BASE_DIR)/test
 SAMPLE_DIR  = $(BASE_DIR)/sample
 REF_DIR     = $(BASE_DIR)/doc/reference
 
-SRCS1       = b9.js Math.js Vector3D.js Matrix3D.js Quaternion.js Color.js
-SRCS2       = LinkedList.js LinkedListItem.js LinkedTree.js
-SRCS3       = System.js ActorList.js Actor.js Texture.js Shader.js Drawable.js Primitive.js PrimitiveBuffer.js Sprite.js SpriteBuffer.js
+SRCS        = b9.js \
+              Math.js \
+              Vector3D.js \
+              Matrix3D.js \
+              Quaternion.js \
+              Color.js \
+              LinkedList.js \
+              LinkedListItem.js \
+              LinkedTree.js \
+              System.js \
+              ActorList.js \
+              Actor.js \
+              Texture.js \
+              Shader.js \
+              Drawable.js \
+              Primitive.js \
+              PrimitiveBuffer.js \
+              Sprite.js \
+              SpriteBuffer.js
 
-SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS1) $(SRCS2) $(SRCS3))
+SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
 SAMPLE_SRCS = $(shell find $(SAMPLE_DIR) -name "*.js")
 TARGET      = $(BASE_DIR)/flatninth.js
