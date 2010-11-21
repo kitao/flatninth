@@ -91,8 +91,12 @@ b9.Texture.prototype.getHeight = function() {
 
 /**
  *
+ * @param {Number} left
+ * @param {Number} top
+ * @param {Number} width
+ * @param {Number} height
  */
-b9.Texture.prototype.updateTexture = function(x, y, width, height) {
+b9.Texture.prototype.updateTexture = function(left, top, width, height) {
     // TODO
 };
 

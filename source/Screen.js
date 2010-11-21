@@ -25,19 +25,22 @@
  *
  * @class A rendering target of drawables.
  *
- * @param {Number} order hoge
+ * @param {Number} left
+ * @param {Number} top
+ * @param {Number} width
+ * @param {Number} height
  */
 b9.Screen = b9.createClass();
 
 /**
  * @ignore
  */
-b9.Screen.prototype.initialize = function() {
+b9.Screen.prototype.initialize = function(left, top, width, height) {
     this._scr_flag = b9.Screen.FLAG_VISIBLE;
-    this._left = 0.0;
-    this._top = 0.0;
-    this._width = b9.System.getCanvas().width;
-    this._height = b9.System.getCanvas().height;
+    this._left = left;
+    this._top = top;
+    this._width = width;
+    this._height = height;
     this._alpha = 1.0;
     this._field_of_view = 45.0; // TODO
     this._aspect_ratio = 1.0; // TODO
@@ -145,18 +148,18 @@ b9.Screen.prototype.setAlpha = function(alpha) {
 };
 
 /**
- * Returns the reference of the clear color.
- * @return {b9.Color} The reference of the clear color.
+ * Returns the clear color of this screen.
+ * @return {b9.Color} The clear color.
  */
-b9.Screen.prototype.refClearColor = function() {
+b9.Screen.prototype.getClearColor = function() {
     return this._clear_color;
 };
 
 /**
- * Returns the reference of the camera matrix.
- * @return {b9.Matrix3D} The reference of the camera matrix.
+ * Returns the camera matrix of this screen.
+ * @return {b9.Matrix3D} The camera matrix.
  */
-b9.Screen.prototype.refCamera = function() {
+b9.Screen.prototype.getCamera = function() {
     return this._camera;
 };
 
@@ -165,37 +168,23 @@ b9.Screen.prototype.refCamera = function() {
  * @param {b9.Drawable} root_draw
  */
 b9.Screen.prototype.render = function(root_draw) {
-    var canvas = this._local_canvas ? this._local_canvas : b9.System.getMainCanvas();
-    var context = canvas.context;
-
-    context.save();
+    var draw;
 
     /*
-     * set clip area
+     * clear screen
      */
-    context.beginPath();
-    context.rect(this._pos.x, this._pos.y, this._size.x, this._size.y);
-    context.clip();
+    // TODO
 
     /*
-     * clear layer
+     * draw drawables
      */
-    if (this._is_clear) {
-        b9.DrawUtility.fillRect(context, this._pos.x, this._pos.y, this._size.x, this._size.y, this._clear_color);
-    }
-
-    /*
-     * draw elements
-     */
-    for (var elem = this._elem_root; elem; elem = elem.getNextAsList()) {
-        if (elem._is_visible) {
-            elem._render(canvas);
+    for (draw = root_draw; draw; draw = draw.getNextAsList()) {
+        if (draw.getFlag(b9.Drawable.FLAG_VISIBLE)) {
+            draw._render();
         } else {
-            elem = elem.getLastDescendant();
+            draw = draw.getLastDescendant();
         }
     }
-
-    context.restore();
 };
 
 /**
