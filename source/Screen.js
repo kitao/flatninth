@@ -169,11 +169,17 @@ b9.Screen.prototype.getCamera = function() {
  */
 b9.Screen.prototype.render = function(root_draw) {
     var draw;
+    var is_clear_color, is_clear_depth;
 
     /*
      * clear screen
      */
-    // TODO
+    is_clear_color = this.getScreenFlag(b9.Screen.FLAG_CLEAR_COLOR);
+    is_clear_depth = this.getScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH);
+
+    if (is_clear_color || is_clear_depth) {
+        // TODO
+    }
 
     /*
      * draw drawables
@@ -197,4 +203,10 @@ b9.Screen.FLAG_VISIBLE = 0x8000;
  * hoge
  * @return {Number}
  */
-b9.Screen.FLAG_CLEAR = 0x4000;
+b9.Screen.FLAG_CLEAR_COLOR = 0x4000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Screen.FLAG_CLEAR_DEPTH = 0x2000;
