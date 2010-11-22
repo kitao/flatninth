@@ -44,7 +44,7 @@ b9.LinkedListItem.prototype.initialize = function(self) {
  */
 b9.LinkedListItem.prototype.finalize = function() {
     if (this._list) {
-        this._list.removeItem(this);
+        this._list.remove(this);
     }
 
     this._self = null;

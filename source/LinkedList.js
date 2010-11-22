@@ -54,7 +54,7 @@ b9.LinkedList.prototype.finalize = function() {
  * Returns the number of the items belong to this list.
  * @return {Number} The number of the items.
  */
-b9.LinkedList.prototype.getItemCount = function() {
+b9.LinkedList.prototype.getCount = function() {
     return this._item_count;
 };
 
@@ -62,7 +62,7 @@ b9.LinkedList.prototype.getItemCount = function() {
  * Returns the first item of this list. If no such item exists, returns null.
  * @return {b9.LinkedListItem} The first item.
  */
-b9.LinkedList.prototype.getFirstItem = function() {
+b9.LinkedList.prototype.getFirst = function() {
     return (this._item_count > 0) ? this._start._next : null;
 };
 
@@ -70,7 +70,7 @@ b9.LinkedList.prototype.getFirstItem = function() {
  * Returns the last item of this list. If no such item exists, returns null.
  * @return {b9.LinkedListItem} The last item.
  */
-b9.LinkedList.prototype.getLastItem = function() {
+b9.LinkedList.prototype.getLast = function() {
     return (this._item_count > 0) ? this._end._prev : null;
 };
 
@@ -79,8 +79,8 @@ b9.LinkedList.prototype.getLastItem = function() {
  * @param {b9.LinkedListItem} item An item. If the item already belongs to some list,
  * the item gets automatically unlinked with it before the operation.
  */
-b9.LinkedList.prototype.addItemFirst = function(item) {
-    this.insertItemAfter(item, this._start);
+b9.LinkedList.prototype.addFirst = function(item) {
+    this.insertAfter(item, this._start);
 };
 
 /**
@@ -88,8 +88,8 @@ b9.LinkedList.prototype.addItemFirst = function(item) {
  * @param {b9.LinkedListItem} item An item. If the item already belongs to some list,
  * the item gets automatically unlinked with it before the operation.
  */
-b9.LinkedList.prototype.addItemLast = function(item) {
-    this.insertItemBefore(item, this._end);
+b9.LinkedList.prototype.addLast = function(item) {
+    this.insertBefore(item, this._end);
 };
 
 /**
@@ -98,10 +98,10 @@ b9.LinkedList.prototype.addItemLast = function(item) {
  * the item gets automatically unlinked with it before the operation.
  * @param {b9.LinkedListItem} next_item The item to be the next. This item must belong to this list.
  */
-b9.LinkedList.prototype.insertItemBefore = function(item, next_item) {
+b9.LinkedList.prototype.insertBefore = function(item, next_item) {
     if (next_item._list === this) {
         if (item._list) {
-            item._list.removeItem(item);
+            item._list.remove(item);
         }
 
         item._list = this;
@@ -121,10 +121,10 @@ b9.LinkedList.prototype.insertItemBefore = function(item, next_item) {
  * the item gets automatically unlinked with it before the operation.
  * @param {b9.LinkedListItem} prev_item The item to be the previous. This item must belong to this list.
  */
-b9.LinkedList.prototype.insertItemAfter = function(item, prev_item) {
+b9.LinkedList.prototype.insertAfter = function(item, prev_item) {
     if (prev_item._list === this) {
         if (item._list) {
-            item._list.removeItem(item);
+            item._list.remove(item);
         }
 
         item._list = this;
@@ -142,7 +142,7 @@ b9.LinkedList.prototype.insertItemAfter = function(item, prev_item) {
  * Unlinks an item from this list.
  * @param {b9.LinkedListItem} item An item to be unlinked. This item must belong to this list.
  */
-b9.LinkedList.prototype.removeItem = function(item) {
+b9.LinkedList.prototype.remove = function(item) {
     if (item._list === this) {
         item._prev._next = item._next;
         item._next._prev = item._prev;
@@ -160,6 +160,6 @@ b9.LinkedList.prototype.removeItem = function(item) {
  */
 b9.LinkedList.prototype.clear = function() {
     while (this._item_count > 0) {
-        this.removeItem(this._start._next);
+        this.remove(this._start._next);
     }
 };
