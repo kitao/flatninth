@@ -35,7 +35,7 @@ function testLinkedListItem() {
     assertEquals(null, item1.getNext());
 
     var list1 = new b9.LinkedList();
-    list1.addItemFirst(item1);
+    list1.addFirst(item1);
 
     assertEquals(dummy1, item1.getSelf());
     assertEquals(list1, item1.getList());
@@ -44,7 +44,7 @@ function testLinkedListItem() {
 
     var dummy2 = 456;
     var item2 = new b9.LinkedListItem(dummy2);
-    list1.addItemLast(item2);
+    list1.addLast(item2);
 
     assertEquals(dummy1, item1.getSelf());
     assertEquals(list1, item1.getList());

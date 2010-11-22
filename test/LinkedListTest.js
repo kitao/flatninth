@@ -22,33 +22,33 @@
 
 function testLinkedList() {
     /* initialize */
-    /* getItemCount */
-    /* getFirstItem */
-    /* getLastItem */
+    /* getCount */
+    /* getFirst */
+    /* getLast */
     var list1 = new b9.LinkedList();
 
-    assertEquals(0, list1.getItemCount());
-    assertEquals(null, list1.getFirstItem());
-    assertEquals(null, list1.getLastItem());
+    assertEquals(0, list1.getCount());
+    assertEquals(null, list1.getFirst());
+    assertEquals(null, list1.getLast());
 
-    /* addItemFirst */
+    /* addFirst */
     var item1 = new b9.LinkedListItem(null);
-    list1.addItemFirst(item1);
+    list1.addFirst(item1);
 
-    assertEquals(1, list1.getItemCount());
-    assertEquals(item1, list1.getFirstItem());
-    assertEquals(item1, list1.getLastItem());
+    assertEquals(1, list1.getCount());
+    assertEquals(item1, list1.getFirst());
+    assertEquals(item1, list1.getLast());
 
     assertEquals(list1, item1.getList());
     assertEquals(null, item1.getPrev());
     assertEquals(null, item1.getNext());
 
     var item2 = new b9.LinkedListItem(null);
-    list1.addItemLast(item2);
+    list1.addLast(item2);
 
-    assertEquals(2, list1.getItemCount());
-    assertEquals(item1, list1.getFirstItem());
-    assertEquals(item2, list1.getLastItem());
+    assertEquals(2, list1.getCount());
+    assertEquals(item1, list1.getFirst());
+    assertEquals(item2, list1.getLast());
 
     assertEquals(list1, item1.getList());
     assertEquals(null, item1.getPrev());
@@ -58,11 +58,11 @@ function testLinkedList() {
     assertEquals(item1, item2.getPrev());
     assertEquals(null, item2.getNext());
 
-    list1.addItemFirst(item2, list1);
+    list1.addFirst(item2, list1);
 
-    assertEquals(2, list1.getItemCount());
-    assertEquals(item2, list1.getFirstItem());
-    assertEquals(item1, list1.getLastItem());
+    assertEquals(2, list1.getCount());
+    assertEquals(item2, list1.getFirst());
+    assertEquals(item1, list1.getLast());
 
     assertEquals(list1, item1.getList());
     assertEquals(item2, item1.getPrev());
@@ -72,12 +72,12 @@ function testLinkedList() {
     assertEquals(null, item2.getPrev());
     assertEquals(item1, item2.getNext());
 
-    /* addItemLast */
-    list1.addItemLast(item2, list1);
+    /* addLast */
+    list1.addLast(item2, list1);
 
-    assertEquals(2, list1.getItemCount());
-    assertEquals(item1, list1.getFirstItem());
-    assertEquals(item2, list1.getLastItem());
+    assertEquals(2, list1.getCount());
+    assertEquals(item1, list1.getFirst());
+    assertEquals(item2, list1.getLast());
 
     assertEquals(list1, item1.getList());
     assertEquals(null, item1.getPrev());
@@ -87,12 +87,12 @@ function testLinkedList() {
     assertEquals(item1, item2.getPrev());
     assertEquals(null, item2.getNext());
 
-    /* insertItemBefore */
-    list1.insertItemBefore(item2, item1);
+    /* insertBefore */
+    list1.insertBefore(item2, item1);
 
-    assertEquals(2, list1.getItemCount());
-    assertEquals(item2, list1.getFirstItem());
-    assertEquals(item1, list1.getLastItem());
+    assertEquals(2, list1.getCount());
+    assertEquals(item2, list1.getFirst());
+    assertEquals(item1, list1.getLast());
 
     assertEquals(list1, item1.getList());
     assertEquals(item2, item1.getPrev());
@@ -102,12 +102,12 @@ function testLinkedList() {
     assertEquals(null, item2.getPrev());
     assertEquals(item1, item2.getNext());
 
-    /* insertItemAfter */
-    list1.insertItemAfter(item2, item1);
+    /* insertAfter */
+    list1.insertAfter(item2, item1);
 
-    assertEquals(2, list1.getItemCount());
-    assertEquals(item1, list1.getFirstItem());
-    assertEquals(item2, list1.getLastItem());
+    assertEquals(2, list1.getCount());
+    assertEquals(item1, list1.getFirst());
+    assertEquals(item2, list1.getLast());
 
     assertEquals(list1, item1.getList());
     assertEquals(null, item1.getPrev());
@@ -117,12 +117,12 @@ function testLinkedList() {
     assertEquals(item1, item2.getPrev());
     assertEquals(null, item2.getNext());
 
-    /* removeItem */
-    list1.removeItem(item1);
+    /* remove */
+    list1.remove(item1);
 
-    assertEquals(1, list1.getItemCount());
-    assertEquals(item2, list1.getFirstItem());
-    assertEquals(item2, list1.getLastItem());
+    assertEquals(1, list1.getCount());
+    assertEquals(item2, list1.getFirst());
+    assertEquals(item2, list1.getLast());
 
     assertEquals(null, item1.getList());
     assertEquals(null, item1.getPrev());
@@ -132,24 +132,24 @@ function testLinkedList() {
     assertEquals(null, item2.getPrev());
     assertEquals(null, item2.getNext());
 
-    list1.removeItem(item2);
+    list1.remove(item2);
 
-    assertEquals(0, list1.getItemCount());
-    assertEquals(null, list1.getFirstItem());
-    assertEquals(null, list1.getLastItem());
+    assertEquals(0, list1.getCount());
+    assertEquals(null, list1.getFirst());
+    assertEquals(null, list1.getLast());
 
     assertEquals(null, item2.getList());
     assertEquals(null, item2.getPrev());
     assertEquals(null, item2.getNext());
 
     /* clear */
-    list1.addItemLast(item1);
-    list1.addItemLast(item2);
+    list1.addLast(item1);
+    list1.addLast(item2);
     list1.clear();
 
-    assertEquals(0, list1.getItemCount());
-    assertEquals(null, list1.getFirstItem());
-    assertEquals(null, list1.getLastItem());
+    assertEquals(0, list1.getCount());
+    assertEquals(null, list1.getFirst());
+    assertEquals(null, list1.getLast());
 
     assertEquals(null, item1.getList());
     assertEquals(null, item1.getPrev());
@@ -160,13 +160,13 @@ function testLinkedList() {
     assertEquals(null, item2.getNext());
 
     /* finalize */
-    list1.addItemLast(item1);
-    list1.addItemLast(item2);
+    list1.addLast(item1);
+    list1.addLast(item2);
     list1.finalize();
 
-    assertEquals(0, list1.getItemCount());
-    assertEquals(null, list1.getFirstItem());
-    assertEquals(null, list1.getLastItem());
+    assertEquals(0, list1.getCount());
+    assertEquals(null, list1.getFirst());
+    assertEquals(null, list1.getLast());
 
     assertEquals(null, item1.getList());
     assertEquals(null, item1.getPrev());
