@@ -57,7 +57,7 @@ Sample.prototype.onUpdate = function() {
  *
  */
 function main() {
-    b9.System.setup("sample01_canvas", 60);
+    b9.PresetSystem.setup("sample01_canvas", 60);
 
     var layer = new b9.Layer(10);
     layer.setClear(true);
