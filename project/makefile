@@ -40,7 +40,6 @@ SRCS        = b9.js \
               LinkedList.js \
               LinkedListItem.js \
               LinkedTree.js \
-              System.js \
               ActorList.js \
               Actor.js \
               Texture.js \
@@ -49,7 +48,9 @@ SRCS        = b9.js \
               Primitive.js \
               PrimitiveBuffer.js \
               Sprite.js \
-              SpriteBuffer.js
+              SpriteBuffer.js \
+              System.js \
+              PresetSystem.js
 
 SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
