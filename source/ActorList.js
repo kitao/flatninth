@@ -32,6 +32,7 @@ b9.ActorList.prototype.initialize = function() {
     this._is_active = true;
 
     this._list = new b9.LinkedList();
+    this._next_actor = null;
 };
 
 /**
@@ -61,8 +62,8 @@ b9.ActorList.prototype.setActive = function(is_active) {
  * Returns the first actor of this actor list. If no such actor exists, returns null.
  * @return {b9.Actor} The first actor.
  */
-b9.ActorList.prototype.getFirstActor = function() {
-    var actor = this._list.getFirstItem();
+b9.ActorList.prototype.getFirst = function() {
+    var actor = this._list.getFirst();
     return actor ? actor.getSelf() : null;
 };
 
@@ -70,8 +71,8 @@ b9.ActorList.prototype.getFirstActor = function() {
  * Returns the last actor of this actor list. If no such actor exists, returns null.
  * @return {b9.Actor} The last actor.
  */
-b9.ActorList.prototype.getLastActor = function() {
-    var actor = this._list.getLastItem();
+b9.ActorList.prototype.getLast = function() {
+    var actor = this._list.getLast();
     return actor ? actor.getSelf() : null;
 };
 
@@ -80,8 +81,8 @@ b9.ActorList.prototype.getLastActor = function() {
  * @param {b9.Actor} actor An actor. If the actor already belongs to some actor list,
  * the actor gets automatically unlinked with it before the operation.
  */
-b9.ActorList.prototype.addActorFirst = function(actor) {
-    this._list.addItemFirst(actor._item);
+b9.ActorList.prototype.addFirst = function(actor) {
+    this._list.addFirst(actor._item);
 };
 
 /**
@@ -89,8 +90,8 @@ b9.ActorList.prototype.addActorFirst = function(actor) {
  * @param {b9.Actor} actor An actor. If the actor already belongs to some actor list,
  * the actor gets automatically unlinked with it before the operation.
  */
-b9.ActorList.prototype.addActorLast = function(actor) {
-    this._list.addItemLast(actor._item);
+b9.ActorList.prototype.addLast = function(actor) {
+    this._list.addLast(actor._item);
 };
 
 /**
@@ -99,8 +100,8 @@ b9.ActorList.prototype.addActorLast = function(actor) {
  * the actor gets automatically unlinked with it before the operation.
  * @param {b9.Actor} next_actor The actor to be the next. This actor must belong to this actor list.
  */
-b9.ActorList.prototype.insertActorBefore = function(actor, next_actor) {
-    this._list.insertItemBefore(actor._item, next_actor._item);
+b9.ActorList.prototype.insertBefore = function(actor, next_actor) {
+    this._list.insertBefore(actor._item, next_actor._item);
 };
 
 /**
@@ -109,15 +110,16 @@ b9.ActorList.prototype.insertActorBefore = function(actor, next_actor) {
  * the actor gets automatically unlinked with it before the operation.
  * @param {b9.Actor} prev_actor The actor to be the previous. This actor must belong to this actor list.
  */
-b9.ActorList.prototype.insertActorAfter = function(actor, prev_actor) {
-    this._list.insertItemAfter(actor._item, prev_actor._item);
+b9.ActorList.prototype.insertAfter = function(actor, prev_actor) {
+    this._list.insertAfter(actor._item, prev_actor._item);
 };
 
 /**
- * Unlinks all of the actor from this actor list.
+ * Unlinks an actor from this actor list.
+ * @param {b9.Actor} actor An actor to be unlinked. This item must belong to this actor list.
  */
-b9.ActorList.prototype.removeActor = function(actor) {
-    this._list.removeItem(actor._item);
+b9.ActorList.prototype.remove = function(actor) {
+    this._list.remove(actor._item);
 };
 
 /**
@@ -128,8 +130,16 @@ b9.ActorList.prototype.clear = function() {
 };
 
 /**
- *
+ * Updates all of the actors which belong to this actor list.
  */
 b9.ActorList.prototype.update = function() {
-    // TODO
+    var actor;
+
+    for (actor = this._list.getFirst(); actor; actor = this._next_actor) {
+        this._next_actor = actor.getNext();
+
+        if (actor._is_active) {
+            actor._update();
+        }
+    }
 };

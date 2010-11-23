@@ -38,6 +38,12 @@ b9.Actor.prototype.initialize = function() {
  * hoge
  */
 b9.Actor.prototype.finalize = function() {
+    var list = this.getActorList();
+
+    if (list && list._next_actor === this) {
+        list._next_actor = this.getNext();
+    }
+
     this._task_tree.finalize();
 };
 

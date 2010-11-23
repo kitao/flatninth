@@ -169,16 +169,21 @@ b9.Screen.prototype.getCamera = function() {
  */
 b9.Screen.prototype.render = function(root_draw) {
     var draw;
-    var is_clear_color, is_clear_depth;
+    var gl = b9.System.getGLContext();
 
     /*
      * clear screen
      */
-    is_clear_color = this.getScreenFlag(b9.Screen.FLAG_CLEAR_COLOR);
-    is_clear_depth = this.getScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH);
+    if (this.getScreenFlag(b9.Screen.FLAG_CLEAR_COLOR)) {
+        gl.clearColor(
+                this._clear_color.getR() / 255.0,
+                this._clear_color.getG() / 255.0,
+                this._clear_color.getB() / 255.0,
+                this._clear_color.getA() / 255.0);
+    }
 
-    if (is_clear_color || is_clear_depth) {
-        // TODO
+    if (this.getScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH)) {
+        gl.clearDepth(-1.0);
     }
 
     /*
