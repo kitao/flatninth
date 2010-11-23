@@ -37,18 +37,19 @@ SRCS        = b9.js \
               Matrix3D.js \
               Quaternion.js \
               Color.js \
-              LinkedList.js \
               LinkedListItem.js \
+              LinkedList.js \
               LinkedTree.js \
-              ActorList.js \
               Actor.js \
+              ActorList.js \
               Texture.js \
               Shader.js \
               Drawable.js \
-              Primitive.js \
               PrimitiveBuffer.js \
-              Sprite.js \
+              Primitive.js \
               SpriteBuffer.js \
+              Sprite.js \
+              Screen.js \
               System.js \
               PresetSystem.js
 
