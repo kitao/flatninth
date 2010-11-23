@@ -35,8 +35,8 @@ b9.Screen = b9.createClass();
  */
 b9.Screen.prototype.initialize = function(width, height) {
     this._scr_flag = b9.Screen.FLAG_VISIBLE;
-    this._x = 0.0f;
-    this._y = 0.0f;
+    this._x = 0;
+    this._y = 0;
     this._width = width;
     this._height = height;
     this._alpha = 1.0;
@@ -81,26 +81,26 @@ b9.Screen.prototype.setScreenFlag = function(scr_flag, is_enabled) {
  * Returns the left postion in the canvas.
  * @return {Number} The left position.
  */
-b9.Screen.prototype.getLeft = function() {
-    return this._left;
+b9.Screen.prototype.getX = function() {
+    return this._x;
 };
 
 /**
  * Returns the top position in the canvas.
  * @return {Number} The top position.
  */
-b9.Screen.prototype.getTop = function() {
-    return this._top;
+b9.Screen.prototype.getY = function() {
+    return this._y;
 };
 
 /**
  * Sets the position in the canvas.
- * @param {Number} left A left position.
- * @param {Number} top A top position.
+ * @param {Number} x A left position.
+ * @param {Number} y A top position.
  */
-b9.Screen.prototype.setPos = function(left, top) {
-    this._left = left;
-    this._top = top;
+b9.Screen.prototype.setPos = function(x, y) {
+    this._x = x;
+    this._y = y;
 };
 
 /**
