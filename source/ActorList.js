@@ -116,7 +116,7 @@ b9.ActorList.prototype.insertAfter = function(actor, prev_actor) {
 
 /**
  * Unlinks an actor from this actor list.
- * @param {b9.Actor} actor An actor to be unlinked. This item must belong to this actor list.
+ * @param {b9.Actor} actor An actor to be unlinked. This actor must belong to this actor list.
  */
 b9.ActorList.prototype.remove = function(actor) {
     this._list.remove(actor._item);
@@ -139,7 +139,7 @@ b9.ActorList.prototype.update = function() {
         this._next_actor = actor.getNext();
 
         if (actor._is_active) {
-            actor._update();
+            actor.update();
         }
     }
 };

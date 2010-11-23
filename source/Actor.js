@@ -38,7 +38,7 @@ b9.Actor.prototype.initialize = function() {
  * hoge
  */
 b9.Actor.prototype.finalize = function() {
-    var list = this.getActorList();
+    var list = this.getList();
 
     if (list && list._next_actor === this) {
         list._next_actor = this.getNext();
@@ -67,7 +67,7 @@ b9.Actor.prototype.setActive = function(is_active) {
  * Returns the actor list to which this actor belongs. If no such actor list exists, returns null.
  * @return {b9.ActorList} The actor list this actor belongs to.
  */
-b9.Actor.prototype.getActorList = function() {
+b9.Actor.prototype.getList = function() {
     var list = this._item.getList();
     return list ? list.getSelf() : null;
 };
@@ -87,3 +87,8 @@ b9.Actor.prototype.getPrev = function() {
 b9.Actor.prototype.getNext = function() {
     this._item.getNext();
 };
+
+/**
+ *
+ */
+b9.Actor.prototype.update = function() {};
