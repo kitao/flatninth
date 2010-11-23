@@ -25,8 +25,6 @@
  *
  * @class A rendering target of drawables.
  *
- * @param {Number} left
- * @param {Number} top
  * @param {Number} width
  * @param {Number} height
  */
@@ -35,10 +33,10 @@ b9.Screen = b9.createClass();
 /**
  * @ignore
  */
-b9.Screen.prototype.initialize = function(left, top, width, height) {
+b9.Screen.prototype.initialize = function(width, height) {
     this._scr_flag = b9.Screen.FLAG_VISIBLE;
-    this._left = left;
-    this._top = top;
+    this._x = 0.0f;
+    this._y = 0.0f;
     this._width = width;
     this._height = height;
     this._alpha = 1.0;

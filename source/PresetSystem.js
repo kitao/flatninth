@@ -29,4 +29,35 @@ b9.PresetSystem = {};
  *
  */
 b9.PresetSystem.setup = function(canvas_id, target_fps) {
+    var canvas_width = b9.System.getCanvasWidth();
+    var canvas_height = b9.System.getCanvasHeight();
+
+    /**
+     *
+     */
+    this.normalActorList = new b9.ActorList();
+
+    /**
+     *
+     */
+    this.normalScreen = new b9.Screen(canvas_width, canvas_height);
+
+    /**
+     *
+     */
+    this.normalScreenDrawable = new b9.Drawable();
+};
+
+/**
+ *
+ */
+b9.PresetSystem._updateFunc = function() {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.PresetSystem._renderFunc = function() {
+    // TODO
 };

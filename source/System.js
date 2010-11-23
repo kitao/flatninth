@@ -145,6 +145,29 @@ b9.System.getCurrentFPS = function() {
 };
 
 /**
+ *
+ * @return {Number}
+ */
+b9.System.getFramebufferWidth = function() {
+    return this._canvas.width;
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.System.getFramebufferHeight = function() {
+    return this._canvas.height;
+};
+
+/**
+ *
+ */
+b9.System.swapBuffers = function() {
+    // TODO
+};
+
+/**
  * hoge
  * @return {Number} hoge
  */
