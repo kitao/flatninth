@@ -41,9 +41,6 @@ b9.System.setup = function(canvas_id, update_func, render_func, target_fps) {
         this.error("can't initialize WebGL.");
     }
 
-//    this._gl.viewportWidth = this._canvas.width;
-//    this._gl.viewportHeight = this._canvas.height;
-
     this._update_func = update_func;
     this._render_func = render_func;
     this._target_fps = b9.Math.max(target_fps, 1);
