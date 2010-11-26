@@ -28,24 +28,19 @@ b9.PresetSystem = {};
 /**
  *
  */
-b9.PresetSystem.setup = function(canvas_id, target_fps) {
+b9.PresetSystem.setup = function(canvas_id, max_alist_range, max_scr_range, target_fps) {
+    b9.System.setup(canvas_id, max_alist_range, max_scr_range, target_fps);
+
     var canvas_width = b9.System.getCanvasWidth();
     var canvas_height = b9.System.getCanvasHeight();
 
-    /**
-     *
-     */
-    this.normalActorList = new b9.ActorList();
+    this._max_alist_range = max_alist_range;
+    this._max_scr_range = max_scr_range;
 
-    /**
-     *
-     */
-    this.normalScreen = new b9.Screen(canvas_width, canvas_height);
+    this._alist_array = new Array(max_alist_range * 2 + 1);
+    this._scr_array = new Array(max_scr_range * 2 + 1);
 
-    /**
-     *
-     */
-    this.normalScreenDrawable = new b9.Drawable();
+    // TODO
 };
 
 /**
