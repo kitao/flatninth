@@ -173,6 +173,14 @@ b9.System.getTime = function() {
 };
 
 /**
+ * Writes a message to the console.
+ * @param {String} msg A message.
+ */
+b9.System.log = function(msg) {
+    console.log(msg);
+};
+
+/**
  * Notifies an error and throws the Error exception.
  * @param {String} msg An error message.
  */
