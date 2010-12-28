@@ -68,7 +68,7 @@ function testColor() {
 
     color1.set(200, 200, 200, 200);
     color2.set(60, 70, 80, 90);
-    assertEquals_object(b9.Color.FULL, color1.add(color2));
+    assertEquals_object(new b9.Color(255, 255, 255, 255), color1.add(color2));
 
     /* sub */
     color1.set(50, 60, 70, 80);
@@ -77,7 +77,7 @@ function testColor() {
 
     color1.set(20, 20, 20, 20);
     color2.set(30, 40, 50, 60);
-    assertEquals_object(b9.Color.ZERO, color1.sub(color2));
+    assertEquals_object(new b9.Color(0, 0, 0, 0), color1.sub(color2));
 
     /* mul */
     color1.set(128, 128, 128, 128);
@@ -88,20 +88,20 @@ function testColor() {
     assertEquals_object(new b9.Color(10, 20, 30, 40), color1.mul(0.5));
 
     color1.set(10, 20, 30, 40);
-    assertEquals_object(b9.Color.ZERO, color1.mul(-1.0));
+    assertEquals_object(new b9.Color(0, 0, 0, 0), color1.mul(-1.0));
 
     color1.set(10, 20, 30, 40);
-    assertEquals_object(b9.Color.FULL, color1.mul(100.0));
+    assertEquals_object(new b9.Color(255, 255, 255, 255), color1.mul(100.0));
 
     /* div */
     color1.set(20, 40, 60, 80);
     assertEquals_object(new b9.Color(10, 20, 30, 40), color1.div(2.0));
 
     color1.set(10, 20, 30, 40);
-    assertEquals_object(b9.Color.ZERO, color1.div(-1.0));
+    assertEquals_object(new b9.Color(0, 0, 0, 0), color1.div(-1.0));
 
     color1.set(10, 20, 30, 40);
-    assertEquals_object(b9.Color.FULL, color1.div(0.01));
+    assertEquals_object(new b9.Color(255, 255, 255, 255), color1.div(0.01));
 
     /* lerp */
     color1.set(20, 40, 60, 80);
@@ -135,10 +135,4 @@ function testColor() {
 
     /* toString */
     assertEquals("(10, 20, 30, 40)", (new b9.Color(10, 20, 30, 40)).toString());
-
-    /* ZERO */
-    assertEquals_object(new b9.Color(0, 0, 0, 0), b9.Color.ZERO);
-
-    /* FULL */
-    assertEquals_object(new b9.Color(255, 255, 255, 255), b9.Color.FULL);
 }
