@@ -77,7 +77,8 @@ b9.Actor.prototype.getList = function() {
  * @return {b9.Actor} The previous actor.
  */
 b9.Actor.prototype.getPrev = function() {
-    this._item.getPrev();
+    var prev = this._item.getPrev();
+    return prev ? prev.getSelf() : null;
 };
 
 /**
@@ -85,7 +86,8 @@ b9.Actor.prototype.getPrev = function() {
  * @return {b9.Actor} The next actor.
  */
 b9.Actor.prototype.getNext = function() {
-    this._item.getNext();
+    var next = this._item.getNext();
+    return next ? next.getSelf() : null;
 };
 
 /**

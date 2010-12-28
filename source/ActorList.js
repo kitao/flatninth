@@ -135,7 +135,7 @@ b9.ActorList.prototype.clear = function() {
 b9.ActorList.prototype.update = function() {
     var actor;
 
-    for (actor = this._list.getFirst(); actor; actor = this._next_actor) {
+    for (actor = this.getFirst(); actor; actor = this._next_actor) {
         this._next_actor = actor.getNext();
 
         if (actor._is_active) {
