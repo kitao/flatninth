@@ -44,7 +44,7 @@ function main() {
         var dummy = new Sample(i);
     }
 
-    b9.PresetSystem.getScreen(0).getClearColor().set(255, 0, 0);
+    b9.PresetSystem.getScreen(0).getClearColor().set(0, 0, 255);
 
     b9.System.start();
 }
