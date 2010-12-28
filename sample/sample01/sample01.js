@@ -20,37 +20,18 @@
  * THE SOFTWARE.
  */
 
-var Sample = b9.createClass(b9.Task);
+var Sample = b9.createClass(b9.Actor);
 
-Sample.prototype.initialize = function(layer, x, y) {
-    this.initializeSuper(b9.System.defaultTaskNormal());
+Sample.prototype.initialize = function(i) {
+    this.initializeSuper();
+    b9.PresetSystem.getActorList(0).addLast(this);
 
-    this._sprt = new b9.Sprite(1, layer.elementRoot());
-
-    this._sprt.rectPos(0).set(x, y);
-    this._sprt.rectSize(0).set(30.0, 20.0);
-    this._sprt.rectColor(0).set(1.0, 1.0, 0.0);
-    this._sprt.setImage("../asset/flatninth_font.png");
-
-    this._sprt.rectUV(0).set(0.125, 0.125, 0.25, 0.25);
-
-    this._speed = new b9.Vector2D();
-    this._speed.x = b9.Math.randomInt(-4, 4);
-    this._speed.y = b9.Math.randomInt(-2, 2);
+    this._no = i;
+    // TODO
 };
 
-Sample.prototype.onUpdate = function() {
-    this._sprt.rectPos(0).add(this._speed);
-    this._speed.y += 0.1;
-
-    if (this._sprt.rectPos(0).y > 480 - this._sprt.rectSize(0).y) {
-        //this._sprt.rectPos(0).y = 460 - this._sprt.rectSize(0).y;
-        this._speed.y = -this._speed.y * 0.98;
-    }
-
-    if (this._sprt.rectPos(0).x < 0 || this._sprt.rectPos(0).x > 640 - this._sprt.rectSize(0).x) {
-        this._speed.x = -this._speed.x;
-    }
+Sample.prototype.update = function() {
+    // TODO
 };
 
 /**
@@ -59,15 +40,11 @@ Sample.prototype.onUpdate = function() {
 function main() {
     b9.PresetSystem.setup("sample01_canvas", 60);
 
-    var layer = new b9.Layer(10);
-    layer.setClear(true);
-    layer.pos().set(100, 100);
-    layer.size().set(200, 150);
-    layer.clearColor().set(1.0, 0.0, 0.0);
-
-    for (var i = 0; i < 100; i++) {
-        var dummy = new Sample((i % 5 === 0) ? layer : b9.System.defaultLayerNormal(), i * 2, i * 2);
+    for (var i = 0; i < 3; i++) {
+        var dummy = new Sample(i);
     }
+
+    b9.PresetSystem.getScreen(0).getClearColor().set(255, 0, 0);
 
     b9.System.start();
 }
