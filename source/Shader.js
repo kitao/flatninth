@@ -37,6 +37,8 @@ b9.Shader = b9.createClass();
  * @ignore
  */
 b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_count, tex_count) {
+    var gl = b9.System.getGLContext();
+
     this._is_uploaded = false;
     this._vert_code = vert_code;
     this._frag_code = frag_code;
@@ -91,9 +93,9 @@ b9.Shader.prototype._setup = function() {
         gl.deleteShader(frag_glshd);
 
         this._local_to_screen_loc = gl.getUnitformLocation(this._glprog, "b9_local_to_screen");
-        this._vertex_loc = gl.getUnitformLocation(this._glprog, "b9_vertex");
-        this._color_loc = gl.getUnitformLocation(this._glprog, "b9_color");
-        this._texcoord_loc = gl.getUnitformLocation(this._glprog, "b9_texcoord");
+        this._vertex_loc = gl.getAttribLocation(this._glprog, "b9_vertex");
+        this._color_loc = gl.getAttribLocation(this._glprog, "b9_color");
+        this._texcoord_loc = gl.getAttribLocation(this._glprog, "b9_texcoord");
 
         if (this._uni_count > 0) {
             this._uni_loc_table = new Array(this._uni_count);

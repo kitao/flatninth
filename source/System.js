@@ -44,11 +44,11 @@ b9.System.setup = function(canvas_id, target_fps) {
         this.error("can't initialize WebGL.");
     }
 
-    this._update_func = this.defaultUpdateFunction;
-    this._render_func = this.defaultRenderFunction;
     this._target_fps = b9.Math.max(target_fps, 1);
     this._current_fps = 0;
 
+    this._update_func = this.defaultUpdateFunction;
+    this._render_func = this.defaultRenderFunction;
     this._timer_id = null;
     this._next_update_time = 0;
 
@@ -69,6 +69,32 @@ b9.System.setup = function(canvas_id, target_fps) {
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_COLOR, true);
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH, true);
     scr.getClearColor().set(0, 0, 0);
+
+    vert_code =
+        "uniform mat4 b9_local_to_screen;" +
+        "" +
+        "attribute vec4 b9_vertex;" +
+        "attribute vec4 b9_color;" +
+        "attribute vec2 b9_texcoord;" +
+        "" +
+        "varying vec4 vary_color;" +
+        "varying vec2 vary_texcoord;" +
+        "" +
+        "void main()" +
+        "{" +
+        "    gl_Position = b9_vertex;" +
+        "}";
+
+    frag_code =
+        "varying vec4 vary_color;" +
+        "varying vec2 vary_texcoord;" +
+        "" +
+        "void main()" +
+        "{" +
+        "    gl_FragColor = vary_color;" +
+        "}";
+
+    this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 0);
 };
 
 /**
