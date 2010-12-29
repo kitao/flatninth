@@ -168,6 +168,8 @@ b9.PrimitiveBuffer.prototype._setup = function() {
     var gl = b9.System.getGLContext();
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._vert_glbuf);
+    gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
 
     if (!this._is_uploaded) {

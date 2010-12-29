@@ -33,12 +33,13 @@ b9.Primitive = b9.createClass(b9.Drawable);
 /**
  * @ignore
  */
-b9.Primitive.prototype.initialize = function(prim_buf) {
+b9.Primitive.prototype.initialize = function(prim_buf, prim_mode) {
     this.initializeSuper();
 
+    this._prim_buf = prim_buf;
+    this._prim_mode = prim_mode;
     this._tex = null;
     this._shd = null;
-    this._prim_buf = prim_buf;
 };
 
 /**
@@ -62,6 +63,22 @@ b9.Primitive.prototype.getPrimitiveBuffer = function() {
  */
 b9.Primitive.prototype.setPrimitiveBuffer = function(prim_buf) {
     this._prim_buf = prim_buf;
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Primitive.prototype.getPrimitiveMode = function() {
+    return this._prim_mode;
+};
+
+/**
+ *
+ * @param {Number} prim_mode
+ */
+b9.Primitive.prototype.setPrimitiveMode = function(prim_mode) {
+    this._prim_mode = prim_mode;
 };
 
 /**
@@ -97,7 +114,20 @@ b9.Primitive.prototype.setShader = function(shd) {
 };
 
 b9.Primitive.prototype._render = function() {
-    // TODO
+    var gl = b9.System.getGLContext();
+
+    this._calcFinal();
+
+    b9.System.log("prim render");
+
+    gl.disable(gl.DEPTH_TEST);
+    gl.enableVertexAttribArray(0);
+
+    b9.System._shader._setup(); //gl.useProgram(program);
+    this._prim_buf._setup();
+
+    //gl.drawElements(gl.TRIANGLES, this._prim_buf._index_count, gl.UNSIGNED_SHORT, 0);
+    gl.drawElements(this._prim_mode, this._prim_buf._index_count, gl.UNSIGNED_SHORT, 0);
 };
 
 /**
@@ -105,3 +135,45 @@ b9.Primitive.prototype._render = function() {
  * @return {Number}
  */
 b9.Primitive.FLAG_XXXX = 0x00800000;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Primitive.MODE_POINTS = 0;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Primitive.MODE_LINES = 1;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Primitive.MODE_LINE_LOOP = 2;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Primitive.MODE_LINE_STRIP = 3;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Primitive.MODE_TRIANGLES = 4;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Primitive.MODE_TRIANGLE_STRIP = 5;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Primitive.MODE_TRIANGLE_FAN = 6;

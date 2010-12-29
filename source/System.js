@@ -86,12 +86,12 @@ b9.System.setup = function(canvas_id, target_fps) {
         "}";
 
     frag_code =
-        "varying vec4 vary_color;" +
-        "varying vec2 vary_texcoord;" +
+        //"varying vec4 vary_color;" +
+        //"varying vec2 vary_texcoord;" +
         "" +
         "void main()" +
         "{" +
-        "    gl_FragColor = vary_color;" +
+        "    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);" +
         "}";
 
     this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 0);

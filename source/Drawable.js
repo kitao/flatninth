@@ -227,7 +227,7 @@ b9.Drawable.prototype._calcFinal = function() {
     }
 };
 
-b9.Drawable.prototype._render = function(canvas) {
+b9.Drawable.prototype._render = function() {
     this._calcFinal();
 };
 
