@@ -28,7 +28,7 @@ Sample.prototype.initialize = function() {
     b9.System.getActorList(0).addLast(this);
 
     this._prim_buf = new b9.PrimitiveBuffer(3, 3);
-    this._prim = new b9.Primitive(this._prim_buf);
+    this._prim = new b9.Primitive(this._prim_buf, b9.Primitive.MODE_LINE_LOOP);
 
     this._prim_buf.getVertexPos(0).set(0.0, 0.5, 0.0);
     this._prim_buf.getVertexPos(1).set(-1.0, -0.5, 0.0);
