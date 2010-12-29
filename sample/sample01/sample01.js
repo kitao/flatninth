@@ -24,7 +24,8 @@ var Sample = b9.createClass(b9.Actor);
 
 Sample.prototype.initialize = function(i) {
     this.initializeSuper();
-    b9.PresetSystem.getActorList(0).addLast(this);
+
+    b9.System.getActorList(0).addLast(this);
 
     this._no = i;
     // TODO
@@ -38,13 +39,13 @@ Sample.prototype.update = function() {
  *
  */
 function main() {
-    b9.PresetSystem.setup("sample01_canvas", 60);
+    b9.System.setup("sample01_canvas", 60);
 
     for (var i = 0; i < 3; i++) {
         var dummy = new Sample(i);
     }
 
-    b9.PresetSystem.getScreen(0).getClearColor().set(0, 0, 255);
+    b9.System.getScreen(0).getClearColor().set(0, 0, 255);
 
     b9.System.start();
 }

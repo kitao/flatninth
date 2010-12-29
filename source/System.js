@@ -28,7 +28,10 @@ b9.System = {};
 /**
  *
  */
-b9.System.setup = function(canvas_id, update_func, render_func, target_fps) {
+b9.System.setup = function(canvas_id, target_fps) {
+    var i;
+    var scr;
+
     this._canvas = document.getElementById(canvas_id);
 
     if (!this._canvas) {
@@ -41,13 +44,32 @@ b9.System.setup = function(canvas_id, update_func, render_func, target_fps) {
         this.error("can't initialize WebGL.");
     }
 
-    this._update_func = update_func;
-    this._render_func = render_func;
+    this._update_func = this.defaultUpdateFunction;
+    this._render_func = this.defaultRenderFunction;
     this._target_fps = b9.Math.max(target_fps, 1);
     this._current_fps = 0;
 
     this._timer_id = null;
     this._next_update_time = 0;
+
+    this._actor_list_array = new Array(this.ACTOR_LIST_COUNT);
+    this._scr_array = new Array(this.SCREEN_COUNT);
+    this._root_draw_array = new Array(this.SCREEN_COUNT);
+
+    for (i = 0; i < this.ACTOR_LIST_COUNT; i++) {
+        this._actor_list_array[i] = new b9.ActorList();
+    }
+
+    for (i = 0; i < this.SCREEN_COUNT; i++) {
+        this._scr_array[i] = new b9.Screen(this._canvas.width, this._canvas.height);
+        this._root_draw_array[i] = new b9.Drawable();
+    }
+
+    scr = this.getScreen(0);
+
+    scr.setScreenFlag(b9.Screen.FLAG_CLEAR_COLOR, true);
+    scr.setScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH, true);
+    scr.getClearColor().set(0, 0, 0);
 };
 
 /**
@@ -121,8 +143,22 @@ b9.System.getUpdateFunction = function() {
 /**
  *
  */
+b9.System.setUpdateFunction = function(update_func) {
+    this._update_func = update_func;
+};
+
+/**
+ *
+ */
 b9.System.getRenderFunction = function() {
     return this._render_func;
+};
+
+/**
+ *
+ */
+b9.System.setRenderFunction = function(render_func) {
+    this._render_func = render_func;
 };
 
 /**
@@ -165,6 +201,33 @@ b9.System.swapBuffers = function() {
 };
 
 /**
+ * Returns the specified actor list.
+ * @param {Number} The index number of an actor list.
+ * @return {b9.ActorList} The actor list.
+ */
+b9.System.getActorList = function(actor_list_no) {
+    return this._actor_list_array[actor_list_no - this.MIN_ACTOR_LIST_NO];
+};
+
+/**
+ * Returns the specified screen.
+ * @param {Number} The index number of a screen.
+ * @return {b9.Screen} The screen.
+ */
+b9.System.getScreen = function(scr_no) {
+    return this._scr_array[scr_no - this.MIN_SCREEN_NO];
+};
+
+/**
+ * Returns the root drawable of the specified screen.
+ * @param {Number} The index number of a screen.
+ * @return {b9.Drawable} The root drawable.
+ */
+b9.System.getRootDrawable = function(scr_no) {
+    return this._root_draw_array[scr_no - this.MIN_SCREEN_NO];
+};
+
+/**
  * hoge
  * @return {Number} hoge
  */
@@ -190,3 +253,57 @@ b9.System.error = function(msg) {
     alert(msg2);
     throw new Error(msg2);
 };
+
+b9.System.defaultUpdateFunction = function() {
+    var i;
+
+    for (i = 0; i < b9.System.ACTOR_LIST_COUNT; i++) {
+        b9.System._actor_list_array[i].update();
+    }
+};
+
+b9.System.defaultRenderFunction = function() {
+    var i;
+
+    for (i = 0; i < b9.System.SCREEN_COUNT; i++) {
+        b9.System._scr_array[i].render(b9.System._root_draw_array[i]);
+    }
+
+    b9.System.swapBuffers();
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.System.MIN_ACTOR_LIST_NO = -3;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.System.MAX_ACTOR_LIST_NO = 3;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.System.ACTOR_LIST_COUNT = b9.System.MAX_ACTOR_LIST_NO - b9.System.MIN_ACTOR_LIST_NO + 1;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.System.MIN_SCREEN_NO = -3;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.System.MAX_SCREEN_NO = 3;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.System.SCREEN_COUNT = b9.System.MAX_SCREEN_NO - b9.System.MIN_SCREEN_NO + 1;

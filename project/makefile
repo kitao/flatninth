@@ -50,8 +50,7 @@ SRCS        = b9.js \
               SpriteBuffer.js \
               Sprite.js \
               Screen.js \
-              System.js \
-              PresetSystem.js
+              System.js
 
 SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
