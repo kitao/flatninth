@@ -22,13 +22,28 @@
 
 var Sample = b9.createClass(b9.Actor);
 
-Sample.prototype.initialize = function(i) {
+Sample.prototype.initialize = function() {
     this.initializeSuper();
 
     b9.System.getActorList(0).addLast(this);
 
-    this._no = i;
-    // TODO
+    this._prim_buf = new b9.PrimitiveBuffer(3, 3);
+    this._prim = new b9.Primitive(this._prim_buf);
+
+    this._prim_buf.getVertexPos(0).set(0.0, 0.5, 0.0);
+    this._prim_buf.getVertexPos(1).set(-1.0, -0.5, 0.0);
+    this._prim_buf.getVertexPos(2).set(1.0, -0.5, 0.0);
+
+    this._prim_buf.setIndex(0, 0);
+    this._prim_buf.setIndex(1, 1);
+    this._prim_buf.setIndex(2, 2);
+
+    this._prim_buf.updateVertex(0);
+    this._prim_buf.updateIndex(0);
+
+    b9.System.getRootDrawable(0).addChildLast(this._prim);
+
+    b9.System.log("ok!!!");
 };
 
 Sample.prototype.update = function() {
@@ -42,7 +57,7 @@ function main() {
     b9.System.setup("sample01_canvas", 60);
 
     for (var i = 0; i < 3; i++) {
-        var dummy = new Sample(i);
+        var dummy = new Sample();
     }
 
     b9.System.getScreen(0).getClearColor().set(0, 0, 255);
