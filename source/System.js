@@ -66,7 +66,6 @@ b9.System.setup = function(canvas_id, target_fps) {
     }
 
     scr = this.getScreen(0);
-
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_COLOR, true);
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH, true);
     scr.getClearColor().set(0, 0, 0);
@@ -121,6 +120,7 @@ b9.System.stop = function() {
 
 /**
  *
+ * @return {Canvas}
  */
 b9.System.getCanvas = function() {
     return this._canvas;
@@ -128,6 +128,7 @@ b9.System.getCanvas = function() {
 
 /**
  *
+ * @return {GL}
  */
 b9.System.getGLContext = function() {
     return this._gl;
@@ -135,30 +136,18 @@ b9.System.getGLContext = function() {
 
 /**
  *
+ * @return {Number}
  */
-b9.System.getUpdateFunction = function() {
-    return this._update_func;
+b9.System.getFramebufferWidth = function() {
+    return this._canvas.width;
 };
 
 /**
  *
+ * @return {Number}
  */
-b9.System.setUpdateFunction = function(update_func) {
-    this._update_func = update_func;
-};
-
-/**
- *
- */
-b9.System.getRenderFunction = function() {
-    return this._render_func;
-};
-
-/**
- *
- */
-b9.System.setRenderFunction = function(render_func) {
-    this._render_func = render_func;
+b9.System.getFramebufferHeight = function() {
+    return this._canvas.height;
 };
 
 /**
@@ -179,25 +168,54 @@ b9.System.getCurrentFPS = function() {
 
 /**
  *
- * @return {Number}
+ * @return {TODO}
  */
-b9.System.getFramebufferWidth = function() {
-    return this._canvas.width;
-};
-
-/**
- *
- * @return {Number}
- */
-b9.System.getFramebufferHeight = function() {
-    return this._canvas.height;
+b9.System.getUpdateFunction = function() {
+    return this._update_func;
 };
 
 /**
  *
  */
-b9.System.swapBuffers = function() {
-    // TODO
+b9.System.setUpdateFunction = function(update_func) {
+    this._update_func = update_func;
+};
+
+/**
+ *
+ * @return {TODO}
+ */
+b9.System.getRenderFunction = function() {
+    return this._render_func;
+};
+
+/**
+ *
+ */
+b9.System.setRenderFunction = function(render_func) {
+    this._render_func = render_func;
+};
+
+/**
+ *
+ */
+b9.System.defaultUpdateFunction = function() {
+    var i;
+
+    for (i = 0; i < b9.System.ACTOR_LIST_COUNT; i++) {
+        b9.System._actor_list_array[i].update();
+    }
+};
+
+/**
+ *
+ */
+b9.System.defaultRenderFunction = function() {
+    var i;
+
+    for (i = 0; i < b9.System.SCREEN_COUNT; i++) {
+        b9.System._scr_array[i].render(b9.System._root_draw_array[i]);
+    }
 };
 
 /**
@@ -252,24 +270,6 @@ b9.System.error = function(msg) {
 
     alert(msg2);
     throw new Error(msg2);
-};
-
-b9.System.defaultUpdateFunction = function() {
-    var i;
-
-    for (i = 0; i < b9.System.ACTOR_LIST_COUNT; i++) {
-        b9.System._actor_list_array[i].update();
-    }
-};
-
-b9.System.defaultRenderFunction = function() {
-    var i;
-
-    for (i = 0; i < b9.System.SCREEN_COUNT; i++) {
-        b9.System._scr_array[i].render(b9.System._root_draw_array[i]);
-    }
-
-    b9.System.swapBuffers();
 };
 
 /**
