@@ -115,19 +115,20 @@ b9.Primitive.prototype.setShader = function(shd) {
 
 b9.Primitive.prototype._render = function() {
     var gl = b9.System.getGLContext();
+    var shader;
 
     this._calcFinal();
 
-    b9.System.log("prim render");
-
     gl.disable(gl.DEPTH_TEST);
-    gl.enableVertexAttribArray(0);
 
-    b9.System._shader._setup(); //gl.useProgram(program);
-    this._prim_buf._setup();
+    shader = b9.System._shader;
 
-    //gl.drawElements(gl.TRIANGLES, this._prim_buf._index_count, gl.UNSIGNED_SHORT, 0);
+    shader._setup();
+    this._prim_buf._setup(shader);
+
     gl.drawElements(this._prim_mode, this._prim_buf._index_count, gl.UNSIGNED_SHORT, 0);
+
+    this._prim_buf._teardown(shader);
 };
 
 /**

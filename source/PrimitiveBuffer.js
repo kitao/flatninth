@@ -194,12 +194,18 @@ b9.PrimitiveBuffer.prototype.setIndex = function(index_no, vert_no) {
     this._index_data[index_no] = vert_no;
 };
 
-b9.PrimitiveBuffer.prototype._setup = function() {
+b9.PrimitiveBuffer.prototype._setup = function(shader) {
     var gl = b9.System.getGLContext();
 
     if (!this._is_uploaded) {
         gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_glbuf);
         gl.bufferData(gl.ARRAY_BUFFER, this._pos_data, gl.STATIC_DRAW);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._color_glbuf);
+        gl.bufferData(gl.ARRAY_BUFFER, this._color_data, gl.STATIC_DRAW);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoord_glbuf);
+        gl.bufferData(gl.ARRAY_BUFFER, this._texcoord_data, gl.STATIC_DRAW);
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._index_data, gl.STATIC_DRAW);
@@ -208,7 +214,22 @@ b9.PrimitiveBuffer.prototype._setup = function() {
     }
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_glbuf);
-    gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(shader._pos_loc);
+    gl.vertexAttribPointer(shader._pos_loc, 3, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._color_glbuf);
+    gl.enableVertexAttribArray(shader._color_loc);
+    gl.vertexAttribPointer(1, 4, gl.UNSINGED_BYTE, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoor_glbuf);
+    gl.enableVertexAttribArray(shader._texcoord_loc);
+    gl.vertexAttribPointer(2, 3, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
+};
+
+b9.PrimitiveBuffer.prototype._teardown = function(shader) {
+    gl.disableVertexAttribArray(shader._pos_loc);
+    gl.disableVertexAttribArray(shader._color_loc);
+    gl.disableVertexAttribArray(shader._texcoord_loc);
 };
