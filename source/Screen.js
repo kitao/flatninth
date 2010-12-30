@@ -183,7 +183,6 @@ b9.Screen.prototype.render = function(root_draw) {
     }
 
     if (this.getScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH)) {
-        gl.clearDepth(-1.0);
         clear_flag |= gl.DEPTH_BUFFER_BIT;
     }
 
