@@ -30,16 +30,13 @@ Sample.prototype.initialize = function() {
     this._prim_buf = new b9.PrimitiveBuffer(3, 3);
     this._prim = new b9.Primitive(this._prim_buf, b9.Primitive.MODE_LINE_LOOP);
 
-    this._prim_buf.getVertexPos(0).set(0.0, 0.5, 0.0);
-    this._prim_buf.getVertexPos(1).set(-1.0, -0.5, 0.0);
-    this._prim_buf.getVertexPos(2).set(1.0, -0.5, 0.0);
+    this._prim_buf.getPos(0).set(0.0, 0.5, 0.0);
+    this._prim_buf.getPos(1).set(-1.0, -0.5, 0.0);
+    this._prim_buf.getPos(2).set(1.0, -0.5, 0.0);
 
     this._prim_buf.setIndex(0, 0);
     this._prim_buf.setIndex(1, 1);
     this._prim_buf.setIndex(2, 2);
-
-    this._prim_buf.updateVertex(0);
-    this._prim_buf.updateIndex(0);
 
     b9.System.getRootDrawable(0).addChildLast(this._prim);
 
