@@ -47,8 +47,8 @@ b9.System.setup = function(canvas_id, target_fps) {
     this._target_fps = b9.Math.max(target_fps, 1);
     this._current_fps = 0;
 
-    this._update_func = this.defaultUpdateFunction;
-    this._render_func = this.defaultRenderFunction;
+    this._update_func = this.defaultUpdateFunc;
+    this._render_func = this.defaultRenderFunc;
     this._timer_id = null;
     this._next_update_time = 0;
 
@@ -196,14 +196,14 @@ b9.System.getCurrentFPS = function() {
  *
  * @return {TODO}
  */
-b9.System.getUpdateFunction = function() {
+b9.System.getUpdateFunc = function() {
     return this._update_func;
 };
 
 /**
  *
  */
-b9.System.setUpdateFunction = function(update_func) {
+b9.System.setUpdateFunc = function(update_func) {
     this._update_func = update_func;
 };
 
@@ -211,21 +211,21 @@ b9.System.setUpdateFunction = function(update_func) {
  *
  * @return {TODO}
  */
-b9.System.getRenderFunction = function() {
+b9.System.getRenderFunc = function() {
     return this._render_func;
 };
 
 /**
  *
  */
-b9.System.setRenderFunction = function(render_func) {
+b9.System.setRenderFunc = function(render_func) {
     this._render_func = render_func;
 };
 
 /**
  *
  */
-b9.System.defaultUpdateFunction = function() {
+b9.System.defaultUpdateFunc = function() {
     var i;
 
     for (i = 0; i < b9.System.ACTOR_LIST_COUNT; i++) {
@@ -236,7 +236,7 @@ b9.System.defaultUpdateFunction = function() {
 /**
  *
  */
-b9.System.defaultRenderFunction = function() {
+b9.System.defaultRenderFunc = function() {
     var i;
 
     for (i = 0; i < b9.System.SCREEN_COUNT; i++) {
