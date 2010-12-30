@@ -140,9 +140,11 @@ function testVector3D() {
     assertEquals_object(new b9.Vector3D(1.0, 2.0, 3.0), vec1.lerp(vec2, -1.0));
 
     vec1.set(1.0, 2.0, 3.0);
+    vec2.set(-1.0, -2.0, -3.0);
     assertEquals_object(new b9.Vector3D(0.0, 0.0, 0.0), vec1.lerp(vec2, 0.5));
 
     vec1.set(1.0, 2.0, 3.0);
+    vec2.set(-1.0, -2.0, -3.0);
     assertEquals_object(vec2, vec1.lerp(vec2, 2.0));
 
     /* toLocal */
