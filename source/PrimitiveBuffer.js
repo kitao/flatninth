@@ -45,7 +45,7 @@ b9.PrimitiveBuffer.prototype.initialize = function(vert_count, index_count) {
     this._pos_glbuf = gl.createBuffer();
 
     this._color_array = new Array(vert_count);
-    this._color_data = new Uint8Array(vert_count * 4);
+    this._color_data = new Float32Array(vert_count * 4);
     this._color_glbuf = gl.createBuffer();
 
     this._texcoord_data = new Float32Array(vert_count * 2);
@@ -55,8 +55,8 @@ b9.PrimitiveBuffer.prototype.initialize = function(vert_count, index_count) {
         this._pos_array[i] = new b9.Vector3D(this._pos_data, i * 3);
         this._pos_array[i].set(b9.Vector3D.ZERO);
 
-        this._color_array[i] = new b9.Vector3D(this._color_data, i * 4);
-        this._color_array[i].set(255, 255, 255);
+        this._color_array[i] = new b9.Color(this._color_data, i * 4);
+        this._color_array[i].set(1.0, 1.0, 1.0, 1.0);
 
         this._texcoord_data[i * 2] = 0.0;
         this._texcoord_data[i * 2 + 1] = 0.0;
@@ -217,9 +217,9 @@ b9.PrimitiveBuffer.prototype._setup = function(shader) {
     gl.enableVertexAttribArray(shader._pos_loc);
     gl.vertexAttribPointer(shader._pos_loc, 3, gl.FLOAT, false, 0, 0);
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._color_glbuf);
     gl.enableVertexAttribArray(shader._color_loc);
-    gl.vertexAttribPointer(shader._color_loc, 4, gl.UNSINGED_BYTE, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._color_glbuf);
+    gl.vertexAttribPointer(shader._color_loc, 4, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoor_glbuf);
     gl.enableVertexAttribArray(shader._texcoord_loc);
@@ -229,6 +229,8 @@ b9.PrimitiveBuffer.prototype._setup = function(shader) {
 };
 
 b9.PrimitiveBuffer.prototype._teardown = function(shader) {
+    var gl = b9.System.getGLContext();
+
     gl.disableVertexAttribArray(shader._pos_loc);
     gl.disableVertexAttribArray(shader._color_loc);
     gl.disableVertexAttribArray(shader._texcoord_loc);

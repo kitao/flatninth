@@ -280,7 +280,7 @@ b9.System._initScreen = function() {
     scr = this.getScreen(0);
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_COLOR, true);
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH, true);
-    scr.getClearColor().set(0, 0, 0);
+    scr.getClearColor().set(0.0, 0.0, 0.0, 0.0);
 };
 
 b9.System._initGL = function() {
@@ -291,8 +291,6 @@ b9.System._initGL = function() {
 
 b9.System._initShader = function() {
     vert_code =
-        "precision highp float;" +
-        "" +
         "uniform mat4 b9_local_to_screen;" +
         "" +
         "attribute vec4 b9_pos;" +
@@ -305,12 +303,15 @@ b9.System._initShader = function() {
         "void main()" +
         "{" +
         "    gl_Position = b9_pos;" +
-        "    vary_color = vec4(1.0, 0.0,1.0,1.0);" +
-//        "    vary_color = b9_color;" +
+        "    vary_color = b9_color;" +
+//        "    vary_texcoord = b9_texcoord;" +
         "}";
 
     frag_code =
-        "precision highp float;" +
+//        "#ifdef GL_ES" +
+        "precision mediump float;" +
+//        "precision highp float;" +
+//        "#endif" +
         "" +
         "varying vec4 vary_color;" +
         "varying vec2 vary_texcoord;" +

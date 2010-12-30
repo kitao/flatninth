@@ -59,8 +59,8 @@ b9.Shader.prototype.finalize = function() {
 
 b9.Shader.prototype._setup = function() {
     var i;
-    var gl;
     var vert_glshd, frag_glshd;
+    var gl = b9.System.getGLContext();
 
     if (!this._is_uploaded) {
         gl = b9.System.getGLContext();
@@ -94,8 +94,11 @@ b9.Shader.prototype._setup = function() {
 
         this._local_to_screen_loc = gl.getUniformLocation(this._glprog, "b9_local_to_screen");
         this._pos_loc = gl.getAttribLocation(this._glprog, "b9_pos");
+b9.System.log("b9_pos_loc=" + this._pos_loc);
         this._color_loc = gl.getAttribLocation(this._glprog, "b9_color");
+b9.System.log("b9_color_loc=" + this._color_loc);
         this._texcoord_loc = gl.getAttribLocation(this._glprog, "b9_texcoord");
+b9.System.log("b9_texcoord_loc=" + this._texcoord_loc);
 
         if (this._uni_count > 0) {
             this._uni_loc_table = new Array(this._uni_count);
