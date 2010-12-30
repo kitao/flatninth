@@ -49,52 +49,14 @@ b9.System.setup = function(canvas_id, target_fps) {
 
     this._update_func = this.defaultUpdateFunc;
     this._render_func = this.defaultRenderFunc;
+
     this._timer_id = null;
     this._next_update_time = 0;
 
-    this._actor_list_array = new Array(this.ACTOR_LIST_COUNT);
-    this._scr_array = new Array(this.SCREEN_COUNT);
-    this._root_draw_array = new Array(this.SCREEN_COUNT);
-
-    for (i = 0; i < this.ACTOR_LIST_COUNT; i++) {
-        this._actor_list_array[i] = new b9.ActorList();
-    }
-
-    for (i = 0; i < this.SCREEN_COUNT; i++) {
-        this._scr_array[i] = new b9.Screen(this._canvas.width, this._canvas.height);
-        this._root_draw_array[i] = new b9.Drawable();
-    }
-
-    scr = this.getScreen(0);
-    scr.setScreenFlag(b9.Screen.FLAG_CLEAR_COLOR, true);
-    scr.setScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH, true);
-    scr.getClearColor().set(0, 0, 0);
-
-    vert_code =
-        "uniform mat4 b9_local_to_screen;" +
-        "" +
-        "attribute vec4 b9_vertex;" +
-        "attribute vec4 b9_color;" +
-        "attribute vec2 b9_texcoord;" +
-        "" +
-        "varying vec4 vary_color;" +
-        "varying vec2 vary_texcoord;" +
-        "" +
-        "void main()" +
-        "{" +
-        "    gl_Position = b9_vertex;" +
-        "}";
-
-    frag_code =
-        //"varying vec4 vary_color;" +
-        //"varying vec2 vary_texcoord;" +
-        "" +
-        "void main()" +
-        "{" +
-        "    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);" +
-        "}";
-
-    this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 0);
+    this._initActorList();
+    this._initScreen();
+    this._initGL();
+    this._initShader();
 };
 
 /**
@@ -296,6 +258,63 @@ b9.System.error = function(msg) {
 
     alert(msg2);
     throw new Error(msg2);
+};
+
+b9.System._initActorList = function() {
+    this._actor_list_array = new Array(this.ACTOR_LIST_COUNT);
+
+    for (i = 0; i < this.ACTOR_LIST_COUNT; i++) {
+        this._actor_list_array[i] = new b9.ActorList();
+    }
+};
+
+b9.System._initScreen = function() {
+    this._scr_array = new Array(this.SCREEN_COUNT);
+    this._root_draw_array = new Array(this.SCREEN_COUNT);
+
+    for (i = 0; i < this.SCREEN_COUNT; i++) {
+        this._scr_array[i] = new b9.Screen(this._canvas.width, this._canvas.height);
+        this._root_draw_array[i] = new b9.Drawable();
+    }
+
+    scr = this.getScreen(0);
+    scr.setScreenFlag(b9.Screen.FLAG_CLEAR_COLOR, true);
+    scr.setScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH, true);
+    scr.getClearColor().set(0, 0, 0);
+};
+
+b9.System._initGL = function() {
+    var gl = this._gl;
+
+    gl.clearDepth(-1.0);
+};
+
+b9.System._initShader = function() {
+    vert_code =
+        "uniform mat4 b9_local_to_screen;" +
+        "" +
+        "attribute vec4 b9_pos;" +
+        "attribute vec4 b9_color;" +
+        "attribute vec2 b9_texcoord;" +
+        "" +
+        "varying vec4 vary_color;" +
+        "varying vec2 vary_texcoord;" +
+        "" +
+        "void main()" +
+        "{" +
+        "    gl_Position = b9_pos;" +
+        "}";
+
+    frag_code =
+        //"varying vec4 vary_color;" +
+        //"varying vec2 vary_texcoord;" +
+        "" +
+        "void main()" +
+        "{" +
+        "    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);" +
+        "}";
+
+    this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 0);
 };
 
 /**
