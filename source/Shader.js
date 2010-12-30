@@ -70,7 +70,7 @@ b9.Shader.prototype._setup = function() {
         gl.compileShader(vert_glshd);
 
         if (!gl.getShaderParameter(vert_glshd, gl.COMPILE_STATUS)) {
-            b9.System.error("vertex shader compile error");
+            b9.System.error("vertex shader compile error\n\n" + gl.getShaderInfoLog(vert_glshd));
         }
 
         frag_glshd = gl.createShader(gl.FRAGMENT_SHADER);
@@ -78,7 +78,7 @@ b9.Shader.prototype._setup = function() {
         gl.compileShader(frag_glshd);
 
         if (!gl.getShaderParameter(frag_glshd, gl.COMPILE_STATUS)) {
-            b9.System.error("fragment shader compile error");
+            b9.System.error("fragment shader compile error\n\n" + gl.getShaderInfoLog(frag_glshd));
         }
 
         gl.attachShader(this._glprog, vert_glshd);

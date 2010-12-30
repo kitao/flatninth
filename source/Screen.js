@@ -170,6 +170,8 @@ b9.Screen.prototype.render = function(root_draw) {
     var gl = b9.System.getGLContext();
     var clear_flag = 0;
 
+    // gl.viewport(x, y, w, h);
+
     /*
      * clear screen
      */

@@ -291,6 +291,8 @@ b9.System._initGL = function() {
 
 b9.System._initShader = function() {
     vert_code =
+        "precision highp float;" +
+        "" +
         "uniform mat4 b9_local_to_screen;" +
         "" +
         "attribute vec4 b9_pos;" +
@@ -303,15 +305,19 @@ b9.System._initShader = function() {
         "void main()" +
         "{" +
         "    gl_Position = b9_pos;" +
+        "    vary_color = vec4(1.0, 0.0,1.0,1.0);" +
+//        "    vary_color = b9_color;" +
         "}";
 
     frag_code =
-        //"varying vec4 vary_color;" +
-        //"varying vec2 vary_texcoord;" +
+        "precision highp float;" +
+        "" +
+        "varying vec4 vary_color;" +
+        "varying vec2 vary_texcoord;" +
         "" +
         "void main()" +
         "{" +
-        "    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);" +
+        "    gl_FragColor = vary_color;" +
         "}";
 
     this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 0);
