@@ -197,15 +197,18 @@ b9.PrimitiveBuffer.prototype.setIndex = function(index_no, vert_no) {
 b9.PrimitiveBuffer.prototype._setup = function() {
     var gl = b9.System.getGLContext();
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_glbuf);
-    gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
-
     if (!this._is_uploaded) {
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_glbuf);
         gl.bufferData(gl.ARRAY_BUFFER, this._pos_data, gl.STATIC_DRAW);
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._index_data, gl.STATIC_DRAW);
 
         this._is_uploaded = true;
     }
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_glbuf);
+    gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
 };
