@@ -310,7 +310,6 @@ b9.System._initShader = function() {
     frag_code =
 //        "#ifdef GL_ES" +
         "precision mediump float;" +
-//        "precision highp float;" +
 //        "#endif" +
         "" +
         "varying vec4 vary_color;" +
