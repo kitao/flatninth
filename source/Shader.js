@@ -93,7 +93,7 @@ b9.Shader.prototype._setup = function() {
         gl.deleteShader(frag_glshd);
 
         this._local_to_screen_loc = gl.getUniformLocation(this._glprog, "b9_local_to_screen");
-        this._vertex_loc = gl.getAttribLocation(this._glprog, "b9_vertex");
+        this._pos_loc = gl.getAttribLocation(this._glprog, "b9_pos");
         this._color_loc = gl.getAttribLocation(this._glprog, "b9_color");
         this._texcoord_loc = gl.getAttribLocation(this._glprog, "b9_texcoord");
 
