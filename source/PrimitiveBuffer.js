@@ -38,17 +38,32 @@ b9.PrimitiveBuffer.prototype.initialize = function(vert_count, index_count) {
     var gl = b9.System.getGLContext();
 
     this._vert_count = vert_count;
-    this._vert_array = new Float32Array(vert_count * 3);
-    this._vert_glbuf = gl.createBuffer();
-
     this._index_count = index_count;
-    this._index_array = new Uint16Array(index_count);
-    this._index_glbuf = gl.createBuffer();
 
-    this._vert_pos = new Array(vert_count);
+    this._pos_array = new Array(vert_count);
+    this._pos_data = new Float32Array(vert_count * 3);
+    this._pos_glbuf = gl.createBuffer();
+
+    this._color_array = new Array(vert_count);
+    this._color_data = new Uint8Array(vert_count * 4);
+    this._color_glbuf = gl.createBuffer();
+
+    this._texcoord_data = new Float32Array(vert_count * 2);
+    this._texcoord_glbuf = gl.createBuffer();
+
     for (i = 0; i < vert_count; i++) {
-        this._vert_pos[i] = new b9.Vector3D(this._vert_array, i * 3);
+        this._pos_array[i] = new b9.Vector3D(this._pos_data, i * 3);
+        this._pos_array[i].set(b9.Vector3D.ZERO);
+
+        this._color_array[i] = new b9.Vector3D(this._color_data, i * 4);
+        this._color_array[i].set(255, 255, 255);
+
+        this._texcoord_data[i * 2] = 0.0;
+        this._texcoord_data[i * 2 + 1] = 0.0;
     }
+
+    this._index_data = new Uint16Array(index_count);
+    this._index_glbuf = gl.createBuffer();
 
     this._is_uploaded = false;
 };
@@ -59,7 +74,14 @@ b9.PrimitiveBuffer.prototype.initialize = function(vert_count, index_count) {
 b9.PrimitiveBuffer.prototype.finalize = function() {
     var gl = b9.System.getGLContext();
 
-    gl.deleteBuffer(this._vert_glbuf);
+    gl.deleteBuffer(this._pos_glbuf);
+    gl.deleteBuffer(this._color_glbuf);
+    gl.deleteBuffer(this._texcoord_glbuf);
+
+    if (this._normal_glbuf) {
+        gl.deleteBuffer(this._normal_glbuf);
+    }
+
     gl.deleteBuffer(this._index_glbuf);
 };
 
@@ -83,8 +105,17 @@ b9.PrimitiveBuffer.prototype.getIndexCount = function() {
  * Returns the position of the specified vertex.
  * @param {Number} vert_no A vertex number.
  */
-b9.PrimitiveBuffer.prototype.getVertexPos = function(vert_no) {
-    return this._vert_pos[vert_no];
+b9.PrimitiveBuffer.prototype.getPos = function(vert_no) {
+    return this._pos_array[vert_no];
+};
+
+/**
+ *
+ * @param {Number} vert_no A vertex number.
+ * @return {b9.Color}
+ */
+b9.PrimitiveBuffer.prototype.getColor = function(vert_no) {
+    return this._color_array[vert_no];
 };
 
 /**
@@ -92,8 +123,8 @@ b9.PrimitiveBuffer.prototype.getVertexPos = function(vert_no) {
  * @param {Number} vert_no A vertex number.
  * @return {Number} The U texture coordinate.
  */
-b9.PrimitiveBuffer.prototype.getVertexTexCoordU = function(vert_no) {
-    // TODO
+b9.PrimitiveBuffer.prototype.getTexCoordU = function(vert_no) {
+    return this._texcoord_data[vert_no * 2];
 };
 
 /**
@@ -101,8 +132,8 @@ b9.PrimitiveBuffer.prototype.getVertexTexCoordU = function(vert_no) {
  * @param {Number} vert_no A vertex number.
  * @return {Number} The V texture coordinate.
  */
-b9.PrimitiveBuffer.prototype.getVertexTexCoordU = function(vert_no) {
-    // TODO
+b9.PrimitiveBuffer.prototype.getTexCoordV = function(vert_no) {
+    return this._texcoord_data[vert_no * 2 + 1];
 };
 
 /**
@@ -111,8 +142,39 @@ b9.PrimitiveBuffer.prototype.getVertexTexCoordU = function(vert_no) {
  * @param {Number} An U texture coordinate.
  * @param {Number} A V texture coordinate.
  */
-b9.PrimitiveBuffer.prototype.setVertexTexCoord = function(vert_no, u, v) {
-    // TODO
+b9.PrimitiveBuffer.prototype.setTexCoord = function(vert_no, u, v) {
+    this._texcoord_data[vert_no * 2] = u;
+    this._texcoord_data[vert_no * 2 + 1] = v;
+};
+
+/**
+ *
+ * @return {Boolean}
+ */
+b9.PrimitiveBuffer.prototype.hasNormal = function() {
+    return this._normal_glbuf ? true : false;
+};
+
+/**
+ *
+ */
+b9.PrimitiveBuffer.prototype.attachNormal = function() {
+    this._normal_array = new Array(vert_count);
+    this._normal_data = new Float32Array(vert_count * 3);
+    this._normal_glbuf = gl.createBuffer();
+
+    for (i = 0; i < vert_count; i++) {
+        this._normal_array[i] = new b9.Vector3D(this._normal_data, i * 3);
+    }
+};
+
+/**
+ *
+ * @param {Number} vert_no A vertex number.
+ * @return {b9.Vector3D}
+ */
+b9.PrimitiveBuffer.prototype.getNormal = function(vert_no) {
+    return this._normal_array[i];
 };
 
 /**
@@ -120,7 +182,7 @@ b9.PrimitiveBuffer.prototype.setVertexTexCoord = function(vert_no, u, v) {
  * @param {Number} index_no An index number.
  */
 b9.PrimitiveBuffer.prototype.getIndex = function(index_no) {
-    return this._index_array[index_no];
+    return this._index_data[index_no];
 };
 
 /**
@@ -129,52 +191,20 @@ b9.PrimitiveBuffer.prototype.getIndex = function(index_no) {
  * @param {Number} vert_no A vertex number.
  */
 b9.PrimitiveBuffer.prototype.setIndex = function(index_no, vert_no) {
-    this._index_array[index_no] = vert_no;
-};
-
-/**
- * TODO
- * @param {Number} vert_no A vertex number.
- */
-b9.PrimitiveBuffer.prototype.updateVertex = function(vert_no) {
-    var gl;
-
-    if (this._is_uploaded) {
-        gl = b9.System.getGLContext();
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._vert_glbuf);
-        gl.bufferSubData(gl.ARRAY_BUFFER, vert_no * 3, this._vert_array);
-        gl.bufferSubData(gl.ARRAY_BUFFER, vert_no * 3 + 1, this._vert_array);
-        gl.bufferSubData(gl.ARRAY_BUFFER, vert_no * 3 + 2, this._vert_array);
-    }
-};
-
-/**
- * TODO
- * @param {Number} index_no An index number.
- */
-b9.PrimitiveBuffer.prototype.updateIndex = function(index_no) {
-    var gl;
-
-    if (this._is_uploaded) {
-        gl = b9.System.getGLContext();
-
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
-        gl.bufferSubData(gl.ELEMENT_ARRAY_BUFFER, index_no, this._index_array);
-    }
+    this._index_data[index_no] = vert_no;
 };
 
 b9.PrimitiveBuffer.prototype._setup = function() {
     var gl = b9.System.getGLContext();
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._vert_glbuf);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_glbuf);
     gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
 
     if (!this._is_uploaded) {
-        gl.bufferData(gl.ARRAY_BUFFER, this._vert_array, gl.STATIC_DRAW); // or gl.DYNAMIC_DRAW
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._index_array, gl.DYNAMIC_DRAW); // or gl.DYNAMIC_DRAW
+        gl.bufferData(gl.ARRAY_BUFFER, this._pos_data, gl.STATIC_DRAW);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._index_data, gl.STATIC_DRAW);
 
         this._is_uploaded = true;
     }
