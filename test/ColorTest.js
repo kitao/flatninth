@@ -38,27 +38,6 @@ function testColor() {
     assertEquals_float(color2.getA(), 0.8);
     assertTrue(color2.getArray() === array && color2.getIndex() === 4);
 
-    var color3 = new b9.Color(0.1, 0.2, 0.3);
-    assertEquals_float(color3.getR(), 0.1);
-    assertEquals_float(color3.getG(), 0.2);
-    assertEquals_float(color3.getB(), 0.3);
-    assertEquals_float(color3.getA(), 1.0);
-    assertTrue(color3.getArray() !== array && color3.getIndex() === 0);
-
-    var color4 = new b9.Color(-1.0, -1.0, -1.0);
-    assertEquals_float(color4.getR(), 0.0);
-    assertEquals_float(color4.getG(), 0.0);
-    assertEquals_float(color4.getB(), 0.0);
-    assertEquals_float(color4.getA(), 1.0);
-    assertTrue(color4.getArray() !== array && color4.getIndex() === 0);
-
-    var color5 = new b9.Color(2.0, 2.0, 2.0);
-    assertEquals_float(color5.getR(), 1.0);
-    assertEquals_float(color5.getG(), 1.0);
-    assertEquals_float(color5.getB(), 1.0);
-    assertEquals_float(color5.getA(), 1.0);
-    assertTrue(color5.getArray() !== array && color5.getIndex() === 0);
-
     var color6 = new b9.Color(0.1, 0.2, 0.3, 0.4);
     assertEquals_float(color6.getR(), 0.1);
     assertEquals_float(color6.getG(), 0.2);
@@ -66,14 +45,14 @@ function testColor() {
     assertEquals_float(color6.getA(), 0.4);
     assertTrue(color6.getArray() !== array && color6.getIndex() === 0);
 
-    var color7 = new b9.Color(-1.0, -1.0, -1.0, -1.0);
+    var color7 = new b9.Color(-1.0, -2.0, -3.0, -4.0);
     assertEquals_float(color7.getR(), 0.0);
     assertEquals_float(color7.getG(), 0.0);
     assertEquals_float(color7.getB(), 0.0);
     assertEquals_float(color7.getA(), 0.0);
     assertTrue(color7.getArray() !== array && color7.getIndex() === 0);
 
-    var color8 = new b9.Color(2.0, 2.0, 2.0, 2.0);
+    var color8 = new b9.Color(2.0, 3.0, 4.0, 5.0);
     assertEquals_float(color8.getR(), 1.0);
     assertEquals_float(color8.getG(), 1.0);
     assertEquals_float(color8.getB(), 1.0);
@@ -108,13 +87,9 @@ function testColor() {
     assertEquals_float(1.0, color1.setA(2.0).getA());
 
     /* set */
-    assertEquals_object(new b9.Color(0.1, 0.2, 0.3, 1.0), color1.set(0.1, 0.2, 0.3));
-    assertEquals_object(new b9.Color(0.0, 0.0, 0.0, 1.0), color1.set(-1.0, -1.0, -1.0));
-    assertEquals_object(new b9.Color(1.0, 1.0, 1.0, 1.0), color1.set(2.0, 2.0, 2.0));
-
     assertEquals_object(new b9.Color(0.2, 0.3, 0.4, 0.5), color1.set(0.2, 0.3, 0.4, 0.5));
-    assertEquals_object(new b9.Color(0.0, 0.0, 0.0, 0.0), color1.set(-1.0, -1.0, -1.0, -1.0));
-    assertEquals_object(new b9.Color(1.0, 1.0, 1.0, 1.0), color1.set(2.0, 2.0, 2.0, 2.0));
+    assertEquals_object(new b9.Color(0.0, 0.0, 0.0, 0.0), color1.set(-1.0, -2.0, -3.0, -4.0));
+    assertEquals_object(new b9.Color(1.0, 1.0, 1.0, 1.0), color1.set(2.0, 3.0, 4.0, 5.0));
 
     assertEquals_object(color1, color2.set(color1));
 
