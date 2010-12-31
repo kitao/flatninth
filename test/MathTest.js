@@ -127,7 +127,7 @@ function testMath() {
     /* lerp */
     assertEquals_float(0.0, b9.Math.lerp(0.0, 2.0, -1.0));
     assertEquals_float(1.0, b9.Math.lerp(0.0, 2.0, 0.5));
-    assertEquals_float(2.0, b9.Math.lerp(0.0, 2.0, 3.0));
+    assertEquals_float(2.0, b9.Math.lerp(0.0, 2.0, 2.0));
 
     /* equals_float */
     assertTrue(b9.Math.equals_float(1.0, 1.0 + b9.Math.EPSILON * 0.99));
