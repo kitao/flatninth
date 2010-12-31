@@ -47,16 +47,16 @@ b9.System.setup = function(canvas_id, target_fps) {
     this._target_fps = b9.Math.max(target_fps, 1);
     this._current_fps = 0;
 
-    this._update_func = this.defaultUpdateFunc;
-    this._render_func = this.defaultRenderFunc;
+    this._update_func = this.defaultUpdateFunction;
+    this._render_func = this.defaultRenderFunction;
 
     this._timer_id = null;
     this._next_update_time = 0;
 
-    this._initActorList();
-    this._initScreen();
     this._initGL();
-    this._initShader();
+    this._initPresetActorList();
+    this._initPresetScreen();
+    this._initPresetShader();
 };
 
 /**
@@ -158,14 +158,14 @@ b9.System.getCurrentFPS = function() {
  *
  * @return {TODO}
  */
-b9.System.getUpdateFunc = function() {
+b9.System.getUpdateFunction = function() {
     return this._update_func;
 };
 
 /**
  *
  */
-b9.System.setUpdateFunc = function(update_func) {
+b9.System.setUpdateFunction = function(update_func) {
     this._update_func = update_func;
 };
 
@@ -173,64 +173,64 @@ b9.System.setUpdateFunc = function(update_func) {
  *
  * @return {TODO}
  */
-b9.System.getRenderFunc = function() {
+b9.System.getRenderFunction = function() {
     return this._render_func;
 };
 
 /**
  *
  */
-b9.System.setRenderFunc = function(render_func) {
+b9.System.setRenderFunction = function(render_func) {
     this._render_func = render_func;
 };
 
 /**
  *
  */
-b9.System.defaultUpdateFunc = function() {
+b9.System.defaultUpdateFunction = function() {
     var i;
 
-    for (i = 0; i < b9.System.ACTOR_LIST_COUNT; i++) {
-        b9.System._actor_list_array[i].update();
+    for (i = 0; i < b9.System.PRESET_ACTOR_LIST_COUNT; i++) {
+        b9.System._preset_actor_list_array[i].update();
     }
 };
 
 /**
  *
  */
-b9.System.defaultRenderFunc = function() {
+b9.System.defaultRenderFunction = function() {
     var i;
 
-    for (i = 0; i < b9.System.SCREEN_COUNT; i++) {
-        b9.System._scr_array[i].render(b9.System._root_draw_array[i]);
+    for (i = 0; i < b9.System.PRESET_SCREEN_COUNT; i++) {
+        b9.System._preset_scr_array[i].render(b9.System._preset_draw_array[i]);
     }
 };
 
 /**
- * Returns the specified actor list.
- * @param {Number} The index number of an actor list.
- * @return {b9.ActorList} The actor list.
+ * Returns the specified preset actor list.
+ * @param {Number} The index number of an preset actor list.
+ * @return {b9.ActorList} The preset actor list.
  */
-b9.System.getActorList = function(actor_list_no) {
-    return this._actor_list_array[actor_list_no - this.MIN_ACTOR_LIST_NO];
+b9.System.getPresetActorList = function(preset_actor_list_no) {
+    return this._preset_actor_list_array[preset_actor_list_no - this.MIN_PRESET_ACTOR_LIST_NO];
 };
 
 /**
- * Returns the specified screen.
- * @param {Number} The index number of a screen.
- * @return {b9.Screen} The screen.
+ * Returns the specified preset screen.
+ * @param {Number} The index number of a preset screen.
+ * @return {b9.Screen} The preset screen.
  */
-b9.System.getScreen = function(scr_no) {
-    return this._scr_array[scr_no - this.MIN_SCREEN_NO];
+b9.System.getPresetScreen = function(preset_scr_no) {
+    return this._preset_scr_array[preset_scr_no - this.MIN_PRESET_SCREEN_NO];
 };
 
 /**
- * Returns the root drawable of the specified screen.
- * @param {Number} The index number of a screen.
+ * Returns the root drawable of the specified preset screen.
+ * @param {Number} The index number of a preset screen.
  * @return {b9.Drawable} The root drawable.
  */
-b9.System.getRootDrawable = function(scr_no) {
-    return this._root_draw_array[scr_no - this.MIN_SCREEN_NO];
+b9.System.getPresetDrawable = function(preset_scr_no) {
+    return this._preset_draw_array[preset_scr_no - this.MIN_PRESET_SCREEN_NO];
 };
 
 /**
@@ -260,24 +260,24 @@ b9.System.error = function(msg) {
     throw new Error(msg2);
 };
 
-b9.System._initActorList = function() {
-    this._actor_list_array = new Array(this.ACTOR_LIST_COUNT);
+b9.System._initPresetActorList = function() {
+    this._preset_actor_list_array = new Array(this.PRESET_ACTOR_LIST_COUNT);
 
-    for (i = 0; i < this.ACTOR_LIST_COUNT; i++) {
-        this._actor_list_array[i] = new b9.ActorList();
+    for (i = 0; i < this.PRESET_ACTOR_LIST_COUNT; i++) {
+        this._preset_actor_list_array[i] = new b9.ActorList();
     }
 };
 
-b9.System._initScreen = function() {
-    this._scr_array = new Array(this.SCREEN_COUNT);
-    this._root_draw_array = new Array(this.SCREEN_COUNT);
+b9.System._initPresetScreen = function() {
+    this._preset_scr_array = new Array(this.PRESET_SCREEN_COUNT);
+    this._preset_draw_array = new Array(this.PRESET_SCREEN_COUNT);
 
-    for (i = 0; i < this.SCREEN_COUNT; i++) {
-        this._scr_array[i] = new b9.Screen(this._canvas.width, this._canvas.height);
-        this._root_draw_array[i] = new b9.Drawable();
+    for (i = 0; i < this.PRESET_SCREEN_COUNT; i++) {
+        this._preset_scr_array[i] = new b9.Screen(this._canvas.width, this._canvas.height);
+        this._preset_draw_array[i] = new b9.Drawable();
     }
 
-    scr = this.getScreen(0);
+    scr = this.getPresetScreen(0);
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_COLOR, true);
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH, true);
     scr.getClearColor().set(0.0, 0.0, 0.0, 0.0);
@@ -289,28 +289,26 @@ b9.System._initGL = function() {
     gl.clearDepth(-1.0);
 };
 
-b9.System._initShader = function() {
+b9.System._initPresetShader = function() {
     vert_code =
         "uniform mat4 b9_local_to_screen;" +
         "" +
-        "attribute vec4 b9_pos;" +
-        "attribute vec4 b9_color;" +
-        "attribute vec2 b9_texcoord;" +
+        "attribute vec4 b9_vertex_pos;" +
+        "attribute vec4 b9_vertex_color;" +
+        "attribute vec2 b9_vertex_texcoord;" +
         "" +
         "varying vec4 vary_color;" +
         "varying vec2 vary_texcoord;" +
         "" +
         "void main()" +
         "{" +
-        "    gl_Position = b9_pos;" +
-        "    vary_color = b9_color;" +
-//        "    vary_texcoord = b9_texcoord;" +
+        "    gl_Position = b9_vertex_pos;" +
+        "    vary_color = b9_vertex_color;" +
+//        "    vary_texcoord = b9_vertex_texcoord;" +
         "}";
 
     frag_code =
-//        "#ifdef GL_ES" +
         "precision mediump float;" +
-//        "#endif" +
         "" +
         "varying vec4 vary_color;" +
         "varying vec2 vary_texcoord;" +
@@ -327,34 +325,34 @@ b9.System._initShader = function() {
  *
  * @return {Number}
  */
-b9.System.MIN_ACTOR_LIST_NO = -3;
+b9.System.MIN_PRESET_ACTOR_LIST_NO = -3;
 
 /**
  *
  * @return {Number}
  */
-b9.System.MAX_ACTOR_LIST_NO = 3;
+b9.System.MAX_PRESET_ACTOR_LIST_NO = 3;
 
 /**
  *
  * @return {Number}
  */
-b9.System.ACTOR_LIST_COUNT = b9.System.MAX_ACTOR_LIST_NO - b9.System.MIN_ACTOR_LIST_NO + 1;
+b9.System.PRESET_ACTOR_LIST_COUNT = b9.System.MAX_PRESET_ACTOR_LIST_NO - b9.System.MIN_PRESET_ACTOR_LIST_NO + 1;
 
 /**
  *
  * @return {Number}
  */
-b9.System.MIN_SCREEN_NO = -3;
+b9.System.MIN_PRESET_SCREEN_NO = -3;
 
 /**
  *
  * @return {Number}
  */
-b9.System.MAX_SCREEN_NO = 3;
+b9.System.MAX_PRESET_SCREEN_NO = 3;
 
 /**
  *
  * @return {Number}
  */
-b9.System.SCREEN_COUNT = b9.System.MAX_SCREEN_NO - b9.System.MIN_SCREEN_NO + 1;
+b9.System.PRESET_SCREEN_COUNT = b9.System.MAX_PRESET_SCREEN_NO - b9.System.MIN_PRESET_SCREEN_NO + 1;
