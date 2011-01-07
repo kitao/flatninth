@@ -21,15 +21,16 @@
  */
 
 /**
+ * Constructs a shader.
  *
+ * @class A programmable shader, consists of a vertex shader and a fragment shader,
+ * which decides how the Primitive should be drawn.
  *
- * @class
- *
- * @param {String} vert_code
- * @param {String} frag_code
- * @param {Number} uni_count
- * @param {Number} att_count
- * @param {Number} tex_count
+ * @param {String} vert_code A vertex shader code.
+ * @param {String} frag_code A fragment shader code.
+ * @param {Number} uni_count The number of the uniforms.
+ * @param {Number} att_count The number of the attributes.
+ * @param {Number} tex_count The number of the textures.
  */
 b9.Shader = b9.createClass();
 
@@ -49,12 +50,36 @@ b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_c
 };
 
 /**
- *
+ * Destructs this shader.
  */
 b9.Shader.prototype.finalize = function() {
     var gl = b9.System.getGLContext();
 
     gl.deleteProgram(this._glprog);
+};
+
+/**
+ * Returns the number of the uniforms this shader requires.
+ * @return {Number} The number of the uniforms.
+ */
+b9.Shader.prototype.getUniformCount = function() {
+    return this._uni_count;
+};
+
+/**
+ * Returns the number of the attributes this shader requires.
+ * @return {Number} The number of the attributes.
+ */
+b9.Shader.prototype.getAttributeCount = function() {
+    return this._att_count;
+};
+
+/**
+ * Returns the number of the textures this shader requires.
+ * @return {Number} The number of the textures.
+ */
+b9.Shader.prototype.getTextureCount = function() {
+    return this._tex_count;
 };
 
 b9.Shader.prototype._setup = function() {
