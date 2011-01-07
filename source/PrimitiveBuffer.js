@@ -199,9 +199,9 @@ b9.PrimitiveBuffer.prototype._setup = function(shader) {
     gl.bindBuffer(gl.ARRAY_BUFFER, this._color_glbuf);
     gl.vertexAttribPointer(shader._color_loc, 4, gl.FLOAT, false, 0, 0);
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoor_glbuf);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoord_glbuf);
     gl.enableVertexAttribArray(shader._texcoord_loc);
-    gl.vertexAttribPointer(shader._texcoord_loc, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(shader._texcoord_loc, 2, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
 };

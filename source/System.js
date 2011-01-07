@@ -306,8 +306,7 @@ b9.System._initPresetShader = function() {
         "    gl_Position = b9_vertex_pos;" +
         //"    pixel_color = b9_drawable_color * b9_vertex_color;" + //
         "    pixel_color = b9_vertex_color;" + //
-        "    pixel_texcoord = vec2(0.5, 0.1);" +
-        //"    pixel_texcoord = b9_vertex_texcoord;" + //
+        "    pixel_texcoord = b9_vertex_texcoord;" + //
         "}";
 
     frag_code =
