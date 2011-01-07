@@ -21,24 +21,26 @@
  */
 
 /**
+ * Constructs a primitive buffer.
  *
- *
- * @class
+ * @class Manages vertices and indices referenced by primitives.
  *
  * @param {Number} vert_count The number of vertices.
  * @param {Number} index_count The number of indices.
+ * @param {Number} [att_count] The number of the shader attributes.
  */
 b9.PrimitiveBuffer = b9.createClass();
 
 /**
  * @ignore
  */
-b9.PrimitiveBuffer.prototype.initialize = function(vert_count, index_count) {
+b9.PrimitiveBuffer.prototype.initialize = function(vert_count, index_count, att_count) {
     var i;
     var gl = b9.System.getGLContext();
 
     this._vert_count = vert_count;
     this._index_count = index_count;
+    this._att_count = att_count; // TODO
 
     this._pos_array = new Array(vert_count);
     this._pos_data = new Float32Array(vert_count * 3);
@@ -69,7 +71,7 @@ b9.PrimitiveBuffer.prototype.initialize = function(vert_count, index_count) {
 };
 
 /**
- *
+ * Destructs thie primitive buffer.
  */
 b9.PrimitiveBuffer.prototype.finalize = function() {
     var gl = b9.System.getGLContext();
@@ -78,27 +80,33 @@ b9.PrimitiveBuffer.prototype.finalize = function() {
     gl.deleteBuffer(this._color_glbuf);
     gl.deleteBuffer(this._texcoord_glbuf);
 
-    if (this._normal_glbuf) {
-        gl.deleteBuffer(this._normal_glbuf);
-    }
+    // TODO: delete attribute buffers
 
     gl.deleteBuffer(this._index_glbuf);
 };
 
 /**
- * Returns the number of vertices.
- * @return {Number} The number of vertices.
+ * Returns the number of the vertices.
+ * @return {Number} The number of the vertices.
  */
 b9.PrimitiveBuffer.prototype.getVertexCount = function() {
     return this._vert_count;
 };
 
 /**
- * Returns the number of indices.
- * @return {Number} The number of indices.
+ * Returns the number of the indices.
+ * @return {Number} The number of ths indices.
  */
 b9.PrimitiveBuffer.prototype.getIndexCount = function() {
     return this._index_count;
+};
+
+/**
+ * Returns the number of the shader attributes.
+ * @return {Number} The number of the attributes.
+ */
+b9.PrimitiveBuffer.prototype.getAttributeCount = function() {
+    return this._att_count;
 };
 
 /**
@@ -145,36 +153,6 @@ b9.PrimitiveBuffer.prototype.getTexCoordV = function(vert_no) {
 b9.PrimitiveBuffer.prototype.setTexCoord = function(vert_no, u, v) {
     this._texcoord_data[vert_no * 2] = u;
     this._texcoord_data[vert_no * 2 + 1] = v;
-};
-
-/**
- *
- * @return {Boolean}
- */
-b9.PrimitiveBuffer.prototype.hasNormal = function() {
-    return this._normal_glbuf ? true : false;
-};
-
-/**
- *
- */
-b9.PrimitiveBuffer.prototype.attachNormal = function() {
-    this._normal_array = new Array(vert_count);
-    this._normal_data = new Float32Array(vert_count * 3);
-    this._normal_glbuf = gl.createBuffer();
-
-    for (i = 0; i < vert_count; i++) {
-        this._normal_array[i] = new b9.Vector3D(this._normal_data, i * 3);
-    }
-};
-
-/**
- *
- * @param {Number} vert_no A vertex number.
- * @return {b9.Vector3D}
- */
-b9.PrimitiveBuffer.prototype.getNormal = function(vert_no) {
-    return this._normal_array[i];
 };
 
 /**
