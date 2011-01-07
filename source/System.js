@@ -298,29 +298,31 @@ b9.System._initPresetShader = function() {
         "attribute vec4 b9_vertex_color;" +
         "attribute vec2 b9_vertex_texcoord;" +
         "" +
-        //"varying vec4 pixel_color;" +
-        //"varying vec2 pixel_texcoord;" +
+        "varying vec4 pixel_color;" +
+        "varying vec2 pixel_texcoord;" +
         "" +
         "void main()" +
         "{" +
         "    gl_Position = b9_vertex_pos;" +
         //"    pixel_color = b9_drawable_color * b9_vertex_color;" + //
-        //"    pixel_color = b9_vertex_color;" + //
-        //"    pixel_texcoord = b9_vertex_texcoord;" +
+        "    pixel_color = b9_vertex_color;" + //
+        "    pixel_texcoord = vec2(0.5, 0.1);" +
+        //"    pixel_texcoord = b9_vertex_texcoord;" + //
         "}";
 
     frag_code =
         "precision mediump float;" +
         "" +
-        //"uniform sampler2D b9_texture;" + //
+        "uniform sampler2D b9_texture;" +
         "" +
-        //"varying vec4 pixel_color;" +
-        //"varying vec2 pixel_texcoord;" +
+        "varying vec4 pixel_color;" +
+        "varying vec2 pixel_texcoord;" +
         "" +
         "void main()" +
         "{" +
         //"    gl_FragColor = texture2D(b9_texture, pixel_texcoord.st) * pixel_color;" + //
-        "    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0); /*pixel_color;*/" + //
+        "    gl_FragColor.xy = pixel_texcoord.st;" +
+        "    gl_FragColor = pixel_color;" + //
         "}";
 
     this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 0);
