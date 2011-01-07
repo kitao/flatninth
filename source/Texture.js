@@ -100,8 +100,11 @@ b9.Texture.prototype.updateTexture = function(left, top, width, height) {
     // TODO
 };
 
-b9.Texture.prototype._setup = function() {
+b9.Texture.prototype._setup = function(shader) {
+    var gl = b9.System._gl;
+
     if (this._is_loaded) {
+        gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, that._gltex);
 
         if (!this._is_uploaded) {
@@ -112,6 +115,8 @@ b9.Texture.prototype._setup = function() {
 
             this._is_uploaded = true;
         }
+
+        gl.uniform1i(shader._tex_loc_table[0], 0);
     }
 };
 
