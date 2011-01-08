@@ -280,7 +280,7 @@ b9.System._initPresetScreen = function() {
     scr = this.getPresetScreen(0);
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_COLOR, true);
     scr.setScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH, true);
-    scr.getClearColor().set(0.0, 0.0, 0.0, 0.0);
+    scr.getClearColor().set(0, 0, 0);
 };
 
 b9.System._initGL = function() {
@@ -305,7 +305,7 @@ b9.System._initPresetShader = function() {
         "{" +
         "    gl_Position = b9_vertex_pos;" +
         //"    pixel_color = b9_drawable_color * b9_vertex_color;" + //
-        "    pixel_color = b9_vertex_color;" + //
+        "    pixel_color = b9_vertex_color / 255.0;" + //
         "    pixel_texcoord = b9_vertex_texcoord;" + //
         "}";
 
