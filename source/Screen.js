@@ -44,7 +44,7 @@ b9.Screen.prototype.initialize = function(width, height) {
     this._aspect_ratio = 1.0; // TODO
     this._near_clip_dist = 0.0; // TODO
     this._far_clip_dist = 100.0; // TODO
-    this._clear_color = new b9.Color(1.0, 0.0, 0.0, 1.0);
+    this._clear_color = new b9.Color(255, 0, 0);
     this._camera = new b9.Matrix3D(b9.Matrix3D.UNIT);
 };
 
@@ -177,10 +177,10 @@ b9.Screen.prototype.render = function(root_draw) {
      */
     if (this.getScreenFlag(b9.Screen.FLAG_CLEAR_COLOR)) {
         gl.clearColor(
-                this._clear_color.getR(),
-                this._clear_color.getG(),
-                this._clear_color.getB(),
-                this._clear_color.getA());
+                this._clear_color.getR() / 255.0,
+                this._clear_color.getG() / 255.0,
+                this._clear_color.getB() / 255.0,
+                1.0);
         clear_flag = gl.COLOR_BUFFER_BIT;
     }
 
