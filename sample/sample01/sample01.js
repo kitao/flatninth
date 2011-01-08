@@ -22,6 +22,8 @@
 
 var Sample = b9.createClass(b9.Actor);
 
+var tex;
+
 Sample.prototype.initialize = function() {
     this.initializeSuper();
 
@@ -42,6 +44,12 @@ Sample.prototype.initialize = function() {
     this._prim_buf.setIndex(1, 1);
     this._prim_buf.setIndex(2, 2);
 
+    this._prim_buf.setTexCoord(0, 0.0, 0.0);
+    this._prim_buf.setTexCoord(1, 1.0, 0.0);
+    this._prim_buf.setTexCoord(2, 0.0, 1.0);
+
+    this._prim.setTexture(0, tex);
+
     b9.System.getPresetDrawable(0).addChildLast(this._prim);
 
     b9.System.log("ok!!!");
@@ -56,6 +64,8 @@ Sample.prototype.update = function() {
  */
 function main() {
     b9.System.setup("sample01_canvas", 60);
+
+    tex = new b9.Texture("../asset/test_texture_64x64.png");
 
     for (var i = 0; i < 3; i++) {
         var dummy = new Sample();
