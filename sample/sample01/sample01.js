@@ -34,9 +34,9 @@ Sample.prototype.initialize = function() {
     this._prim_buf.getPos(1).set(-1.0, -0.5, 0.0);
     this._prim_buf.getPos(2).set(1.0, -0.5, 0.0);
 
-    this._prim_buf.getColor(0).set(1.0, 0.0, 0.0, 1.0);
-    this._prim_buf.getColor(1).set(0.0, 1.0, 0.0, 1.0);
-    this._prim_buf.getColor(2).set(0.0, 0.0, 1.0, 1.0);
+    this._prim_buf.getColor(0).set(255, 0, 0);
+    this._prim_buf.getColor(1).set(0, 255, 0);
+    this._prim_buf.getColor(2).set(0, 0, 255);
 
     this._prim_buf.setIndex(0, 0);
     this._prim_buf.setIndex(1, 1);
@@ -61,7 +61,7 @@ function main() {
         var dummy = new Sample();
     }
 
-    b9.System.getPresetScreen(0).getClearColor().set(0.0, 0.0, 1.0, 1.0);
+    b9.System.getPresetScreen(0).getClearColor().set(0, 0, 255);
 
     b9.System.start();
 }
