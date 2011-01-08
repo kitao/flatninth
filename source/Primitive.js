@@ -115,7 +115,7 @@ b9.Primitive.prototype.setPrimitiveMode = function(prim_mode) {
  * @return {b9.Texture} The texture.
  */
 b9.Primitive.prototype.getTexture = function(tex_no) {
-    return this._tex[tex_no];
+    return this._tex_array[tex_no];
 };
 
 /**
@@ -124,7 +124,7 @@ b9.Primitive.prototype.getTexture = function(tex_no) {
  * @param {b9.Texture} tex A texture.
  */
 b9.Primitive.prototype.setTexture = function(tex_no, tex) {
-    this._tex[tex_no] = tex;
+    this._tex_array[tex_no] = tex;
 };
 
 /**
@@ -165,7 +165,7 @@ b9.Primitive.prototype._render = function() {
         tex = this._tex_array[i];
 
         if (tex) {
-            tex._setup();
+            tex._setup(shader);
         }
     }
 
