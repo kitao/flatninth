@@ -312,19 +312,17 @@ b9.System._initPresetShader = function() {
     frag_code =
         "precision mediump float;" +
         "" +
-        "uniform sampler2D b9_texture;" +
+        "uniform sampler2D b9_tex_00;" +
         "" +
         "varying vec4 pixel_color;" +
         "varying vec2 pixel_texcoord;" +
         "" +
         "void main()" +
         "{" +
-        //"    gl_FragColor = texture2D(b9_texture, pixel_texcoord.st) * pixel_color;" + //
-        "    gl_FragColor.xy = pixel_texcoord.st;" +
-        "    gl_FragColor = pixel_color;" + //
+        "    gl_FragColor = texture2D(b9_tex_00, pixel_texcoord.st) * pixel_color;" + //
         "}";
 
-    this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 0);
+    this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 1);
 };
 
 /**

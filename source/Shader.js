@@ -118,6 +118,7 @@ b9.Shader.prototype._setup = function() {
         gl.deleteShader(frag_glshd);
 
         this._local_to_screen_loc = gl.getUniformLocation(this._glprog, "b9_local_to_screen");
+b9.System.log("b9_local_to_screen=" + this._local_to_screen_loc);
         this._pos_loc = gl.getAttribLocation(this._glprog, "b9_vertex_pos");
 b9.System.log("b9_vertex_pos_loc=" + this._pos_loc);
         this._color_loc = gl.getAttribLocation(this._glprog, "b9_vertex_color");
@@ -146,6 +147,7 @@ b9.System.log("b9_vertex_texcoord_loc=" + this._texcoord_loc);
 
             for (i = 0; i < this._tex_count; i++) {
                 this._tex_loc_table[i] = gl.getUniformLocation(this._glprog, "b9_tex_" + ("0" + i).substr(-2));
+b9.System.log("b9_tex_" + i + "=" + this._tex_loc_table[i]);
             }
         }
 
