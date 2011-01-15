@@ -52,6 +52,7 @@ b9.System.setup = function(canvas_id, target_fps) {
 
     b9.Resource._initialize();
     b9.Input._initialize();
+    b9.Debug._initialize();
     b9.Preset._initialize();
 };
 
@@ -186,14 +187,6 @@ b9.System.setRenderFunction = function(render_func) {
  */
 b9.System.getTime = function() {
     return (new Date()).getTime();
-};
-
-/**
- * Writes a message to the console.
- * @param {String} msg A message.
- */
-b9.System.log = function(msg) {
-    console.log(msg);
 };
 
 /**

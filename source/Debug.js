@@ -23,33 +23,15 @@
 /**
  * @class
  */
-b9.Resource = {};
+b9.Debug = {};
 
-b9.Resource._initialize = function() {
-    this._res_table = {};
+b9.Debug._initialize = function() {
 };
 
 /**
- *
- * @param {String} res_name
+ * Writes a message to the console.
+ * @param {String} msg A message.
  */
-b9.Resource.get= function(res_name) {
-    return this._res_table[res_name];
-};
-
-/**
- *
- * @param {String} res_name
- * @param {Object} obj
- */
-b9.Resource.add = function(res_name, obj) {
-    this._res_table[res_name] = obj;
-};
-
-/**
- *
- * @param {String} res_name
- */
-b9.Resource.remove = function(res_name) {
-    delete this._res_table[res_name];
+b9.Debug.trace = function(msg) {
+    console.log(msg);
 };
