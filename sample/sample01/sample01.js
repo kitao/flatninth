@@ -27,7 +27,7 @@ var tex;
 Sample.prototype.initialize = function() {
     this.initializeSuper();
 
-    b9.System.getPresetActorList(0).addLast(this);
+    b9.Preset.getActorList(0).addLast(this);
 
     this._prim_buf = new b9.PrimitiveBuffer(3, 3);
     this._prim = new b9.Primitive(this._prim_buf);
@@ -50,7 +50,7 @@ Sample.prototype.initialize = function() {
 
     this._prim.setTexture(0, tex);
 
-    b9.System.getPresetDrawable(0).addChildLast(this._prim);
+    b9.Preset.getRootDrawable(0).addChildLast(this._prim);
 
     b9.System.log("ok!!!");
 };
@@ -71,7 +71,7 @@ function main() {
         var dummy = new Sample();
     }
 
-    b9.System.getPresetScreen(0).getClearColor().set(0, 0, 255);
+    b9.Preset.getScreen(0).getClearColor().set(0, 0, 255);
 
     b9.System.start();
 }
