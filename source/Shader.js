@@ -119,18 +119,20 @@ b9.Shader.prototype._setup = function() {
 
         this._local_to_screen_loc = gl.getUniformLocation(this._glprog, "b9_local_to_screen");
 b9.Debug.trace("b9_local_to_screen=" + this._local_to_screen_loc);
+        this._drawable_alpha_loc = gl.getUniformLocation(this._glprog, "b9_drawable_alpha");
+b9.Debug.trace("b9_drawable_alpha=" + this._drawable_alpha_loc);
         this._pos_loc = gl.getAttribLocation(this._glprog, "b9_vertex_pos");
-b9.Debug.trace("b9_vertex_pos_loc=" + this._pos_loc);
+b9.Debug.trace("b9_vertex_pos=" + this._pos_loc);
         this._color_loc = gl.getAttribLocation(this._glprog, "b9_vertex_color");
-b9.Debug.trace("b9_vertex_color_loc=" + this._color_loc);
+b9.Debug.trace("b9_vertex_color=" + this._color_loc);
         this._texcoord_loc = gl.getAttribLocation(this._glprog, "b9_vertex_texcoord");
-b9.Debug.trace("b9_vertex_texcoord_loc=" + this._texcoord_loc);
+b9.Debug.trace("b9_vertex_texcoord=" + this._texcoord_loc);
 
         if (this._uni_count > 0) {
             this._uni_loc_table = new Array(this._uni_count);
 
             for (i = 0; i < this._uni_count; i++) {
-                this._uni_loc_table[i] = gl.getUniformLocation(this._glprog, "b9_uni_" + ("0" + i).substr(-2));
+                this._uni_loc_table[i] = gl.getUniformLocation(this._glprog, "b9_uniform_" + ("0" + i).substr(-2));
             }
         }
 
@@ -138,7 +140,7 @@ b9.Debug.trace("b9_vertex_texcoord_loc=" + this._texcoord_loc);
             this._att_loc_table = new Array(this._att_count);
 
             for (i = 0; i < this._att_count; i++) {
-                this._att_loc_table[i] = gl.getAttribLocation(this._glprog, "b9_att_" + ("0" + i).substr(-2));
+                this._att_loc_table[i] = gl.getAttribLocation(this._glprog, "b9_attrib_" + ("0" + i).substr(-2));
             }
         }
 
@@ -146,8 +148,8 @@ b9.Debug.trace("b9_vertex_texcoord_loc=" + this._texcoord_loc);
             this._tex_loc_table = new Array(this._tex_count);
 
             for (i = 0; i < this._tex_count; i++) {
-                this._tex_loc_table[i] = gl.getUniformLocation(this._glprog, "b9_tex_" + ("0" + i).substr(-2));
-b9.Debug.trace("b9_tex_" + i + "=" + this._tex_loc_table[i]);
+                this._tex_loc_table[i] = gl.getUniformLocation(this._glprog, "b9_texture_" + ("0" + i).substr(-2));
+b9.Debug.trace("b9_texture_" + i + "=" + this._tex_loc_table[i]);
             }
         }
 

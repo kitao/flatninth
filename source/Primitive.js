@@ -159,6 +159,8 @@ b9.Primitive.prototype._render = function() {
     shader._setup();
     this._prim_buf._setup(shader);
 
+    gl.uniform1f(shader._drawable_alpha_loc, this._final_alpha);
+
     tex_count = this._tex_count;
 
     for (i = 0; i < tex_count; i++) {

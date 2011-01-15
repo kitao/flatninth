@@ -32,12 +32,12 @@ b9.Drawable = b9.createClass();
  */
 b9.Drawable.prototype.initialize = function() {
     this._draw_flag = b9.Drawable.FLAG_VISIBLE;
-    this._alpha = 1.0;
+    this._alpha = 255;
     this._local = new b9.Matrix3D(b9.Matrix3D.UNIT);
 
     this._tree = new b9.LinkedTree(this);
     this._world = new b9.Matrix3D();
-    this._final_alpha = 1.0;
+    this._final_alpha = 0;
 };
 
 /**
@@ -83,7 +83,7 @@ b9.Drawable.prototype.getAlpha = function() {
  * @param {Number} alpha An alpha value.
  */
 b9.Drawable.prototype.setAlpha = function(alpha) {
-    this._alpha = b9.Math.clamp(alpha, 0.0, 1.0);
+    this._alpha = b9.Math.clamp(alpha, 0, 255);
 };
 
 /**
@@ -223,7 +223,7 @@ b9.Drawable.prototype._calcFinal = function() {
 
     if (parent) {
         this._world.toGlobal(parent._local);
-        this._final_alpha *= parent._final_alpha;
+        this._final_alpha *= parent._final_alpha / 255.0;
     }
 };
 
