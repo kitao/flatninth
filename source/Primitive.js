@@ -154,7 +154,7 @@ b9.Primitive.prototype._render = function() {
 
     gl.disable(gl.DEPTH_TEST);
 
-    shader = b9.System._shader;
+    shader = this._shader ? this._shader : b9.Preset._shader; // TODO
 
     shader._setup();
     this._prim_buf._setup(shader);
