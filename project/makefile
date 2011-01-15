@@ -50,6 +50,9 @@ SRCS        = b9.js \
               SpriteBuffer.js \
               Sprite.js \
               Screen.js \
+              Resource.js \
+              Input.js \
+              Preset.js \
               System.js
 
 SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS))
