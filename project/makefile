@@ -52,6 +52,7 @@ SRCS        = b9.js \
               Screen.js \
               Resource.js \
               Input.js \
+              Debug.js \
               Preset.js \
               System.js
 
@@ -59,6 +60,12 @@ SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
 SAMPLE_SRCS = $(shell find $(SAMPLE_DIR) -name "*.js")
 TARGET      = $(BASE_DIR)/flatninth.js
+
+ifdef RELEASE
+	CLOSURE_OPTS = --compilation_level SIMPLE_OPTIMIZATIONS
+else
+	CLOSURE_OPTS = --compilation_level WHITESPACE_ONLY
+endif
 
 .PHONY: all clean test sample reference
 
@@ -77,4 +84,4 @@ reference:
 	java -jar $(JSDOC_DIR)/jsrun.jar $(JSDOC_DIR)/app/run.js -a -r -t=$(JSDOC_DIR)/templates/jsdoc -d=$(REF_DIR) $(SRC_DIR)
 
 $(TARGET): $(SRCS)
-	java -jar $(CLOSURE_DIR)/compiler.jar --compilation_level WHITESPACE_ONLY $(addprefix --js , $(SRCS)) --js_output_file $(TARGET)
+	java -jar $(CLOSURE_DIR)/compiler.jar $(CLOSURE_OPTS) $(addprefix --js , $(SRCS)) --js_output_file $(TARGET)
