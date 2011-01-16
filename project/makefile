@@ -27,7 +27,6 @@ CLOSURE_DIR = $(BASE_DIR)/tool/closure
 JSDOC_DIR   = $(BASE_DIR)/tool/jsdoc-toolkit
 
 SRC_DIR     = $(BASE_DIR)/src
-LIB_DIR     = $(BASE_DIR)/lib
 TEST_DIR    = $(BASE_DIR)/test
 SAMPLE_DIR  = $(BASE_DIR)/sample
 REF_DIR     = $(BASE_DIR)/doc/reference
@@ -60,7 +59,7 @@ SRCS        = b9.js \
 SRCS       := $(addprefix $(SRC_DIR)/, $(SRCS))
 TEST_SRCS   = $(shell find $(TEST_DIR) -name "*.js")
 SAMPLE_SRCS = $(shell find $(SAMPLE_DIR) -name "*.js")
-TARGET      = $(LIB_DIR)/flatninth.js
+TARGET      = $(BASE_DIR)/flatninth.js
 
 ifdef RELEASE
 	CLOSURE_OPTS = --compilation_level SIMPLE_OPTIMIZATIONS
