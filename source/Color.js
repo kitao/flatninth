@@ -254,10 +254,10 @@ b9.Color.prototype.mul = function(color_or_s) {
         color_array = color_or_s._array;
         color_index = color_or_s._index;
 
-        array[index] = array[index] * color_array[color_index] / 255;
-        array[index + 1] = array[index + 1] * color_array[color_index + 1] / 255;
-        array[index + 2] = array[index + 2] * color_array[color_index + 2] / 255;
-        array[index + 3] = array[index + 3] * color_array[color_index + 3] / 255;
+        array[index] = ((array[index] + 1) * (color_array[color_index] + 1) - 1) >> 8;
+        array[index + 1] = ((array[index + 1] + 1) * (color_array[color_index + 1] + 1) - 1) >> 8;
+        array[index + 2] = ((array[index + 2] + 1) * (color_array[color_index + 2] + 1) - 1) >> 8;
+        array[index + 3] = ((array[index + 3] + 1) * (color_array[color_index + 3] + 1) - 1) >> 8;
     } else {
         array[index] = b9.Math.clamp(array[index] * color_or_s, 0, 255);
         array[index + 1] = b9.Math.clamp(array[index + 1] * color_or_s, 0, 255);

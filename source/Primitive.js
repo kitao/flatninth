@@ -159,7 +159,8 @@ b9.Primitive.prototype._render = function() {
     shader._setup();
     this._prim_buf._setup(shader);
 
-    gl.uniform1f(shader._drawable_alpha_loc, this._final_alpha);
+    gl.uniformMatrix4fv(shader._local_to_screen_loc, false, this._world.getArray()); // TODO
+    gl.uniform4fv(shader._drawable_color_loc, this._final_color.getArray());
 
     tex_count = this._tex_count;
 

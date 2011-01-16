@@ -55,6 +55,7 @@ Sample.prototype.initialize = function() {
 
 Sample.prototype.update = function() {
     // TODO
+    this._prim.getLocal().rotateZ_int(1);
 };
 
 /**
