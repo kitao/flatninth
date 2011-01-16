@@ -32,12 +32,12 @@ b9.Drawable = b9.createClass();
  */
 b9.Drawable.prototype.initialize = function() {
     this._draw_flag = b9.Drawable.FLAG_VISIBLE;
-    this._alpha = 255;
     this._local = new b9.Matrix3D(b9.Matrix3D.UNIT);
+    this._color = new b9.Color(255, 255, 255, 255);
 
     this._tree = new b9.LinkedTree(this);
     this._world = new b9.Matrix3D();
-    this._final_alpha = 0;
+    this._final_color = new b9.Color();
 };
 
 /**
@@ -71,27 +71,20 @@ b9.Drawable.prototype.setDrawableFlag = function(draw_flag, is_enabled) {
 };
 
 /**
- * Returns the alpha value of this drawable.
- * @return {Number} The alpha value.
- */
-b9.Drawable.prototype.getAlpha = function() {
-    return this._alpha;
-};
-
-/**
- * Sets the alpha value of this drawable.
- * @param {Number} alpha An alpha value.
- */
-b9.Drawable.prototype.setAlpha = function(alpha) {
-    this._alpha = b9.Math.clamp(alpha, 0, 255);
-};
-
-/**
  * Returns the local matrix of this drawable.
  * @return {b9.Matrix3D} The local matrix.
  */
 b9.Drawable.prototype.getLocal = function() {
     return this._local;
+};
+
+/**
+ * Returns the color of this drawable, which applies to the children of this drawable
+ * and the objects managed by this drawable.
+ * @return {b9.Color} The color.
+ */
+b9.Drawable.prototype.getColor = function() {
+    return this._color;
 };
 
 /**
@@ -219,11 +212,11 @@ b9.Drawable.prototype._calcFinal = function() {
     var parent = this.getParent();
 
     this._world.set(this._local);
-    this._final_alpha = this._alpha;
+    this._final_color.set(this._color);
 
     if (parent) {
         this._world.toGlobal(parent._local);
-        this._final_alpha *= parent._final_alpha / 255.0;
+        this._final_color.mul(parent._final_color);
     }
 };
 
