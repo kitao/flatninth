@@ -146,23 +146,21 @@ b9.Primitive.prototype.setShader = function(shader) {
 b9.Primitive.prototype._render = function() {
     var i;
     var tex;
-    var tex_count;
     var gl = b9.System.getGLContext();
-    var shader;
+    var shader = this._shader ? this._shader : b9.Preset._shader; // TODO
+    var final_color_array = this._final_color.getArray();
+    var tex_count = this._tex_count;
 
     this._calcFinal();
 
     gl.disable(gl.DEPTH_TEST);
 
-    shader = this._shader ? this._shader : b9.Preset._shader; // TODO
-
     shader._setup();
     this._prim_buf._setup(shader);
 
     gl.uniformMatrix4fv(shader._local_to_screen_loc, false, this._world.getArray()); // TODO
-    gl.uniform4fv(shader._drawable_color_loc, this._final_color.getArray());
-
-    tex_count = this._tex_count;
+    gl.uniform4f(shader._drawable_color_loc,
+            final_color_array[0], final_color_array[1], final_color_array[2], final_color_array[3]); // TODO
 
     for (i = 0; i < tex_count; i++) {
         tex = this._tex_array[i];

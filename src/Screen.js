@@ -39,12 +39,12 @@ b9.Screen.prototype.initialize = function(width, height) {
     this._y = 0;
     this._width = width;
     this._height = height;
-    this._alpha = 1.0;
-    this._field_of_view = 45.0; // TODO
-    this._aspect_ratio = 1.0; // TODO
-    this._near_clip_dist = 0.0; // TODO
-    this._far_clip_dist = 100.0; // TODO
     this._clear_color = new b9.Color(255, 0, 0);
+    this._focal_length = 1000.0;
+    this._near_clip_dist = 10.0;
+    this._far_clip_dist = 100000.0;
+    this._inner_scale_x = 1.0;
+    this._inner_scale_y = 1.0;
     this._camera = new b9.Matrix3D(b9.Matrix3D.UNIT);
 };
 
@@ -130,27 +130,79 @@ b9.Screen.prototype.setSize = function(width, height) {
 };
 
 /**
- * Returns the alpha of this screen.
- * @return {Number} The alpha of this screen.
- */
-b9.Screen.prototype.getAlpha = function() {
-    return this._alpha;
-};
-
-/**
- * Sets the alpha of this screen.
- * @param {Number} alpha The alpha of this screen.
- */
-b9.Screen.prototype.setAlpha = function(alpha) {
-    this._alpha = alpha;
-};
-
-/**
  * Returns the clear color of this screen.
  * @return {b9.Color} The clear color.
  */
 b9.Screen.prototype.getClearColor = function() {
     return this._clear_color;
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Screen.prototype.getFocalLength = function() {
+    return this._focal_length;
+};
+
+/**
+ *
+ * @param {Number} focal_length
+ */
+b9.Screen.prototype.setFocalLength = function(focal_length) {
+    this._focal_length = focal_length;
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Screen.prototype.getNearClipDist = function() {
+    return this._near_clip_dist;
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Screen.prototype.getFarClipDist = function() {
+    return this._far_clip_dist;
+};
+
+/**
+ *
+ * @param {Number} near_clip_dist
+ * @param {Number} far_clip_dist
+ */
+b9.Screen.prototype.setClipDist = function(near_clip_dist, far_clip_dist) {
+    this._near_clip_dist = near_clip_dist;
+    this._far_clip_dist = far_clip_dist;
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Screen.prototype.getInnerScaleX = function() {
+    return this._inner_scale_y;
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Screen.prototype.getInnerScaleY = function() {
+    return this._inner_scale_y;
+};
+
+/**
+ *
+ * @param {Number} scale_x
+ * @param {Number} scale_y
+ */
+b9.Screen.prototype.setInnerScale = function(scale_x, scale_y) {
+    this._inner_scale_x = scale_x;
+    this._inner_scale_y = scale_y;
 };
 
 /**
