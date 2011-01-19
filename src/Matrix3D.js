@@ -511,6 +511,118 @@ b9.Matrix3D.prototype.lookAt = function(from, to, up) {
 };
 
 /**
+ * Multiplies this matrix, as a 4x4 matrix, with a matrix.
+ * @param {b9.Matrix3D} mat A matrix.
+ * @return {b9.Matrix3D} This matrix.
+ */
+b9.Matrix3D.prototype.mulAs4x4 = function(mat) {
+    var array = this._array;
+    var index = this._index;
+    var mat_array = mat._array;
+    var mat_index = mat._index;
+    var res_array = b9.Matrix3D._mat1._array;
+    var res_index = b9.Matrix3D._mat1._index;
+
+    res_array[res_index] =
+        array[index] * mat_array[mat_index] +
+        array[index + 4] * mat_array[mat_index + 1] +
+        array[index + 8] * mat_array[mat_index + 2] +
+        array[index + 12] * mat_array[mat_index + 3];
+
+    res_array[res_index + 1] =
+        array[index + 1] * mat_array[mat_index] +
+        array[index + 5] * mat_array[mat_index + 1] +
+        array[index + 9] * mat_array[mat_index + 2] +
+        array[index + 13] * mat_array[mat_index + 3];
+
+    res_array[res_index + 2] =
+        array[index + 2] * mat_array[mat_index] +
+        array[index + 6] * mat_array[mat_index + 1] +
+        array[index + 10] * mat_array[mat_index + 2] +
+        array[index + 14] * mat_array[mat_index + 3];
+
+    res_array[res_index + 3] =
+        array[index + 3] * mat_array[mat_index] +
+        array[index + 7] * mat_array[mat_index + 1] +
+        array[index + 11] * mat_array[mat_index + 2] +
+        array[index + 15] * mat_array[mat_index + 3];
+
+    res_array[res_index + 4] =
+        array[index] * mat_array[mat_index + 4] +
+        array[index + 4] * mat_array[mat_index + 5] +
+        array[index + 8] * mat_array[mat_index + 6] +
+        array[index + 12] * mat_array[mat_index + 7];
+
+    res_array[res_index + 5] =
+        array[index + 1] * mat_array[mat_index + 4] +
+        array[index + 5] * mat_array[mat_index + 5] +
+        array[index + 9] * mat_array[mat_index + 6] +
+        array[index + 13] * mat_array[mat_index + 7];
+
+    res_array[res_index + 6] =
+        array[index + 2] * mat_array[mat_index + 4] +
+        array[index + 6] * mat_array[mat_index + 5] +
+        array[index + 10] * mat_array[mat_index + 6] +
+        array[index + 14] * mat_array[mat_index + 7];
+
+    res_array[res_index + 7] =
+        array[index + 3] * mat_array[mat_index + 4] +
+        array[index + 7] * mat_array[mat_index + 5] +
+        array[index + 11] * mat_array[mat_index + 6] +
+        array[index + 15] * mat_array[mat_index + 7];
+
+    res_array[res_index + 8] =
+        array[index] * mat_array[mat_index + 8] +
+        array[index + 4] * mat_array[mat_index + 9] +
+        array[index + 8] * mat_array[mat_index + 10] +
+        array[index + 12] * mat_array[mat_index + 11];
+
+    res_array[res_index + 9] =
+        array[index + 1] * mat_array[mat_index + 8] +
+        array[index + 5] * mat_array[mat_index + 9] +
+        array[index + 9] * mat_array[mat_index + 10] +
+        array[index + 13] * mat_array[mat_index + 11];
+
+    res_array[res_index + 10] =
+        array[index + 2] * mat_array[mat_index + 8] +
+        array[index + 6] * mat_array[mat_index + 9] +
+        array[index + 10] * mat_array[mat_index + 10] +
+        array[index + 14] * mat_array[mat_index + 11];
+
+    res_array[res_index + 11] =
+        array[index + 3] * mat_array[mat_index + 8] +
+        array[index + 7] * mat_array[mat_index + 9] +
+        array[index + 11] * mat_array[mat_index + 10] +
+        array[index + 15] * mat_array[mat_index + 11];
+
+    res_array[res_index + 12] =
+        array[index] * mat_array[mat_index + 12] +
+        array[index + 4] * mat_array[mat_index + 13] +
+        array[index + 8] * mat_array[mat_index + 14] +
+        array[index + 12] * mat_array[mat_index + 15];
+
+    res_array[res_index + 13] =
+        array[index + 1] * mat_array[mat_index + 12] +
+        array[index + 5] * mat_array[mat_index + 13] +
+        array[index + 9] * mat_array[mat_index + 14] +
+        array[index + 13] * mat_array[mat_index + 15];
+
+    res_array[res_index + 14] =
+        array[index + 2] * mat_array[mat_index + 12] +
+        array[index + 6] * mat_array[mat_index + 13] +
+        array[index + 10] * mat_array[mat_index + 14] +
+        array[index + 14] * mat_array[mat_index + 15];
+
+    res_array[res_index + 15] =
+        array[index + 3] * mat_array[mat_index + 12] +
+        array[index + 7] * mat_array[mat_index + 13] +
+        array[index + 11] * mat_array[mat_index + 14] +
+        array[index + 15] * mat_array[mat_index + 15];
+
+    return this.set(b9.Matrix3D._mat1);
+};
+
+/**
  * Returns whether this matrix equals a matrix.
  * @param {b9.Matrix3D} vec A matrix.
  * @return {Boolean} true if the two matrices are equal; false otherwise.
