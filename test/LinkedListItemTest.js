@@ -21,7 +21,7 @@
  */
 
 function testLinkedListItem() {
-    var list1;
+    var list;
     var item1, item2;
     var dummy1, dummy2;
 
@@ -38,25 +38,25 @@ function testLinkedListItem() {
     assertEquals(null, item1.getPrev());
     assertEquals(null, item1.getNext());
 
-    list1 = new b9.LinkedList();
-    list1.addFirst(item1);
+    list = new b9.LinkedList();
+    list.addFirst(item1);
 
     assertEquals(dummy1, item1.getSelf());
-    assertEquals(list1, item1.getList());
+    assertEquals(list, item1.getList());
     assertEquals(null, item1.getPrev());
     assertEquals(null, item1.getNext());
 
     dummy2 = 456;
     item2 = new b9.LinkedListItem(dummy2);
-    list1.addLast(item2);
+    list.addLast(item2);
 
     assertEquals(dummy1, item1.getSelf());
-    assertEquals(list1, item1.getList());
+    assertEquals(list, item1.getList());
     assertEquals(null, item1.getPrev());
     assertEquals(item2, item1.getNext());
 
     assertEquals(dummy2, item2.getSelf());
-    assertEquals(list1, item2.getList());
+    assertEquals(list, item2.getList());
     assertEquals(item1, item2.getPrev());
     assertEquals(null, item2.getNext());
 
@@ -69,7 +69,7 @@ function testLinkedListItem() {
     assertEquals(null, item1.getNext());
 
     assertEquals(dummy2, item2.getSelf());
-    assertEquals(list1, item2.getList());
+    assertEquals(list, item2.getList());
     assertEquals(null, item2.getPrev());
     assertEquals(null, item2.getNext());
 

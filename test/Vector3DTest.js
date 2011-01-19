@@ -22,8 +22,8 @@
 
 function testVector3D() {
     var vec1, vec2, vec3, vec4;
-    var array1;
-    var mat1;
+    var array;
+    var mat;
 
     /* initialize */
     /* getX */
@@ -33,10 +33,10 @@ function testVector3D() {
     /* getIndex */
     vec1 = new b9.Vector3D();
 
-    array1 = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0]);
-    vec2 = new b9.Vector3D(array1, 3);
+    array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0]);
+    vec2 = new b9.Vector3D(array, 3);
     assertTrue(vec2.getX() === 4.0 && vec2.getY() === 5.0 && vec2.getZ() === 6.0);
-    assertTrue(vec2.getArray() === array1 && vec2.getIndex() === 3);
+    assertTrue(vec2.getArray() === array && vec2.getIndex() === 3);
 
     vec3 = new b9.Vector3D(1.0, 2.0, 3.0);
     assertTrue(vec3.getX() === 1.0 && vec3.getY() === 2.0 && vec3.getZ() === 3.0);
@@ -152,40 +152,40 @@ function testVector3D() {
     assertEquals_object(vec2, vec1.lerp(vec2, 2.0));
 
     /* toLocal */
-    mat1 = new b9.Matrix3D(
+    mat = new b9.Matrix3D(
             new b9.Vector3D(0.0, 0.0, -1.0),
             new b9.Vector3D(-1.0, 0.0, 0.0),
             new b9.Vector3D(0.0, 1.0, 0.0),
             new b9.Vector3D(100.0, 200.0, 300.0));
     vec1.set(1.0, 2.0, 3.0);
-    assertEquals_object(new b9.Vector3D(297.0, 99.0, -198.0), vec1.toLocal(mat1));
+    assertEquals_object(new b9.Vector3D(297.0, 99.0, -198.0), vec1.toLocal(mat));
 
     /* toGlobal */
-    mat1 = new b9.Matrix3D(
+    mat = new b9.Matrix3D(
             new b9.Vector3D(0.0, 0.0, -1.0),
             new b9.Vector3D(-1.0, 0.0, 0.0),
             new b9.Vector3D(0.0, 1.0, 0.0),
             new b9.Vector3D(100.0, 200.0, 300.0));
     vec1.set(297.0, 99.0, -198.0);
-    assertEquals_object(new b9.Vector3D(1.0, 2.0, 3.0), vec1.toGlobal(mat1));
+    assertEquals_object(new b9.Vector3D(1.0, 2.0, 3.0), vec1.toGlobal(mat));
 
     /* toLocal_noTrans */
-    mat1 = new b9.Matrix3D(
+    mat = new b9.Matrix3D(
             new b9.Vector3D(0.0, 0.0, -1.0),
             new b9.Vector3D(-1.0, 0.0, 0.0),
             new b9.Vector3D(0.0, 1.0, 0.0),
             new b9.Vector3D(100.0, 200.0, 300.0));
     vec1.set(1.0, 2.0, 3.0);
-    assertEquals_object(new b9.Vector3D(-3.0, -1.0, 2.0), vec1.toLocal_noTrans(mat1));
+    assertEquals_object(new b9.Vector3D(-3.0, -1.0, 2.0), vec1.toLocal_noTrans(mat));
 
     /* toGlobal_noTrans */
-    mat1 = new b9.Matrix3D(
+    mat = new b9.Matrix3D(
             new b9.Vector3D(0.0, 0.0, -1.0),
             new b9.Vector3D(-1.0, 0.0, 0.0),
             new b9.Vector3D(0.0, 1.0, 0.0),
             new b9.Vector3D(100.0, 200.0, 300.0));
     vec1.set(-3.0, -1.0, 2.0);
-    assertEquals_object(new b9.Vector3D(1.0, 2.0, 3.0), vec1.toGlobal_noTrans(mat1));
+    assertEquals_object(new b9.Vector3D(1.0, 2.0, 3.0), vec1.toGlobal_noTrans(mat));
 
     /* equals */
     vec1.set(1.0, 2.0, 3.0);
