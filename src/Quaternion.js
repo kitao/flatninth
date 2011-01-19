@@ -257,10 +257,13 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
     var omega;
     var sin_om, cos_om;
     var scale0, scale1;
+    var quat;
 
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
+        quat = b9.Quaternion._quat1;
+
         to_array = to._array;
         to_index = to._index;
 
@@ -272,20 +275,20 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
         if (cos_om < 0.0) {
             cos_om = -cos_om;
 
-            b9.Quaternion._quat1.set(
+            quat.set(
                     -to_array[to_index],
                     -to_array[to_index + 1],
                     -to_array[to_index + 2],
                     -to_array[to_index + 3]);
         } else {
-            b9.Quaternion._quat1.set(to);
+            quat.set(to);
         }
 
         if (cos_om >= 1.0) {
             this.set(to);
         } else {
-            quat_array = b9.Quaternion._quat1._array;
-            quat_index = b9.Quaternion._quat1._index;
+            quat_array = quat._array;
+            quat_index = quat._index;
             omega = b9.Math.acos(cos_om > 1.0 ? 1.0 : cos_om);
             sin_om = b9.Math.sin_float(omega);
             scale0 = b9.Math.sin_float(omega * (1.0 - ratio)) / sin_om;
