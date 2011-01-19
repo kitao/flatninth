@@ -253,11 +253,10 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
     var array = this._array;
     var index = this._index;
     var to_array, to_index;
-    var quat_array, quat_index;
+    var quat, quat_array, quat_index;
     var omega;
     var sin_om, cos_om;
     var scale0, scale1;
-    var quat;
 
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
