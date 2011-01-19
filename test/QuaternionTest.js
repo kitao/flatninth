@@ -22,7 +22,7 @@
 
 function testQuaternion() {
     var quat1, quat2, quat3, quat4;
-    var quat_array;
+    var array1;
     var ratio;
 
     /* initialize */
@@ -34,10 +34,10 @@ function testQuaternion() {
     /* getIndex */
     quat1 = new b9.Quaternion();
 
-    quat_array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]);
-    quat2 = new b9.Quaternion(quat_array, 4);
+    array1 = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]);
+    quat2 = new b9.Quaternion(array1, 4);
     assertTrue(quat2.getX() === 5.0 && quat2.getY() === 6.0 && quat2.getZ() === 7.0 && quat2.getW() === 8.0);
-    assertTrue(quat2.getArray() === quat_array && quat2.getIndex() === 4);
+    assertTrue(quat2.getArray() === array1 && quat2.getIndex() === 4);
 
     quat3 = new b9.Quaternion(1.0, 2.0, 3.0, 4.0);
     assertTrue(quat3.getX() === 1.0 && quat3.getY() === 2.0 && quat3.getZ() === 3.0 && quat3.getW() === 4.0);
