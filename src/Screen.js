@@ -46,6 +46,8 @@ b9.Screen.prototype.initialize = function(width, height) {
     this._inner_scale_x = 1.0;
     this._inner_scale_y = 1.0;
     this._camera = new b9.Matrix3D(b9.Matrix3D.UNIT);
+
+    this._camera_to_screen = new b9.Matrix3D();
 };
 
 /**
@@ -222,6 +224,15 @@ b9.Screen.prototype.render = function(root_draw) {
     var gl = b9.System.getGLContext();
     var clear_flag = 0;
 
+    var world_to_camera = b9.Screen._mat1;
+    var world_to_screen = b9.Screen._mat2;
+
+    this._updateCameraToScreen(); // TODO
+
+    world_to_camera.set(b9.Matrix3D.UNIT).toLocal(this._camera);
+    world_to_screen.set(this._camera_to_screen)
+    //world_to_screen.mulAs4x4(world_to_camera);
+
     // gl.viewport(x, y, w, h);
 
     /*
@@ -256,6 +267,31 @@ b9.Screen.prototype.render = function(root_draw) {
     }
 };
 
+b9.Screen.prototype._updateCameraToScreen = function() {
+    var camera_to_screen_array = this._camera_to_screen.getArray();
+    var inv_sub = 1.0 / (this._far_clip_dist - this._near_clip_dist);
+
+    camera_to_screen_array[0] = this._focal_length * 2.0 / this._view_width;
+    camera_to_screen_array[4] = 0.0;
+    camera_to_screen_array[8] = 0.0;
+    camera_to_screen_array[12] = 0.0;
+
+    camera_to_screen_array[1] = 0.0;
+    camera_to_screen_array[5] = this._focal_length * 2.0 / this._view_height;
+    camera_to_screen_array[9] = 0.0;
+    camera_to_screen_array[13] = 0.0;
+
+    camera_to_screen_array[2] = 0.0;
+    camera_to_screen_array[6] = 0.0;
+    camera_to_screen_array[10] = (this._far_clip_dist + this._near_clip_dist) * inv_sub;
+    camera_to_screen_array[14] = 2.0 * this._far_clip_dist * this._near_clip_dist * inv_sub;
+
+    camera_to_screen_array[3] = 0.0;
+    camera_to_screen_array[7] = 0.0;
+    camera_to_screen_array[11] = -1.0;
+    camera_to_screen_array[15] = 0.0;
+};
+
 /**
  * hoge
  * @return {Number}
@@ -273,3 +309,6 @@ b9.Screen.FLAG_CLEAR_COLOR = 0x4000;
  * @return {Number}
  */
 b9.Screen.FLAG_CLEAR_DEPTH = 0x2000;
+
+b9.Screen._mat1 = new b9.Matrix3D();
+b9.Screen._mat2 = new b9.Matrix3D();
