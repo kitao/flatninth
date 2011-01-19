@@ -21,6 +21,9 @@
  */
 
 function testLinkedTree() {
+    var tree1, tree2, tree3, tree4;
+    var dummy1, dummy2, dummy3, dummy4;
+
     /* initialize */
     /* getSelf */
     /* getPrevAsList */
@@ -31,8 +34,8 @@ function testLinkedTree() {
     /* getFirstChild */
     /* getLastChild */
     /* getLastDescendant */
-    var dummy1 = 111;
-    var tree1 = new b9.LinkedTree(dummy1);
+    dummy1 = 111;
+    tree1 = new b9.LinkedTree(dummy1);
 
     assertEquals(dummy1, tree1.getSelf());
     assertEquals(null, tree1.getPrevAsList());
@@ -45,8 +48,8 @@ function testLinkedTree() {
     assertEquals(tree1, tree1.getLastDescendant());
 
     /* addChildFirst */
-    var dummy2 = 222;
-    var tree2 = new b9.LinkedTree(dummy2);
+    dummy2 = 222;
+    tree2 = new b9.LinkedTree(dummy2);
     tree1.addChildFirst(tree2);
 
     assertEquals(dummy1, tree1.getSelf());
@@ -69,8 +72,8 @@ function testLinkedTree() {
     assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
-    var dummy3 = 333;
-    var tree3 = new b9.LinkedTree(dummy3);
+    dummy3 = 333;
+    tree3 = new b9.LinkedTree(dummy3);
     tree1.addChildFirst(tree3);
 
     assertEquals(dummy1, tree1.getSelf());
@@ -103,8 +106,8 @@ function testLinkedTree() {
     assertEquals(null, tree3.getLastChild());
     assertEquals(tree3, tree3.getLastDescendant());
 
-    var dummy4 = 444;
-    var tree4 = new b9.LinkedTree(dummy4);
+    dummy4 = 444;
+    tree4 = new b9.LinkedTree(dummy4);
     tree3.addChildFirst(tree4);
 
     assertEquals(dummy1, tree1.getSelf());

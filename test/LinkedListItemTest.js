@@ -21,20 +21,24 @@
  */
 
 function testLinkedListItem() {
+    var list;
+    var item1, item2;
+    var dummy1, dummy2;
+
     /* initialize */
     /* getSelf */
     /* getList */
     /* getPrev */
     /* getNext */
-    var dummy1 = 123;
-    var item1 = new b9.LinkedListItem(dummy1);
+    dummy1 = 123;
+    item1 = new b9.LinkedListItem(dummy1);
 
     assertEquals(123, item1.getSelf());
     assertEquals(null, item1.getList());
     assertEquals(null, item1.getPrev());
     assertEquals(null, item1.getNext());
 
-    var list1 = new b9.LinkedList();
+    list1 = new b9.LinkedList();
     list1.addFirst(item1);
 
     assertEquals(dummy1, item1.getSelf());
@@ -42,8 +46,8 @@ function testLinkedListItem() {
     assertEquals(null, item1.getPrev());
     assertEquals(null, item1.getNext());
 
-    var dummy2 = 456;
-    var item2 = new b9.LinkedListItem(dummy2);
+    dummy2 = 456;
+    item2 = new b9.LinkedListItem(dummy2);
     list1.addLast(item2);
 
     assertEquals(dummy1, item1.getSelf());

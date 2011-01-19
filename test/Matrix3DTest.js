@@ -21,6 +21,10 @@
  */
 
 function testMatrix3D() {
+    var mat1, mat2, mat3, mat4;
+    var mat_array;
+    var ratio;
+
     /* initialize */
     /* getXAxis */
     /* getYAxis */
@@ -28,26 +32,26 @@ function testMatrix3D() {
     /* getTrans */
     /* getArray */
     /* getIndex */
-    var mat1 = new b9.Matrix3D();
+    mat1 = new b9.Matrix3D();
 
-    var array = new Float32Array(
+    mat_array = new Float32Array(
             [100.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]);
-    var mat2 = new b9.Matrix3D(array, 1);
+    mat2 = new b9.Matrix3D(mat_array, 1);
     assertTrue(
             mat2.getXAxis().equals(b9.Vector3D.X_UNIT) &&
             mat2.getYAxis().equals(b9.Vector3D.Y_UNIT) &&
             mat2.getZAxis().equals(b9.Vector3D.Z_UNIT) &&
             mat2.getTrans().equals(b9.Vector3D.ZERO));
-    assertTrue(mat2.getArray() === array && mat2.getIndex() === 1);
+    assertTrue(mat2.getArray() === mat_array && mat2.getIndex() === 1);
 
-    var mat3 = new b9.Matrix3D(b9.Vector3D.ZERO, b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT);
+    mat3 = new b9.Matrix3D(b9.Vector3D.ZERO, b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT);
     assertTrue(
             mat3.getXAxis().equals(b9.Vector3D.ZERO) &&
             mat3.getYAxis().equals(b9.Vector3D.X_UNIT) &&
             mat3.getZAxis().equals(b9.Vector3D.Y_UNIT) &&
             mat3.getTrans().equals(b9.Vector3D.Z_UNIT));
 
-    var mat4 = new b9.Matrix3D(mat2);
+    mat4 = new b9.Matrix3D(mat2);
     assertTrue(
             mat4.getXAxis().equals(b9.Vector3D.X_UNIT) &&
             mat4.getYAxis().equals(b9.Vector3D.Y_UNIT) &&
@@ -186,7 +190,6 @@ function testMatrix3D() {
             mat1.translate(10.0, -20.0, 30.0));
 
     /* slerp */
-    var ratio;
     for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
         mat1.set(b9.Matrix3D.UNIT);
         mat2.set(b9.Matrix3D.UNIT).translate(2.0, 4.0, 6.0).rotateX_int(90);
@@ -292,6 +295,33 @@ function testMatrix3D() {
                 new b9.Vector3D(5.0, 2.0, -3.0)),
             mat1.lookAt(
                 new b9.Vector3D(5.0, 2.0, -3.0), new b9.Vector3D(-5.0, 2.0, -3.0), new b9.Vector3D(1.0, 0.0, 10.0)));
+
+    /* mulAs4x4 */
+    mat1 = new b9.Matrix3D(new Float32Array([
+                1.0, 2.0, 3.0, 4.0,
+                5.0, 6.0, 7.0, 8.0,
+                9.0, 10.0, 11.0, 12.0,
+                13.0, 14.0, 15.0, 16.0]), 0);
+
+    mat2 = new b9.Matrix3D(new Float32Array([
+                2.0, 3.0, 4.0, 5.0,
+                6.0, 7.0, 8.0, 9.0,
+                10.0, 11.0, 12.0, 13.0,
+                14.0, 15.0, 16.0, 1.0]), 0);
+
+    mat3.set(mat1);
+
+    assertEquals_object(new b9.Matrix3D(new Float32Array([
+                118.0, 132.0, 146.0, 160.0,
+                230.0, 260.0, 290.0, 320.0,
+                342.0, 388.0, 434.0, 480.0,
+                246.0, 292.0, 338.0, 384.0]), 0), mat1.mulAs4x4(mat2));
+
+    assertEquals_object(new b9.Matrix3D(new Float32Array([
+                90.0, 100.0, 110.0, 120.0,
+                202.0, 228.0, 254.0, 280.0,
+                314.0, 356.0, 398.0, 440.0,
+                426.0, 484.0, 542.0, 600.0]), 0), mat3.mulAs4x4(mat3));
 
     /* equals */
     mat1.set(b9.Matrix3D.UNIT);

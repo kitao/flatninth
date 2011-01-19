@@ -21,6 +21,10 @@
  */
 
 function testQuaternion() {
+    var quat1, quat2, quat3, quat4;
+    var quat_array;
+    var ratio;
+
     /* initialize */
     /* getX */
     /* getY */
@@ -28,17 +32,17 @@ function testQuaternion() {
     /* getW */
     /* getArray */
     /* getIndex */
-    var quat1 = new b9.Quaternion();
+    quat1 = new b9.Quaternion();
 
-    var array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]);
-    var quat2 = new b9.Quaternion(array, 4);
+    quat_array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]);
+    quat2 = new b9.Quaternion(quat_array, 4);
     assertTrue(quat2.getX() === 5.0 && quat2.getY() === 6.0 && quat2.getZ() === 7.0 && quat2.getW() === 8.0);
-    assertTrue(quat2.getArray() === array && quat2.getIndex() === 4);
+    assertTrue(quat2.getArray() === quat_array && quat2.getIndex() === 4);
 
-    var quat3 = new b9.Quaternion(1.0, 2.0, 3.0, 4.0);
+    quat3 = new b9.Quaternion(1.0, 2.0, 3.0, 4.0);
     assertTrue(quat3.getX() === 1.0 && quat3.getY() === 2.0 && quat3.getZ() === 3.0 && quat3.getW() === 4.0);
 
-    var quat4 = new b9.Quaternion(quat2);
+    quat4 = new b9.Quaternion(quat2);
     assertTrue(quat4.getX() === 5.0 && quat4.getY() === 6.0 && quat4.getZ() === 7.0 && quat4.getW() === 8.0);
 
     /* setX */
@@ -61,7 +65,6 @@ function testQuaternion() {
     assertEquals_object(new b9.Quaternion(0.0, 0.0, 0.0, 1.0), quat1.fromMatrix3D(b9.Matrix3D.UNIT));
 
     /* slerp */
-    var ratio;
     for (ratio = 0.0; ratio <= 1.0; ratio += 0.5) {
         quat1.fromMatrix3D(new b9.Matrix3D(b9.Matrix3D.UNIT));
         quat2.fromMatrix3D((new b9.Matrix3D(b9.Matrix3D.UNIT)).rotateX_int(90));

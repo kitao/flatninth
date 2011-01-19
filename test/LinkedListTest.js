@@ -21,18 +21,21 @@
  */
 
 function testLinkedList() {
+    var list1;
+    var item1, item2;
+
     /* initialize */
     /* getCount */
     /* getFirst */
     /* getLast */
-    var list1 = new b9.LinkedList();
+    list1 = new b9.LinkedList();
 
     assertEquals(0, list1.getCount());
     assertEquals(null, list1.getFirst());
     assertEquals(null, list1.getLast());
 
     /* addFirst */
-    var item1 = new b9.LinkedListItem(null);
+    item1 = new b9.LinkedListItem(null);
     list1.addFirst(item1);
 
     assertEquals(1, list1.getCount());
@@ -43,7 +46,7 @@ function testLinkedList() {
     assertEquals(null, item1.getPrev());
     assertEquals(null, item1.getNext());
 
-    var item2 = new b9.LinkedListItem(null);
+    item2 = new b9.LinkedListItem(null);
     list1.addFirst(item2);
 
     assertEquals(2, list1.getCount());

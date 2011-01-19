@@ -21,23 +21,27 @@
  */
 
 function testVector3D() {
+    var vec1, vec2, vec3, vec4;
+    var vec_array;
+    var mat1;
+
     /* initialize */
     /* getX */
     /* getY */
     /* getZ */
     /* getArray */
     /* getIndex */
-    var vec1 = new b9.Vector3D();
+    vec1 = new b9.Vector3D();
 
-    var array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0]);
-    var vec2 = new b9.Vector3D(array, 3);
+    vec_array = new Float32Array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0]);
+    vec2 = new b9.Vector3D(vec_array, 3);
     assertTrue(vec2.getX() === 4.0 && vec2.getY() === 5.0 && vec2.getZ() === 6.0);
-    assertTrue(vec2.getArray() === array && vec2.getIndex() === 3);
+    assertTrue(vec2.getArray() === vec_array && vec2.getIndex() === 3);
 
-    var vec3 = new b9.Vector3D(1.0, 2.0, 3.0);
+    vec3 = new b9.Vector3D(1.0, 2.0, 3.0);
     assertTrue(vec3.getX() === 1.0 && vec3.getY() === 2.0 && vec3.getZ() === 3.0);
 
-    var vec4 = new b9.Vector3D(vec2);
+    vec4 = new b9.Vector3D(vec2);
     assertTrue(vec4.getX() === 4.0 && vec4.getY() === 5.0 && vec4.getZ() === 6.0);
 
     /* setX */
@@ -148,7 +152,7 @@ function testVector3D() {
     assertEquals_object(vec2, vec1.lerp(vec2, 2.0));
 
     /* toLocal */
-    var mat1 = new b9.Matrix3D(
+    mat1 = new b9.Matrix3D(
             new b9.Vector3D(0.0, 0.0, -1.0),
             new b9.Vector3D(-1.0, 0.0, 0.0),
             new b9.Vector3D(0.0, 1.0, 0.0),

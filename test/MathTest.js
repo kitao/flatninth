@@ -21,6 +21,8 @@
  */
 
 function testMath() {
+    var i, x;
+
     /* floor */
     assertEquals(1.0, b9.Math.floor(1.234));
     assertEquals(-2.0, b9.Math.floor(-1.234));
@@ -91,8 +93,6 @@ function testMath() {
     assertEquals_float(-90.0, b9.Math.atan2(-4.0, 0.0));
 
     /* random_int */
-    var i, x;
-
     for (i = 0; i < 10; i++) {
         x = b9.Math.random_int(-1, 1);
         assertTrue(x === -1 || x === 0 || x === 1);
