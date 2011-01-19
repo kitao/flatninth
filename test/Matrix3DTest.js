@@ -345,7 +345,7 @@ function testMatrix3D() {
     assertFalse(mat1.equals(mat2));
 
     /* toString */
-    assertEquals("((1, 0, 0), (0, 1, 0), (0, 0, 1), (0, 0, 0))", b9.Matrix3D.UNIT.toString());
+    assertEquals("(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)", b9.Matrix3D.UNIT.toString());
 
     /* UNIT */
     assertEquals_object(

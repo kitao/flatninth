@@ -231,7 +231,7 @@ b9.Screen.prototype.render = function(root_draw) {
 
     world_to_camera.set(b9.Matrix3D.UNIT).toLocal(this._camera);
     world_to_screen.set(this._camera_to_screen);
-    //world_to_screen.mulAs4x4(world_to_camera);
+    world_to_screen.mulAs4x4(world_to_camera);
 
     // gl.viewport(x, y, w, h);
 
