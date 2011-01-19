@@ -137,18 +137,10 @@ b9.Matrix3D.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
             array[index + i] = mat_array[mat_index + i];
         }
     } else if (arguments.length === 4) {
-        array = this._array;
-        index = this._index;
-
         this._x_axis.set(mat_or_x_axis);
         this._y_axis.set(y_axis);
         this._z_axis.set(z_axis);
         this._trans.set(trans);
-
-        array[index + 3] = 0.0;
-        array[index + 7] = 0.0;
-        array[index + 11] = 0.0;
-        array[index + 15] = 1.0;
     }
 
     return this;
@@ -546,117 +538,38 @@ b9.Matrix3D.prototype.lookAt = function(from, to, up) {
 };
 
 /**
- * Multiplies this matrix, as a 4x4 matrix, with a matrix.
- * @param {b9.Matrix3D} mat A matrix.
- * @return {b9.Matrix3D} This matrix.
+ * Multiplies a 16-element float array, as a 4x4 matrix, with an another array.
+ * @param {Float32Array} left A float array.
+ * @param {Float32Array} right An another float array.
+ * @param {b9.Matrix3D} result The product of two arrays.
  */
-b9.Matrix3D.prototype.mulAs4x4 = function(mat) {
-    var array = this._array;
-    var index = this._index;
+b9.Matrix3D.mulArrayAs4x4 = function(left, right, result) {
+    var i;
+    var array = b9.Matrix3D._array1;
 
-    var mat_array = mat._array;
-    var mat_index = mat._index;
+    array[0] = left[0] * right[0] + left[4] * right[1] + left[8] * right[2] + left[12] * right[3];
+    array[1] = left[1] * right[0] + left[5] * right[1] + left[9] * right[2] + left[13] * right[3];
+    array[2] = left[2] * right[0] + left[6] * right[1] + left[10] * right[2] + left[14] * right[3];
+    array[3] = left[3] * right[0] + left[7] * right[1] + left[11] * right[2] + left[15] * right[3];
 
-    var res = b9.Matrix3D._mat2; // the index is always 0.
-    var res_array = res._array;
+    array[4] = left[0] * right[4] + left[4] * right[5] + left[8] * right[6] + left[12] * right[7];
+    array[5] = left[1] * right[4] + left[5] * right[5] + left[9] * right[6] + left[13] * right[7];
+    array[6] = left[2] * right[4] + left[6] * right[5] + left[10] * right[6] + left[14] * right[7];
+    array[7] = left[3] * right[4] + left[7] * right[5] + left[11] * right[6] + left[15] * right[7];
 
-    res_array[0] =
-        array[index] * mat_array[mat_index] +
-        array[index + 4] * mat_array[mat_index + 1] +
-        array[index + 8] * mat_array[mat_index + 2] +
-        array[index + 12] * mat_array[mat_index + 3];
+    array[8] = left[0] * right[8] + left[4] * right[9] + left[8] * right[10] + left[12] * right[11];
+    array[9] = left[1] * right[8] + left[5] * right[9] + left[9] * right[10] + left[13] * right[11];
+    array[10] = left[2] * right[8] + left[6] * right[9] + left[10] * right[10] + left[14] * right[11];
+    array[11] = left[3] * right[8] + left[7] * right[9] + left[11] * right[10] + left[15] * right[11];
 
-    res_array[1] =
-        array[index + 1] * mat_array[mat_index] +
-        array[index + 5] * mat_array[mat_index + 1] +
-        array[index + 9] * mat_array[mat_index + 2] +
-        array[index + 13] * mat_array[mat_index + 3];
+    array[12] = left[0] * right[12] + left[4] * right[13] + left[8] * right[14] + left[12] * right[15];
+    array[13] = left[1] * right[12] + left[5] * right[13] + left[9] * right[14] + left[13] * right[15];
+    array[14] = left[2] * right[12] + left[6] * right[13] + left[10] * right[14] + left[14] * right[15];
+    array[15] = left[3] * right[12] + left[7] * right[13] + left[11] * right[14] + left[15] * right[15];
 
-    res_array[2] =
-        array[index + 2] * mat_array[mat_index] +
-        array[index + 6] * mat_array[mat_index + 1] +
-        array[index + 10] * mat_array[mat_index + 2] +
-        array[index + 14] * mat_array[mat_index + 3];
-
-    res_array[3] =
-        array[index + 3] * mat_array[mat_index] +
-        array[index + 7] * mat_array[mat_index + 1] +
-        array[index + 11] * mat_array[mat_index + 2] +
-        array[index + 15] * mat_array[mat_index + 3];
-
-    res_array[4] =
-        array[index] * mat_array[mat_index + 4] +
-        array[index + 4] * mat_array[mat_index + 5] +
-        array[index + 8] * mat_array[mat_index + 6] +
-        array[index + 12] * mat_array[mat_index + 7];
-
-    res_array[5] =
-        array[index + 1] * mat_array[mat_index + 4] +
-        array[index + 5] * mat_array[mat_index + 5] +
-        array[index + 9] * mat_array[mat_index + 6] +
-        array[index + 13] * mat_array[mat_index + 7];
-
-    res_array[6] =
-        array[index + 2] * mat_array[mat_index + 4] +
-        array[index + 6] * mat_array[mat_index + 5] +
-        array[index + 10] * mat_array[mat_index + 6] +
-        array[index + 14] * mat_array[mat_index + 7];
-
-    res_array[7] =
-        array[index + 3] * mat_array[mat_index + 4] +
-        array[index + 7] * mat_array[mat_index + 5] +
-        array[index + 11] * mat_array[mat_index + 6] +
-        array[index + 15] * mat_array[mat_index + 7];
-
-    res_array[8] =
-        array[index] * mat_array[mat_index + 8] +
-        array[index + 4] * mat_array[mat_index + 9] +
-        array[index + 8] * mat_array[mat_index + 10] +
-        array[index + 12] * mat_array[mat_index + 11];
-
-    res_array[9] =
-        array[index + 1] * mat_array[mat_index + 8] +
-        array[index + 5] * mat_array[mat_index + 9] +
-        array[index + 9] * mat_array[mat_index + 10] +
-        array[index + 13] * mat_array[mat_index + 11];
-
-    res_array[10] =
-        array[index + 2] * mat_array[mat_index + 8] +
-        array[index + 6] * mat_array[mat_index + 9] +
-        array[index + 10] * mat_array[mat_index + 10] +
-        array[index + 14] * mat_array[mat_index + 11];
-
-    res_array[11] =
-        array[index + 3] * mat_array[mat_index + 8] +
-        array[index + 7] * mat_array[mat_index + 9] +
-        array[index + 11] * mat_array[mat_index + 10] +
-        array[index + 15] * mat_array[mat_index + 11];
-
-    res_array[12] =
-        array[index] * mat_array[mat_index + 12] +
-        array[index + 4] * mat_array[mat_index + 13] +
-        array[index + 8] * mat_array[mat_index + 14] +
-        array[index + 12] * mat_array[mat_index + 15];
-
-    res_array[13] =
-        array[index + 1] * mat_array[mat_index + 12] +
-        array[index + 5] * mat_array[mat_index + 13] +
-        array[index + 9] * mat_array[mat_index + 14] +
-        array[index + 13] * mat_array[mat_index + 15];
-
-    res_array[14] =
-        array[index + 2] * mat_array[mat_index + 12] +
-        array[index + 6] * mat_array[mat_index + 13] +
-        array[index + 10] * mat_array[mat_index + 14] +
-        array[index + 14] * mat_array[mat_index + 15];
-
-    res_array[15] =
-        array[index + 3] * mat_array[mat_index + 12] +
-        array[index + 7] * mat_array[mat_index + 13] +
-        array[index + 11] * mat_array[mat_index + 14] +
-        array[index + 15] * mat_array[mat_index + 15];
-
-    return this.set(res);
+    for (i = 0; i < 16; i++) {
+        result[i] = array[i];
+    }
 };
 
 /**
@@ -687,6 +600,7 @@ b9.Matrix3D.prototype.equals = function(mat) {
 b9.Matrix3D.prototype.toString = function() {
     var array = this._array;
     var index = this._index;
+
     var i;
     var str = "(";
 
@@ -710,5 +624,5 @@ b9.Matrix3D._vec1 = new b9.Vector3D();
 b9.Matrix3D._vec2 = new b9.Vector3D();
 b9.Matrix3D._vec3 = new b9.Vector3D();
 b9.Matrix3D._mat1 = new b9.Matrix3D();
-b9.Matrix3D._mat2 = new b9.Matrix3D();
+b9.Matrix3D._array1 = new Float32Array(16);
 // _quat1 and _quat2 are defined in Quaternion.js
