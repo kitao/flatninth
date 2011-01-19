@@ -21,7 +21,7 @@
  */
 
 function testLinkedListItem() {
-    var list;
+    var list1;
     var item1, item2;
     var dummy1, dummy2;
 
