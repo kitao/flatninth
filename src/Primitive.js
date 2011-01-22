@@ -143,13 +143,15 @@ b9.Primitive.prototype.setShader = function(shader) {
     this._shader = shader;
 };
 
-b9.Primitive.prototype._render = function() {
+b9.Primitive.prototype._render = function(world_to_screen) {
     var i;
     var tex;
     var gl = b9.System.getGLContext();
     var shader = this._shader ? this._shader : b9.Preset._shader; // TODO
     var final_color_array = this._final_color.getArray();
     var tex_count = this._tex_count;
+
+    var local_to_screen = b9.Primitive._mat1;
 
     this._calcFinal();
 
@@ -158,7 +160,9 @@ b9.Primitive.prototype._render = function() {
     shader._setup();
     this._prim_buf._setup(shader);
 
-    gl.uniformMatrix4fv(shader._local_to_screen_loc, false, this._world.getArray()); // TODO
+    b9.Matrix3D.mulArrayAs4x4(world_to_screen.getArray(), this._world.getArray(), local_to_screen.getArray());
+    gl.uniformMatrix4fv(shader._local_to_screen_loc, false, local_to_screen.getArray()); // TODO
+
     gl.uniform4f(shader._drawable_color_loc,
             final_color_array[0], final_color_array[1], final_color_array[2], final_color_array[3]); // TODO
 
@@ -222,3 +226,5 @@ b9.Primitive.MODE_TRIANGLE_STRIP = 5;
  * @return {Number}
  */
 b9.Primitive.MODE_TRIANGLE_FAN = 6;
+
+b9.Primitive._mat1 = new b9.Matrix3D();

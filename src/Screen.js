@@ -39,13 +39,13 @@ b9.Screen.prototype.initialize = function(width, height) {
     this._y = 0;
     this._width = width;
     this._height = height;
-    this._clear_color = new b9.Color(255, 0, 0);
+    this._clear_color = new b9.Color(255, 0, 0, 255);
     this._focal_length = 1000.0;
     this._near_clip_dist = 10.0;
     this._far_clip_dist = 100000.0;
     this._inner_scale_x = 1.0;
     this._inner_scale_y = 1.0;
-    this._camera = new b9.Matrix3D(b9.Matrix3D.UNIT);
+    this._camera = (new b9.Matrix3D(b9.Matrix3D.UNIT)).translate(0.0, 0.0, this._focal_length);
 
     this._camera_to_screen = new b9.Matrix3D();
 };
@@ -231,7 +231,7 @@ b9.Screen.prototype.render = function(root_draw) {
 
     world_to_camera.set(b9.Matrix3D.UNIT).toLocal(this._camera);
     b9.Matrix3D.mulArrayAs4x4(
-            world_to_screen.getArray(), this._camera_to_screen.getArray(), world_to_camera.getArray());
+            this._camera_to_screen.getArray(), world_to_camera.getArray(), world_to_screen.getArray());
 
     // gl.viewport(x, y, w, h);
 
@@ -243,7 +243,7 @@ b9.Screen.prototype.render = function(root_draw) {
                 this._clear_color.getR() / 255.0,
                 this._clear_color.getG() / 255.0,
                 this._clear_color.getB() / 255.0,
-                1.0);
+                this._clear_color.getA() / 255.0);
         clear_flag = gl.COLOR_BUFFER_BIT;
     }
 
@@ -260,7 +260,7 @@ b9.Screen.prototype.render = function(root_draw) {
      */
     for (draw = root_draw; draw; draw = draw.getNextAsList()) {
         if (draw.getDrawableFlag(b9.Drawable.FLAG_VISIBLE)) {
-            draw._render();
+            draw._render(world_to_screen);
         } else {
             draw = draw.getLastDescendant();
         }
@@ -271,13 +271,13 @@ b9.Screen.prototype._updateCameraToScreen = function() {
     var camera_to_screen_array = this._camera_to_screen.getArray();
     var inv_sub = 1.0 / (this._far_clip_dist - this._near_clip_dist);
 
-    camera_to_screen_array[0] = this._focal_length * 2.0 / this._view_width;
+    camera_to_screen_array[0] = this._focal_length * 2.0 / this._width;
     camera_to_screen_array[4] = 0.0;
     camera_to_screen_array[8] = 0.0;
     camera_to_screen_array[12] = 0.0;
 
     camera_to_screen_array[1] = 0.0;
-    camera_to_screen_array[5] = this._focal_length * 2.0 / this._view_height;
+    camera_to_screen_array[5] = this._focal_length * 2.0 / this._height;
     camera_to_screen_array[9] = 0.0;
     camera_to_screen_array[13] = 0.0;
 
