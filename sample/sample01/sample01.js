@@ -30,9 +30,9 @@ Sample.prototype.initialize = function() {
     this._prim_buf = new b9.PrimitiveBuffer(3, 3);
     this._prim = new b9.Primitive(this._prim_buf);
 
-    this._prim_buf.getPos(0).set(0.0, 0.5, 0.0);
-    this._prim_buf.getPos(1).set(-1.0, -0.5, 0.0);
-    this._prim_buf.getPos(2).set(1.0, -0.5, 0.0);
+    this._prim_buf.getPos(0).set(0.0, 50.0, 0.0);
+    this._prim_buf.getPos(1).set(-200.0, -100.0, 0.0);
+    this._prim_buf.getPos(2).set(200.0, -100.0, 0.0);
 
     this._prim_buf.getColor(0).set(255, 0, 0);
     this._prim_buf.getColor(1).set(0, 255, 0);
@@ -55,7 +55,7 @@ Sample.prototype.initialize = function() {
 
 Sample.prototype.update = function() {
     // TODO
-    this._prim.getLocal().rotateZ_int(1);
+    this._prim.getLocal().rotateX_int(1).rotateY_int(2);
 };
 
 /**
