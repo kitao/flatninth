@@ -45,7 +45,9 @@ b9.Screen.prototype.initialize = function(width, height) {
     this._far_clip_dist = 100000.0;
     this._inner_scale_x = 1.0;
     this._inner_scale_y = 1.0;
-    this._camera = (new b9.Matrix3D(b9.Matrix3D.UNIT)).translate(0.0, 0.0, this._focal_length);
+
+    this._camera = new b9.Matrix3D(b9.Matrix3D.UNIT);
+    this._camera.getTrans().setZ(this._focal_length);
 
     this._camera_to_screen = new b9.Matrix3D();
 };
