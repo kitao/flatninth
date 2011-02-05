@@ -64,7 +64,7 @@ TARGET      = $(BASE_DIR)/flatninth.js
 ifdef RELEASE
 	CLOSURE_OPTS = --compilation_level SIMPLE_OPTIMIZATIONS
 else
-	CLOSURE_OPTS = --compilation_level WHITESPACE_ONLY
+	CLOSURE_OPTS = --compilation_level WHITESPACE_ONLY --formatting pretty_print
 endif
 
 .PHONY: all clean test sample reference
