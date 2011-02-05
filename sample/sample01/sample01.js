@@ -70,7 +70,7 @@ function main() {
         var dummy = new Sample();
     }
 
-    b9.Preset.getScreen(0).getClearColor().set(0, 0, 255);
+    b9.Preset.getScreen(0).getClearColor().set(0, 0, 128);
 
     b9.System.start();
 }
