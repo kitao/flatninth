@@ -42,6 +42,8 @@ b9.Primitive.prototype.initialize = function(prim_buf, uni_count, tex_count) {
     this.initializeSuper();
 
     this._prim_buf = prim_buf;
+    this._elem_index = 0;
+    this._elem_count = prim_buf._elem_count;
     this._uni_count = uni_count;
     this._tex_count = b9.Math.max(tex_count, 1);
     this._prim_mode = b9.Primitive.MODE_TRIANGLES;
@@ -75,6 +77,43 @@ b9.Primitive.prototype.getPrimitiveBuffer = function() {
  */
 b9.Primitive.prototype.setPrimitiveBuffer = function(prim_buf) {
     this._prim_buf = prim_buf;
+
+    // TODO: check index and count
+};
+
+/**
+ * Returns the element index of the primitive buffer, from which this primitive draws.
+ * @retrun {Number} The element index.
+ */
+b9.Primitive.prototype.getElementIndex = function() {
+    this._elem_index;
+};
+
+/**
+ * Sets the element index of the primitive buffer, from which this primitive draws.
+ * The element index must be less than the number of the primitive buffer elements.
+ * @param {Number} elem_index The element index.
+ */
+b9.Primitive.prototype.setElementIndex = function(elem_index) {
+    this._elem_index = elem_index;
+};
+
+/**
+ * Returns the number of elements, which this primitive draws.
+ * @retrun {Number} The number of vertices.
+ */
+b9.Primitive.prototype.getElementCount = function() {
+    return this._elem_count;
+};
+
+/**
+ * Sets the number of elements, which this primitive draws.
+ * The sum of the element index and the number of elements must be equal to or less than
+ * the number of the primitive buffer elements.
+ * @param {Number} elem_count The number of elements.
+ */
+b9.Primitive.prototype.setElementCount = function(elem_count) {
+    this._vert_count = vert_count;
 };
 
 /**
@@ -174,7 +213,7 @@ b9.Primitive.prototype._render = function(world_to_screen) {
         }
     }
 
-    gl.drawElements(this._prim_mode, this._prim_buf._index_count, gl.UNSIGNED_SHORT, 0);
+    gl.drawElements(this._prim_mode, this._prim_buf._elem_count, gl.UNSIGNED_SHORT, 0);
 
     this._prim_buf._teardown(shader);
 };

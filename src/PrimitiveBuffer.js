@@ -23,10 +23,12 @@
 /**
  * Constructs a primitive buffer.
  *
- * @class Manages vertices and indices referenced by primitives.
+ * @class Manages vertices and elements referenced by primitives.
+ * Vertices contain the information for drawing such as a position, a color, and texture coordinates.
+ * Elements are the reference to vertices, with which a vertex can be used multiple times in a single drawing.
  *
  * @param {Number} vert_count The number of vertices.
- * @param {Number} index_count The number of indices.
+ * @param {Number} elem_count The number of elements.
  * @param {Number} [att_count] The number of the shader attributes.
  */
 b9.PrimitiveBuffer = b9.createClass();
@@ -34,12 +36,12 @@ b9.PrimitiveBuffer = b9.createClass();
 /**
  * @ignore
  */
-b9.PrimitiveBuffer.prototype.initialize = function(vert_count, index_count, att_count) {
+b9.PrimitiveBuffer.prototype.initialize = function(vert_count, elem_count, att_count) {
     var i;
     var gl = b9.System.getGLContext();
 
     this._vert_count = vert_count;
-    this._index_count = index_count;
+    this._elem_count = elem_count;
     this._att_count = att_count; // TODO
 
     this._pos_array = new Array(vert_count);
@@ -64,8 +66,8 @@ b9.PrimitiveBuffer.prototype.initialize = function(vert_count, index_count, att_
         this._texcoord_data[i * 2 + 1] = 0.0;
     }
 
-    this._index_data = new Uint16Array(index_count);
-    this._index_glbuf = gl.createBuffer();
+    this._elem_data = new Uint16Array(elem_count);
+    this._elem_glbuf = gl.createBuffer();
 
     this._is_uploaded = false;
 };
@@ -82,7 +84,7 @@ b9.PrimitiveBuffer.prototype.finalize = function() {
 
     // TODO: delete attribute buffers
 
-    gl.deleteBuffer(this._index_glbuf);
+    gl.deleteBuffer(this._elem_glbuf);
 };
 
 /**
@@ -94,11 +96,11 @@ b9.PrimitiveBuffer.prototype.getVertexCount = function() {
 };
 
 /**
- * Returns the number of the indices.
- * @return {Number} The number of ths indices.
+ * Returns the number of the elements.
+ * @return {Number} The number of ths elements.
  */
-b9.PrimitiveBuffer.prototype.getIndexCount = function() {
-    return this._index_count;
+b9.PrimitiveBuffer.prototype.getElementCount = function() {
+    return this._elem_count;
 };
 
 /**
@@ -111,65 +113,66 @@ b9.PrimitiveBuffer.prototype.getAttributeCount = function() {
 
 /**
  * Returns the position of the specified vertex.
- * @param {Number} vert_no A vertex number.
+ * @param {Number} vert_index A vertex index.
+ * @preturn {b9.Vector3D} The position of the vertex.
  */
-b9.PrimitiveBuffer.prototype.getPos = function(vert_no) {
-    return this._pos_array[vert_no];
+b9.PrimitiveBuffer.prototype.getPos = function(vert_index) {
+    return this._pos_array[vert_index];
 };
 
 /**
- *
- * @param {Number} vert_no A vertex number.
- * @return {b9.Color}
+ * Returns the color of the specified vertex.
+ * @param {Number} vert_index A vertex index.
+ * @return {b9.Color} The color of the vertex.
  */
-b9.PrimitiveBuffer.prototype.getColor = function(vert_no) {
-    return this._color_array[vert_no];
+b9.PrimitiveBuffer.prototype.getColor = function(vert_index) {
+    return this._color_array[vert_index];
 };
 
 /**
  * Returns the U texture coordinate of the specified vertex.
- * @param {Number} vert_no A vertex number.
+ * @param {Number} vert_index A vertex index.
  * @return {Number} The U texture coordinate.
  */
-b9.PrimitiveBuffer.prototype.getTexCoordU = function(vert_no) {
-    return this._texcoord_data[vert_no * 2];
+b9.PrimitiveBuffer.prototype.getTexCoordU = function(vert_index) {
+    return this._texcoord_data[vert_index * 2];
 };
 
 /**
  * Returns the V texture coordinate of the specified vertex.
- * @param {Number} vert_no A vertex number.
+ * @param {Number} vert_index A vertex index.
  * @return {Number} The V texture coordinate.
  */
-b9.PrimitiveBuffer.prototype.getTexCoordV = function(vert_no) {
-    return this._texcoord_data[vert_no * 2 + 1];
+b9.PrimitiveBuffer.prototype.getTexCoordV = function(vert_index) {
+    return this._texcoord_data[vert_index * 2 + 1];
 };
 
 /**
  * Sets the UV texture coordinates of the specified vertex.
- * @param {Number} vert_no A vertex number.
- * @param {Number} An U texture coordinate.
- * @param {Number} A V texture coordinate.
+ * @param {Number} vert_index A vertex index.
+ * @param {Number} u A U texture coordinate.
+ * @param {Number} v A V texture coordinate.
  */
-b9.PrimitiveBuffer.prototype.setTexCoord = function(vert_no, u, v) {
-    this._texcoord_data[vert_no * 2] = u;
-    this._texcoord_data[vert_no * 2 + 1] = v;
+b9.PrimitiveBuffer.prototype.setTexCoord = function(vert_index, u, v) {
+    this._texcoord_data[vert_index * 2] = u;
+    this._texcoord_data[vert_index * 2 + 1] = v;
 };
 
 /**
- * Returns the vertex number to which the specified index refers.
- * @param {Number} index_no An index number.
+ * Returns the vertex index to which the specified element refers.
+ * @param {Number} elem_index An element index.
  */
-b9.PrimitiveBuffer.prototype.getIndex = function(index_no) {
-    return this._index_data[index_no];
+b9.PrimitiveBuffer.prototype.getIndex = function(elem_index) {
+    return this._elem_data[elem_index];
 };
 
 /**
- * Sets the vertex number to which the specified index refers.
- * @param {Number} index_no An index number.
- * @param {Number} vert_no A vertex number.
+ * Sets the vertex index to which the specified element refers.
+ * @param {Number} elem_index An element index.
+ * @param {Number} vert_index A vertex index.
  */
-b9.PrimitiveBuffer.prototype.setIndex = function(index_no, vert_no) {
-    this._index_data[index_no] = vert_no;
+b9.PrimitiveBuffer.prototype.setIndex = function(elem_index, vert_index) {
+    this._elem_data[elem_index] = vert_index;
 };
 
 b9.PrimitiveBuffer.prototype._setup = function(shader) {
@@ -185,8 +188,8 @@ b9.PrimitiveBuffer.prototype._setup = function(shader) {
         gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoord_glbuf);
         gl.bufferData(gl.ARRAY_BUFFER, this._texcoord_data, gl.STATIC_DRAW);
 
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._index_data, gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._elem_glbuf);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._elem_data, gl.STATIC_DRAW);
 
         this._is_uploaded = true;
     }
@@ -203,7 +206,7 @@ b9.PrimitiveBuffer.prototype._setup = function(shader) {
     gl.enableVertexAttribArray(shader._texcoord_loc);
     gl.vertexAttribPointer(shader._texcoord_loc, 2, gl.FLOAT, false, 0, 0);
 
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._index_glbuf);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._elem_glbuf);
 };
 
 b9.PrimitiveBuffer.prototype._teardown = function(shader) {
