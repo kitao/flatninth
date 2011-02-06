@@ -86,7 +86,7 @@ b9.Primitive.prototype.setPrimitiveBuffer = function(prim_buf) {
  * @retrun {Number} The element index.
  */
 b9.Primitive.prototype.getElementIndex = function() {
-    this._elem_index;
+    return this._elem_index;
 };
 
 /**

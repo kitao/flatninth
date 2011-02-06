@@ -34,6 +34,7 @@ b9.Drawable.prototype.initialize = function() {
     this._draw_flag = b9.Drawable.FLAG_VISIBLE;
     this._local = new b9.Matrix3D(b9.Matrix3D.UNIT);
     this._color = new b9.Color(255, 255, 255, 255);
+    this._blend_mode = b9.Drawable.BLEND_OFF;
 
     this._tree = new b9.LinkedTree(this);
     this._world = new b9.Matrix3D();
@@ -85,6 +86,54 @@ b9.Drawable.prototype.getLocal = function() {
  */
 b9.Drawable.prototype.getColor = function() {
     return this._color;
+};
+
+/**
+ * Returns the blend mode of this drawable.
+ * @return {Number} The blend mode.
+ */
+b9.Drawable.prototype.getBlendMode = function() {
+    return this._blend_mode;
+};
+
+/**
+ * Sets the blend mode of this drawable.
+ * @param {Number} blend_mode A blend mode.
+ * @param {Boolean} is_preset_setting TODO
+ */
+b9.Drawable.prototype.setBlendMode = function(blend_mode, is_preset_setting) {
+    this._blend_mode = blend_mode;
+/*
+    if (is_preset_setting)
+    {
+        setDepthTest(DEPTH_TEST_GEQUAL);
+        m_draw_flag.clear();
+        m_draw_flag.setOn(FLAG_WRITE_RGB);
+        m_draw_flag.setOn(FLAG_BILINEAR);
+
+        switch (m_blend_mode.getType())
+        {
+        case BLEND_OFF:
+            m_draw_flag.setOn(FLAG_WRITE_DEPTH);
+            break;
+
+        case BLEND_HALF:
+            m_draw_flag.setOn(FLAG_SORT);
+            break;
+
+        case BLEND_ADD:
+            m_draw_flag.setOn(FLAG_SORT);
+            break;
+
+        case BLEND_DEST_ALPHA:
+            m_draw_flag.setOn(FLAG_WRITE_DEPTH);
+            break;
+
+        default:
+            break;
+        }
+    }
+*/
 };
 
 /**
@@ -235,3 +284,75 @@ b9.Drawable.FLAG_VISIBLE = 0x80000000;
  * @return {Number}
  */
 b9.Drawable.FLAG_Z_SORT = 0x40000000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.FLAG_WRITE_RGB = 0x20000000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.FLAG_WRITE_ALPHA = 0x10000000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.FLAG_WRITE_DEPTH = 0x08000000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.BLEND_OFF = 0;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.BLEND_HALF = 1;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.BLEND_ADD = 2;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.BLEND_DEST_ALPHA = 3;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.DEPTH_TEST_ALWAYS = 0;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.DEPTH_TEST_LESS = 1;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.DEPTH_TEST_GREATER = 2;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.DEPTH_TEST_LEQUAL = 3;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.DEPTH_TEST_GEQUAL = 4;
