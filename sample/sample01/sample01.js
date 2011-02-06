@@ -50,12 +50,17 @@ Sample.prototype.initialize = function() {
 
     b9.Preset.getRootDrawable(0).addChildLast(this._prim);
 
+    this._prim2 = new b9.Primitive(this._prim_buf);
+    this._prim2.getLocal().translate(100.0, 50.0, 0.0);
+    this._prim.addChildLast(this._prim2);
+
     b9.Debug.trace("ok!!!");
 };
 
 Sample.prototype.update = function() {
     // TODO
     this._prim.getLocal().rotateX_int(1).rotateY_int(2);
+    this._prim2.getLocal().rotateZ_int(1);
 };
 
 /**
