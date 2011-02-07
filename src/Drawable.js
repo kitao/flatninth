@@ -283,13 +283,13 @@ b9.Drawable.prototype._setup = function() {
         gl.disable(gl.BLEND);
     } else if (blend_mode === b9.Drawable.BLEND_HALF) {
         gl.enable(gl.BLEND);
-        glBlendFunc(GL_SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     } else if (blend_mode === b9.Drawable.BLEND_ADD) {
         gl.enable(gl.BLEND);
-        glBlendFunc(gl.SRC_ALPHA, gl.ONE);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
     } else if (blend_mode === b9.Drawable.BLEND_DEST_ALPHA) {
         gl.enable(gl.BLEND);
-        glBlendFunc(gl.DST_ALPHA, gl.ONE_MINUS_DST_ALPHA);
+        gl.blendFunc(gl.DST_ALPHA, gl.ONE_MINUS_DST_ALPHA);
     }
 };
 
