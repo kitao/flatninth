@@ -31,7 +31,13 @@ b9.Drawable = b9.createClass();
  * @ignore
  */
 b9.Drawable.prototype.initialize = function() {
-    this._draw_flag = b9.Drawable.FLAG_VISIBLE;
+    this._draw_flag =
+        b9.Drawable.FLAG_VISIBLE |
+        b9.Drawable.FLAG_DEPTH_TEST |
+        b9.Drawable.FLAG_WRITE_RGB |
+        b9.Drawable.FLAG_WRITE_DEPTH |
+        b9.Drawable.FLAG_BILINEAR;
+
     this._local = new b9.Matrix3D(b9.Matrix3D.UNIT);
     this._color = new b9.Color(255, 255, 255, 255);
     this._blend_mode = b9.Drawable.BLEND_OFF;
@@ -99,41 +105,27 @@ b9.Drawable.prototype.getBlendMode = function() {
 /**
  * Sets the blend mode of this drawable.
  * @param {Number} blend_mode A blend mode.
- * @param {Boolean} is_preset_setting TODO
+ * @param {Boolean} with_preset_setting If true, FLAG_Z_SORT and FLAG_WRITE_DEPTH are set automatically,
+ * such as the following:
+ * <ul>
+ * <li>BLEND_OFF -> FLAG_Z_SORT: off, FLAG_WRITE_DEPTH: on</li>
+ * <li>BLEND_HALF -> FLAG_Z_SORT: on, FLAG_WRITE_DEPTH: off</li>
+ * <li>BLEND_ADD -> FLAG_Z_SORT: on, FLAG_WRITE_DEPTH: off</li>
+ * <li>BLEND_DEST_ALPHA -> FLAG_Z_SORT: off, FLAG_WRITE_DEPTH: on</li>
+ * </ul>
  */
-b9.Drawable.prototype.setBlendMode = function(blend_mode, is_preset_setting) {
+b9.Drawable.prototype.setBlendMode = function(blend_mode, with_preset_setting) {
     this._blend_mode = blend_mode;
-/*
-    if (is_preset_setting)
-    {
-        setDepthTest(DEPTH_TEST_GEQUAL);
-        m_draw_flag.clear();
-        m_draw_flag.setOn(FLAG_WRITE_RGB);
-        m_draw_flag.setOn(FLAG_BILINEAR);
 
-        switch (m_blend_mode.getType())
-        {
-        case BLEND_OFF:
-            m_draw_flag.setOn(FLAG_WRITE_DEPTH);
-            break;
-
-        case BLEND_HALF:
-            m_draw_flag.setOn(FLAG_SORT);
-            break;
-
-        case BLEND_ADD:
-            m_draw_flag.setOn(FLAG_SORT);
-            break;
-
-        case BLEND_DEST_ALPHA:
-            m_draw_flag.setOn(FLAG_WRITE_DEPTH);
-            break;
-
-        default:
-            break;
+    if (with_preset_setting) {
+        if (blend_mode === b9.Drawable.BLEND_OFF || blend_mode === b9.Drawable.BLEND_DEST_ALPHA) {
+            this._draw_flag &= ~b9.Drawable.FLAG_Z_SORT;
+            this._draw_flag |= b9.Drawable.FLAG_WRITE_DEPTH;
+        } else {
+            this._draw_flag |= b9.Drawable.FLAG_Z_SORT;
+            this._draw_flag &= ~b9.Drawable.FLAG_WRITE_DEPTH;
         }
     }
-*/
 };
 
 /**
@@ -269,6 +261,38 @@ b9.Drawable.prototype._calcFinal = function() {
     }
 };
 
+b9.Drawable.prototype._setup = function() {
+    var gl = b9.System.getGLContext();
+    var draw_flag = this._draw_flag;
+    var write_rgb = (draw_flag & b9.Drawable.FLAG_WRITE_RGB) ? true : false;
+    var blend_mode = this._blend_mode;
+
+    this._calcFinal();
+
+    gl.depthFunc((draw_flag & b9.Drawable.FLAG_DEPTH_TEST) ? gl.GEQUAL : gl.ALWAYS);
+    gl.colorMask(write_rgb, write_rgb, write_rgb, (draw_flag & b9.Drawable.FLAG_WRITE_ALPHA) ? true : false);
+    gl.depthMask((draw_flag & b9.Drawable.FLAG_WRITE_DEPTH) ? true : false);
+
+    if (draw_flag & b9.Drawable.FLAG_CULL_FACE) {
+        gl.enable(gl.CULL_FACE);
+    } else {
+        gl.disable(gl.CULL_FACE);
+    }
+
+    if (blend_mode === b9.Drawable.BLEND_OFF) {
+        gl.disable(gl.BLEND);
+    } else if (blend_mode === b9.Drawable.BLEND_HALF) {
+        gl.enable(gl.BLEND);
+        glBlendFunc(GL_SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    } else if (blend_mode === b9.Drawable.BLEND_ADD) {
+        gl.enable(gl.BLEND);
+        glBlendFunc(gl.SRC_ALPHA, gl.ONE);
+    } else if (blend_mode === b9.Drawable.BLEND_DEST_ALPHA) {
+        gl.enable(gl.BLEND);
+        glBlendFunc(gl.DST_ALPHA, gl.ONE_MINUS_DST_ALPHA);
+    }
+};
+
 b9.Drawable.prototype._render = function() {
     this._calcFinal();
 };
@@ -286,22 +310,40 @@ b9.Drawable.FLAG_VISIBLE = 0x80000000;
 b9.Drawable.FLAG_Z_SORT = 0x40000000;
 
 /**
- * hoge
+ *
  * @return {Number}
  */
-b9.Drawable.FLAG_WRITE_RGB = 0x20000000;
+b9.Drawable.FLAG_DEPTH_TEST = 0x20000000;
 
 /**
  * hoge
  * @return {Number}
  */
-b9.Drawable.FLAG_WRITE_ALPHA = 0x10000000;
+b9.Drawable.FLAG_WRITE_RGB = 0x10000000;
 
 /**
  * hoge
  * @return {Number}
  */
-b9.Drawable.FLAG_WRITE_DEPTH = 0x08000000;
+b9.Drawable.FLAG_WRITE_ALPHA = 0x08000000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.FLAG_WRITE_DEPTH = 0x04000000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.FLAG_CULL_FACE = 0x02000000;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Drawable.FLAG_BILINEAR = 0x01000000;
 
 /**
  * hoge
@@ -326,33 +368,3 @@ b9.Drawable.BLEND_ADD = 2;
  * @return {Number}
  */
 b9.Drawable.BLEND_DEST_ALPHA = 3;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Drawable.DEPTH_TEST_ALWAYS = 0;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Drawable.DEPTH_TEST_LESS = 1;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Drawable.DEPTH_TEST_GREATER = 2;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Drawable.DEPTH_TEST_LEQUAL = 3;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Drawable.DEPTH_TEST_GEQUAL = 4;

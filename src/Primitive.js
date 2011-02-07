@@ -192,9 +192,7 @@ b9.Primitive.prototype._render = function(world_to_screen) {
 
     var local_to_screen = b9.Primitive._mat1;
 
-    this._calcFinal();
-
-    gl.disable(gl.DEPTH_TEST);
+    this._setup();
 
     shader._setup();
     this._prim_buf._setup(shader);
