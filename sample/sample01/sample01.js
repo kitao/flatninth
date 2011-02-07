@@ -54,6 +54,9 @@ Sample.prototype.initialize = function() {
     this._prim2.getLocal().translate(100.0, 50.0, 0.0);
     this._prim.addChildLast(this._prim2);
 
+    this._prim2.setBlendMode(b9.Drawable.BLEND_HALF, true);
+    this._prim2.getColor().setA(32);
+
     b9.Debug.trace("ok!!!");
 };
 
