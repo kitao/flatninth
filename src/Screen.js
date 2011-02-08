@@ -267,7 +267,7 @@ b9.Screen.prototype.render = function(root_draw) {
 //    ckVec sort_center = m_sort_center.toGlobalFrom(m_world);
 //    m_sort_value = (sort_center - view.trans).dot(view.z_axis) + m_sort_offset;
 
-                draw._next_sort = sort_list;
+                draw._sort_list = sort_list;
                 sort_list = draw;
             } else {
                 draw._render(world_to_screen);
@@ -284,7 +284,7 @@ b9.Screen.prototype.render = function(root_draw) {
         // TODO: sort
     }
 
-    for (draw = sort_list; draw; draw = draw._next_sort) {
+    for (draw = sort_list; draw; draw = draw._sort_list) {
         draw._render(world_to_screen);
     }
 };
