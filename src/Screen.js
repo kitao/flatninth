@@ -225,9 +225,9 @@ b9.Screen.prototype.render = function(root_draw) {
     var draw;
     var gl = b9.System.getGLContext();
     var clear_flag = 0;
-
     var world_to_camera = b9.Screen._mat1;
     var world_to_screen = b9.Screen._mat2;
+    var sort_list = null;
 
     this._updateCameraToScreen(); // TODO
 
@@ -258,15 +258,103 @@ b9.Screen.prototype.render = function(root_draw) {
     }
 
     /*
-     * draw drawables
+     * draw opaque drawables
      */
     for (draw = root_draw; draw; draw = draw.getNextAsList()) {
         if (draw.getDrawableFlag(b9.Drawable.FLAG_VISIBLE)) {
-            draw._render(world_to_screen);
+            if (draw.getDrawableFlag(b9.Drawable.FLAG_Z_SORT)) {
+                // TODO: setup sort value
+//    ckVec sort_center = m_sort_center.toGlobalFrom(m_world);
+//    m_sort_value = (sort_center - view.trans).dot(view.z_axis) + m_sort_offset;
+
+                draw._next_sort = sort_list;
+                sort_list = draw;
+            } else {
+                draw._render(world_to_screen);
+            }
         } else {
             draw = draw.getLastDescendant();
         }
     }
+
+    /*
+     * draw transparent drawables
+     */
+    if (sort_list) {
+        // TODO: sort
+    }
+
+    for (draw = sort_list; draw; draw = draw._next_sort) {
+        draw._render(world_to_screen);
+    }
+};
+
+b9.Screen.prototype._sortTransparentDrawables = function(start, end, list) {
+/*
+    ckDraw* center = target_list;
+    target_list = target_list->m_next_sort;
+
+    if (!target_list)
+    {
+        center->m_next_sort = NULL;
+
+        *sorted_start = center;
+        *sorted_end = center;
+
+        return;
+    }
+
+    ckDraw* left_list = NULL;
+    ckDraw* right_list = NULL;
+    ckDraw* next_sort;
+
+    for (ckDraw* draw = target_list; draw; draw = next_sort)
+    {
+        next_sort = draw->m_next_sort;
+
+        if (draw->m_sort_value <= center->m_sort_value)
+        {
+            draw->m_next_sort = left_list;
+            left_list = draw;
+        }
+        else
+        {
+            draw->m_next_sort = right_list;
+            right_list = draw;
+        }
+    }
+
+    if (left_list)
+    {
+        ckDraw* start;
+        ckDraw* end;
+
+        sortList(&start, &end, left_list);
+
+        *sorted_start = start;
+        end->m_next_sort = center;
+    }
+    else
+    {
+        *sorted_start = center;
+    }
+
+    if (right_list)
+    {
+        ckDraw* start;
+        ckDraw* end;
+
+        sortList(&start, &end, right_list);
+
+        *sorted_end = end;
+        center->m_next_sort = start;
+    }
+    else
+    {
+        *sorted_end = center;
+        center->m_next_sort = NULL;
+    }
+*/
 };
 
 b9.Screen.prototype._updateCameraToScreen = function() {
