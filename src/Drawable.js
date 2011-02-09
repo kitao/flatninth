@@ -45,8 +45,8 @@ b9.Drawable.prototype.initialize = function() {
     this._tree = new b9.LinkedTree(this);
     this._world = new b9.Matrix3D();
     this._final_color = new b9.Color();
-    this._sort_next = null;
     this._sort_value = 0.0;
+    this._sort_next = null;
 };
 
 /**
