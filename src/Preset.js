@@ -44,15 +44,6 @@ b9.Preset.getScreen = function(scr_no) {
 };
 
 /**
- * Returns the root drawable of the specified screen.
- * @param {Number} The index number of a screen.
- * @return {b9.Drawable} The root drawable.
- */
-b9.Preset.getRootDrawable = function(scr_no) {
-    return this._root_draw_array[scr_no - this.MIN_SCREEN_NO];
-};
-
-/**
  *
  */
 b9.Preset.defaultUpdateFunction = function() {
@@ -68,14 +59,9 @@ b9.Preset.defaultUpdateFunction = function() {
  */
 b9.Preset.defaultRenderFunction = function() {
     var i;
-    var scr;
 
     for (i = 0; i < b9.Preset.SCREEN_COUNT; i++) {
-        scr = b9.Preset._scr_array[i];
-
-        scr.beginRender();
-        scr.render(b9.Preset._root_draw_array[i]);
-        scr.endRender();
+        b9.Preset._scr_array[i].render();
     }
 };
 
@@ -98,14 +84,12 @@ b9.Preset._initialize = function() {
      * initialize the preset screens
      */
     this._scr_array = new Array(this.SCREEN_COUNT);
-    this._root_draw_array = new Array(this.SCREEN_COUNT);
 
     width = b9.System.getFramebufferWidth();
     height = b9.System.getFramebufferHeight();
 
     for (i = 0; i < this.SCREEN_COUNT; i++) {
         this._scr_array[i] = new b9.Screen(width, height);
-        this._root_draw_array[i] = new b9.Drawable();
     }
 
     scr = this.getScreen(0);

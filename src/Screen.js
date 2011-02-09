@@ -45,13 +45,11 @@ b9.Screen.prototype.initialize = function(width, height) {
     this._far_clip_dist = 100000.0;
     this._inner_scale_x = 1.0;
     this._inner_scale_y = 1.0;
-
     this._camera = new b9.Matrix3D(b9.Matrix3D.UNIT);
     this._camera.getTrans().setZ(this._focal_length);
+    this._root_draw = new b9.Drawable();
 
     this._camera_to_screen = new b9.Matrix3D();
-    this._world_to_camera = new b9.Matrix3D();
-    this._world_to_screen = new b9.Matrix3D();
 };
 
 /**
@@ -220,19 +218,31 @@ b9.Screen.prototype.getCamera = function() {
 };
 
 /**
+ * Returns the root drawable of this screen.
+ * @return {b9.Drawable} The root drawable.
+ */
+b9.Screen.prototype.getRootDrawable = function() {
+    return this._root_draw;
+};
+
+/**
  *
  */
-b9.Screen.prototype.beginRender = function() {
+b9.Screen.prototype.render = function() {
+    var draw;
     var gl = b9.System.getGLContext();
+    var camera = this._camera;
     var clear_flag = 0;
+    var sort_list = null;
 
-    this._sort_list = null;
+    var world_to_camera = b9.Screen._mat1;
+    var world_to_screen = b9.Screen._mat2;
 
     this._updateCameraToScreen(); // TODO
 
-    this._world_to_camera.set(b9.Matrix3D.UNIT).toLocal(this._camera);
+    world_to_camera.set(b9.Matrix3D.UNIT).toLocal(camera);
     b9.Matrix3D.mulArrayAs4x4(
-            this._camera_to_screen.getArray(), this._world_to_camera.getArray(), this._world_to_screen.getArray());
+            this._camera_to_screen.getArray(), world_to_camera.getArray(), world_to_screen.getArray());
 
     // gl.viewport(x, y, w, h);
 
@@ -252,25 +262,15 @@ b9.Screen.prototype.beginRender = function() {
     if (clear_flag) {
         gl.clear(clear_flag);
     }
-};
 
-/**
- *
- * @param {b9.Drawable} root_draw
- */
-b9.Screen.prototype.render = function(root_draw) {
-    var draw;
-    var world_to_screen = this._world_to_screen;
-
-    for (draw = root_draw; draw; draw = draw.getNextAsList()) {
+    for (draw = this._root_draw; draw; draw = draw.getNextAsList()) {
         if (draw.getDrawableFlag(b9.Drawable.FLAG_VISIBLE)) {
             if (draw.getDrawableFlag(b9.Drawable.FLAG_Z_SORT)) {
-                // TODO: setup sort value
-//    ckVec sort_center = m_sort_center.toGlobalFrom(m_world);
-//    m_sort_value = (sort_center - view.trans).dot(view.z_axis) + m_sort_offset;
+                draw._sort_value =
+                    b9.Screen._vec1.set(draw._world.getTrans()).sub(camera.getTrans()).dot(camera.getZAxis());
 
-                draw._sort_list = this._sort_list;
-                this._sort_list = draw;
+                draw._sort_next = sort_list;
+                sort_list = draw;
             } else {
                 draw._render(world_to_screen);
             }
@@ -278,55 +278,62 @@ b9.Screen.prototype.render = function(root_draw) {
             draw = draw.getLastDescendant();
         }
     }
-};
 
-/**
- *
- */
-b9.Screen.prototype.endRender = function() {
-    var draw;
-    var world_to_screen = this._world_to_screen;
+    if (sort_list) {
+        this._sortDrawables(sort_list);
 
-    for (draw = this._sort_list; draw; draw = draw._sort_list) {
-        draw._render(world_to_screen);
+        for (draw = sort_list; draw; draw = draw._sort_next) {
+            draw._render(world_to_screen);
+        }
     }
 };
 
-b9.Screen.prototype._sortTransparentDrawables = function(start, end, list) {
+b9.Screen.prototype._sortDrawables = function(sort_list, start, end) {
 /*
-    ckDraw* center = target_list;
-    target_list = target_list->m_next_sort;
+    var center = sort_list;
+    var sort_list2 = sort_list.sort_list;
 
-    if (!target_list)
-    {
-        center->m_next_sort = NULL;
+    var left_list = null;
+    var right_list = null;
 
-        *sorted_start = center;
-        *sorted_end = center;
+    var left_list_end = null;
+    var right_list_end = null;
 
-        return;
-    }
+    var draw, next;
 
-    ckDraw* left_list = NULL;
-    ckDraw* right_list = NULL;
-    ckDraw* next_sort;
 
-    for (ckDraw* draw = target_list; draw; draw = next_sort)
-    {
-        next_sort = draw->m_next_sort;
+    for (draw = start; draw != end; draw = next) {
+        next = draw.sort_list;
 
-        if (draw->m_sort_value <= center->m_sort_value)
-        {
-            draw->m_next_sort = left_list;
+        if (draw.sort_value <= center.sort_value) {
+            draw.sort_list = left_list;
             left_list = draw;
-        }
-        else
-        {
-            draw->m_next_sort = right_list;
+
+            left_list_end = draw;
+        } else {
+            draw.sort_list = right_list;
             right_list = draw;
+
+            right_list_end = draw;
         }
     }
 
+    for (draw = sort_list2; draw; draw = next) {
+        next = draw.sort_list;
+
+    }
+
+    center.sort_list = right_list;
+
+    if (!sort_list) {
+        center.sort_list = null;
+
+        sl = center;
+        el = center;
+    }
+*/
+
+/*
     if (left_list)
     {
         ckDraw* start;
@@ -402,3 +409,7 @@ b9.Screen.FLAG_CLEAR_COLOR = 0x4000;
  * @return {Number}
  */
 b9.Screen.FLAG_CLEAR_DEPTH = 0x2000;
+
+b9.Screen._vec1 = new b9.Vector3D();
+b9.Screen._mat1 = new b9.Matrix3D();
+b9.Screen._mat2 = new b9.Matrix3D();
