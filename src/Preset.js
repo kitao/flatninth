@@ -68,9 +68,14 @@ b9.Preset.defaultUpdateFunction = function() {
  */
 b9.Preset.defaultRenderFunction = function() {
     var i;
+    var scr;
 
     for (i = 0; i < b9.Preset.SCREEN_COUNT; i++) {
-        b9.Preset._scr_array[i].render(b9.Preset._root_draw_array[i]);
+        scr = b9.Preset._scr_array[i];
+
+        scr.beginRender();
+        scr.render(b9.Preset._root_draw_array[i]);
+        scr.endRender();
     }
 };
 

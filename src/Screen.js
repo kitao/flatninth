@@ -50,6 +50,8 @@ b9.Screen.prototype.initialize = function(width, height) {
     this._camera.getTrans().setZ(this._focal_length);
 
     this._camera_to_screen = new b9.Matrix3D();
+    this._world_to_camera = new b9.Matrix3D();
+    this._world_to_screen = new b9.Matrix3D();
 };
 
 /**
@@ -219,27 +221,21 @@ b9.Screen.prototype.getCamera = function() {
 
 /**
  *
- * @param {b9.Drawable} root_draw
  */
-b9.Screen.prototype.render = function(root_draw) {
-    var draw;
+b9.Screen.prototype.beginRender = function() {
     var gl = b9.System.getGLContext();
     var clear_flag = 0;
-    var world_to_camera = b9.Screen._mat1;
-    var world_to_screen = b9.Screen._mat2;
-    var sort_list = null;
+
+    this._sort_list = null;
 
     this._updateCameraToScreen(); // TODO
 
-    world_to_camera.set(b9.Matrix3D.UNIT).toLocal(this._camera);
+    this._world_to_camera.set(b9.Matrix3D.UNIT).toLocal(this._camera);
     b9.Matrix3D.mulArrayAs4x4(
-            this._camera_to_screen.getArray(), world_to_camera.getArray(), world_to_screen.getArray());
+            this._camera_to_screen.getArray(), this._world_to_camera.getArray(), this._world_to_screen.getArray());
 
     // gl.viewport(x, y, w, h);
 
-    /*
-     * clear screen
-     */
     if (this.getScreenFlag(b9.Screen.FLAG_CLEAR_COLOR)) {
         gl.clearColor(
                 this._clear_color.getR() / 255.0,
@@ -256,10 +252,16 @@ b9.Screen.prototype.render = function(root_draw) {
     if (clear_flag) {
         gl.clear(clear_flag);
     }
+};
 
-    /*
-     * draw opaque drawables
-     */
+/**
+ *
+ * @param {b9.Drawable} root_draw
+ */
+b9.Screen.prototype.render = function(root_draw) {
+    var draw;
+    var world_to_screen = this._world_to_screen;
+
     for (draw = root_draw; draw; draw = draw.getNextAsList()) {
         if (draw.getDrawableFlag(b9.Drawable.FLAG_VISIBLE)) {
             if (draw.getDrawableFlag(b9.Drawable.FLAG_Z_SORT)) {
@@ -267,8 +269,8 @@ b9.Screen.prototype.render = function(root_draw) {
 //    ckVec sort_center = m_sort_center.toGlobalFrom(m_world);
 //    m_sort_value = (sort_center - view.trans).dot(view.z_axis) + m_sort_offset;
 
-                draw._sort_list = sort_list;
-                sort_list = draw;
+                draw._sort_list = this._sort_list;
+                this._sort_list = draw;
             } else {
                 draw._render(world_to_screen);
             }
@@ -276,15 +278,16 @@ b9.Screen.prototype.render = function(root_draw) {
             draw = draw.getLastDescendant();
         }
     }
+};
 
-    /*
-     * draw transparent drawables
-     */
-    if (sort_list) {
-        // TODO: sort
-    }
+/**
+ *
+ */
+b9.Screen.prototype.endRender = function() {
+    var draw;
+    var world_to_screen = this._world_to_screen;
 
-    for (draw = sort_list; draw; draw = draw._sort_list) {
+    for (draw = this._sort_list; draw; draw = draw._sort_list) {
         draw._render(world_to_screen);
     }
 };
@@ -399,6 +402,3 @@ b9.Screen.FLAG_CLEAR_COLOR = 0x4000;
  * @return {Number}
  */
 b9.Screen.FLAG_CLEAR_DEPTH = 0x2000;
-
-b9.Screen._mat1 = new b9.Matrix3D();
-b9.Screen._mat2 = new b9.Matrix3D();
