@@ -47,7 +47,6 @@ b9.Screen.prototype.initialize = function(width, height) {
     this._inner_scale_y = 1.0;
     this._camera = new b9.Matrix3D(b9.Matrix3D.UNIT);
     this._camera.getTrans().setZ(this._focal_length);
-    this._root_draw = new b9.Drawable();
 
     this._camera_to_screen = new b9.Matrix3D();
 };
@@ -218,17 +217,10 @@ b9.Screen.prototype.getCamera = function() {
 };
 
 /**
- * Returns the root drawable of this screen.
- * @return {b9.Drawable} The root drawable.
- */
-b9.Screen.prototype.getRootDrawable = function() {
-    return this._root_draw;
-};
-
-/**
  *
+ * @param {b9.Drawable} root_draw
  */
-b9.Screen.prototype.render = function() {
+b9.Screen.prototype.render = function(root_draw) {
     var draw;
     var gl = b9.System.getGLContext();
     var camera = this._camera;
@@ -263,7 +255,7 @@ b9.Screen.prototype.render = function() {
         gl.clear(clear_flag);
     }
 
-    for (draw = this._root_draw; draw; draw = draw.getNextAsList()) {
+    for (draw = root_draw; draw; draw = draw.getNextAsList()) {
         if (draw.getDrawableFlag(b9.Drawable.FLAG_VISIBLE)) {
             if (draw.getDrawableFlag(b9.Drawable.FLAG_Z_SORT)) {
                 draw._sort_value =
