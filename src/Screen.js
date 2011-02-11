@@ -280,91 +280,12 @@ b9.Screen.prototype.render = function() {
     }
 
     if (sort_list) {
-        this._sortDrawables(sort_list);
+        sort_list = b9.Screen._sortList(sort_list, null, null);
 
         for (draw = sort_list; draw; draw = draw._sort_next) {
             draw._render(world_to_screen);
         }
     }
-};
-
-b9.Screen.prototype._sortDrawables = function(sort_list, start, end) {
-/*
-    var center = sort_list;
-    var sort_list2 = sort_list.sort_list;
-
-    var left_list = null;
-    var right_list = null;
-
-    var left_list_end = null;
-    var right_list_end = null;
-
-    var draw, next;
-
-
-    for (draw = start; draw != end; draw = next) {
-        next = draw.sort_list;
-
-        if (draw.sort_value <= center.sort_value) {
-            draw.sort_list = left_list;
-            left_list = draw;
-
-            left_list_end = draw;
-        } else {
-            draw.sort_list = right_list;
-            right_list = draw;
-
-            right_list_end = draw;
-        }
-    }
-
-    for (draw = sort_list2; draw; draw = next) {
-        next = draw.sort_list;
-
-    }
-
-    center.sort_list = right_list;
-
-    if (!sort_list) {
-        center.sort_list = null;
-
-        sl = center;
-        el = center;
-    }
-*/
-
-/*
-    if (left_list)
-    {
-        ckDraw* start;
-        ckDraw* end;
-
-        sortList(&start, &end, left_list);
-
-        *sorted_start = start;
-        end->m_next_sort = center;
-    }
-    else
-    {
-        *sorted_start = center;
-    }
-
-    if (right_list)
-    {
-        ckDraw* start;
-        ckDraw* end;
-
-        sortList(&start, &end, right_list);
-
-        *sorted_end = end;
-        center->m_next_sort = start;
-    }
-    else
-    {
-        *sorted_end = center;
-        center->m_next_sort = NULL;
-    }
-*/
 };
 
 b9.Screen.prototype._updateCameraToScreen = function() {
@@ -390,6 +311,63 @@ b9.Screen.prototype._updateCameraToScreen = function() {
     camera_to_screen_array[7] = 0.0;
     camera_to_screen_array[11] = -1.0;
     camera_to_screen_array[15] = 0.0;
+};
+
+b9.Screen._sortList = function(sort_list, start, end) {
+    var draw, next;
+    var center = sort_list;
+    var center_sort_value = center.sort_value;
+    var left = null;
+    var left_end = null;
+    var right = null;
+    var right_end = null;
+
+    sort_list = sort_list._sort_next;
+
+    for (draw = sort_list; draw != end; draw = next) {
+        next = draw._sort_next;
+
+        if (draw.sort_value <= center_sort_value) {
+            if (!left) {
+                left_end = draw;
+            }
+
+            draw.sort_list = left;
+            left = draw;
+        } else {
+            if (!right) {
+                right_end = draw;
+            }
+
+            draw.sort_list = right;
+            right = draw;
+        }
+    }
+
+    if (left) {
+        if (start) {
+            start._sort_next = left;
+        }
+
+        left_end._sort_next = center;
+        sort_list = b9.Screen._sortList(left, start, center);
+    } else {
+        if (start) {
+            start._sort_next = center;
+        }
+
+        sort_list = center;
+    }
+
+    if (right) {
+        center._sort_next = right;
+        right_end._sort_next = end;
+        b9.Screen._sortList(right, center, end);
+    } else {
+        center._sort_next = end;
+    }
+
+    return sort_list;
 };
 
 /**
