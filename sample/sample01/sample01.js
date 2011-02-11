@@ -48,7 +48,7 @@ Sample.prototype.initialize = function() {
 
     this._prim.setTexture(0, b9.Resource.get("test_texture"));
 
-    b9.Preset.getScreen(0).getRootDrawable().addChildLast(this._prim);
+    b9.Preset.getRootDrawable(0).addChildLast(this._prim);
 
     this._prim2 = new b9.Primitive(this._prim_buf);
     this._prim2.getLocal().translate(100.0, 50.0, 0.0);
