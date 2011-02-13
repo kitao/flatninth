@@ -33,14 +33,151 @@ b9.SpriteBuffer = b9.createClass();
  * @ignore
  */
 b9.SpriteBuffer.prototype.initialize = function(rect_count) {
-    this.initializeSuper();
+    var i, j;
+    var gl = b9.System.getGLContext();
 
     this._rect_count = rect_count;
+    this._vert_count = rect_count * 4;
+
+    this._pos_array = new Array(rect_count);
+    this._pos_data = new Float32Array(vert_count * 3);
+    this._pos_glbuf = gl.createBuffer();
+
+    this._color_array = new Array(rect_count);
+    this._color_data = new Uint8Array(vert_count * 4);
+    this._color_glbuf = gl.createBuffer();
+
+    this._size_data = new Float32Array((vert_count * 2);
+
+    this._texcoord_data = new Float32Array(vert_count * 2);
+    this._texcoord_glbuf = gl.createBuffer();
+
+    for (i = 0; i < rect_count; i++) {
+        this._pos_array[i] = new b9.Vector3D(this._pos_data, i * 3);
+        this._pos_array[i].set(b9.Vector3D.ZERO);
+
+        this._color_array[i] = new b9.Color(this._color_data, i * 4);
+        this._color_array[i].set(255, 255, 255);
+
+        for (j = 0; j < 8; j++) {
+            this._texcoord_data[i * 2 + j] = 0.0;
+        }
+    }
+
+    this._is_uploaded = false;
 };
 
 /**
  *
  */
 b9.SpriteBuffer.prototype.finalize = function() {
-    this.finalizeSuper();
+    var gl = b9.System.getGLContext();
+
+    gl.deleteBuffer(this._pos_glbuf);
+    gl.deleteBuffer(this._color_glbuf);
+    gl.deleteBuffer(this._texcoord_glbuf);
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.SpriteBuffer.prototype.getRectangleCount = function() {
+    return this._rect_count;
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ */
+b9.SpriteBuffer.prototype.getPos = function(rect_index) {
+    return this._pos_array[vert_index];
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ */
+b9.SpriteBuffer.prototype.getWidth = function(rect_index) {
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ */
+b9.SpriteBuffer.prototype.getHeight = function(rect_index) {
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ * @param {Number} width
+ * @param {Number} height
+ */
+b9.SpriteBuffer.prototype.setSize = function(rect_index, width, height) {
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ */
+b9.SpriteBuffer.prototype.getColor = function(rect_index) {
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ * @return {Number}
+ */
+b9.SpriteBuffer.prototype.getTexCoordU1 = function(rect_index) {
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ * @return {Number}
+ */
+b9.SpriteBuffer.prototype.getTexCoordV1 = function(rect_index) {
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ * @return {Number}
+ */
+b9.SpriteBuffer.prototype.getTexCoordU2 = function(rect_index) {
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ * @return {Number}
+ */
+b9.SpriteBuffer.prototype.getTexCoordV2 = function(rect_index) {
+};
+
+/**
+ *
+ * @param {Number} rect_index A rectangle index.
+ * @param {Number} u1
+ * @param {Number} v1
+ * @param {Number} u2
+ * @param {Number} v2
+ */
+b9.SpriteBuffer.prototype.setTexCoord = function(rect_index, u1, v1, u2, v2) {
+};
+
+/**
+ *
+ */
+b9.PrimitiveBuffer.prototype.update = function() {
+    this._is_uploaded = false;
+};
+
+b9.SpriteBuffer.prototype._setup = function() {
+    // TODO
+};
+
+b9.SpriteBuffer.prototype._teardown = function() {
+    // TODO
 };

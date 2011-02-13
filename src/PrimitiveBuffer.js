@@ -175,21 +175,28 @@ b9.PrimitiveBuffer.prototype.setIndex = function(elem_index, vert_index) {
     this._elem_data[elem_index] = vert_index;
 };
 
+/**
+ *
+ */
+b9.PrimitiveBuffer.prototype.update = function() {
+    this._is_uploaded = false;
+};
+
 b9.PrimitiveBuffer.prototype._setup = function(shader) {
     var gl = b9.System.getGLContext();
 
     if (!this._is_uploaded) {
         gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_glbuf);
-        gl.bufferData(gl.ARRAY_BUFFER, this._pos_data, gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, this._pos_data, gl.DYNAMIC_DRAW);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this._color_glbuf);
-        gl.bufferData(gl.ARRAY_BUFFER, this._color_data, gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, this._color_data, gl.DYNAMIC_DRAW);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoord_glbuf);
-        gl.bufferData(gl.ARRAY_BUFFER, this._texcoord_data, gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, this._texcoord_data, gl.DYNAMIC_DRAW);
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._elem_glbuf);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._elem_data, gl.STATIC_DRAW);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._elem_data, gl.DYNAMIC_DRAW);
 
         this._is_uploaded = true;
     }
