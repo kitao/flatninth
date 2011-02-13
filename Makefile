@@ -44,11 +44,9 @@ SRCS        = b9.js \
               ActorList.js \
               Texture.js \
               Shader.js \
-              Drawable.js \
+              Node.js \
               PrimitiveBuffer.js \
               Primitive.js \
-              SpriteBuffer.js \
-              Sprite.js \
               Screen.js \
               Resource.js \
               Input.js \
