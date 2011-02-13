@@ -44,12 +44,12 @@ b9.Preset.getScreen = function(scr_no) {
 };
 
 /**
- * Returns the root drawable of the specified screen.
+ * Returns the root node of the specified screen.
  * @param {Number} The index number of a screen.
- * @return {b9.Drawable} The root drawable.
+ * @return {b9.Node} The root node.
  */
-b9.Preset.getRootDrawable = function(scr_no) {
-    return this._root_draw_array[scr_no - this.MIN_SCREEN_NO];
+b9.Preset.getRootNode = function(scr_no) {
+    return this._root_node_array[scr_no - this.MIN_SCREEN_NO];
 };
 
 /**
@@ -70,7 +70,7 @@ b9.Preset.defaultRenderFunction = function() {
     var i;
 
     for (i = 0; i < b9.Preset.SCREEN_COUNT; i++) {
-        b9.Preset._scr_array[i].render(b9.Preset._root_draw_array[i]);
+        b9.Preset._scr_array[i].render(b9.Preset._root_node_array[i]);
     }
 };
 
@@ -93,14 +93,14 @@ b9.Preset._initialize = function() {
      * initialize the preset screens
      */
     this._scr_array = new Array(this.SCREEN_COUNT);
-    this._root_draw_array = new Array(this.SCREEN_COUNT);
+    this._root_node_array = new Array(this.SCREEN_COUNT);
 
     width = b9.System.getFramebufferWidth();
     height = b9.System.getFramebufferHeight();
 
     for (i = 0; i < this.SCREEN_COUNT; i++) {
         this._scr_array[i] = new b9.Screen(width, height);
-        this._root_draw_array[i] = new b9.Drawable();
+        this._root_node_array[i] = new b9.Node();
     }
 
     scr = this.getScreen(0);
@@ -113,7 +113,7 @@ b9.Preset._initialize = function() {
      */
     vert_code =
         "uniform mat4 b9_local_to_screen;" +
-        "uniform vec4 b9_drawable_color;" +
+        "uniform vec4 b9_node_color;" +
         "" +
         "attribute vec4 b9_vertex_pos;" +
         "attribute vec4 b9_vertex_color;" +
@@ -125,7 +125,7 @@ b9.Preset._initialize = function() {
         "void main()" +
         "{" +
         "    gl_Position = b9_local_to_screen * b9_vertex_pos;" +
-        "    pixel_color = b9_vertex_color * b9_drawable_color / (255.0 * 255.0);" +
+        "    pixel_color = b9_vertex_color * b9_node_color / (255.0 * 255.0);" +
         "    pixel_texcoord = b9_vertex_texcoord;" +
         "}";
 

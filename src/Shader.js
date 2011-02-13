@@ -119,8 +119,8 @@ b9.Shader.prototype._setup = function() {
 
         this._local_to_screen_loc = gl.getUniformLocation(this._glprog, "b9_local_to_screen");
 b9.Debug.trace("b9_local_to_screen=" + this._local_to_screen_loc);
-        this._drawable_color_loc = gl.getUniformLocation(this._glprog, "b9_drawable_color");
-b9.Debug.trace("b9_drawable_color=" + this._drawable_color_loc);
+        this._node_color_loc = gl.getUniformLocation(this._glprog, "b9_node_color");
+b9.Debug.trace("b9_node_color=" + this._node_color_loc);
         this._pos_loc = gl.getAttribLocation(this._glprog, "b9_vertex_pos");
 b9.Debug.trace("b9_vertex_pos=" + this._pos_loc);
         this._color_loc = gl.getAttribLocation(this._glprog, "b9_vertex_color");

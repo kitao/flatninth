@@ -23,7 +23,7 @@
 /**
  * Constructs a screen.
  *
- * @class A rendering target of drawables.
+ * @class A rendering target of nodes.
  *
  * @param {Number} width
  * @param {Number} height
@@ -218,10 +218,10 @@ b9.Screen.prototype.getCamera = function() {
 
 /**
  *
- * @param {b9.Drawable} root_draw
+ * @param {b9.Node} root_node
  */
-b9.Screen.prototype.render = function(root_draw) {
-    var draw;
+b9.Screen.prototype.render = function(root_node) {
+    var node;
     var gl = b9.System.getGLContext();
     var camera = this._camera;
     var clear_flag = 0;
@@ -255,27 +255,27 @@ b9.Screen.prototype.render = function(root_draw) {
         gl.clear(clear_flag);
     }
 
-    for (draw = root_draw; draw; draw = draw.getNextAsList()) {
-        if (draw.getDrawableFlag(b9.Drawable.FLAG_VISIBLE)) {
-            if (draw.getDrawableFlag(b9.Drawable.FLAG_Z_SORT)) {
-                draw._sort_value =
-                    b9.Screen._vec1.set(draw._world.getTrans()).sub(camera.getTrans()).dot(camera.getZAxis());
+    for (node = root_node; node; node = node.getNextAsList()) {
+        if (node.getNodeFlag(b9.Node.FLAG_VISIBLE)) {
+            if (node.getNodeFlag(b9.Node.FLAG_Z_SORT)) {
+                node._sort_value =
+                    b9.Screen._vec1.set(node._world.getTrans()).sub(camera.getTrans()).dot(camera.getZAxis());
 
-                draw._sort_next = sort_list;
-                sort_list = draw;
+                node._sort_next = sort_list;
+                sort_list = node;
             } else {
-                draw._render(world_to_screen);
+                node._render(world_to_screen);
             }
         } else {
-            draw = draw.getLastDescendant();
+            node = node.getLastDescendant();
         }
     }
 
     if (sort_list) {
         sort_list = b9.Screen._sortList(sort_list, null, null);
 
-        for (draw = sort_list; draw; draw = draw._sort_next) {
-            draw._render(world_to_screen);
+        for (node = sort_list; node; node = node._sort_next) {
+            node._render(world_to_screen);
         }
     }
 };
@@ -306,7 +306,7 @@ b9.Screen.prototype._updateCameraToScreen = function() {
 };
 
 b9.Screen._sortList = function(sort_list, start, end) {
-    var draw, next;
+    var node, next;
     var center = sort_list;
     var center_sort_value = center.sort_value;
     var left = null;
@@ -316,23 +316,23 @@ b9.Screen._sortList = function(sort_list, start, end) {
 
     sort_list = sort_list._sort_next;
 
-    for (draw = sort_list; draw != end; draw = next) {
-        next = draw._sort_next;
+    for (node = sort_list; node != end; node = next) {
+        next = node._sort_next;
 
-        if (draw.sort_value <= center_sort_value) {
+        if (node.sort_value <= center_sort_value) {
             if (!left) {
-                left_end = draw;
+                left_end = node;
             }
 
-            draw.sort_list = left;
-            left = draw;
+            node.sort_list = left;
+            left = node;
         } else {
             if (!right) {
-                right_end = draw;
+                right_end = node;
             }
 
-            draw.sort_list = right;
-            right = draw;
+            node.sort_list = right;
+            right = node;
         }
     }
 

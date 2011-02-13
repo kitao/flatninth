@@ -23,15 +23,15 @@
 /**
  * Constructs a primitive.
  *
- * @class A derived class of the b9.Drawable class, which draws points, lines, and polygons.
- * @extends b9.Drawable
+ * @class A derived class of the b9.Node class, which draws points, lines, and polygons.
+ * @extends b9.Node
  *
  * @param {b9.PrimitiveBuffer} prim_buf A primitive buffer this primitive refers to.
  * @param {Number} [uni_count] The number of the shader uniforms. If not specified, 0 is used.
  * @param {Number} [tex_count] The number of the textures. This number is must be equal to or more than 1.
  * If not specified, 1 is used.
  */
-b9.Primitive = b9.createClass(b9.Drawable);
+b9.Primitive = b9.createClass(b9.Node);
 
 /**
  * @ignore
@@ -200,7 +200,7 @@ b9.Primitive.prototype._render = function(world_to_screen) {
     b9.Matrix3D.mulArrayAs4x4(world_to_screen.getArray(), this._world.getArray(), local_to_screen.getArray());
     gl.uniformMatrix4fv(shader._local_to_screen_loc, false, local_to_screen.getArray()); // TODO
 
-    gl.uniform4f(shader._drawable_color_loc,
+    gl.uniform4f(shader._node_color_loc,
             final_color_array[0], final_color_array[1], final_color_array[2], final_color_array[3]); // TODO
 
     for (i = 0; i < tex_count; i++) {
@@ -215,12 +215,6 @@ b9.Primitive.prototype._render = function(world_to_screen) {
 
     this._prim_buf._teardown(shader);
 };
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Primitive.FLAG_XXXX = 0x00800000;
 
 /**
  *
