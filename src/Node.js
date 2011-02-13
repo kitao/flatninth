@@ -344,7 +344,13 @@ b9.Node.FLAG_CULL_FACE = 0x0200;
  * hoge
  * @return {Number}
  */
-b9.Node.FLAG_BILINEAR = 0x0100;
+b9.Node.FLAG_BILLBOARD = 0x0100;
+
+/**
+ * hoge
+ * @return {Number}
+ */
+b9.Node.FLAG_BILINEAR = 0x0080;
 
 /**
  * hoge

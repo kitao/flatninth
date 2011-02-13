@@ -55,6 +55,8 @@ b9.PrimitiveBuffer.prototype.initialize = function(vert_count, elem_count, att_c
     this._texcoord_data = new Float32Array(vert_count * 2);
     this._texcoord_glbuf = gl.createBuffer();
 
+    // TODO: initialize attributes
+
     for (i = 0; i < vert_count; i++) {
         this._pos_array[i] = new b9.Vector3D(this._pos_data, i * 3);
         this._pos_array[i].set(b9.Vector3D.ZERO);
@@ -177,8 +179,24 @@ b9.PrimitiveBuffer.prototype.setIndex = function(elem_index, vert_index) {
 
 /**
  *
+ * @param {Number} vert_index A vertex index.
  */
-b9.PrimitiveBuffer.prototype.update = function() {
+b9.PrimitiveBuffer.prototype.updateVertex = function(vert_index) {
+    // TODO
+};
+
+/**
+ *
+ * @param {Number} elem_index An element index.
+ */
+b9.PrimitiveBuffer.prototype.updateElement = function(elem_index) {
+    // TODO
+};
+
+/**
+ *
+ */
+b9.PrimitiveBuffer.prototype.updateAll = function() {
     this._is_uploaded = false;
 };
 
