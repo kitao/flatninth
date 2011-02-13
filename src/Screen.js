@@ -23,7 +23,7 @@
 /**
  * Constructs a screen.
  *
- * @class A rendering target of nodes.
+ * @class A rendering target of scene graph nodes.
  *
  * @param {Number} width
  * @param {Number} height
