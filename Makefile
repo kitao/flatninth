@@ -40,8 +40,8 @@ SRCS        = b9.js \
               LinkedListItem.js \
               LinkedList.js \
               LinkedTree.js \
-              Actor.js \
-              ActorList.js \
+              Task.js \
+              TaskList.js \
               Texture.js \
               Shader.js \
               Node.js \
