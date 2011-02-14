@@ -26,12 +26,12 @@
 b9.Preset = {};
 
 /**
- * Returns the specified actor list.
- * @param {Number} The index number of an actor list.
- * @return {b9.ActorList} The actor list.
+ * Returns the specified task list.
+ * @param {Number} The index number of an task list.
+ * @return {b9.TaskList} The task list.
  */
-b9.Preset.getActorList = function(actor_list_no) {
-    return this._actor_list_array[actor_list_no - this.MIN_ACTOR_LIST_NO];
+b9.Preset.getTaskList = function(task_list_no) {
+    return this._task_list_array[task_list_no - this.MIN_TASK_LIST_NO];
 };
 
 /**
@@ -58,8 +58,8 @@ b9.Preset.getRootNode = function(scr_no) {
 b9.Preset.defaultUpdateFunction = function() {
     var i;
 
-    for (i = 0; i < b9.Preset.ACTOR_LIST_COUNT; i++) {
-        b9.Preset._actor_list_array[i].update();
+    for (i = 0; i < b9.Preset.TASK_LIST_COUNT; i++) {
+        b9.Preset._task_list_array[i].update();
     }
 };
 
@@ -81,12 +81,12 @@ b9.Preset._initialize = function() {
     var vert_code, frag_code;
 
     /*
-     * initialize the preset actor list
+     * initialize the preset task list
      */
-    this._actor_list_array = new Array(this.ACTOR_LIST_COUNT);
+    this._task_list_array = new Array(this.task_LIST_COUNT);
 
-    for (i = 0; i < this.ACTOR_LIST_COUNT; i++) {
-        this._actor_list_array[i] = new b9.ActorList();
+    for (i = 0; i < this.TASK_LIST_COUNT; i++) {
+        this._task_list_array[i] = new b9.TaskList();
     }
 
     /*
@@ -149,19 +149,19 @@ b9.Preset._initialize = function() {
  *
  * @return {Number}
  */
-b9.Preset.MIN_ACTOR_LIST_NO = -3;
+b9.Preset.MIN_TASK_LIST_NO = -3;
 
 /**
  *
  * @return {Number}
  */
-b9.Preset.MAX_ACTOR_LIST_NO = 3;
+b9.Preset.MAX_TASK_LIST_NO = 3;
 
 /**
  *
  * @return {Number}
  */
-b9.Preset.ACTOR_LIST_COUNT = b9.Preset.MAX_ACTOR_LIST_NO - b9.Preset.MIN_ACTOR_LIST_NO + 1;
+b9.Preset.TASK_LIST_COUNT = b9.Preset.MAX_TASK_LIST_NO - b9.Preset.MIN_TASK_LIST_NO + 1;
 
 /**
  *

@@ -23,12 +23,12 @@
 /**
  * @class hoge
  */
-b9.Actor = b9.createClass();
+b9.Task = b9.createClass();
 
 /**
  * @ignore
  */
-b9.Actor.prototype.initialize = function() {
+b9.Task.prototype.initialize = function() {
     this._is_active = true;
 
     this._item = new b9.LinkedListItem(this);
@@ -37,11 +37,11 @@ b9.Actor.prototype.initialize = function() {
 /**
  * hoge
  */
-b9.Actor.prototype.finalize = function() {
+b9.Task.prototype.finalize = function() {
     var list = this.getList();
 
-    if (list && list._next_actor === this) {
-        list._next_actor = this.getNext();
+    if (list && list._next_task === this) {
+        list._next_task = this.getNext();
     }
 
     this._task_tree.finalize();
@@ -51,7 +51,7 @@ b9.Actor.prototype.finalize = function() {
  * hoge
  * @return {Boolean} hoge
  */
-b9.Actor.prototype.isActive = function() {
+b9.Task.prototype.isActive = function() {
     return this._is_active;
 };
 
@@ -59,33 +59,33 @@ b9.Actor.prototype.isActive = function() {
  * hoge
  * @param {Boolean} is_active hoge
  */
-b9.Actor.prototype.setActive = function(is_active) {
+b9.Task.prototype.setActive = function(is_active) {
     this._is_active = is_active;
 };
 
 /**
- * Returns the actor list to which this actor belongs. If no such actor list exists, returns null.
- * @return {b9.ActorList} The actor list this actor belongs to.
+ * Returns the task list to which this task belongs. If no such task list exists, returns null.
+ * @return {b9.TaskList} The task list this task belongs to.
  */
-b9.Actor.prototype.getList = function() {
+b9.Task.prototype.getList = function() {
     var list = this._item.getList();
     return list ? list.getSelf() : null;
 };
 
 /**
- * Returns the previous actor of this actor. If no such actor exists, returns null.
- * @return {b9.Actor} The previous actor.
+ * Returns the previous task of this task. If no such task exists, returns null.
+ * @return {b9.Task} The previous task.
  */
-b9.Actor.prototype.getPrev = function() {
+b9.Task.prototype.getPrev = function() {
     var prev = this._item.getPrev();
     return prev ? prev.getSelf() : null;
 };
 
 /**
- * Returns the next actor of this actor. If no such actor exists, returns null.
- * @return {b9.Actor} The next actor.
+ * Returns the next task of this task. If no such task exists, returns null.
+ * @return {b9.Task} The next task.
  */
-b9.Actor.prototype.getNext = function() {
+b9.Task.prototype.getNext = function() {
     var next = this._item.getNext();
     return next ? next.getSelf() : null;
 };
@@ -93,4 +93,4 @@ b9.Actor.prototype.getNext = function() {
 /**
  *
  */
-b9.Actor.prototype.update = function() {};
+b9.Task.prototype.update = function() {};
