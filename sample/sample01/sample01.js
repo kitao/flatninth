@@ -20,12 +20,12 @@
  * THE SOFTWARE.
  */
 
-var Sample = b9.createClass(b9.Actor);
+var Sample = b9.createClass(b9.Task);
 
 Sample.prototype.initialize = function() {
     this.initializeSuper();
 
-    b9.Preset.getActorList(0).addLast(this);
+    b9.Preset.getTaskList(0).addLast(this);
 
     this._prim_buf = new b9.PrimitiveBuffer(3, 3);
     this._prim = new b9.Primitive(this._prim_buf);
