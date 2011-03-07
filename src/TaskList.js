@@ -143,3 +143,10 @@ b9.TaskList.prototype.update = function() {
         }
     }
 };
+
+/**
+ *
+ */
+b9.TaskList.prototype.dump = function() {
+    // TODO
+};

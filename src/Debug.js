@@ -26,6 +26,33 @@
 b9.Debug = {};
 
 b9.Debug._initialize = function() {
+    this._is_debugging = true;
+    this._is_perf_monitor = false;
+    this._is_debug_console = false;
+};
+
+/**
+ *
+ * @param {Boolean} is_on
+ */
+b9.Debug.switchDebugging = function(is_on) {
+    this._is_debugging = is_on;
+};
+
+/**
+ *
+ * @param {Boolean} is_on
+ */
+b9.Debug.switchPerformanceMonitor = function(is_on) {
+    this._is_perf_monitor = is_on;
+};
+
+/**
+ *
+ * @param {Boolean} is_on
+ */
+b9.Debug.switchDebugConsole = function(is_on) {
+    this._is_debug_console = is_on;
 };
 
 /**
@@ -33,5 +60,102 @@ b9.Debug._initialize = function() {
  * @param {String} msg A message.
  */
 b9.Debug.trace = function(msg) {
-    console.log(msg);
+    if (this._is_debugging) {
+        console.log(msg);
+
+        // TODO
+    }
+};
+
+/**
+ *
+ * @param {Number} x
+ * @param {Number} y
+ * @param {String} str
+ * @param {b9.Color} color
+ */
+b9.Debug.drawString = function(x, y, str, color) {
+    if (this._is_debugging) {
+        // TODO
+    }
+};
+
+/**
+ *
+ * @param {Number} x1
+ * @param {Number} y1
+ * @param {Number} x2
+ * @param {Number} y2
+ * @param {b9.Color} color
+ */
+b9.Debug.drawLine = function(x1, y1, x2, y2, color) {
+    if (this._is_debugging) {
+        // TODO
+    }
+};
+
+/**
+ *
+ * @param {Number} x1
+ * @param {Number} y1
+ * @param {Number} x2
+ * @param {Number} y2
+ * @param {b9.Color} color
+ */
+b9.Debug.drawPolygon3 = function(x1, y1, x2, y2, x3, y3, color) {
+    if (this._is_debugging) {
+        // TODO
+    }
+};
+
+/**
+ *
+ * @param {Number} x1
+ * @param {Number} y1
+ * @param {Number} x2
+ * @param {Number} y2
+ * @param {Number} x3
+ * @param {Number} y3
+ * @param {Number} x4
+ * @param {Number} y4
+ * @param {b9.Color} color
+ */
+b9.Debug.drawPolygon4 = function(x1, y1, x2, y2, x3, y3, x4, y4, color) {
+    if (this._is_debugging) {
+        // TODO
+    }
+};
+
+/**
+ *
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} width
+ * @param {Number} height
+ * @param {b9.Color} color
+ */
+b9.Debug.drawRectangle = function(x, y, width, height, color) {
+    if (this._is_debugging) {
+        // TODO
+    }
+};
+
+b9.Debug._render = function() {
+    if (this._is_debugging) {
+        if (this._is_perf_monitor) {
+            this._renderPerformanceMonitor();
+        }
+
+        if (this._is_debug_console) {
+            this._renderDebugConsole();
+        }
+    }
+};
+
+b9.Debug._renderPerformanceMonitor = function() {
+    // TODO
+};
+
+b9.Debug._renderDebugConsole = function() {
+    // TODO
 };

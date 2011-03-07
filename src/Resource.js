@@ -53,3 +53,10 @@ b9.Resource.add = function(res_name, obj) {
 b9.Resource.remove = function(res_name) {
     delete this._res_table[res_name];
 };
+
+/**
+ *
+ */
+b9.Resource.dump = function() {
+    // TODO
+};

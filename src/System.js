@@ -84,6 +84,7 @@ b9.System.start = function() {
         }
 
         that._render_func();
+        b9.Debug._render();
 
         cur_time = that.getTime();
         wait_time = b9.Math.max(that._next_update_time - cur_time, 0);

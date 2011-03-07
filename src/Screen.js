@@ -280,6 +280,13 @@ b9.Screen.prototype.render = function(root_node) {
     }
 };
 
+/**
+ *
+ */
+b9.Screen.prototype.dump = function() {
+    // TODO
+};
+
 b9.Screen.prototype._updateCameraToScreen = function() {
     var camera_to_screen_array = this._camera_to_screen.getArray();
     var inv_sub = 1.0 / (this._far_clip_dist - this._near_clip_dist);
