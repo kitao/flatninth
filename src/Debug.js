@@ -26,33 +26,55 @@
 b9.Debug = {};
 
 b9.Debug._initialize = function() {
-    this._is_debugging = true;
-    this._is_perf_monitor = false;
-    this._is_debug_console = false;
+    this._is_debug_enabled = true;
+    this._is_perf_monitor_enabled = false;
+    this._is_debug_console_enabled = false;
 };
 
 /**
  *
- * @param {Boolean} is_on
  */
-b9.Debug.switchDebugging = function(is_on) {
-    this._is_debugging = is_on;
+b9.Debug.isDebugEnabled = function() {
+    return this._is_debug_enabled;
 };
 
 /**
  *
- * @param {Boolean} is_on
+ * @param {Boolean} is_debug_enabled
  */
-b9.Debug.switchPerformanceMonitor = function(is_on) {
-    this._is_perf_monitor = is_on;
+b9.Debug.switchDebug = function(is_debug_enabled) {
+    this._is_debug_enabled = is_on;
 };
 
 /**
  *
- * @param {Boolean} is_on
  */
-b9.Debug.switchDebugConsole = function(is_on) {
-    this._is_debug_console = is_on;
+b9.Debug.isPerformanceMonitorEnabled = function() {
+    return this._is_perf_monitor_enabled;
+};
+
+/**
+ *
+ * @param {Boolean} is_perf_monitor_enabled
+ */
+b9.Debug.switchPerformanceMonitor = function(is_perf_monitor_enabled) {
+    this._is_perf_monitor_enabled = is_perf_monitor_enabled;
+};
+
+/**
+ *
+ * @return {Boolean}
+ */
+b9.Debug.isDebugConsoleEnabled = function() {
+    return this._is_debug_console_enabled;
+};
+
+/**
+ *
+ * @param {Boolean} is_debug_console_enabled
+ */
+b9.Debug.switchDebugConsole = function(is_debug_console_enabled) {
+    this._is_debug_console_enabled = is_debug_console_enabled;
 };
 
 /**
@@ -60,7 +82,7 @@ b9.Debug.switchDebugConsole = function(is_on) {
  * @param {String} msg A message.
  */
 b9.Debug.trace = function(msg) {
-    if (this._is_debugging) {
+    if (this._is_debug_enabled) {
         console.log(msg);
 
         // TODO
@@ -75,7 +97,7 @@ b9.Debug.trace = function(msg) {
  * @param {b9.Color} color
  */
 b9.Debug.drawString = function(x, y, str, color) {
-    if (this._is_debugging) {
+    if (this._is_debug_enabled) {
         // TODO
     }
 };
@@ -89,7 +111,7 @@ b9.Debug.drawString = function(x, y, str, color) {
  * @param {b9.Color} color
  */
 b9.Debug.drawLine = function(x1, y1, x2, y2, color) {
-    if (this._is_debugging) {
+    if (this._is_debug_enabled) {
         // TODO
     }
 };
@@ -103,7 +125,7 @@ b9.Debug.drawLine = function(x1, y1, x2, y2, color) {
  * @param {b9.Color} color
  */
 b9.Debug.drawPolygon3 = function(x1, y1, x2, y2, x3, y3, color) {
-    if (this._is_debugging) {
+    if (this._is_debug_enabled) {
         // TODO
     }
 };
@@ -121,7 +143,7 @@ b9.Debug.drawPolygon3 = function(x1, y1, x2, y2, x3, y3, color) {
  * @param {b9.Color} color
  */
 b9.Debug.drawPolygon4 = function(x1, y1, x2, y2, x3, y3, x4, y4, color) {
-    if (this._is_debugging) {
+    if (this._is_debug_enabled) {
         // TODO
     }
 };
@@ -135,18 +157,18 @@ b9.Debug.drawPolygon4 = function(x1, y1, x2, y2, x3, y3, x4, y4, color) {
  * @param {b9.Color} color
  */
 b9.Debug.drawRectangle = function(x, y, width, height, color) {
-    if (this._is_debugging) {
+    if (this._is_debug_enabled) {
         // TODO
     }
 };
 
 b9.Debug._render = function() {
-    if (this._is_debugging) {
-        if (this._is_perf_monitor) {
+    if (this._is_debug_enabled) {
+        if (this._is_perf_monitor_enabled) {
             this._renderPerformanceMonitor();
         }
 
-        if (this._is_debug_console) {
+        if (this._is_debug_console_enabled) {
             this._renderDebugConsole();
         }
     }
