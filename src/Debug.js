@@ -26,9 +26,20 @@
 b9.Debug = {};
 
 b9.Debug._initialize = function() {
+    var i;
+
     this._is_debug_enabled = true;
     this._is_perf_monitor_enabled = false;
-    this._is_debug_console_enabled = false;
+
+    this._prim_buf = new b9.PrimitiveBuffer(this._MAX_VERTEX_COUNT, this._MAX_VERTEX_COUNT);
+    this._prim_array = new Array(this._MAX_PRIMITIVE_COUNT);
+
+    this._cur_prim_count = 0;
+    this._cur_vert_count = 0;
+
+    for (i = 0; i < this._MAX_PRIMITIVE_COUNT; i++) {
+        this._prim_array[i] = new b9.Primitive(this._prim_buf);
+    }
 };
 
 /**
@@ -42,8 +53,8 @@ b9.Debug.isDebugEnabled = function() {
  *
  * @param {Boolean} is_debug_enabled
  */
-b9.Debug.switchDebug = function(is_debug_enabled) {
-    this._is_debug_enabled = is_on;
+b9.Debug.setDebugEnabled = function(is_enabled) {
+    this._is_debug_enabled = is_enabled;
 };
 
 /**
@@ -57,24 +68,8 @@ b9.Debug.isPerformanceMonitorEnabled = function() {
  *
  * @param {Boolean} is_perf_monitor_enabled
  */
-b9.Debug.switchPerformanceMonitor = function(is_perf_monitor_enabled) {
-    this._is_perf_monitor_enabled = is_perf_monitor_enabled;
-};
-
-/**
- *
- * @return {Boolean}
- */
-b9.Debug.isDebugConsoleEnabled = function() {
-    return this._is_debug_console_enabled;
-};
-
-/**
- *
- * @param {Boolean} is_debug_console_enabled
- */
-b9.Debug.switchDebugConsole = function(is_debug_console_enabled) {
-    this._is_debug_console_enabled = is_debug_console_enabled;
+b9.Debug.setPerformanceMonitorEnabled = function(is_enabled) {
+    this._is_perf_monitor_enabled = is_enabled;
 };
 
 /**
@@ -84,8 +79,6 @@ b9.Debug.switchDebugConsole = function(is_debug_console_enabled) {
 b9.Debug.trace = function(msg) {
     if (this._is_debug_enabled) {
         console.log(msg);
-
-        // TODO
     }
 };
 
@@ -112,6 +105,14 @@ b9.Debug.drawString = function(x, y, str, color) {
  */
 b9.Debug.drawLine = function(x1, y1, x2, y2, color) {
     if (this._is_debug_enabled) {
+        if (this._cur_prim_count < this._MAX_PRIMITIVE_COUNT && this._cur_vert_count + 1 < this._MAX_VERTEX_COUNT) {
+            // TODO
+
+            this._cur_prim_count += 1;
+            this._cur_vert_count += 2;
+        }
+
+
         // TODO
     }
 };
@@ -122,6 +123,8 @@ b9.Debug.drawLine = function(x1, y1, x2, y2, color) {
  * @param {Number} y1
  * @param {Number} x2
  * @param {Number} y2
+ * @param {Number} x3
+ * @param {Number} y3
  * @param {b9.Color} color
  */
 b9.Debug.drawPolygon3 = function(x1, y1, x2, y2, x3, y3, color) {
@@ -168,9 +171,10 @@ b9.Debug._render = function() {
             this._renderPerformanceMonitor();
         }
 
-        if (this._is_debug_console_enabled) {
-            this._renderDebugConsole();
-        }
+
+
+        this._cur_prim_count = 0;
+        this._cur_vert_count = 0;
     }
 };
 
@@ -178,6 +182,5 @@ b9.Debug._renderPerformanceMonitor = function() {
     // TODO
 };
 
-b9.Debug._renderDebugConsole = function() {
-    // TODO
-};
+b9.Debug._MAX_PRIMITIVE_COUNT = 100;
+b9.Debug._MAX_VERTEX_COUNT = 100;

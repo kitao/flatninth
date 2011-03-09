@@ -26,17 +26,32 @@
  * @class A derived class of the b9.Node class, which draws TODO.
  * @extends b9.Node
  *
- * @param {b9.SpriteBuffer} sprt_buf A sprite buffer this sprite refers to.
+ * @param {Number} [uni_count] The number of the shader uniforms. If not specified, 0 is used.
+ * @param {Number} [tex_count] The number of the textures. This number is must be equal to or more than 1.
+ * If not specified, 1 is used.
  */
 b9.Sprite = b9.createClass(b9.Node);
 
 /**
  * @ignore
  */
-b9.Sprite.prototype.initialize = function(sprt_buf) {
+b9.Sprite.prototype.initialize = function(uni_count, tex_count) {
+    var i;
+
     this.initializeSuper();
 
-    this._sprt_buf = sprt_buf;
+    this._uni_count = uni_count;
+    this._tex_count = b9.Math.max(tex_count, 1);
+    this._pivot_type = b9.Sprite.PIVOT_CENTER;
+    this._width = b9.Sprite._DEFAULT_SPRITE_SIZE;
+    this._height = b9.Sprite._DEFAULT_SPRITE_SIZE;
+
+    this._tex_array = new Array(tex_count);
+    for (i = 0; i < tex_count; i++) {
+        this._tex_array[i] = null;
+    }
+
+    this._shader = null;
 };
 
 /**
@@ -47,19 +62,135 @@ b9.Sprite.prototype.finalize = function() {
 };
 
 /**
- * Returns the sprite buffer of this sprite.
- * @return {b9.SpriteBuffer} The sprite buffer.
+ *
+ * @return {Number}
  */
-b9.Sprite.prototype.getSpriteBuffer = function() {
-    return this._sprt_buf;
+b9.Sprite.prototype.getPivotType = function() {
+    return this._pivot_type;
 };
 
 /**
- * Sets the sprite buffer of this sprite.
- * @param {b9.SpriteBuffer} sprt_buf
+ *
+ * @param {Number} pivot_type
  */
-b9.Sprite.prototype.setSpriteBuffer = function(sprt_buf) {
-    this._sprt_buf = sprt_buf;
-
-    // TODO: check index and count
+b9.Sprite.prototype.setPivotType = function(pivot_type) {
+    this._pivot_type = pivot_type;
 };
+
+/**
+ *
+ */
+b9.Sprite.prototype.getWidth = function() {
+    return this._width;
+};
+
+/**
+ *
+ */
+b9.Sprite.prototype.getHeight = function() {
+    return this._height;
+};
+
+/**
+ * Returns the number of the shader uniforms of this primitive.
+ * @return {Number} The number of the shader uniforms.
+ */
+b9.Primitive.prototype.getUniformCount = function() {
+    return this._uni_count;
+};
+
+/**
+ * Returns the number of the shader attributes.
+ * @return {Number} The number of the attributes.
+ */
+b9.PrimitiveBuffer.prototype.getAttributeCount = function() {
+    return this._att_count;
+};
+
+/**
+ * Returns the number of the textures of this sprite.
+ * @return {Number} The number of the textures.
+ */
+b9.Sprite.prototype.getTextureCount = function() {
+    return this._tex_count;
+};
+
+/**
+ * Returns the specified texture of this sprite.
+ * @param {Number} tex_no A texture number.
+ * @return {b9.Texture} The texture.
+ */
+b9.Sprite.prototype.getTexture = function(tex_no) {
+    return this._tex_array[tex_no];
+};
+
+/**
+ * Sets the specified texture of this sprite.
+ * @param {Number} tex_no A texture number.
+ * @param {b9.Texture} tex A texture.
+ */
+b9.Sprite.prototype.setTexture = function(tex_no, tex) {
+    this._tex_array[tex_no] = tex;
+};
+
+/**
+ * Returns the shader of this sprite. If the default shader is used, returns null.
+ * @return {b9.Shader} The shader.
+ */
+b9.Sprite.prototype.getShader = function() {
+    return this._shader;
+};
+
+/**
+ * Sets the shader of this sprite. If null is specified, the default shader is used.
+ * @param {b9.Shader} shader A shader.
+ */
+b9.Sprite.prototype.setShader = function(shader) {
+    this._shader = shader;
+};
+
+b9.Sprite.prototype._render = function(world_to_screen) {
+    // TODO
+};
+
+/**
+ *
+ * @param {Number} width
+ * @param {Number} height
+ */
+b9.Sprite.prototype.setSize = function(width, height) {
+    this._width = width;
+    this._height = height;
+};
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Sprite.PIVOT_CENTER = 0;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Sprite.PIVOT_LEFT_TOP = 1;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Sprite.PIVOT_RIGHT_TOP = 2;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Sprite.PIVOT_LEFT_BOTTOM = 3;
+
+/**
+ *
+ * @return {Number}
+ */
+b9.Sprite.PIVOT_RIGHT_BOTTOM = 4;
+
+b9.Sprite._DEFAULT_SPRITE_SIZE = 16.0;
