@@ -38,15 +38,13 @@ b9.Shader = b9.createClass();
  * @ignore
  */
 b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_count, tex_count) {
-    var gl = b9.System.getGLContext();
-
-    this._is_uploaded = false;
+    this._buf_stat = new b9.BufferState();
     this._vert_code = vert_code;
     this._frag_code = frag_code;
     this._uni_count = uni_count;
     this._att_count = att_count;
     this._tex_count = tex_count;
-    this._glprog = gl.createProgram();
+    this._glprog = null;
 };
 
 /**
@@ -55,7 +53,10 @@ b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_c
 b9.Shader.prototype.finalize = function() {
     var gl = b9.System.getGLContext();
 
-    gl.deleteProgram(this._glprog);
+    if (this._glprog) {
+        gl.deleteProgram(this._glprog);
+        this._glprog = null;
+    }
 };
 
 /**
@@ -87,8 +88,10 @@ b9.Shader.prototype._setup = function() {
     var vert_glshd, frag_glshd;
     var gl = b9.System.getGLContext();
 
-    if (!this._is_uploaded) {
+    if (this._buf_stat.checkUpdate()) {
         gl = b9.System.getGLContext();
+
+        this._glprog = gl.createProgram();
 
         vert_glshd = gl.createShader(gl.VERTEX_SHADER);
         gl.shaderSource(vert_glshd, this._vert_code);
@@ -153,7 +156,7 @@ b9.Debug.trace("b9_texture_" + i + "=" + this._tex_loc_table[i]);
             }
         }
 
-        this._is_uploaded = true;
+        this._buf_stat.finishUpdate();
     }
 
     gl.useProgram(this._glprog);

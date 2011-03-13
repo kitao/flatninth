@@ -33,16 +33,15 @@ b9.Texture = b9.createClass();
  * @ignore
  */
 b9.Texture.prototype.initialize = function(filename_or_width, height, format) {
-    var gl = b9.System.getGLContext();
     var that;
 
     this._is_loaded = false;
-    this._is_uploaded = false;
+    this._buf_stat = new b9.BufferState();
     this._width = 0.0;
     this._height = 0.0;
 
     if (arguments.length === 1) {
-        this._gltex = gl.createTexture();
+        this._gltex = null;
         this._image = new Image();
         this._image.src = filename_or_width;
 
@@ -62,6 +61,11 @@ b9.Texture.prototype.initialize = function(filename_or_width, height, format) {
  *
  */
 b9.Texture.prototype.finalize = function() {
+    if (this._gltex) {
+        // TODO
+        this._gltex = null;
+    }
+
     // TODO
 };
 
@@ -104,18 +108,20 @@ b9.Texture.prototype._setup = function(shader) {
     var gl = b9.System._gl;
 
     if (this._is_loaded) {
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, this._gltex);
+        if (this._buf_stat.checkUpdate()) {
+            this._gltex = gl.createTexture();
 
-        if (!this._is_uploaded) {
+            gl.bindTexture(gl.TEXTURE_2D, this._gltex);
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this._image);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 
-            this._is_uploaded = true;
+            this._buf_stat.finishUpdate();
         }
 
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, this._gltex);
         gl.uniform1i(shader._tex_loc_table[0], 0);
     }
 };

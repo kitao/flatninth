@@ -48,7 +48,7 @@ b9.System.setup = function(canvas_id, target_fps) {
     this._timer_id = null;
     this._next_update_time = 0;
 
-    this._initGL();
+    this._initializeGL();
 
     b9.Resource._initialize();
     b9.Input._initialize();
@@ -201,7 +201,7 @@ b9.System.error = function(msg) {
     throw new Error(msg2);
 };
 
-b9.System._initGL = function() {
+b9.System._initializeGL = function() {
     var gl = this._gl;
 
     gl.clearDepth(-1.0);
