@@ -122,7 +122,7 @@ b9.Texture.prototype._setup = function(shader) {
 
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this._gltex);
-        gl.uniform1i(shader._tex_loc_table[0], 0);
+        gl.uniform1i(shader._tex_loc_array[0], 0);
     }
 };
 

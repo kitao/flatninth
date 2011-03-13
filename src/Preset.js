@@ -143,6 +143,40 @@ b9.Preset._initialize = function() {
         "}";
 
     this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 1);
+
+    vert_code =
+        "uniform mat4 b9_local_to_screen;" +
+        "uniform vec4 b9_node_color;" +
+        "uniform vec4 b9_uniform_00;" +
+        "uniform vec4 b9_uniform_01;" +
+        "" +
+        "attribute vec4 b9_vertex_pos;" +
+        "attribute vec2 b9_vertex_texcoord;" +
+        "" +
+        "varying vec4 pixel_color;" +
+        "varying vec2 pixel_texcoord;" +
+        "" +
+        "void main()" +
+        "{" +
+        "    gl_Position = b9_local_to_screen * (b9_vertex_pos * vec3(b9_uniform_00, b9_uniform_01, 1.0));" +
+        "    pixel_color = b9_node_color / 255.0;" +
+        "    pixel_texcoord = b9_vertex_texcoord;" +
+        "}";
+
+    frag_code =
+        "precision mediump float;" +
+        "" +
+        "uniform sampler2D b9_texture_00;" +
+        "" +
+        "varying vec4 pixel_color;" +
+        "varying vec2 pixel_texcoord;" +
+        "" +
+        "void main()" +
+        "{" +
+        "    gl_FragColor = texture2D(b9_texture_00, pixel_texcoord.st) * pixel_color;" +
+        "}";
+
+    this._sprite_shader = new b9.Shader(vert_code, frag_code, 2, 0, 1);
 };
 
 /**

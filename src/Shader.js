@@ -38,13 +38,16 @@ b9.Shader = b9.createClass();
  * @ignore
  */
 b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_count, tex_count) {
+    this._glprog = null;
     this._buf_stat = new b9.BufferState();
     this._vert_code = vert_code;
     this._frag_code = frag_code;
     this._uni_count = uni_count;
+    this._uni_loc_array = (uni_count > 0) ? new Array(uni_count) : null;
     this._att_count = att_count;
+    this._att_loc_array = (att_count > 0) ? new Array(att_count) : null;
     this._tex_count = tex_count;
-    this._glprog = null;
+    this._tex_loc_array = (tex_count > 0) ? new Array(tex_count) : null;
 };
 
 /**
@@ -132,27 +135,21 @@ b9.Debug.trace("b9_vertex_color=" + this._color_loc);
 b9.Debug.trace("b9_vertex_texcoord=" + this._texcoord_loc);
 
         if (this._uni_count > 0) {
-            this._uni_loc_table = new Array(this._uni_count);
-
             for (i = 0; i < this._uni_count; i++) {
-                this._uni_loc_table[i] = gl.getUniformLocation(this._glprog, "b9_uniform_" + ("0" + i).substr(-2));
+                this._uni_loc_array[i] = gl.getUniformLocation(this._glprog, "b9_uniform_" + ("0" + i).substr(-2));
             }
         }
 
         if (this._att_count > 0) {
-            this._att_loc_table = new Array(this._att_count);
-
             for (i = 0; i < this._att_count; i++) {
-                this._att_loc_table[i] = gl.getAttribLocation(this._glprog, "b9_attrib_" + ("0" + i).substr(-2));
+                this._att_loc_array[i] = gl.getAttribLocation(this._glprog, "b9_attrib_" + ("0" + i).substr(-2));
             }
         }
 
         if (this._tex_count > 0) {
-            this._tex_loc_table = new Array(this._tex_count);
-
             for (i = 0; i < this._tex_count; i++) {
-                this._tex_loc_table[i] = gl.getUniformLocation(this._glprog, "b9_texture_" + ("0" + i).substr(-2));
-b9.Debug.trace("b9_texture_" + i + "=" + this._tex_loc_table[i]);
+                this._tex_loc_array[i] = gl.getUniformLocation(this._glprog, "b9_texture_" + ("0" + i).substr(-2));
+b9.Debug.trace("b9_texture_" + i + "=" + this._tex_loc_array[i]);
             }
         }
 
