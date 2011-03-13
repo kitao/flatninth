@@ -42,12 +42,12 @@ SRCS        = b9.js \
               LinkedTree.js \
               Task.js \
               TaskList.js \
+              BufferState.js \
               Texture.js \
               Shader.js \
               Node.js \
               PrimitiveBuffer.js \
               Primitive.js \
-              SpriteBuffer.js \
               Sprite.js \
               Screen.js \
               Resource.js \

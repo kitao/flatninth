@@ -38,22 +38,22 @@ b9.PrimitiveBuffer = b9.createClass();
  */
 b9.PrimitiveBuffer.prototype.initialize = function(vert_count, elem_count, att_count) {
     var i;
-    var gl = b9.System.getGLContext();
 
+    this._buf_stat = new b9.BufferState();
     this._vert_count = vert_count;
     this._elem_count = elem_count;
     this._att_count = att_count; // TODO
 
     this._pos_array = new Array(vert_count);
     this._pos_data = new Float32Array(vert_count * 3);
-    this._pos_glbuf = gl.createBuffer();
+    this._pos_glbuf = null;
 
     this._color_array = new Array(vert_count);
     this._color_data = new Uint8Array(vert_count * 4);
-    this._color_glbuf = gl.createBuffer();
+    this._color_glbuf = null;
 
     this._texcoord_data = new Float32Array(vert_count * 2);
-    this._texcoord_glbuf = gl.createBuffer();
+    this._texcoord_glbuf = null;
 
     // TODO: initialize attributes
 
@@ -69,9 +69,7 @@ b9.PrimitiveBuffer.prototype.initialize = function(vert_count, elem_count, att_c
     }
 
     this._elem_data = new Uint16Array(elem_count);
-    this._elem_glbuf = gl.createBuffer();
-
-    this._is_uploaded = false;
+    this._elem_glbuf = null;
 };
 
 /**
@@ -197,26 +195,30 @@ b9.PrimitiveBuffer.prototype.updateElement = function(elem_index) {
  *
  */
 b9.PrimitiveBuffer.prototype.updateAll = function() {
-    this._is_uploaded = false;
+    this._buf_stat.requestUpdate();
 };
 
 b9.PrimitiveBuffer.prototype._setup = function(shader) {
     var gl = b9.System.getGLContext();
 
-    if (!this._is_uploaded) {
+    if (this._buf_stat.checkUpdate()) {
+        this._pos_glbuf = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_glbuf);
         gl.bufferData(gl.ARRAY_BUFFER, this._pos_data, gl.DYNAMIC_DRAW);
 
+        this._color_glbuf = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this._color_glbuf);
         gl.bufferData(gl.ARRAY_BUFFER, this._color_data, gl.DYNAMIC_DRAW);
 
+        this._texcoord_glbuf = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoord_glbuf);
         gl.bufferData(gl.ARRAY_BUFFER, this._texcoord_data, gl.DYNAMIC_DRAW);
 
+        this._elem_glbuf = gl.createBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._elem_glbuf);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this._elem_data, gl.DYNAMIC_DRAW);
 
-        this._is_uploaded = true;
+        this._buf_stat.finishUpdate();
     }
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this._pos_glbuf);

@@ -41,19 +41,18 @@ b9.Primitive.prototype.initialize = function(prim_buf, uni_count, tex_count) {
 
     this.initializeSuper();
 
+    this._shader = null;
+    this._uni_count = uni_count;
+    this._tex_count = b9.Math.max(tex_count, 1);
     this._prim_buf = prim_buf;
     this._elem_index = 0;
     this._elem_count = prim_buf._elem_count;
-    this._uni_count = uni_count;
-    this._tex_count = b9.Math.max(tex_count, 1);
     this._prim_mode = b9.Primitive.MODE_TRIANGLES;
 
     this._tex_array = new Array(tex_count);
     for (i = 0; i < tex_count; i++) {
         this._tex_array[i] = null;
     }
-
-    this._shader = null;
 };
 
 /**
@@ -61,6 +60,56 @@ b9.Primitive.prototype.initialize = function(prim_buf, uni_count, tex_count) {
  */
 b9.Primitive.prototype.finalize = function() {
     this.finalizeSuper();
+};
+
+/**
+ * Returns the shader of this primitive. If the default shader is used, returns null.
+ * @return {b9.Shader} The shader.
+ */
+b9.Primitive.prototype.getShader = function() {
+    return this._shader;
+};
+
+/**
+ * Sets the shader of this primitive. If null is specified, the default shader is used.
+ * @param {b9.Shader} shader A shader.
+ */
+b9.Primitive.prototype.setShader = function(shader) {
+    this._shader = shader;
+};
+
+/**
+ * Returns the number of the shader uniforms of this primitive.
+ * @return {Number} The number of the shader uniforms.
+ */
+b9.Primitive.prototype.getUniformCount = function() {
+    return this._uni_count;
+};
+
+/**
+ * Returns the number of the textures of this primitive.
+ * @return {Number} The number of the textures.
+ */
+b9.Primitive.prototype.getTextureCount = function() {
+    return this._tex_count;
+};
+
+/**
+ * Returns the specified texture of this primitive.
+ * @param {Number} tex_no A texture number.
+ * @return {b9.Texture} The texture.
+ */
+b9.Primitive.prototype.getTexture = function(tex_no) {
+    return this._tex_array[tex_no];
+};
+
+/**
+ * Sets the specified texture of this primitive.
+ * @param {Number} tex_no A texture number.
+ * @param {b9.Texture} tex A texture.
+ */
+b9.Primitive.prototype.setTexture = function(tex_no, tex) {
+    this._tex_array[tex_no] = tex;
 };
 
 /**
@@ -117,22 +166,6 @@ b9.Primitive.prototype.setElementCount = function(elem_count) {
 };
 
 /**
- * Returns the number of the shader uniforms of this primitive.
- * @return {Number} The number of the shader uniforms.
- */
-b9.Primitive.prototype.getUniformCount = function() {
-    return this._uni_count;
-};
-
-/**
- * Returns the number of the textures of this primitive.
- * @return {Number} The number of the textures.
- */
-b9.Primitive.prototype.getTextureCount = function() {
-    return this._tex_count;
-};
-
-/**
  * Returns the primitive mode of this primitive.
  * @return {Number} The primitive mode.
  */
@@ -146,40 +179,6 @@ b9.Primitive.prototype.getPrimitiveMode = function() {
  */
 b9.Primitive.prototype.setPrimitiveMode = function(prim_mode) {
     this._prim_mode = prim_mode;
-};
-
-/**
- * Returns the specified texture of this primitive.
- * @param {Number} tex_no A texture number.
- * @return {b9.Texture} The texture.
- */
-b9.Primitive.prototype.getTexture = function(tex_no) {
-    return this._tex_array[tex_no];
-};
-
-/**
- * Sets the specified texture of this primitive.
- * @param {Number} tex_no A texture number.
- * @param {b9.Texture} tex A texture.
- */
-b9.Primitive.prototype.setTexture = function(tex_no, tex) {
-    this._tex_array[tex_no] = tex;
-};
-
-/**
- * Returns the shader of this primitive. If the default shader is used, returns null.
- * @return {b9.Shader} The shader.
- */
-b9.Primitive.prototype.getShader = function() {
-    return this._shader;
-};
-
-/**
- * Sets the shader of this primitive. If null is specified, the default shader is used.
- * @param {b9.Shader} shader A shader.
- */
-b9.Primitive.prototype.setShader = function(shader) {
-    this._shader = shader;
 };
 
 b9.Primitive.prototype._render = function(world_to_screen) {
