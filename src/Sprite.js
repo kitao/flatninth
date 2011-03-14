@@ -231,7 +231,9 @@ b9.Sprite.setTexCoord = function(u1, v1, u2, v2) {
 };
 
 b9.Sprite.prototype._render = function(world_to_screen) {
-    // TODO: shader
+    var shader = b9.Preset._sprite_shader;
+
+    shader._setup();
 
     b9.Sprite._setupCommonBuffer(this._pivot_type, shader);
 
@@ -246,75 +248,89 @@ b9.Sprite.prototype._render = function(world_to_screen) {
 
     gl.enableVertexAttribArray(shader._texcoord_loc);
     gl.vertexAttribPointer(shader._texcoord_loc, 2, gl.FLOAT, false, 0, 0);
+
+    b9.Matrix3D.mulArrayAs4x4(world_to_screen.getArray(), this._world.getArray(), local_to_screen.getArray());
+    gl.uniformMatrix4fv(shader._local_to_screen_loc, false, local_to_screen.getArray()); // TODO
+
+    gl.uniform4f(shader._node_color_loc,
+            final_color_array[0], final_color_array[1], final_color_array[2], final_color_array[3]); // TODO
+
+    gl.uniform2f(shader._sprite_scale_loc, this._width, this._height);
+
+    for (i = 0; i < tex_count; i++) {
+        tex = this._tex_array[i];
+
+        if (tex) {
+            tex._setup(shader);
+        }
+    }
+
+    gl.drawArrays(gl.MODE_TRIANGLE_STRIP, 0, 4);
+
+    // teardown
+    gl.disableVertexAttribArray(shader._pos_loc);
+    gl.disableVertexAttribArray(shader._texcoord_loc);
 };
 
 b9.Sprite._s_buf_stat = new b9.BufferState();
-b9.Sprite._s_pos_array_array = new Array(5);
-b9.Sprite._s_pos_glbuf_array = new Array(5);
-b9.Sprite._s_pos_data_array = new Array(5);
+b9.Sprite._s_pos_glbuf = null;
+b9.Sprite._s_pos_array = new Array(5 * 4);
+b9.Sprite._s_pos_data = new Array(5 * 4 * 3);
 
 b9.Sprite._setupCommonBuffer = function(pivot_type, shader) {
+    var i;
     var gl;
-    var i, j;
     var pos_array, pos_data;
 
     if (!this._s_buf_stat || this._s_buf_stat.checkUpdate()) {
         gl = b9.System.getGLContext();
 
-        for (i = 0; i < 5; i++) {
-            pos_array = this._s_pos_array_array[i] = new Array(4);
-            pos_data = this._s_pos_data_array[i] = new Float32Array(4 * 3);
-            this._s_pos_glbuf_array[i] = gl.createBuffer();
+        pos_array = this._s_pos_array;
+        pos_data = this._s_pos_data;
 
-            for (j = 0; j < 4; j++) {
-                pos_array[j] = new b9.Vector3D(pos_data, j * 3);
-            }
+        for (i = 0; i < 20; i++) {
+            pos_array[i] = new b9.Vector3D(pos_data, i * 3);
         }
 
         // b9.Sprite.PIVOT_CENTER
-        pos_array = this._s_pos_array_array[0];
         pos_array[0].set(-0.5, 0.5, 0.0);
         pos_array[1].set(-0.5, -0.5, 0.0);
         pos_array[2].set(0.5, 0.5, 0.0);
         pos_array[3].set(0.5, -0.5, 0.0);
 
         // b9.Sprite.PIVOT_LEFT_TOP
-        pos_array = this._s_pos_array_array[1];
-        pos_array[0].set(0.0, 0.0, 0.0);
-        pos_array[1].set(0.0, -1.0, 0.0);
-        pos_array[2].set(1.0, 0.0, 0.0);
-        pos_array[3].set(1.0, -1.0, 0.0);
+        pos_array[4].set(0.0, 0.0, 0.0);
+        pos_array[5].set(0.0, -1.0, 0.0);
+        pos_array[6].set(1.0, 0.0, 0.0);
+        pos_array[7].set(1.0, -1.0, 0.0);
 
         // b9.Sprite.PIVOT_RIGHT_TOP
-        pos_array = this._s_pos_array_array[2];
-        pos_array[0].set(-1.0, 0.0, 0.0);
-        pos_array[1].set(-1.0, -1.0, 0.0);
-        pos_array[2].set(0.0, 0.0, 0.0);
-        pos_array[3].set(0.0, -1.0, 0.0);
+        pos_array[8].set(-1.0, 0.0, 0.0);
+        pos_array[9].set(-1.0, -1.0, 0.0);
+        pos_array[10].set(0.0, 0.0, 0.0);
+        pos_array[11].set(0.0, -1.0, 0.0);
 
         // b9.Sprite.PIVOT_LEFT_BOTTOM
-        pos_array = this._s_pos_array_array[3];
-        pos_array[0].set(0.0, 1.0, 0.0);
-        pos_array[1].set(0.0, 0.0, 0.0);
-        pos_array[2].set(1.0, 1.0, 0.0);
-        pos_array[3].set(1.0, 0.0, 0.0);
+        pos_array[12].set(0.0, 1.0, 0.0);
+        pos_array[13].set(0.0, 0.0, 0.0);
+        pos_array[14].set(1.0, 1.0, 0.0);
+        pos_array[15].set(1.0, 0.0, 0.0);
 
         // b9.Sprite.PIVOT_RIGHT_BOTTOM
-        pos_array = this._s_pos_array_array[4];
-        pos_array[0].set(-1.0, 1.0, 0.0);
-        pos_array[1].set(-1.0, 0.0, 0.0);
-        pos_array[2].set(0.0, 1.0, 0.0);
-        pos_array[3].set(0.0, 0.0, 0.0);
+        pos_array[16].set(-1.0, 1.0, 0.0);
+        pos_array[17].set(-1.0, 0.0, 0.0);
+        pos_array[18].set(0.0, 1.0, 0.0);
+        pos_array[19].set(0.0, 0.0, 0.0);
 
-        for (i = 0; i < 5; i++) {
-            gl.bindBuffer(gl.ARRAY_BUFFER, this._s_pos_glbuf_array[i]);
-            gl.bufferData(gl.ARRAY_BUFFER, this._pos_data_array[i], gl.DYNAMIC_DRAW);
-        }
+        this._s_pos_glbuf = gl.createBuffer();
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._s_pos_glbuf);
+        gl.bufferData(gl.ARRAY_BUFFER, pos_data, gl.DYNAMIC_DRAW);
 
         this._s_buf_stat.finishUpdate();
     }
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, this._s_pos_glbuf_array[pivot_type]);
+    //gl.bindBuffer(gl.ARRAY_BUFFER, this._s_pos_glbuf_array[pivot_type]);
     gl.enableVertexAttribArray(shader._pos_loc);
     gl.vertexAttribPointer(shader._pos_loc, 3, gl.FLOAT, false, 0, 0);
 };

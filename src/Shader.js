@@ -43,10 +43,17 @@ b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_c
     this._vert_code = vert_code;
     this._frag_code = frag_code;
     this._uni_count = uni_count;
-    this._uni_loc_array = (uni_count > 0) ? new Array(uni_count) : null;
     this._att_count = att_count;
-    this._att_loc_array = (att_count > 0) ? new Array(att_count) : null;
     this._tex_count = tex_count;
+
+    this._local_to_screen_loc = 0;
+    this._node_color_loc = 0;
+    this._sprt_scale_loc = 0;
+    this._vert_pos_loc = 0;
+    this._vert_color_loc = 0;
+    this._vert_texcoord_loc = 0;
+    this._uni_loc_array = (uni_count > 0) ? new Array(uni_count) : null;
+    this._att_loc_array = (att_count > 0) ? new Array(att_count) : null;
     this._tex_loc_array = (tex_count > 0) ? new Array(tex_count) : null;
 };
 
@@ -127,12 +134,15 @@ b9.Shader.prototype._setup = function() {
 b9.Debug.trace("b9_local_to_screen=" + this._local_to_screen_loc);
         this._node_color_loc = gl.getUniformLocation(this._glprog, "b9_node_color");
 b9.Debug.trace("b9_node_color=" + this._node_color_loc);
-        this._pos_loc = gl.getAttribLocation(this._glprog, "b9_vertex_pos");
-b9.Debug.trace("b9_vertex_pos=" + this._pos_loc);
-        this._color_loc = gl.getAttribLocation(this._glprog, "b9_vertex_color");
-b9.Debug.trace("b9_vertex_color=" + this._color_loc);
-        this._texcoord_loc = gl.getAttribLocation(this._glprog, "b9_vertex_texcoord");
-b9.Debug.trace("b9_vertex_texcoord=" + this._texcoord_loc);
+        this._sprt_scale_loc = gl.getUniformLocation(this._glprog, "b9_sprite_scale");
+b9.Debug.trace("b9_sprite_scale=" + this._sprt_scale_loc);
+
+        this._vert_pos_loc = gl.getAttribLocation(this._glprog, "b9_vertex_pos");
+b9.Debug.trace("b9_vertex_pos=" + this._vert_pos_loc);
+        this._vert_color_loc = gl.getAttribLocation(this._glprog, "b9_vertex_color");
+b9.Debug.trace("b9_vertex_color=" + this._vert_color_loc);
+        this._vert_texcoord_loc = gl.getAttribLocation(this._glprog, "b9_vertex_texcoord");
+b9.Debug.trace("b9_vertex_texcoord=" + this._vert_texcoord_loc);
 
         if (this._uni_count > 0) {
             for (i = 0; i < this._uni_count; i++) {
