@@ -601,7 +601,9 @@ b9.Matrix3D.prototype.toString = function() {
     var i;
     var array = this.array_;
     var index = this.index_;
-    var str = "(";
+    var str;
+
+    str = "(";
 
     for (i = 0; i < 15; i++) {
         str += array[index + i];

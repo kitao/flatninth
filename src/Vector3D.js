@@ -584,8 +584,9 @@ b9.Vector3D.prototype.equals = function(vec) {
 b9.Vector3D.prototype.toString = function() {
     var array = this.array_;
     var index = this.index_;
-    var str = "(";
+    var str;
 
+    str = "(";
     str += array[index];
     str += ", ";
     str += array[index + 1];
