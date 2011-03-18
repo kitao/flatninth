@@ -75,7 +75,7 @@ b9.System.start = function() {
 
         cur_time = that.getTime();
         update_count = (cur_time - that._next_update_time) * that._target_fps / 1000.0;
-        update_count = b9.Math.min(b9.Math.floor(update_count), 1);
+        update_count = b9.Math.max(b9.Math.floor(update_count), 1);
 
         that._next_update_time += (1000.0 / that._target_fps) * update_count;
 
