@@ -22,8 +22,8 @@
 
 function testVector3D() {
     var vec1, vec2, vec3, vec4;
-    var array;
     var mat;
+    var array;
 
     /* initialize */
     /* getX */
