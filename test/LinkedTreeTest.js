@@ -382,7 +382,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getLastChild());
     assertEquals(tree1, tree1.getLastDescendant());
 
-    assertEquals(dummy2, tree2.getSelf());
+    assertEquals(null, tree2.getSelf());
     assertEquals(null, tree2.getPrevAsList());
     assertEquals(null, tree2.getNextAsList());
     assertEquals(null, tree2.getParent());
