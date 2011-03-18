@@ -24,34 +24,34 @@
  * Constructs a matrix. The following forms are allowed:
  * <ul>
  * <li>b9.Matrix3D()</li>
- * <li>b9.Matrix3D(b9.Matrix3D matrix_to_be_cloned)</li>
- * <li>b9.Matrix3D(Float32Array array_to_be_referenced, int array_index_of_first_component)</li>
- * <li>b9.Matrix3D(b9.Vector3D x_axis, b9.Vector3D y_axis, b9.Vector3D z_axis, b9.Vector3D trans)</li>
+ * <li>b9.Matrix3D(b9.Matrix3D matrixToBeCloned)</li>
+ * <li>b9.Matrix3D(Float32Array arrayToBeReferenced, int arrayIndexOfFirstComponent)</li>
+ * <li>b9.Matrix3D(b9.Vector3D xAxis, b9.Vector3D yAxis, b9.Vector3D zAxis, b9.Vector3D trans)</li>
  * </ul>
  *
  * @class A 4x4 matrix which is represented by four vectors.
  *
- * @param {b9.Matrix3D|Float32Array|b9.Vector3D} [mat_or_array_or_x_axis]
+ * @param {b9.Matrix3D|Float32Array|b9.Vector3D} [arg1]
  * A matrix to be cloned, an array to be referenced, or an x-axis.
- * @param {Number|b9.Vector3D} [index_or_y_axis] The array index of the first component or a y-axis.
- * @param {b9.Vector3D} [z_axis] A z-axis.
- * @param {b9.Vector3D} [trans] A translation.
+ * @param {number|b9.Vector3D} [arg2] The array index of the first component or a y-axis.
+ * @param {b9.Vector3D} [arg3] A z-axis.
+ * @param {b9.Vector3D} [arg4] A translation.
  */
 b9.Matrix3D = b9.createClass();
 
 /**
  * @ignore
  */
-b9.Matrix3D.prototype.initialize = function(mat_or_array_or_x_axis, index_or_y_axis, z_axis, trans) {
-    var array = this._array = (arguments.length === 2) ? mat_or_array_or_x_axis : new Float32Array(16);
-    var index = this._index = (arguments.length === 2) ? index_or_y_axis : 0;
-    var mat_array, mat_index;
+b9.Matrix3D.prototype.initialize = function(arg1, arg2, arg3, arg4) {
     var i;
+    var array = this.array_ = (arguments.length === 2) ? arg1 : new Float32Array(16);
+    var index = this.index_ = (arguments.length === 2) ? arg2 : 0;
+    var matArray, matIndex;
 
-    this._x_axis = new b9.Vector3D(array, index);
-    this._y_axis = new b9.Vector3D(array, index + 4);
-    this._z_axis = new b9.Vector3D(array, index + 8);
-    this._trans = new b9.Vector3D(array, index + 12);
+    this.xAxis_ = new b9.Vector3D(array, index);
+    this.yAxis_ = new b9.Vector3D(array, index + 4);
+    this.zAxis_ = new b9.Vector3D(array, index + 8);
+    this.trans_ = new b9.Vector3D(array, index + 12);
 
     if (arguments.length === 0) {
         array[index + 3] = 0.0;
@@ -59,17 +59,17 @@ b9.Matrix3D.prototype.initialize = function(mat_or_array_or_x_axis, index_or_y_a
         array[index + 11] = 0.0;
         array[index + 15] = 1.0;
     } else if (arguments.length === 1) {
-        mat_array = mat_or_array_or_x_axis._array;
-        mat_index = mat_or_array_or_x_axis._index;
+        matArray = arg1.array_;
+        matIndex = arg1.index_;
 
         for (i = 0; i < 16; i++) {
-            array[index + i] = mat_array[mat_index + i];
+            array[index + i] = matArray[matIndex + i];
         }
     } else if (arguments.length === 4) {
-        this._x_axis.set(mat_or_array_or_x_axis);
-        this._y_axis.set(index_or_y_axis);
-        this._z_axis.set(z_axis);
-        this._trans.set(trans);
+        this.xAxis_.set(arg1);
+        this.yAxis_.set(arg2);
+        this.zAxis_.set(arg3);
+        this.trans_.set(arg4);
 
         array[index + 3] = 0.0;
         array[index + 7] = 0.0;
@@ -83,7 +83,7 @@ b9.Matrix3D.prototype.initialize = function(mat_or_array_or_x_axis, index_or_y_a
  * @return The x-axis.
  */
 b9.Matrix3D.prototype.getXAxis = function() {
-    return this._x_axis;
+    return this.xAxis_;
 };
 
 /**
@@ -91,7 +91,7 @@ b9.Matrix3D.prototype.getXAxis = function() {
  * @return The y-axis.
  */
 b9.Matrix3D.prototype.getYAxis = function() {
-    return this._y_axis;
+    return this.yAxis_;
 };
 
 /**
@@ -99,7 +99,7 @@ b9.Matrix3D.prototype.getYAxis = function() {
  * @return The z-axis.
  */
 b9.Matrix3D.prototype.getZAxis = function() {
-    return this._z_axis;
+    return this.zAxis_;
 };
 
 /**
@@ -107,40 +107,40 @@ b9.Matrix3D.prototype.getZAxis = function() {
  * @return The translation.
  */
 b9.Matrix3D.prototype.getTrans = function() {
-    return this._trans;
+    return this.trans_;
 };
 
 /**
  * Sets all of the components to this matrix. The following forms are allowed:
  * <ul>
- * <li>set(b9.Matrix3D matrix_to_be_cloned)</li>
- * <li>set(b9.Vector3D x_axis, b9.Vector3D y_axis, b9.Vector3D z_axis, b9.Vector3D trans)</li>
+ * <li>set(b9.Matrix3D matrixToBeCloned)</li>
+ * <li>set(b9.Vector3D xAxis, b9.Vector3D yAxis, b9.Vector3D zAxis, b9.Vector3D trans)</li>
  * </ul>
- * @param {b9.Matrix3D|b9.Vector3D} [mat_or_x_axis] A matrix to be cloned or an x-axis.
- * @param {b9.Vector3D} [y_axis] A y-axis.
- * @param {b9.Vector3D} [z_axis] A z-axis.
- * @param {b9.Vector3D} [trans] A translation.
+ * @param {b9.Matrix3D|b9.Vector3D} [arg1] A matrix to be cloned or an x-axis.
+ * @param {b9.Vector3D} [arg2] A y-axis.
+ * @param {b9.Vector3D} [arg3] A z-axis.
+ * @param {b9.Vector3D} [arg4] A translation.
  * @return This matrix.
  */
-b9.Matrix3D.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
-    var array, index;
-    var mat_array, mat_index;
+b9.Matrix3D.prototype.set = function(arg1, arg2, arg3, arg4) {
     var i;
+    var array, index;
+    var matArray, matIndex;
 
     if (arguments.length === 1) {
-        array = this._array;
-        index = this._index;
-        mat_array = mat_or_x_axis._array;
-        mat_index = mat_or_x_axis._index;
+        array = this.array_;
+        index = this.index_;
+        matArray = arg1.array_;
+        matIndex = arg1.index_;
 
         for (i = 0; i < 16; i++) {
-            array[index + i] = mat_array[mat_index + i];
+            array[index + i] = matArray[matIndex + i];
         }
     } else if (arguments.length === 4) {
-        this._x_axis.set(mat_or_x_axis);
-        this._y_axis.set(y_axis);
-        this._z_axis.set(z_axis);
-        this._trans.set(trans);
+        this.xAxis_.set(arg1);
+        this.yAxis_.set(arg2);
+        this.zAxis_.set(arg3);
+        this.trans_.set(arg4);
     }
 
     return this;
@@ -151,7 +151,7 @@ b9.Matrix3D.prototype.set = function(mat_or_x_axis, y_axis, z_axis, trans) {
  * @return The array.
  */
 b9.Matrix3D.prototype.getArray = function() {
-    return this._array;
+    return this.array_;
 };
 
 /**
@@ -159,7 +159,7 @@ b9.Matrix3D.prototype.getArray = function() {
  * @return The array index.
  */
 b9.Matrix3D.prototype.getIndex = function() {
-    return this._index;
+    return this.index_;
 };
 
 /**
@@ -168,32 +168,32 @@ b9.Matrix3D.prototype.getIndex = function() {
  * @return This matrix.
  */
 b9.Matrix3D.prototype.fromQuaternion = function(quat) {
-    var quat_array = quat._array;
-    var quat_index = quat._index;
+    var quatArray = quat.array_;
+    var quatIndex = quat.index_;
 
-    var quat_x = quat_array[quat_index];
-    var quat_y = quat_array[quat_index + 1];
-    var quat_z = quat_array[quat_index + 2];
-    var quat_w = quat_array[quat_index + 3];
+    var quatX = quatArray[quatIndex];
+    var quatY = quatArray[quatIndex + 1];
+    var quatZ = quatArray[quatIndex + 2];
+    var quatW = quatArray[quatIndex + 3];
 
-    var x2 = quat_x + quat_x;
-    var y2 = quat_y + quat_y;
-    var z2 = quat_z + quat_z;
+    var x2 = quatX + quatX;
+    var y2 = quatY + quatY;
+    var z2 = quatZ + quatZ;
 
-    var wx2 = quat_w * x2;
-    var wy2 = quat_w * y2;
-    var wz2 = quat_w * z2;
-    var xx2 = quat_x * x2;
-    var xy2 = quat_x * y2;
-    var xz2 = quat_x * z2;
-    var yy2 = quat_y * y2;
-    var yz2 = quat_y * z2;
-    var zz2 = quat_z * z2;
+    var wx2 = quatW * x2;
+    var wy2 = quatW * y2;
+    var wz2 = quatW * z2;
+    var xx2 = quatX * x2;
+    var xy2 = quatX * y2;
+    var xz2 = quatX * z2;
+    var yy2 = quatY * y2;
+    var yz2 = quatY * z2;
+    var zz2 = quatZ * z2;
 
-    this._x_axis.set(1.0 - (yy2 + zz2), xy2 + wz2, xz2 - wy2);
-    this._y_axis.set(xy2 - wz2, 1.0 - (xx2 + zz2), yz2 + wx2);
-    this._z_axis.set(xz2 + wy2, yz2 - wx2, 1.0 - (xx2 + yy2));
-    this._trans.set(b9.Vector3D.ZERO);
+    this.xAxis_.set(1.0 - (yy2 + zz2), xy2 + wz2, xz2 - wy2);
+    this.yAxis_.set(xy2 - wz2, 1.0 - (xx2 + zz2), yz2 + wx2);
+    this.zAxis_.set(xz2 + wy2, yz2 - wx2, 1.0 - (xx2 + yy2));
+    this.trans_.set(b9.Vector3D.ZERO);
 
     return this;
 };
@@ -203,31 +203,31 @@ b9.Matrix3D.prototype.fromQuaternion = function(quat) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.orthonormalize = function() {
-    var vec1 = b9.Matrix3D._vec1;
-    var vec2 = b9.Matrix3D._vec2;
-    var vec3 = b9.Matrix3D._vec3;
+    var vec1 = b9.Matrix3D.vec1_;
+    var vec2 = b9.Matrix3D.vec2_;
+    var vec3 = b9.Matrix3D.vec3_;
 
-    vec3.set(this._z_axis).normalize();
-    vec1.set(this._y_axis).cross(this._z_axis).normalize();
+    vec3.set(this.zAxis_).normalize();
+    vec1.set(this.yAxis_).cross(this.zAxis_).normalize();
     vec2.set(vec3).cross(vec1);
 
-    return this.set(vec1, vec2, vec3, this._trans);
+    return this.set(vec1, vec2, vec3, this.trans_);
 };
 
 /**
  * Rotates this matrix around its x-axis.
- * @param {Number} deg A float angle in degrees.
+ * @param {number} deg A float angle in degrees.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateX_float = function(deg) {
+    var mat = b9.Matrix3D.mat1_;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
-    var mat = b9.Matrix3D._mat1;
 
-    mat._x_axis.set(b9.Vector3D.X_UNIT);
-    mat._y_axis.set(0.0, cos, sin);
-    mat._z_axis.set(0.0, -sin, cos);
-    mat._trans.set(b9.Vector3D.ZERO);
+    mat.xAxis_.set(b9.Vector3D.X_UNIT);
+    mat.yAxis_.set(0.0, cos, sin);
+    mat.zAxis_.set(0.0, -sin, cos);
+    mat.trans_.set(b9.Vector3D.ZERO);
     mat.toGlobal(this);
 
     return this.set(mat);
@@ -235,18 +235,18 @@ b9.Matrix3D.prototype.rotateX_float = function(deg) {
 
 /**
  * Rotates this matrix around its y-axis.
- * @param {Number} deg A float angle in degrees.
+ * @param {number} deg A float angle in degrees.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateY_float = function(deg) {
+    var mat = b9.Matrix3D.mat1_;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
-    var mat = b9.Matrix3D._mat1;
 
-    mat._x_axis.set(cos, 0.0, -sin);
-    mat._y_axis.set(b9.Vector3D.Y_UNIT);
-    mat._z_axis.set(sin, 0.0, cos);
-    mat._trans.set(b9.Vector3D.ZERO);
+    mat.xAxis_.set(cos, 0.0, -sin);
+    mat.yAxis_.set(b9.Vector3D.Y_UNIT);
+    mat.zAxis_.set(sin, 0.0, cos);
+    mat.trans_.set(b9.Vector3D.ZERO);
     mat.toGlobal(this);
 
     return this.set(mat);
@@ -254,18 +254,18 @@ b9.Matrix3D.prototype.rotateY_float = function(deg) {
 
 /**
  * Rotates this matrix around its z-axis.
- * @param {Number} deg A float angle in degrees.
+ * @param {number} deg A float angle in degrees.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateZ_float = function(deg) {
+    var mat = b9.Matrix3D.mat1_;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
-    var mat = b9.Matrix3D._mat1;
 
-    mat._x_axis.set(cos, sin, 0.0);
-    mat._y_axis.set(-sin, cos, 0.0);
-    mat._z_axis.set(b9.Vector3D.Z_UNIT);
-    mat._trans.set(b9.Vector3D.ZERO);
+    mat.xAxis_.set(cos, sin, 0.0);
+    mat.yAxis_.set(-sin, cos, 0.0);
+    mat.zAxis_.set(b9.Vector3D.Z_UNIT);
+    mat.trans_.set(b9.Vector3D.ZERO);
     mat.toGlobal(this);
 
     return this.set(mat);
@@ -274,18 +274,18 @@ b9.Matrix3D.prototype.rotateZ_float = function(deg) {
 /**
  * Rotates this matrix around its x-axis.
  * This method allows only an integer angle, but is faster than the rotateX_float method.
- * @param {Number} deg An integer angle in degrees.
+ * @param {number} deg An integer angle in degrees.
  * @return {b9.Vector3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateX_int = function(deg) {
+    var mat = b9.Matrix3D.mat1_;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
-    var mat = b9.Matrix3D._mat1;
 
-    mat._x_axis.set(b9.Vector3D.X_UNIT);
-    mat._y_axis.set(0.0, cos, sin);
-    mat._z_axis.set(0.0, -sin, cos);
-    mat._trans.set(b9.Vector3D.ZERO);
+    mat.xAxis_.set(b9.Vector3D.X_UNIT);
+    mat.yAxis_.set(0.0, cos, sin);
+    mat.zAxis_.set(0.0, -sin, cos);
+    mat.trans_.set(b9.Vector3D.ZERO);
     mat.toGlobal(this);
 
     return this.set(mat);
@@ -294,18 +294,18 @@ b9.Matrix3D.prototype.rotateX_int = function(deg) {
 /**
  * Rotates this matrix around its y-axis.
  * This method allows only an integer angle, but is faster than the rotateY_float method.
- * @param {Number} deg An integer angle in degrees.
+ * @param {number} deg An integer angle in degrees.
  * @return {b9.Vector3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateY_int = function(deg) {
+    var mat = b9.Matrix3D.mat1_;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
-    var mat = b9.Matrix3D._mat1;
 
-    mat._x_axis.set(cos, 0.0, -sin);
-    mat._y_axis.set(b9.Vector3D.Y_UNIT);
-    mat._z_axis.set(sin, 0.0, cos);
-    mat._trans.set(b9.Vector3D.ZERO);
+    mat.xAxis_.set(cos, 0.0, -sin);
+    mat.yAxis_.set(b9.Vector3D.Y_UNIT);
+    mat.zAxis_.set(sin, 0.0, cos);
+    mat.trans_.set(b9.Vector3D.ZERO);
     mat.toGlobal(this);
 
     return this.set(mat);
@@ -314,18 +314,18 @@ b9.Matrix3D.prototype.rotateY_int = function(deg) {
 /**
  * Rotates this matrix around its z-axis.
  * This method allows only an integer angle, but is faster than the rotateZ_float method.
- * @param {Number} deg An integer angle in degrees.
+ * @param {number} deg An integer angle in degrees.
  * @return {b9.Vector3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateZ_int = function(deg) {
+    var mat = b9.Matrix3D.mat1_;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
-    var mat = b9.Matrix3D._mat1;
 
-    mat._x_axis.set(cos, sin, 0.0);
-    mat._y_axis.set(-sin, cos, 0.0);
-    mat._z_axis.set(b9.Vector3D.Z_UNIT);
-    mat._trans.set(b9.Vector3D.ZERO);
+    mat.xAxis_.set(cos, sin, 0.0);
+    mat.yAxis_.set(-sin, cos, 0.0);
+    mat.zAxis_.set(b9.Vector3D.Z_UNIT);
+    mat.trans_.set(b9.Vector3D.ZERO);
     mat.toGlobal(this);
 
     return this.set(mat);
@@ -333,44 +333,44 @@ b9.Matrix3D.prototype.rotateZ_int = function(deg) {
 
 /**
  * Scales this matrix.
- * @param {Number} scale_x An x-axis scale factor.
- * @param {Number} scale_y A y-axis scale factor.
- * @param {Number} scale_z A z-axis scale factor.
+ * @param {number} scaleX An x-axis scale factor.
+ * @param {number} scaleY A y-axis scale factor.
+ * @param {number} scaleZ A z-axis scale factor.
  * @return {b9.Matrix3D} This matrix.
  */
-b9.Matrix3D.prototype.scale = function(scale_x, scale_y, scale_z) {
-    this._x_axis.mul(scale_x);
-    this._y_axis.mul(scale_y);
-    this._z_axis.mul(scale_z);
+b9.Matrix3D.prototype.scale = function(scaleX, scaleY, scaleZ) {
+    this.xAxis_.mul(scaleX);
+    this.yAxis_.mul(scaleY);
+    this.zAxis_.mul(scaleZ);
 
     return this;
 };
 
 /**
  * Translates this matrix along its axes.
- * @param {Number} offset_x A length of translation along the x-axis.
- * @param {Number} offset_y A length of translation along the y-axis.
- * @param {Number} offset_z A length of translation along the z-axis.
+ * @param {number} offsetX A length of translation along the x-axis.
+ * @param {number} offsetY A length of translation along the y-axis.
+ * @param {number} offsetZ A length of translation along the z-axis.
  * @return {b9.Matrix3D} This matrix.
  */
-b9.Matrix3D.prototype.translate = function(offset_x, offset_y, offset_z) {
-    var vec1 = b9.Matrix3D._vec1;
-    var vec2 = b9.Matrix3D._vec2;
-    var vec3 = b9.Matrix3D._vec3;
+b9.Matrix3D.prototype.translate = function(offsetX, offsetY, offsetZ) {
+    var vec1 = b9.Matrix3D.vec1_;
+    var vec2 = b9.Matrix3D.vec2_;
+    var vec3 = b9.Matrix3D.vec3_;
 
-    vec1.set(this._x_axis).mul(offset_x);
-    vec2.set(this._y_axis).mul(offset_y);
-    vec3.set(this._z_axis).mul(offset_z);
+    vec1.set(this.xAxis_).mul(offsetX);
+    vec2.set(this.yAxis_).mul(offsetY);
+    vec3.set(this.zAxis_).mul(offsetZ);
 
-    this._trans.add(vec1).add(vec2).add(vec3);
+    this.trans_.add(vec1).add(vec2).add(vec3);
 
     return this;
 };
 
 /**
  * Interpolates this matrix to a matrix by a ratio, using spherical linear interpolation.
- * @param {Number} to A destination matrix.
- * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
+ * @param {number} to A destination matrix.
+ * @param {number} ratio The value which indicates how far to interpolate between the two matrices.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.slerp = function(to, ratio) {
@@ -380,16 +380,16 @@ b9.Matrix3D.prototype.slerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        vec = b9.Matrix3D._vec1;
-        quat1 = b9.Matrix3D._quat1;
-        quat2 = b9.Matrix3D._quat2;
+        vec = b9.Matrix3D.vec1_;
+        quat1 = b9.Matrix3D.quat1_;
+        quat2 = b9.Matrix3D.quat2_;
 
         quat1.fromMatrix3D(this);
         quat2.fromMatrix3D(to);
-        vec.set(this._trans).lerp(to._trans, ratio);
+        vec.set(this.trans_).lerp(to.trans_, ratio);
 
         this.fromQuaternion(quat1.slerp(quat2, ratio));
-        this._trans.set(vec);
+        this.trans_.set(vec);
     }
 
     return this;
@@ -398,28 +398,28 @@ b9.Matrix3D.prototype.slerp = function(to, ratio) {
 /**
  * Interpolates this matrix to a matrix by a ratio, using spherical linear interpolation.
  * However, unlike the slerp method, the translation of this matrix is regarded as the zero vector.
- * @param {Number} to A destination matrix.
- * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
+ * @param {number} to A destination matrix.
+ * @param {number} ratio The value which indicates how far to interpolate between the two matrices.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.slerp_noTrans = function(to, ratio) {
     var quat1, quat2;
 
     if (ratio > 1.0 - b9.Math.EPSILON) {
-        this._x_axis.set(to._x_axis);
-        this._y_axis.set(to._y_axis);
-        this._z_axis.set(to._z_axis);
-        this._trans.set(b9.Vector3D.ZERO);
+        this.xAxis_.set(to.xAxis_);
+        this.yAxis_.set(to.yAxis_);
+        this.zAxis_.set(to.zAxis_);
+        this.trans_.set(b9.Vector3D.ZERO);
     } else if (ratio >= b9.Math.EPSILON) {
-        quat1 = b9.Matrix3D._quat1;
-        quat2 = b9.Matrix3D._quat2;
+        quat1 = b9.Matrix3D.quat1_;
+        quat2 = b9.Matrix3D.quat2_;
 
         quat1.fromMatrix3D(this);
         quat2.fromMatrix3D(to);
 
         this.fromQuaternion(quat1.slerp(quat2, ratio));
     } else {
-        this._trans.set(b9.Vector3D.ZERO);
+        this.trans_.set(b9.Vector3D.ZERO);
     }
 
     return this;
@@ -431,32 +431,32 @@ b9.Matrix3D.prototype.slerp_noTrans = function(to, ratio) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.toLocal = function(mat) {
-    var rsq_xa = 1.0 / mat._x_axis.sqNorm();
-    var rsq_ya = 1.0 / mat._y_axis.sqNorm();
-    var rsq_za = 1.0 / mat._z_axis.sqNorm();
-    var vec = b9.Matrix3D._vec1;
+    var vec = b9.Matrix3D.vec1_;
+    var rsqXA = 1.0 / mat.xAxis_.sqNorm();
+    var rsqYA = 1.0 / mat.yAxis_.sqNorm();
+    var rsqZA = 1.0 / mat.zAxis_.sqNorm();
 
-    vec.set(this._trans).sub(mat._trans);
+    vec.set(this.trans_).sub(mat.trans_);
 
-    this._x_axis.set(
-            this._x_axis.dot(mat._x_axis) * rsq_xa,
-            this._x_axis.dot(mat._y_axis) * rsq_ya,
-            this._x_axis.dot(mat._z_axis) * rsq_za);
+    this.xAxis_.set(
+            this.xAxis_.dot(mat.xAxis_) * rsqXA,
+            this.xAxis_.dot(mat.yAxis_) * rsqYA,
+            this.xAxis_.dot(mat.zAxis_) * rsqZA);
 
-    this._y_axis.set(
-            this._y_axis.dot(mat._x_axis) * rsq_xa,
-            this._y_axis.dot(mat._y_axis) * rsq_ya,
-            this._y_axis.dot(mat._z_axis) * rsq_za);
+    this.yAxis_.set(
+            this.yAxis_.dot(mat.xAxis_) * rsqXA,
+            this.yAxis_.dot(mat.yAxis_) * rsqYA,
+            this.yAxis_.dot(mat.zAxis_) * rsqZA);
 
-    this._z_axis.set(
-            this._z_axis.dot(mat._x_axis) * rsq_xa,
-            this._z_axis.dot(mat._y_axis) * rsq_ya,
-            this._z_axis.dot(mat._z_axis) * rsq_za);
+    this.zAxis_.set(
+            this.zAxis_.dot(mat.xAxis_) * rsqXA,
+            this.zAxis_.dot(mat.yAxis_) * rsqYA,
+            this.zAxis_.dot(mat.zAxis_) * rsqZA);
 
-    this._trans.set(
-            vec.dot(mat._x_axis) * rsq_xa,
-            vec.dot(mat._y_axis) * rsq_ya,
-            vec.dot(mat._z_axis) * rsq_za);
+    this.trans_.set(
+            vec.dot(mat.xAxis_) * rsqXA,
+            vec.dot(mat.yAxis_) * rsqYA,
+            vec.dot(mat.zAxis_) * rsqZA);
 
     return this;
 };
@@ -467,10 +467,10 @@ b9.Matrix3D.prototype.toLocal = function(mat) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.toGlobal = function(mat) {
-    this._x_axis.toGlobal_noTrans(mat);
-    this._y_axis.toGlobal_noTrans(mat);
-    this._z_axis.toGlobal_noTrans(mat);
-    this._trans.toGlobal(mat);
+    this.xAxis_.toGlobal_noTrans(mat);
+    this.yAxis_.toGlobal_noTrans(mat);
+    this.zAxis_.toGlobal_noTrans(mat);
+    this.trans_.toGlobal(mat);
 
     return this;
 };
@@ -482,26 +482,26 @@ b9.Matrix3D.prototype.toGlobal = function(mat) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.toLocal_noTrans = function(mat) {
-    var rsq_xa = 1.0 / mat._x_axis.sqNorm();
-    var rsq_ya = 1.0 / mat._y_axis.sqNorm();
-    var rsq_za = 1.0 / mat._z_axis.sqNorm();
+    var rsqXA = 1.0 / mat.xAxis_.sqNorm();
+    var rsqYA = 1.0 / mat.yAxis_.sqNorm();
+    var rsqZA = 1.0 / mat.zAxis_.sqNorm();
 
-    this._x_axis.set(
-            this._x_axis.dot(mat._x_axis) * rsq_xa,
-            this._x_axis.dot(mat._y_axis) * rsq_ya,
-            this._x_axis.dot(mat._z_axis) * rsq_za);
+    this.xAxis_.set(
+            this.xAxis_.dot(mat.xAxis_) * rsqXA,
+            this.xAxis_.dot(mat.yAxis_) * rsqYA,
+            this.xAxis_.dot(mat.zAxis_) * rsqZA);
 
-    this._y_axis.set(
-            this._y_axis.dot(mat._x_axis) * rsq_xa,
-            this._y_axis.dot(mat._y_axis) * rsq_ya,
-            this._y_axis.dot(mat._z_axis) * rsq_za);
+    this.yAxis_.set(
+            this.yAxis_.dot(mat.xAxis_) * rsqXA,
+            this.yAxis_.dot(mat.yAxis_) * rsqYA,
+            this.yAxis_.dot(mat.zAxis_) * rsqZA);
 
-    this._z_axis.set(
-            this._z_axis.dot(mat._x_axis) * rsq_xa,
-            this._z_axis.dot(mat._y_axis) * rsq_ya,
-            this._z_axis.dot(mat._z_axis) * rsq_za);
+    this.zAxis_.set(
+            this.zAxis_.dot(mat.xAxis_) * rsqXA,
+            this.zAxis_.dot(mat.yAxis_) * rsqYA,
+            this.zAxis_.dot(mat.zAxis_) * rsqZA);
 
-    this._trans.set(b9.Vector3D.ZERO);
+    this.trans_.set(b9.Vector3D.ZERO);
 
     return this;
 };
@@ -513,10 +513,10 @@ b9.Matrix3D.prototype.toLocal_noTrans = function(mat) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.toGlobal_noTrans = function(mat) {
-    this._x_axis.toGlobal_noTrans(mat);
-    this._y_axis.toGlobal_noTrans(mat);
-    this._z_axis.toGlobal_noTrans(mat);
-    this._trans.set(b9.Vector3D.ZERO);
+    this.xAxis_.toGlobal_noTrans(mat);
+    this.yAxis_.toGlobal_noTrans(mat);
+    this.zAxis_.toGlobal_noTrans(mat);
+    this.trans_.set(b9.Vector3D.ZERO);
 
     return this;
 };
@@ -529,10 +529,10 @@ b9.Matrix3D.prototype.toGlobal_noTrans = function(mat) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.lookAt = function(from, to, up) {
-    this._z_axis.set(from).sub(to).normalize();
-    this._x_axis.set(up).cross(this._z_axis).normalize();
-    this._y_axis.set(this._z_axis).cross(this._x_axis);
-    this._trans.set(from);
+    this.zAxis_.set(from).sub(to).normalize();
+    this.xAxis_.set(up).cross(this.zAxis_).normalize();
+    this.yAxis_.set(this.zAxis_).cross(this.xAxis_);
+    this.trans_.set(from);
 
     return this;
 };
@@ -545,7 +545,7 @@ b9.Matrix3D.prototype.lookAt = function(from, to, up) {
  */
 b9.Matrix3D.mulArrayAs4x4 = function(left, right, result) {
     var i;
-    var array = b9.Matrix3D._array1;
+    var array = b9.Matrix3D.array1_;
 
     array[0] = left[0] * right[0] + left[4] * right[1] + left[8] * right[2] + left[12] * right[3];
     array[1] = left[1] * right[0] + left[5] * right[1] + left[9] * right[2] + left[13] * right[3];
@@ -575,17 +575,17 @@ b9.Matrix3D.mulArrayAs4x4 = function(left, right, result) {
 /**
  * Returns whether this matrix equals a matrix.
  * @param {b9.Matrix3D} vec A matrix.
- * @return {Boolean} true if the two matrices are equal; false otherwise.
+ * @return {boolean} true if the two matrices are equal; false otherwise.
  */
 b9.Matrix3D.prototype.equals = function(mat) {
-    var array = this._array;
-    var index = this._index;
-    var mat_array = mat._array;
-    var mat_index = mat._index;
     var i;
+    var array = this.array_;
+    var index = this.index_;
+    var matArray = mat.array_;
+    var matIndex = mat.index_;
 
     for (i = 0; i < 16; i++) {
-        if (!b9.Math.equals_float(array[index + i], mat_array[mat_index + i])) {
+        if (!b9.Math.equals_float(array[index + i], matArray[matIndex + i])) {
             return false;
         }
     }
@@ -595,19 +595,19 @@ b9.Matrix3D.prototype.equals = function(mat) {
 
 /**
  * Returns a string representation of this matrix.
- * @return {String} A string representation of this matrix.
+ * @return {string} A string representation of this matrix.
  */
 b9.Matrix3D.prototype.toString = function() {
-    var array = this._array;
-    var index = this._index;
-
     var i;
+    var array = this.array_;
+    var index = this.index_;
     var str = "(";
 
     for (i = 0; i < 15; i++) {
         str += array[index + i];
         str += ", ";
     }
+
     str += array[index + 15];
     str += ")";
 
@@ -616,13 +616,14 @@ b9.Matrix3D.prototype.toString = function() {
 
 /**
  * The unit matrix.
- * @return {b9.Matrix3D}
+ * @const
+ * @type {b9.Matrix3D}
  */
 b9.Matrix3D.UNIT = new b9.Matrix3D(b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT, b9.Vector3D.ZERO);
 
-b9.Matrix3D._vec1 = new b9.Vector3D();
-b9.Matrix3D._vec2 = new b9.Vector3D();
-b9.Matrix3D._vec3 = new b9.Vector3D();
-b9.Matrix3D._mat1 = new b9.Matrix3D();
-b9.Matrix3D._array1 = new Float32Array(16);
-// _quat1 and _quat2 are defined in Quaternion.js
+b9.Matrix3D.vec1_ = new b9.Vector3D();
+b9.Matrix3D.vec2_ = new b9.Vector3D();
+b9.Matrix3D.vec3_ = new b9.Vector3D();
+b9.Matrix3D.mat1_ = new b9.Matrix3D();
+b9.Matrix3D.array1_ = new Float32Array(16);
+// quat1_ and quat2_ are defined in Quaternion.js
