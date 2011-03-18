@@ -29,9 +29,8 @@ b9.Task = b9.createClass();
  * @ignore
  */
 b9.Task.prototype.initialize = function() {
-    this._is_active = true;
-
-    this._item = new b9.LinkedListItem(this);
+    this.isActive_ = true;
+    this.item_ = new b9.LinkedListItem(this);
 };
 
 /**
@@ -40,27 +39,27 @@ b9.Task.prototype.initialize = function() {
 b9.Task.prototype.finalize = function() {
     var list = this.getList();
 
-    if (list && list._next_task === this) {
-        list._next_task = this.getNext();
+    if (list && list.nextTask_ === this) {
+        list.nextTask_ = this.getNext();
     }
 
-    this._task_tree.finalize();
+    this.taskTree_.finalize();
 };
 
 /**
  * hoge
- * @return {Boolean} hoge
+ * @return {boolean} hoge
  */
 b9.Task.prototype.isActive = function() {
-    return this._is_active;
+    return this.isActive_;
 };
 
 /**
  * hoge
- * @param {Boolean} is_active hoge
+ * @param {boolean} isActive hoge
  */
-b9.Task.prototype.setActive = function(is_active) {
-    this._is_active = is_active;
+b9.Task.prototype.setActive = function(isActive) {
+    this.isActive_ = isActive;
 };
 
 /**
@@ -68,7 +67,7 @@ b9.Task.prototype.setActive = function(is_active) {
  * @return {b9.TaskList} The task list this task belongs to.
  */
 b9.Task.prototype.getList = function() {
-    var list = this._item.getList();
+    var list = this.item_.getList();
     return list ? list.getSelf() : null;
 };
 
@@ -77,7 +76,7 @@ b9.Task.prototype.getList = function() {
  * @return {b9.Task} The previous task.
  */
 b9.Task.prototype.getPrev = function() {
-    var prev = this._item.getPrev();
+    var prev = this.item_.getPrev();
     return prev ? prev.getSelf() : null;
 };
 
@@ -86,7 +85,7 @@ b9.Task.prototype.getPrev = function() {
  * @return {b9.Task} The next task.
  */
 b9.Task.prototype.getNext = function() {
-    var next = this._item.getNext();
+    var next = this.item_.getNext();
     return next ? next.getSelf() : null;
 };
 
