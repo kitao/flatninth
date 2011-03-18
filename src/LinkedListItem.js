@@ -25,7 +25,7 @@
  *
  * @class An element of the b9.LinkedList class.
  *
- * @param {Object} self An object to be associated.
+ * @param {object} self An object to be associated.
  */
 b9.LinkedListItem = b9.createClass();
 
@@ -33,29 +33,29 @@ b9.LinkedListItem = b9.createClass();
  * @ignore
  */
 b9.LinkedListItem.prototype.initialize = function(self) {
-    this._self = self;
-    this._list = null;
-    this._prev = null;
-    this._next = null;
+    this.self_ = self;
+    this.list_ = null;
+    this.prev_ = null;
+    this.next_ = null;
 };
 
 /**
  * Destructs this item. If this item belongs to a list, this item gets unlinked from it.
  */
 b9.LinkedListItem.prototype.finalize = function() {
-    if (this._list) {
-        this._list.remove(this);
+    if (this.list_) {
+        this.list_.remove(this);
     }
 
-    this._self = null;
+    this.self_ = null;
 };
 
 /**
  * Returns the object associated with this item.
- * @return {Object} The associated object.
+ * @return {object} The associated object.
  */
 b9.LinkedListItem.prototype.getSelf = function() {
-    return this._self;
+    return this.self_;
 };
 
 /**
@@ -63,7 +63,7 @@ b9.LinkedListItem.prototype.getSelf = function() {
  * @return {b9.LinkedList} The list this item belongs to.
  */
 b9.LinkedListItem.prototype.getList = function() {
-    return this._list;
+    return this.list_;
 };
 
 /**
@@ -71,7 +71,7 @@ b9.LinkedListItem.prototype.getList = function() {
  * @return {b9.LinkedListItem} The previous item.
  */
 b9.LinkedListItem.prototype.getPrev = function() {
-    return (this._list && this._prev === this._list._start) ? null : this._prev;
+    return (this.list_ && this.prev_ === this.list_.start_) ? null : this.prev_;
 };
 
 /**
@@ -79,5 +79,5 @@ b9.LinkedListItem.prototype.getPrev = function() {
  * @return {b9.LinkedListItem} The next item.
  */
 b9.LinkedListItem.prototype.getNext = function() {
-    return (this._list && this._next === this._list._end) ? null : this._next;
+    return (this.list_ && this.next_ === this.list_.end_) ? null : this.next_;
 };
