@@ -20,6 +20,6 @@
  * THE SOFTWARE.
  */
 
-function testActorList() {
+function testTask() {
     // TODO
 }
