@@ -23,10 +23,10 @@
 /**
  * Constructs a screen.
  *
- * @class A rendering target of scene graph nodes.
+ * @class A rendering target of scene graph nodes. Each screen has a camera and manages its parameters.
  *
- * @param {Number} width
- * @param {Number} height
+ * @param {number} width The width of a screen.
+ * @param {number} height The height of a screen.
  */
 b9.Screen = b9.createClass();
 
@@ -34,102 +34,103 @@ b9.Screen = b9.createClass();
  * @ignore
  */
 b9.Screen.prototype.initialize = function(width, height) {
-    this._scr_flag = b9.Screen.FLAG_VISIBLE;
-    this._x = 0;
-    this._y = 0;
-    this._width = width;
-    this._height = height;
-    this._clear_color = new b9.Color(255, 0, 0, 255);
-    this._focal_length = 1000.0;
-    this._near_clip_dist = 10.0;
-    this._far_clip_dist = 100000.0;
-    this._inner_scale_x = 1.0;
-    this._inner_scale_y = 1.0;
-    this._camera = new b9.Matrix3D(b9.Matrix3D.UNIT);
-    this._camera.getTrans().setZ(this._focal_length);
+    this.scrFlag_ = b9.Screen.ScreenFlag.VISIBLE;
+    this.x_ = 0;
+    this.y_ = 0;
+    this.width_ = width;
+    this.height_ = height;
+    this.clearColor_ = new b9.Color(255, 0, 0, 255);
+    this.focalLength_ = 1000.0;
+    this.nearClipDist_ = 10.0;
+    this.farClipDist_ = 100000.0;
+    this.innerScaleX_ = 1.0;
+    this.innerScaleY_ = 1.0;
+    this.camera_ = new b9.Matrix3D(b9.Matrix3D.UNIT);
+    this.camera_.getTrans().setZ(this.focalLength_);
 
-    this._camera_to_screen = new b9.Matrix3D();
+    this.cameraToScreen_ = new b9.Matrix3D();
 };
 
 /**
  * hoge
  */
 b9.Screen.prototype.finalize = function() {
+    // TODO
 };
 
 
 /**
  * Returns whether the specified screen flag is enabled.
- * @param {Number} scr_flag A screen flag.
- * @return {Boolean} true the flag is enabled; false otherwise.
+ * @param {b9.Screen.ScreenFlag} scrFlag A screen flag.
+ * @return {boolean} true the flag is enabled; false otherwise.
  */
-b9.Screen.prototype.getScreenFlag = function(scr_flag) {
-    return (this._scr_flag & scr_flag) ? true : false;
+b9.Screen.prototype.getScreenFlag = function(scrFlag) {
+    return (this.scrFlag_ & scrFlag) ? true : false;
 };
 
 /**
  * Sets the specified screen flag.
- * @param {Number} scr_flag A screen flag.
- * @param {Boolean} is_enabled Whether the flag is enabled.
+ * @param {b9.Screen.ScreenFlag} scrFlag A screen flag.
+ * @param {boolean} isEnabled Whether the flag is enabled.
  */
-b9.Screen.prototype.setScreenFlag = function(scr_flag, is_enabled) {
-    if (is_enabled) {
-        this._scr_flag |= scr_flag;
+b9.Screen.prototype.setScreenFlag = function(scrFlag, isEnabled) {
+    if (isEnabled) {
+        this.scrFlag_ |= scrFlag;
     } else {
-        this._scr_flag &= ~scr_flag;
+        this.scrFlag_ &= ~scrFlag;
     }
 };
 
 /**
- * Returns the left postion in the canvas.
- * @return {Number} The left position.
+ * Returns the left position in the canvas.
+ * @return {number} The left position.
  */
 b9.Screen.prototype.getX = function() {
-    return this._x;
+    return this.x_;
 };
 
 /**
  * Returns the top position in the canvas.
- * @return {Number} The top position.
+ * @return {number} The top position.
  */
 b9.Screen.prototype.getY = function() {
-    return this._y;
+    return this.y_;
 };
 
 /**
  * Sets the position in the canvas.
- * @param {Number} x A left position.
- * @param {Number} y A top position.
+ * @param {number} x A left position.
+ * @param {number} y A top position.
  */
 b9.Screen.prototype.setPos = function(x, y) {
-    this._x = x;
-    this._y = y;
+    this.x_ = x;
+    this.y_ = y;
 };
 
 /**
  * Returns the width of this screen.
- * @return {Number} The width of this screen.
+ * @return {number} The width of this screen.
  */
 b9.Screen.prototype.getWidth = function() {
-    return this._width;
+    return this.width_;
 };
 
 /**
  * Returns the height of this screen.
- * @return {Number} The height of this screen.
+ * @return {number} The height of this screen.
  */
 b9.Screen.prototype.getHeight = function() {
-    return this._height;
+    return this.height_;
 };
 
 /**
  * Sets the size of this screen.
- * @param {Number} width A width of this screen.
- * @param {Number} height A height of this screen.
+ * @param {number} width The width of a screen.
+ * @param {number} height The height of a screen.
  */
 b9.Screen.prototype.setSize = function(width, height) {
-    this._width = width;
-    this._height = height;
+    this.width_ = width;
+    this.height_ = height;
 };
 
 /**
@@ -137,75 +138,75 @@ b9.Screen.prototype.setSize = function(width, height) {
  * @return {b9.Color} The clear color.
  */
 b9.Screen.prototype.getClearColor = function() {
-    return this._clear_color;
+    return this.clearColor_;
 };
 
 /**
- *
- * @return {Number}
+ * Returns the focal length of this screen.
+ * @return {number} The focal length.
  */
 b9.Screen.prototype.getFocalLength = function() {
-    return this._focal_length;
+    return this.focalLength_;
 };
 
 /**
- *
- * @param {Number} focal_length
+ * Sets the focal length of this screen.
+ * @param {number} focal_length A focal length.
  */
 b9.Screen.prototype.setFocalLength = function(focal_length) {
-    this._focal_length = focal_length;
+    this.focalLength_ = focal_length;
 };
 
 /**
- *
- * @return {Number}
+ * Returns the near clip distance of this screen.
+ * @return {number} The near clip distance.
  */
 b9.Screen.prototype.getNearClipDist = function() {
-    return this._near_clip_dist;
+    return this.nearClipDist_;
 };
 
 /**
- *
- * @return {Number}
+ * Returns the far clip distance of thie screen.
+ * @return {number} The far clip distance.
  */
 b9.Screen.prototype.getFarClipDist = function() {
-    return this._far_clip_dist;
+    return this.farClipDist_;
 };
 
 /**
- *
- * @param {Number} near_clip_dist
- * @param {Number} far_clip_dist
+ * Sets the clip distances of this screen.
+ * @param {number} near_clip_dist A near clip distance.
+ * @param {number} far_clip_dist A far clip distance.
  */
 b9.Screen.prototype.setClipDist = function(near_clip_dist, far_clip_dist) {
-    this._near_clip_dist = near_clip_dist;
-    this._far_clip_dist = far_clip_dist;
+    this.nearClipDist_ = near_clip_dist;
+    this.farClipDist_ = far_clip_dist;
 };
 
 /**
  *
- * @return {Number}
+ * @return {number}
  */
 b9.Screen.prototype.getInnerScaleX = function() {
-    return this._inner_scale_y;
+    return this.innerScaleY_;
 };
 
 /**
  *
- * @return {Number}
+ * @return {number}
  */
 b9.Screen.prototype.getInnerScaleY = function() {
-    return this._inner_scale_y;
+    return this.innerScaleY_;
 };
 
 /**
  *
- * @param {Number} scale_x
- * @param {Number} scale_y
+ * @param {number} scaleX
+ * @param {number} scaleY
  */
-b9.Screen.prototype.setInnerScale = function(scale_x, scale_y) {
-    this._inner_scale_x = scale_x;
-    this._inner_scale_y = scale_y;
+b9.Screen.prototype.setInnerScale = function(scaleX, scaleY) {
+    this.innerScaleX_ = scaleX;
+    this.innerScaleY_ = scaleY;
 };
 
 /**
@@ -213,69 +214,69 @@ b9.Screen.prototype.setInnerScale = function(scale_x, scale_y) {
  * @return {b9.Matrix3D} The camera matrix.
  */
 b9.Screen.prototype.getCamera = function() {
-    return this._camera;
+    return this.camera_;
 };
 
 /**
  *
- * @param {b9.Node} root_node
+ * @param {b9.Node} rootNode
  */
-b9.Screen.prototype.render = function(root_node) {
+b9.Screen.prototype.render = function(rootNode) {
     var node;
     var gl = b9.System.getGLContext();
-    var camera = this._camera;
-    var clear_flag = 0;
-    var sort_list = null;
+    var camera = this.camera_;
+    var clearFlag = 0;
+    var sortList = null;
 
-    var world_to_camera = b9.Screen._mat1;
-    var world_to_screen = b9.Screen._mat2;
+    var worldToCamera = b9.Screen.mat1_;
+    var worldToScreen = b9.Screen.mat2_;
 
-    this._updateCameraToScreen(); // TODO
+    this.updateCameraToScreen_(); // TODO
 
-    world_to_camera.set(b9.Matrix3D.UNIT).toLocal(camera);
+    worldToCamera.set(b9.Matrix3D.UNIT).toLocal(camera);
     b9.Matrix3D.mulArrayAs4x4(
-            this._camera_to_screen.getArray(), world_to_camera.getArray(), world_to_screen.getArray());
+            this.cameraToScreen_.getArray(), worldToCamera.getArray(), worldToScreen.getArray());
 
     // gl.viewport(x, y, w, h);
 
-    if (this.getScreenFlag(b9.Screen.FLAG_CLEAR_COLOR)) {
+    if (this.getScreenFlag(b9.Screen.ScreenFlag.CLEAR_COLOR)) {
         gl.clearColor(
-                this._clear_color.getR() / 255.0,
-                this._clear_color.getG() / 255.0,
-                this._clear_color.getB() / 255.0,
-                this._clear_color.getA() / 255.0);
-        clear_flag = gl.COLOR_BUFFER_BIT;
+                this.clearColor_.getR() / 255.0,
+                this.clearColor_.getG() / 255.0,
+                this.clearColor_.getB() / 255.0,
+                this.clearColor_.getA() / 255.0);
+        clearFlag = gl.COLOR_BUFFER_BIT;
     }
 
-    if (this.getScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH)) {
-        clear_flag |= gl.DEPTH_BUFFER_BIT;
+    if (this.getScreenFlag(b9.Screen.ScreenFlag.CLEAR_DEPTH)) {
+        clearFlag |= gl.DEPTH_BUFFER_BIT;
     }
 
-    if (clear_flag) {
-        gl.clear(clear_flag);
+    if (clearFlag) {
+        gl.clear(clearFlag);
     }
 
-    for (node = root_node; node; node = node.getNextAsList()) {
+    for (node = rootNode; node; node = node.getNextAsList()) {
         if (node.getNodeFlag(b9.Node.FLAG_VISIBLE)) {
             if (node.getNodeFlag(b9.Node.FLAG_Z_SORT)) {
-                node._sort_value =
-                    b9.Screen._vec1.set(node._world.getTrans()).sub(camera.getTrans()).dot(camera.getZAxis());
+                node.sortValue_ =
+                    b9.Screen.vec1_.set(node._world.getTrans()).sub(camera.getTrans()).dot(camera.getZAxis());
 
-                node._sort_next = sort_list;
-                sort_list = node;
+                node.sortNext_ = sortList;
+                sortList = node;
             } else {
-                node._render(world_to_screen);
+                node._render(worldToScreen);
             }
         } else {
             node = node.getLastDescendant();
         }
     }
 
-    if (sort_list) {
-        sort_list = b9.Screen._sortList(sort_list, null, null);
+    if (sortList) {
+        sortList = b9.Screen.sortList_(sortList, null, null);
 
-        for (node = sort_list; node; node = node._sort_next) {
-            node._render(world_to_screen);
+        for (node = sortList; node; node = node.sortNext_) {
+            node._render(worldToScreen);
         }
     }
 };
@@ -287,106 +288,109 @@ b9.Screen.prototype.dump = function() {
     // TODO
 };
 
-b9.Screen.prototype._updateCameraToScreen = function() {
-    var camera_to_screen_array = this._camera_to_screen.getArray();
-    var inv_sub = 1.0 / (this._far_clip_dist - this._near_clip_dist);
+b9.Screen.prototype.updateCameraToScreen_ = function() {
+    var cameraToScreenArray = this.cameraToScreen_.getArray();
+    var invSub = 1.0 / (this.farClipDist_ - this.nearClipDist_);
 
-    camera_to_screen_array[0] = this._focal_length * 2.0 / this._width;
-    camera_to_screen_array[4] = 0.0;
-    camera_to_screen_array[8] = 0.0;
-    camera_to_screen_array[12] = 0.0;
+    cameraToScreenArray[0] = this.focalLength_ * 2.0 / this.width_;
+    cameraToScreenArray[4] = 0.0;
+    cameraToScreenArray[8] = 0.0;
+    cameraToScreenArray[12] = 0.0;
 
-    camera_to_screen_array[1] = 0.0;
-    camera_to_screen_array[5] = this._focal_length * 2.0 / this._height;
-    camera_to_screen_array[9] = 0.0;
-    camera_to_screen_array[13] = 0.0;
+    cameraToScreenArray[1] = 0.0;
+    cameraToScreenArray[5] = this.focalLength_ * 2.0 / this.height_;
+    cameraToScreenArray[9] = 0.0;
+    cameraToScreenArray[13] = 0.0;
 
-    camera_to_screen_array[2] = 0.0;
-    camera_to_screen_array[6] = 0.0;
-    camera_to_screen_array[10] = (this._far_clip_dist + this._near_clip_dist) * inv_sub;
-    camera_to_screen_array[14] = 2.0 * this._far_clip_dist * this._near_clip_dist * inv_sub;
+    cameraToScreenArray[2] = 0.0;
+    cameraToScreenArray[6] = 0.0;
+    cameraToScreenArray[10] = (this.farClipDist_ + this.nearClipDist_) * invSub;
+    cameraToScreenArray[14] = 2.0 * this.farClipDist_ * this.nearClipDist_ * invSub;
 
-    camera_to_screen_array[3] = 0.0;
-    camera_to_screen_array[7] = 0.0;
-    camera_to_screen_array[11] = -1.0;
-    camera_to_screen_array[15] = 0.0;
+    cameraToScreenArray[3] = 0.0;
+    cameraToScreenArray[7] = 0.0;
+    cameraToScreenArray[11] = -1.0;
+    cameraToScreenArray[15] = 0.0;
 };
 
-b9.Screen._sortList = function(sort_list, start, end) {
+b9.Screen.sortList_ = function(sortList, start, end) {
     var node, next;
-    var center = sort_list;
-    var center_sort_value = center.sort_value;
+    var center = sortList;
+    var centerSortValue = center.sort_value;
     var left = null;
-    var left_end = null;
+    var leftEnd = null;
     var right = null;
-    var right_end = null;
+    var rightEnd = null;
 
-    sort_list = sort_list._sort_next;
+    sortList = sortList.sortNext_;
 
-    for (node = sort_list; node != end; node = next) {
-        next = node._sort_next;
+    for (node = sortList; node != end; node = next) {
+        next = node.sortNext_;
 
-        if (node.sort_value <= center_sort_value) {
+        if (node.sort_value <= centerSortValue) {
             if (!left) {
-                left_end = node;
+                leftEnd = node;
             }
 
-            node.sort_list = left;
+            node.sortList = left;
             left = node;
         } else {
             if (!right) {
-                right_end = node;
+                rightEnd = node;
             }
 
-            node.sort_list = right;
+            node.sortList = right;
             right = node;
         }
     }
 
     if (left) {
         if (start) {
-            start._sort_next = left;
+            start.sortNext_ = left;
         }
 
-        left_end._sort_next = center;
-        sort_list = b9.Screen._sortList(left, start, center);
+        leftEnd.sortNext_ = center;
+        sortList = b9.Screen.sortList_(left, start, center);
     } else {
         if (start) {
-            start._sort_next = center;
+            start.sortNext_ = center;
         }
 
-        sort_list = center;
+        sortList = center;
     }
 
     if (right) {
-        center._sort_next = right;
-        right_end._sort_next = end;
-        b9.Screen._sortList(right, center, end);
+        center.sortNext_ = right;
+        rightEnd.sortNext_ = end;
+        b9.Screen.sortList_(right, center, end);
     } else {
-        center._sort_next = end;
+        center.sortNext_ = end;
     }
 
-    return sort_list;
+    return sortList;
 };
 
 /**
- * hoge
- * @return {Number}
+ * Enum for the screen flags.
+ * @enum {number}
  */
-b9.Screen.FLAG_VISIBLE = 0x8000;
+b9.Screen.ScreenFlag = {
+    /**
+     * TODO
+     */
+    VISIBLE: 0x8000,
 
-/**
- * hoge
- * @return {Number}
- */
-b9.Screen.FLAG_CLEAR_COLOR = 0x4000;
+    /**
+     * TODO
+     */
+    CLEAR_COLOR: 0x4000,
 
-/**
- * hoge
- * @return {Number}
- */
-b9.Screen.FLAG_CLEAR_DEPTH = 0x2000;
+    /**
+     * TODO
+     */
+    CLEAR_DEPTH: 0x2000
+};
 
-b9.Screen._vec1 = new b9.Vector3D();
-b9.Screen._mat1 = new b9.Matrix3D();
-b9.Screen._mat2 = new b9.Matrix3D();
+b9.Screen.vec1_ = new b9.Vector3D();
+b9.Screen.mat1_ = new b9.Matrix3D();
+b9.Screen.mat2_ = new b9.Matrix3D();
