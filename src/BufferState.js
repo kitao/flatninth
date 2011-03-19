@@ -21,9 +21,9 @@
  */
 
 /**
- * Constructs a buffer state.
+ * Constructs a GL buffer state.
  *
- * @class TODO
+ * @class Determines whether the managed buffer needs to be updated.
  */
 b9.BufferState = b9.createClass();
 
@@ -31,27 +31,27 @@ b9.BufferState = b9.createClass();
  * @ignore
  */
 b9.BufferState.prototype.initialize = function() {
-    this._need_to_update = true;
+    this.isNeedToUpdate_ = true;
 };
 
 /**
- *
- * @return {Boolean}
+ * TODO
+ * @return {Boolean} TODO
  */
 b9.BufferState.prototype.checkUpdate = function() {
-    return this._need_to_update;
+    return this.isNeedToUpdate_;
 };
 
 /**
- *
+ * TODO
  */
 b9.BufferState.prototype.requestUpdate = function() {
-    this._need_to_update = false;
+    this.isNeedToUpdate_ = false;
 };
 
 /**
- *
+ * TODO
  */
 b9.BufferState.prototype.finishUpdate = function() {
-    this._need_to_update = false;
+    this.isNeedToUpdate_ = false;
 };
