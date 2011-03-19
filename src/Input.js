@@ -25,5 +25,5 @@
  */
 b9.Input = {};
 
-b9.Input._initialize = function() {
+b9.Input.initialize_ = function() {
 };

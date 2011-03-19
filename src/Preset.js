@@ -74,7 +74,7 @@ b9.Preset.defaultRenderFunction = function() {
     }
 };
 
-b9.Preset._initialize = function() {
+b9.Preset.initialize_ = function() {
     var i;
     var scr;
     var width, height;

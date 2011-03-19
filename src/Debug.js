@@ -25,7 +25,7 @@
  */
 b9.Debug = {};
 
-b9.Debug._initialize = function() {
+b9.Debug.initialize_ = function() {
     var i;
 
     this._is_debug_enabled = true;
