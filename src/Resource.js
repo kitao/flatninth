@@ -25,10 +25,6 @@
  */
 b9.Resource = {};
 
-b9.Resource.initialize_ = function() {
-    this.resTable_ = {};
-};
-
 /**
  *
  * @param {string} resName
@@ -58,5 +54,13 @@ b9.Resource.remove = function(resName) {
  *
  */
 b9.Resource.dump = function() {
+    // TODO
+};
+
+b9.Resource.initialize_ = function() {
+    this.resTable_ = {};
+};
+
+b9.Resource.finalize_ = function() {
     // TODO
 };

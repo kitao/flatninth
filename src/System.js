@@ -50,10 +50,10 @@ b9.System.setup = function(canvas_id, target_fps) {
 
     this._initializeGL();
 
-    b9.Resource._initialize();
-    b9.Input._initialize();
-    b9.Debug._initialize();
-    b9.Preset._initialize();
+    b9.Resource.initialize_();
+    b9.Input.initialize_();
+    b9.Debug.initialize_();
+    b9.Preset.initialize_();
 };
 
 /**
@@ -84,7 +84,7 @@ b9.System.start = function() {
         }
 
         that._render_func();
-        b9.Debug._render();
+        b9.Debug.render_();
 
         cur_time = that.getTime();
         wait_time = b9.Math.max(that._next_update_time - cur_time, 0);

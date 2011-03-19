@@ -25,23 +25,6 @@
  */
 b9.Debug = {};
 
-b9.Debug.initialize_ = function() {
-    var i;
-
-    this._is_debug_enabled = true;
-    this._is_perf_monitor_enabled = false;
-
-    this._prim_buf = new b9.PrimitiveBuffer(this._MAX_VERTEX_COUNT, this._MAX_VERTEX_COUNT);
-    this._prim_array = new Array(this._MAX_PRIMITIVE_COUNT);
-
-    this._cur_prim_count = 0;
-    this._cur_vert_count = 0;
-
-    for (i = 0; i < this._MAX_PRIMITIVE_COUNT; i++) {
-        this._prim_array[i] = new b9.Primitive(this._prim_buf);
-    }
-};
-
 /**
  *
  */
@@ -165,7 +148,7 @@ b9.Debug.drawRectangle = function(x, y, width, height, color) {
     }
 };
 
-b9.Debug._render = function() {
+b9.Debug.render_ = function() {
     if (this._is_debug_enabled) {
         if (this._is_perf_monitor_enabled) {
             this._renderPerformanceMonitor();
@@ -179,6 +162,27 @@ b9.Debug._render = function() {
 };
 
 b9.Debug._renderPerformanceMonitor = function() {
+    // TODO
+};
+
+b9.Debug.initialize_ = function() {
+    var i;
+
+    this._is_debug_enabled = true;
+    this._is_perf_monitor_enabled = false;
+
+    this._prim_buf = new b9.PrimitiveBuffer(this._MAX_VERTEX_COUNT, this._MAX_VERTEX_COUNT);
+    this._prim_array = new Array(this._MAX_PRIMITIVE_COUNT);
+
+    this._cur_prim_count = 0;
+    this._cur_vert_count = 0;
+
+    for (i = 0; i < this._MAX_PRIMITIVE_COUNT; i++) {
+        this._prim_array[i] = new b9.Primitive(this._prim_buf);
+    }
+};
+
+b9.Debug.finalize_ = function() {
     // TODO
 };
 

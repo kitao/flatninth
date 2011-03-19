@@ -179,38 +179,48 @@ b9.Preset.initialize_ = function() {
     this._sprite_shader = new b9.Shader(vert_code, frag_code, 2, 0, 1);
 };
 
+b9.Preset.finalize_ = function() {
+    // TODO
+};
+
 /**
  *
- * @return {Number}
+ * @const
+ * @type {Number}
  */
 b9.Preset.MIN_TASK_LIST_NO = -3;
 
 /**
  *
- * @return {Number}
+ * @const
+ * @type {Number}
  */
 b9.Preset.MAX_TASK_LIST_NO = 3;
 
 /**
  *
- * @return {Number}
+ * @const
+ * @type {Number}
  */
 b9.Preset.TASK_LIST_COUNT = b9.Preset.MAX_TASK_LIST_NO - b9.Preset.MIN_TASK_LIST_NO + 1;
 
 /**
  *
- * @return {Number}
+ * @const
+ * @type {Number}
  */
 b9.Preset.MIN_SCREEN_NO = -3;
 
 /**
  *
- * @return {Number}
+ * @const
+ * @type {Number}
  */
 b9.Preset.MAX_SCREEN_NO = 3;
 
 /**
  *
- * @return {Number}
+ * @const
+ * @type {Number}
  */
 b9.Preset.SCREEN_COUNT = b9.Preset.MAX_SCREEN_NO - b9.Preset.MIN_SCREEN_NO + 1;

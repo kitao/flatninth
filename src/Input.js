@@ -26,4 +26,9 @@
 b9.Input = {};
 
 b9.Input.initialize_ = function() {
+    // TODO
+};
+
+b9.Input.finalize_ = function() {
+    // TODO
 };
