@@ -221,7 +221,7 @@ b9.Screen.prototype.getCamera = function() {
  *
  * @param {b9.Node} rootNode
  */
-b9.Screen.prototype.draw = function(rootNode) {
+b9.Screen.prototype.render = function(rootNode) {
     var node;
     var gl = b9.System.getGLContext();
     var camera = this.camera_;
@@ -257,8 +257,8 @@ b9.Screen.prototype.draw = function(rootNode) {
     }
 
     for (node = rootNode; node; node = node.getNextAsList()) {
-        if (node.getNodeFlag(b9.Node.FLAG_VISIBLE)) {
-            if (node.getNodeFlag(b9.Node.FLAG_Z_SORT)) {
+        if (node.getNodeFlag(b9.Node.NodeFlag.VISIBLE)) {
+            if (node.getNodeFlag(b9.Node.NodeFlag.Z_SORT)) {
                 node.sortValue_ =
                     b9.Screen.vec1_.set(node._world.getTrans()).sub(camera.getTrans()).dot(camera.getZAxis());
 
