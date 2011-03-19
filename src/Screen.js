@@ -175,12 +175,12 @@ b9.Screen.prototype.getFarClipDist = function() {
 
 /**
  * Sets the clip distances of this screen.
- * @param {number} near_clip_dist A near clip distance.
- * @param {number} far_clip_dist A far clip distance.
+ * @param {number} nearClipDist A near clip distance.
+ * @param {number} farClipDist A far clip distance.
  */
-b9.Screen.prototype.setClipDist = function(near_clip_dist, far_clip_dist) {
-    this.nearClipDist_ = near_clip_dist;
-    this.farClipDist_ = far_clip_dist;
+b9.Screen.prototype.setClipDist = function(nearClipDist, farClipDist) {
+    this.nearClipDist_ = nearClipDist;
+    this.farClipDist_ = farClipDist;
 };
 
 /**
@@ -228,6 +228,9 @@ b9.Screen.prototype.render = function(rootNode) {
     var clearFlag = 0;
     var sortList = null;
 
+    var ScreenFlag = b9.Screen.ScreenFlag;
+    var NodeFlag = b9.Node.NodeFlag;
+
     var worldToCamera = b9.Screen.mat1_;
     var worldToScreen = b9.Screen.mat2_;
 
@@ -239,7 +242,7 @@ b9.Screen.prototype.render = function(rootNode) {
 
     // gl.viewport(x, y, w, h);
 
-    if (this.getScreenFlag(b9.Screen.ScreenFlag.CLEAR_COLOR)) {
+    if (this.getScreenFlag(ScreenFlag.CLEAR_COLOR)) {
         gl.clearColor(
                 this.clearColor_.getR() / 255.0,
                 this.clearColor_.getG() / 255.0,
@@ -248,7 +251,7 @@ b9.Screen.prototype.render = function(rootNode) {
         clearFlag = gl.COLOR_BUFFER_BIT;
     }
 
-    if (this.getScreenFlag(b9.Screen.ScreenFlag.CLEAR_DEPTH)) {
+    if (this.getScreenFlag(ScreenFlag.CLEAR_DEPTH)) {
         clearFlag |= gl.DEPTH_BUFFER_BIT;
     }
 
@@ -257,8 +260,8 @@ b9.Screen.prototype.render = function(rootNode) {
     }
 
     for (node = rootNode; node; node = node.getNextAsList()) {
-        if (node.getNodeFlag(b9.Node.NodeFlag.VISIBLE)) {
-            if (node.getNodeFlag(b9.Node.NodeFlag.Z_SORT)) {
+        if (node.getNodeFlag(NodeFlag.VISIBLE)) {
+            if (node.getNodeFlag(NodeFlag.Z_SORT)) {
                 node.sortValue_ =
                     b9.Screen.vec1_.set(node._world.getTrans()).sub(camera.getTrans()).dot(camera.getZAxis());
 
