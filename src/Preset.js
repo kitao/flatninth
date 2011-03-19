@@ -104,8 +104,8 @@ b9.Preset._initialize = function() {
     }
 
     scr = this.getScreen(0);
-    scr.setScreenFlag(b9.Screen.FLAG_CLEAR_COLOR, true);
-    scr.setScreenFlag(b9.Screen.FLAG_CLEAR_DEPTH, true);
+    scr.setScreenFlag(b9.Screen.ScreenFlag.CLEAR_COLOR, true);
+    scr.setScreenFlag(b9.Screen.ScreenFlag.CLEAR_DEPTH, true);
     scr.getClearColor().set(0, 0, 0);
 
     /*
