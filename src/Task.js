@@ -21,7 +21,9 @@
  */
 
 /**
- * @class hoge
+ * Constructs a task.
+ *
+ * @class A lightweight task which is managed by the b9.TaskList class and gets updated every frame.
  */
 b9.Task = b9.createClass();
 
@@ -29,34 +31,51 @@ b9.Task = b9.createClass();
  * @ignore
  */
 b9.Task.prototype.initialize = function() {
+    this.name_ = "noname";
     this.isActive_ = true;
     this.item_ = new b9.LinkedListItem(this);
 };
 
 /**
- * hoge
+ * Destructs this task.
  */
 b9.Task.prototype.finalize = function() {
-    var list = this.getList();
+    var list = this.getTaskList();
 
     if (list && list.nextTask_ === this) {
         list.nextTask_ = this.getNext();
     }
 
-    this.taskTree_.finalize();
+    this.item_.finalize();
 };
 
 /**
- * hoge
- * @return {boolean} hoge
+ * Returns the name of this task.
+ * @return The name of this task.
+ */
+b9.Task.prototype.getName = function() {
+    return this.name_;
+};
+
+/**
+ * Sets the name of this task.
+ * @param {string} name A name.
+ */
+b9.Task.prototype.setName = function(name) {
+    this.name_ = name;
+};
+
+/**
+ * Returns whether this task is active. If active, the update method is called by the task list.
+ * @return {boolean} true if this task is active; false otherwise.
  */
 b9.Task.prototype.isActive = function() {
     return this.isActive_;
 };
 
 /**
- * hoge
- * @param {boolean} isActive hoge
+ * Sets whether this task is active.
+ * @param {boolean} isActive Whether this task is active.
  */
 b9.Task.prototype.setActive = function(isActive) {
     this.isActive_ = isActive;
@@ -66,7 +85,7 @@ b9.Task.prototype.setActive = function(isActive) {
  * Returns the task list to which this task belongs. If no such task list exists, returns null.
  * @return {b9.TaskList} The task list this task belongs to.
  */
-b9.Task.prototype.getList = function() {
+b9.Task.prototype.getTaskList = function() {
     var list = this.item_.getList();
     return list ? list.getSelf() : null;
 };
@@ -90,6 +109,7 @@ b9.Task.prototype.getNext = function() {
 };
 
 /**
- *
+ * The method to update the state of this task.
+ * This method is overridden by eash derived class and called by the task list every frame.
  */
 b9.Task.prototype.update = function() {};

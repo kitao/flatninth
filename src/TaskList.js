@@ -21,7 +21,9 @@
  */
 
 /**
- * @class hoge
+ * Constructs a task list.
+ *
+ * @class A container which stores and updates instances of the b9.Task class.
  */
 b9.TaskList = b9.createClass();
 
@@ -35,23 +37,24 @@ b9.TaskList.prototype.initialize = function() {
 };
 
 /**
- *
+ * Destructs this task list. All of the tasks belong to this task list get unlinked.
  */
 b9.TaskList.prototype.finalize = function() {
     this.list_.finalize();
 };
 
 /**
- * hoge
- * @return {boolean} hoge
+ * Returns whether this task list is active.
+ * If active, calls the update method of each task when the update method of this task list is called.
+ * @return {boolean} true if this task list is active; false otherwise.
  */
 b9.TaskList.prototype.isActive = function() {
     return this.isActive_;
 };
 
 /**
- * hoge
- * @param {boolean} isActive hoge
+ * Sets whether this task list is active.
+ * @param {boolean} isActive Whether this task list is active.
  */
 b9.TaskList.prototype.setActive = function(isActive) {
     this.isActive_ = isActive;
@@ -76,8 +79,8 @@ b9.TaskList.prototype.getLast = function() {
 };
 
 /**
- * Links an task as the first task with this task list.
- * @param {b9.Task} task An task. If the task already belongs to some task list,
+ * Links a task as the first task with this task list.
+ * @param {b9.Task} task A task. If the task already belongs to some task list,
  * the task gets unlinked with it before the operation automatically.
  */
 b9.TaskList.prototype.addFirst = function(task) {
@@ -85,8 +88,8 @@ b9.TaskList.prototype.addFirst = function(task) {
 };
 
 /**
- * Links an task as the last task with this task list.
- * @param {b9.Task} task An task. If the task already belongs to some task list,
+ * Links a task as the last task with this task list.
+ * @param {b9.Task} task A task. If the task already belongs to some task list,
  * the task gets unlinked with it before the operation automatically.
  */
 b9.TaskList.prototype.addLast = function(task) {
@@ -94,8 +97,8 @@ b9.TaskList.prototype.addLast = function(task) {
 };
 
 /**
- * Links an task as the previous of the specified task with this task list.
- * @param {b9.Task} task An task. If the task already belongs to some task list,
+ * Links a task as the previous of the specified task with this task list.
+ * @param {b9.Task} task A task. If the task already belongs to some task list,
  * the task gets unlinked with it before the operation automatically.
  * @param {b9.Task} nextTask The task to be the next. This task must belong to this task list.
  */
@@ -104,8 +107,8 @@ b9.TaskList.prototype.insertBefore = function(task, nextTask) {
 };
 
 /**
- * Links an task as the next of the specified task with this task list.
- * @param {b9.Task} task An task. If the task already belongs to some task list,
+ * Links a task as the next of the specified task with this task list.
+ * @param {b9.Task} task A task. If the task already belongs to some task list,
  * the task gets unlinked with it before the operation automatically.
  * @param {b9.Task} prevTask The task to be the previous. This task must belong to this task list.
  */
@@ -114,8 +117,8 @@ b9.TaskList.prototype.insertAfter = function(task, prevTask) {
 };
 
 /**
- * Unlinks an task from this task list.
- * @param {b9.Task} task An task to be unlinked. This task must belong to this task list.
+ * Unlinks a task from this task list.
+ * @param {b9.Task} task A task to be unlinked. This task must belong to this task list.
  */
 b9.TaskList.prototype.remove = function(task) {
     this.list_.remove(task.item_);
@@ -144,7 +147,7 @@ b9.TaskList.prototype.update = function() {
 };
 
 /**
- *
+ * TODO
  */
 b9.TaskList.prototype.dump = function() {
     // TODO
