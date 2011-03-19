@@ -21,37 +21,37 @@
  */
 
 /**
- * Constructs a GL buffer state.
+ * Constructs an OpenGL buffer state.
  *
- * @class Determines whether the managed buffer needs to be updated.
+ * @class Manages the state which determines whether an OpenGL buffer needs to be updated.
  */
-b9.BufferState = b9.createClass();
+b9.GLBufferState = b9.createClass();
 
 /**
  * @ignore
  */
-b9.BufferState.prototype.initialize = function() {
+b9.GLBufferState.prototype.initialize = function() {
     this.isNeedToUpdate_ = true;
 };
 
 /**
- * TODO
- * @return {Boolean} TODO
+ * Returns whether an OpenGL buffer needs to be updated.
+ * @return {Boolean} true if an OpenGL buffer needs to be updated; false otherwise.
  */
-b9.BufferState.prototype.checkUpdate = function() {
+b9.GLBufferState.prototype.checkUpdate = function() {
     return this.isNeedToUpdate_;
 };
 
 /**
- * TODO
+ * Declares that an OpenGL buffer needs to be updated.
  */
-b9.BufferState.prototype.requestUpdate = function() {
+b9.GLBufferState.prototype.requestUpdate = function() {
     this.isNeedToUpdate_ = false;
 };
 
 /**
- * TODO
+ * Declares that an OpenGL buffer is updated.
  */
-b9.BufferState.prototype.finishUpdate = function() {
+b9.GLBufferState.prototype.finishUpdate = function() {
     this.isNeedToUpdate_ = false;
 };
