@@ -25,33 +25,33 @@
  */
 b9.Resource = {};
 
-b9.Resource._initialize = function() {
-    this._res_table = {};
+b9.Resource.initialize_ = function() {
+    this.resTable_ = {};
 };
 
 /**
  *
- * @param {String} res_name
+ * @param {string} resName
  */
-b9.Resource.get= function(res_name) {
-    return this._res_table[res_name];
+b9.Resource.get= function(resName) {
+    return this.resTable_[resName];
 };
 
 /**
  *
- * @param {String} res_name
- * @param {Object} obj
+ * @param {string} resName
+ * @param {object} obj
  */
-b9.Resource.add = function(res_name, obj) {
-    this._res_table[res_name] = obj;
+b9.Resource.add = function(resName, obj) {
+    this.resTable_[resName] = obj;
 };
 
 /**
  *
- * @param {String} res_name
+ * @param {string} resName
  */
-b9.Resource.remove = function(res_name) {
-    delete this._res_table[res_name];
+b9.Resource.remove = function(resName) {
+    delete this.resTable_[resName];
 };
 
 /**
