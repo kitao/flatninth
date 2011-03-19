@@ -221,7 +221,7 @@ b9.Screen.prototype.getCamera = function() {
  *
  * @param {b9.Node} rootNode
  */
-b9.Screen.prototype.render = function(rootNode) {
+b9.Screen.prototype.draw = function(rootNode) {
     var node;
     var gl = b9.System.getGLContext();
     var camera = this.camera_;
@@ -265,7 +265,7 @@ b9.Screen.prototype.render = function(rootNode) {
                 node.sortNext_ = sortList;
                 sortList = node;
             } else {
-                node._render(worldToScreen);
+                node.draw_(worldToScreen);
             }
         } else {
             node = node.getLastDescendant();
@@ -276,7 +276,7 @@ b9.Screen.prototype.render = function(rootNode) {
         sortList = b9.Screen.sortList_(sortList, null, null);
 
         for (node = sortList; node; node = node.sortNext_) {
-            node._render(worldToScreen);
+            node.draw_(worldToScreen);
         }
     }
 };
@@ -371,7 +371,7 @@ b9.Screen.sortList_ = function(sortList, start, end) {
 };
 
 /**
- * Enum for the screen flags.
+ * The flags which specify how to draw a screen.
  * @enum {number}
  */
 b9.Screen.ScreenFlag = {
