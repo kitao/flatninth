@@ -107,12 +107,13 @@ b9.Math.sin_int = function(deg) {
     deg = this.floor(deg);
 
     if (deg < 0) {
-        deg -= this.floor(deg / 360) * 360;
+        deg %= 360;
+        deg += 360;
     } else if (deg >= 360) {
         deg %= 360;
     }
 
-    return (deg < 180) ? this._sin_table[deg] : -this._sin_table[deg - 180];
+    return this.sinTable_[deg];
 };
 
 /**
@@ -122,7 +123,16 @@ b9.Math.sin_int = function(deg) {
  * @return {number} The cosine of an angle.
  */
 b9.Math.cos_int = function(deg) {
-    return this.sin_int(deg + 90);
+    deg = this.floor(deg) + 90;
+
+    if (deg < 0) {
+        deg %= 360;
+        deg += 360;
+    } else if (deg >= 360) {
+        deg %= 360;
+    }
+
+    return this.sinTable_[deg];
 };
 
 /**
@@ -219,7 +229,7 @@ b9.Math.lerp = function(from, to, ratio) {
  * @return {boolean} true if the two values are almost equal; false otherwise.
  */
 b9.Math.equals_float = function(a, b) {
-    return (this.abs(a - b) < this.EPSILON) ? true : false;
+    return (this.abs(a - b) < this.EPSILON);
 };
 
 /**
@@ -251,12 +261,11 @@ b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
  */
 b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 
-b9.Math._sin_table = new Array(180);
-
+b9.Math.sinTable_ = [];
 (function() {
     var i;
 
-    for (i = 0; i < 180; i++) {
-        b9.Math._sin_table[i] = b9.Math.sin_float(i);
+    for (i = 0; i < 360; i++) {
+        b9.Math.sinTable_[i] = b9.Math.sin_float(i);
     }
 })();
