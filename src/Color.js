@@ -234,3 +234,17 @@ b9.Color.prototype.toString = function() {
 
     return str;
 };
+
+/**
+ * The color whose components are all 0.
+ * @const
+ * @type {b9.Color}
+ */
+b9.Color.ZERO = new b9.Color(0, 0, 0, 0);
+
+/**
+ * The color whose components are all 255.
+ * @const
+ * @type {b9.Color}
+ */
+b9.Color.FULL = new b9.Color(255, 255, 255, 255);
