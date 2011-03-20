@@ -21,7 +21,7 @@
  */
 
 function testQuaternion() {
-    var quat1, quat2, quat3, quat4;
+    var quat1, quat2, quat3;
     var ratio;
 
     /* initialize */
@@ -34,8 +34,8 @@ function testQuaternion() {
     assertTrue(quat3.x === 1.0 && quat3.y === 2.0 && quat3.z === 3.0 && quat3.w === 4.0);
 
     /* set */
-    assertEquals_object(quat1, quat2.set(quat1));
     assertEquals_object(new b9.Quaternion(3.0, 4.0, 5.0, 6.0), quat1.set(3.0, 4.0, 5.0, 6.0));
+    assertEquals_object(quat1, quat2.set(quat1));
 
     /* fromMatrix3D */
     assertEquals_object(new b9.Quaternion(0.0, 0.0, 0.0, 1.0), quat1.fromMatrix3D(b9.Matrix3D.UNIT));
