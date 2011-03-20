@@ -45,25 +45,25 @@ b9.Quaternion.prototype.initialize = function(quatOrX, y, z, w) {
      * The x-coordinate of this quaternion.
      * @type {number}
      */
-    this.x;
+    this.x = 0.0;
 
     /**
      * The y-coordinate of this quaternion.
      * @type {number}
      */
-    this.y;
+    this.y = 0.0;
 
     /**
      * The z-coordinate of this quaternion.
      * @type {number}
      */
-    this.z;
+    this.z = 0.0;
 
     /**
      * The w-coordinate of this quaternion.
      * @type {number}
      */
-    this.w;
+    this.w = 0.0;
 
     if (arguments.length === 1) {
         this.x = quatOrX.x;
@@ -113,9 +113,9 @@ b9.Quaternion.prototype.set = function(quatOrX, y, z, w) {
  */
 b9.Quaternion.prototype.fromMatrix3D = function(mat) {
     var k;
-    var matXAxis = matXAxis;
-    var matYAxis = matYAxis;
-    var matZAxis = matZAxis;
+    var matXAxis = mat.xAxis;
+    var matYAxis = mat.yAxis;
+    var matZAxis = mat.zAxis;
     var trace = matXAxis.x + matYAxis.y + matZAxis.z;
     var root, scale;
 
