@@ -21,46 +21,19 @@
  */
 
 function testColor() {
-    var color1, color2, color3, color4, color5;
-    var array;
+    var color1, color2, color3, color4;
 
     /* initialize */
-    /* getR */
-    /* getG */
-    /* getB */
-    /* getA */
-    /* getArray */
-    /* getIndex */
     color1 = new b9.Color();
 
-    array = new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]);
-    color2 = new b9.Color(array, 4);
-    assertTrue(color2.getR() === 5 && color2.getG() === 6 && color2.getB() === 7 && color2.getA() === 8);
-    assertTrue(color2.getArray() === array && color2.getIndex() === 4);
+    color2 = new b9.Color(1, 2, 3, 4);
+    assertTrue(color2.r === 1 && color2.g === 2 && color2.b === 3 && color2.a === 4);
 
-    color3 = new b9.Color(2, 3, 4, 5);
-    assertTrue(color3.getR() === 2 && color3.getG() === 3 && color3.getB() === 4 && color3.getA() === 5);
-    assertTrue(color3.getArray() !== array && color3.getIndex() === 0);
+    color3 = new b9.Color(2, 3, 4);
+    assertTrue(color3.r === 2 && color3.g === 3 && color3.b === 4 && color3.a === 255);
 
-    color4 = new b9.Color(3, 4, 5);
-    assertTrue(color4.getR() === 3 && color4.getG() === 4 && color4.getB() === 5 && color4.getA() === 255);
-    assertTrue(color4.getArray() !== array && color4.getIndex() === 0);
-
-    color5 = new b9.Color(color2);
-    assertTrue(color5.getR() === 5 && color5.getG() === 6 && color5.getB() === 7 && color5.getA() === 8);
-    assertTrue(color5.getArray() !== array && color5.getIndex() === 0);
-
-    /* setR */
-    assertEquals(10, color1.setR(10).getR());
-
-    /* setG */
-    assertEquals(20, color1.setG(20).getG());
-
-    /* setB */
-    assertEquals(30, color1.setB(30).getB());
-
-    /* setA */
-    assertEquals(40, color1.setA(40).getA());
+    color4 = new b9.Color(color2);
+    assertTrue(color4.r === 1 && color4.g === 2 && color4.b === 3 && color4.a === 4);
 
     /* set */
     assertEquals_object(new b9.Color(1, 2, 3, 4), color1.set(1, 2, 3, 4));
@@ -141,4 +114,10 @@ function testColor() {
 
     /* toString */
     assertEquals("(10, 20, 30, 40)", (new b9.Color(10, 20, 30, 40)).toString());
+
+    /* ZERO */
+    assertEquals_object(new b9.Color(0, 0, 0, 0), b9.Color.ZERO);
+
+    /* FULL */
+    assertEquals_object(new b9.Color(255, 255, 255, 255), b9.Color.FULL);
 }
