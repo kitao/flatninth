@@ -30,42 +30,42 @@
  *
  * @class A 3-element vector which is represented by xyz coordinates.
  *
- * @param {b9.Vector3D|number} [arg1] A vector to be cloned or an x-coordinate.
- * @param {number} [arg2] A y-coordinate.
- * @param {number} [arg3] A z-coordinate.
+ * @param {b9.Vector3D|number} [vecOrX] A vector to be cloned or an x-coordinate.
+ * @param {Number} [y] A y-coordinate.
+ * @param {Number} [z] A z-coordinate.
  */
 b9.Vector3D = b9.createClass();
 
 /**
  * @ignore
  */
-b9.Vector3D.prototype.initialize = function(arg1, arg2, arg3) {
+b9.Vector3D.prototype.initialize = function(vecOrX, y, z) {
     /**
      * The x-coordinate of this vector.
-     * @type {number}
+     * @type {Number}
      */
     this.x = 0.0;
 
     /**
      * The y-coordinate of this vector.
-     * @type {number}
+     * @type {Number}
      */
     this.y = 0.0;
 
     /**
      * The z-coordinate of this vector.
-     * @type {number}
+     * @type {Number}
      */
     this.z = 0.0;
 
     if (arguments.length === 1) {
-        this.x = arg1.x;
-        this.y = arg1.y;
-        this.z = arg1.z;
+        this.x = vecOrX.x;
+        this.y = vecOrX.y;
+        this.z = vecOrX.z;
     } else if (arguments.length === 3) {
-        this.x = arg1;
-        this.y = arg2;
-        this.z = arg3;
+        this.x = vecOrX;
+        this.y = y;
+        this.z = z;
     }
 };
 
@@ -75,20 +75,20 @@ b9.Vector3D.prototype.initialize = function(arg1, arg2, arg3) {
  * <li>set(b9.Vector3D vectorToBeCloned)</li>
  * <li>set(float x, float y, float z)</li>
  * </ul>
- * @param {b9.Vector3D|number} [arg1] A vector to be cloned or an x-coordinate.
- * @param {number} [arg2] A y-coordinate.
- * @param {number} [arg3] A z-coordinate.
+ * @param {b9.Vector3D|number} [vecOrX] A vector to be cloned or an x-coordinate.
+ * @param {Number} [y] A y-coordinate.
+ * @param {Number} [z] A z-coordinate.
  * @return {b9.Vector3D} This vector.
  */
-b9.Vector3D.prototype.set = function(arg1, arg2, arg3) {
+b9.Vector3D.prototype.set = function(vecOrX, y, z) {
     if (arguments.length === 1) {
-        this.x = arg1.x;
-        this.y = arg1.y;
-        this.z = arg1.z;
+        this.x = vecOrX.x;
+        this.y = vecOrX.y;
+        this.z = vecOrX.z;
     } else if (arguments.length === 3) {
-        this.x = arg1;
-        this.y = arg2;
-        this.z = arg3;
+        this.x = vecOrX;
+        this.y = y;
+        this.z = z;
     }
 
     return this;
@@ -134,7 +134,7 @@ b9.Vector3D.prototype.sub = function(vec) {
 
 /**
  * Multiplies this vector with a scalar value.
- * @param {number} s A scalar value.
+ * @param {Number} s A scalar value.
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.mul = function(s) {
@@ -147,7 +147,7 @@ b9.Vector3D.prototype.mul = function(s) {
 
 /**
  * Divides this vector by a scalar value.
- * @param {number} s A scalar value.
+ * @param {Number} s A scalar value.
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.div = function(s) {
@@ -162,7 +162,7 @@ b9.Vector3D.prototype.div = function(s) {
 
 /**
  * Returns the norm of this vector.
- * @return {number} The norm of this vector.
+ * @return {Number} The norm of this vector.
  */
 b9.Vector3D.prototype.norm = function() {
     return b9.Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
@@ -171,7 +171,7 @@ b9.Vector3D.prototype.norm = function() {
 /**
  * Returns the squared norm of this vector.
  * This method is faster than the norm method.
- * @return {number} The squared norm of this vector.
+ * @return {Number} The squared norm of this vector.
  */
 b9.Vector3D.prototype.sqNorm = function() {
     return this.x * this.x + this.y * this.y + this.z * this.z;
@@ -180,7 +180,7 @@ b9.Vector3D.prototype.sqNorm = function() {
 /**
  * Returns the distance between this vector and a vector.
  * @param {b9.Vector3D} vec A vector.
- * @return {number} The distance between the two vectors.
+ * @return {Number} The distance between the two vectors.
  */
 b9.Vector3D.prototype.dist = function(vec) {
     return b9.Vector3D.vec1_.set(this).sub(vec).norm();
@@ -190,7 +190,7 @@ b9.Vector3D.prototype.dist = function(vec) {
  * Returns the squared distance between this vector and a vector.
  * This method is faster than the dist method.
  * @param {b9.Vector3D} vec A vector.
- * @return {number} The squared distance between the two vectors.
+ * @return {Number} The squared distance between the two vectors.
  */
 b9.Vector3D.prototype.sqDist = function(vec) {
     return b9.Vector3D.vec1_.set(this).sub(vec).sqNorm();
@@ -199,7 +199,7 @@ b9.Vector3D.prototype.sqDist = function(vec) {
 /**
  * Returns the inner product of this vector and a vector.
  * @param {b9.Vector3D} vec A vector.
- * @return {number} The inner product of the two vectors.
+ * @return {Number} The inner product of the two vectors.
  */
 b9.Vector3D.prototype.dot = function(vec) {
     return this.x * vec.x + this.y * vec.y + this.z * vec.z;
@@ -235,7 +235,7 @@ b9.Vector3D.prototype.normalize = function() {
 
 /**
  * Rotates this vector around the orthonormal x-axis.
- * @param {number} deg A float angle in degrees.
+ * @param {Number} deg A float angle in degrees.
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateX_float = function(deg) {
@@ -253,7 +253,7 @@ b9.Vector3D.prototype.rotateX_float = function(deg) {
 
 /**
  * Rotates this vector around the orthonormal y-axis.
- * @param {number} deg A float angle in degrees.
+ * @param {Number} deg A float angle in degrees.
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateY_float = function(deg) {
@@ -271,7 +271,7 @@ b9.Vector3D.prototype.rotateY_float = function(deg) {
 
 /**
  * Rotates this vector around the orthonormal z-axis.
- * @param {number} deg A float angle in degrees.
+ * @param {Number} deg A float angle in degrees.
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateZ_float = function(deg) {
@@ -292,7 +292,7 @@ b9.Vector3D.prototype.rotateZ_float = function(deg) {
 /**
  * Rotates this vector around the orthonormal x-axis.
  * This method allows only an integer angle, but is faster than the rotateX_float method.
- * @param {number} deg An integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateX_int = function(deg) {
@@ -313,7 +313,7 @@ b9.Vector3D.prototype.rotateX_int = function(deg) {
 /**
  * Rotates this vector around the orthonormal y-axis.
  * This method allows only an integer angle, but is faster than the rotateY_float method.
- * @param {number} deg An integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateY_int = function(deg) {
@@ -332,7 +332,7 @@ b9.Vector3D.prototype.rotateY_int = function(deg) {
 /**
  * Rotates this vector around the orthonormal z-axis.
  * This method allows only an integer angle, but is faster than the rotateZ_float method.
- * @param {number} deg An integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateZ_int = function(deg) {
@@ -351,7 +351,7 @@ b9.Vector3D.prototype.rotateZ_int = function(deg) {
 /**
  * Interpolates this vector to a vector by a ratio.
  * @param {b9.Vector3D} to A destination vector.
- * @param {number} ratio The value which indicates how far to interpolate between the two vectors.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two vectors.
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.lerp = function(to, ratio) {
@@ -440,17 +440,17 @@ b9.Vector3D.prototype.toGlobal_noTrans = function(mat) {
 /**
  * Returns whether this vector equals a vector.
  * @param {b9.Vector3D} vec A vector.
- * @return {boolean} true if the two vectors are equal; false otherwise.
+ * @return {Boolean} true if the two vectors are equal; false otherwise.
  */
 b9.Vector3D.prototype.equals = function(vec) {
     return (b9.Math.equals_float(this.x, vec.x) &&
             b9.Math.equals_float(this.y, vec.y) &&
-            b9.Math.equals_float(this.z, vec.z)) ? true : false;
+            b9.Math.equals_float(this.z, vec.z));
 };
 
 /**
  * Returns a string representation of this vector.
- * @return {string} A string representation of this vector.
+ * @return {String} A string representation of this vector.
  */
 b9.Vector3D.prototype.toString = function() {
     var str;

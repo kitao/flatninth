@@ -40,7 +40,7 @@ b9.Sprite.prototype.initialize = function(uni_count, tex_count) {
 
     this.initializeSuper();
 
-    this._buf_stat = new b9.BufferState();
+    this.glBufStat_ = new b9.GLBufferState();
     this._shader = null;
     this._uni_count = uni_count;
     this._tex_count = b9.Math.max(tex_count, 1);
@@ -230,20 +230,20 @@ b9.Sprite.setTexCoord = function(u1, v1, u2, v2) {
     this._is_uploaded = false;
 };
 
-b9.Sprite.prototype._render = function(world_to_screen) {
+b9.Sprite.prototype.draw_ = function(world_to_screen) {
     var shader = b9.Preset._sprite_shader;
 
     shader._setup();
 
     b9.Sprite._setupCommonBuffer(this._pivot_type, shader);
 
-    if (this._buf_stat.checkUpdate()) {
+    if (this.glBufStat_.checkUpdate()) {
         this._texcoord_glbuf = gl.createBuffer();
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoord_glbuf);
         gl.bufferData(gl.ARRAY_BUFFER, this._texcoord_data, gl.DYNAMIC_DRAW);
 
-        this._buf_stat.finishUpdate();
+        this.glBufStat_.finishUpdate();
     }
 
     gl.enableVertexAttribArray(shader._texcoord_loc);
@@ -272,7 +272,7 @@ b9.Sprite.prototype._render = function(world_to_screen) {
     gl.disableVertexAttribArray(shader._texcoord_loc);
 };
 
-b9.Sprite._s_buf_stat = new b9.BufferState();
+b9.Sprite.commonGLBufStat_ = new b9.GLBufferState();
 b9.Sprite._s_pos_glbuf = null;
 b9.Sprite._s_pos_array = new Array(5 * 4);
 b9.Sprite._s_pos_data = new Array(5 * 4 * 3);
@@ -282,7 +282,7 @@ b9.Sprite._setupCommonBuffer = function(pivot_type, shader) {
     var gl;
     var pos_array, pos_data;
 
-    if (!this._s_buf_stat || this._s_buf_stat.checkUpdate()) {
+    if (!this.commonGLBufStat_ || this.commonGLBufStat_.checkUpdate()) {
         gl = b9.System.getGLContext();
 
         pos_array = this._s_pos_array;
@@ -327,7 +327,7 @@ b9.Sprite._setupCommonBuffer = function(pivot_type, shader) {
         gl.bindBuffer(gl.ARRAY_BUFFER, this._s_pos_glbuf);
         gl.bufferData(gl.ARRAY_BUFFER, pos_data, gl.DYNAMIC_DRAW);
 
-        this._s_buf_stat.finishUpdate();
+        this.commonGLBufStat_.finishUpdate();
     }
 
     //gl.bindBuffer(gl.ARRAY_BUFFER, this._s_pos_glbuf_array[pivot_type]);

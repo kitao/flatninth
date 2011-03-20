@@ -25,8 +25,8 @@
  *
  * @class A rendering target of scene graph nodes. Each screen has a camera and manages its parameters.
  *
- * @param {number} width The width of a screen.
- * @param {number} height The height of a screen.
+ * @param {Number} width A width.
+ * @param {Number} height A height.
  */
 b9.Screen = b9.createClass();
 
@@ -46,9 +46,9 @@ b9.Screen.prototype.initialize = function(width, height) {
     this.innerScaleX_ = 1.0;
     this.innerScaleY_ = 1.0;
     this.camera_ = new b9.Matrix3D(b9.Matrix3D.UNIT);
-    this.camera_.getTrans().setZ(this.focalLength_);
+    this.camera_.trans.x = this.focalLength_;
 
-    this.cameraToScreen_ = new b9.Matrix3D();
+    this.cameraToScreenArray_ = [];
 };
 
 /**
@@ -62,7 +62,7 @@ b9.Screen.prototype.finalize = function() {
 /**
  * Returns whether the specified screen flag is enabled.
  * @param {b9.Screen.ScreenFlag} scrFlag A screen flag.
- * @return {boolean} true the flag is enabled; false otherwise.
+ * @return {Boolean} true the flag is enabled; false otherwise.
  */
 b9.Screen.prototype.getScreenFlag = function(scrFlag) {
     return (this.scrFlag_ & scrFlag) ? true : false;
@@ -71,7 +71,7 @@ b9.Screen.prototype.getScreenFlag = function(scrFlag) {
 /**
  * Sets the specified screen flag.
  * @param {b9.Screen.ScreenFlag} scrFlag A screen flag.
- * @param {boolean} isEnabled Whether the flag is enabled.
+ * @param {Boolean} isEnabled Whether the flag is enabled.
  */
 b9.Screen.prototype.setScreenFlag = function(scrFlag, isEnabled) {
     if (isEnabled) {
@@ -83,7 +83,7 @@ b9.Screen.prototype.setScreenFlag = function(scrFlag, isEnabled) {
 
 /**
  * Returns the left position in the canvas.
- * @return {number} The left position.
+ * @return {Number} The left position.
  */
 b9.Screen.prototype.getX = function() {
     return this.x_;
@@ -91,7 +91,7 @@ b9.Screen.prototype.getX = function() {
 
 /**
  * Returns the top position in the canvas.
- * @return {number} The top position.
+ * @return {Number} The top position.
  */
 b9.Screen.prototype.getY = function() {
     return this.y_;
@@ -99,8 +99,8 @@ b9.Screen.prototype.getY = function() {
 
 /**
  * Sets the position in the canvas.
- * @param {number} x A left position.
- * @param {number} y A top position.
+ * @param {Number} x A left position.
+ * @param {Number} y A top position.
  */
 b9.Screen.prototype.setPos = function(x, y) {
     this.x_ = x;
@@ -109,7 +109,7 @@ b9.Screen.prototype.setPos = function(x, y) {
 
 /**
  * Returns the width of this screen.
- * @return {number} The width of this screen.
+ * @return {Number} The width of this screen.
  */
 b9.Screen.prototype.getWidth = function() {
     return this.width_;
@@ -117,7 +117,7 @@ b9.Screen.prototype.getWidth = function() {
 
 /**
  * Returns the height of this screen.
- * @return {number} The height of this screen.
+ * @return {Number} The height of this screen.
  */
 b9.Screen.prototype.getHeight = function() {
     return this.height_;
@@ -125,8 +125,8 @@ b9.Screen.prototype.getHeight = function() {
 
 /**
  * Sets the size of this screen.
- * @param {number} width The width of a screen.
- * @param {number} height The height of a screen.
+ * @param {Number} width The width of a screen.
+ * @param {Number} height The height of a screen.
  */
 b9.Screen.prototype.setSize = function(width, height) {
     this.width_ = width;
@@ -143,7 +143,7 @@ b9.Screen.prototype.getClearColor = function() {
 
 /**
  * Returns the focal length of this screen.
- * @return {number} The focal length.
+ * @return {Number} The focal length.
  */
 b9.Screen.prototype.getFocalLength = function() {
     return this.focalLength_;
@@ -151,7 +151,7 @@ b9.Screen.prototype.getFocalLength = function() {
 
 /**
  * Sets the focal length of this screen.
- * @param {number} focal_length A focal length.
+ * @param {Number} focal_length A focal length.
  */
 b9.Screen.prototype.setFocalLength = function(focal_length) {
     this.focalLength_ = focal_length;
@@ -159,7 +159,7 @@ b9.Screen.prototype.setFocalLength = function(focal_length) {
 
 /**
  * Returns the near clip distance of this screen.
- * @return {number} The near clip distance.
+ * @return {Number} The near clip distance.
  */
 b9.Screen.prototype.getNearClipDist = function() {
     return this.nearClipDist_;
@@ -167,7 +167,7 @@ b9.Screen.prototype.getNearClipDist = function() {
 
 /**
  * Returns the far clip distance of thie screen.
- * @return {number} The far clip distance.
+ * @return {Number} The far clip distance.
  */
 b9.Screen.prototype.getFarClipDist = function() {
     return this.farClipDist_;
@@ -175,8 +175,8 @@ b9.Screen.prototype.getFarClipDist = function() {
 
 /**
  * Sets the clip distances of this screen.
- * @param {number} nearClipDist A near clip distance.
- * @param {number} farClipDist A far clip distance.
+ * @param {Number} nearClipDist A near clip distance.
+ * @param {Number} farClipDist A far clip distance.
  */
 b9.Screen.prototype.setClipDist = function(nearClipDist, farClipDist) {
     this.nearClipDist_ = nearClipDist;
@@ -185,7 +185,7 @@ b9.Screen.prototype.setClipDist = function(nearClipDist, farClipDist) {
 
 /**
  *
- * @return {number}
+ * @return {Number}
  */
 b9.Screen.prototype.getInnerScaleX = function() {
     return this.innerScaleY_;
@@ -193,7 +193,7 @@ b9.Screen.prototype.getInnerScaleX = function() {
 
 /**
  *
- * @return {number}
+ * @return {Number}
  */
 b9.Screen.prototype.getInnerScaleY = function() {
     return this.innerScaleY_;
@@ -201,8 +201,8 @@ b9.Screen.prototype.getInnerScaleY = function() {
 
 /**
  *
- * @param {number} scaleX
- * @param {number} scaleY
+ * @param {Number} scaleX
+ * @param {Number} scaleY
  */
 b9.Screen.prototype.setInnerScale = function(scaleX, scaleY) {
     this.innerScaleX_ = scaleX;
@@ -232,13 +232,16 @@ b9.Screen.prototype.render = function(rootNode) {
     var NodeFlag = b9.Node.NodeFlag;
 
     var worldToCamera = b9.Screen.mat1_;
-    var worldToScreen = b9.Screen.mat2_;
+
+    var worldToCameraArray = [];
+    var worldToScreenArray = [];
 
     this.updateCameraToScreen_(); // TODO
 
     worldToCamera.set(b9.Matrix3D.UNIT).toLocal(camera);
-    b9.Matrix3D.mulArrayAs4x4(
-            this.cameraToScreen_.getArray(), worldToCamera.getArray(), worldToScreen.getArray());
+    worldToCamera.toArray(worldToCameraArray);
+
+    b9.Matrix3D.mulArray(this.cameraToScreenArray_, worldToCameraArray, worldToScreenArray);
 
     // gl.viewport(x, y, w, h);
 
@@ -263,12 +266,12 @@ b9.Screen.prototype.render = function(rootNode) {
         if (node.getNodeFlag(NodeFlag.VISIBLE)) {
             if (node.getNodeFlag(NodeFlag.Z_SORT)) {
                 node.sortValue_ =
-                    b9.Screen.vec1_.set(node._world.getTrans()).sub(camera.getTrans()).dot(camera.getZAxis());
+                    b9.Screen.vec1_.set(node._world.trans).sub(camera.trans).dot(camera.zAxis);
 
                 node.sortNext_ = sortList;
                 sortList = node;
             } else {
-                node.draw_(worldToScreen);
+                node.draw_(worldToScreenArray);
             }
         } else {
             node = node.getLastDescendant();
@@ -279,7 +282,7 @@ b9.Screen.prototype.render = function(rootNode) {
         sortList = b9.Screen.sortList_(sortList, null, null);
 
         for (node = sortList; node; node = node.sortNext_) {
-            node.draw_(worldToScreen);
+            node.draw_(worldToScreenArray);
         }
     }
 };
@@ -292,28 +295,28 @@ b9.Screen.prototype.dump = function() {
 };
 
 b9.Screen.prototype.updateCameraToScreen_ = function() {
-    var cameraToScreenArray = this.cameraToScreen_.getArray();
+    var array = this.cameraToScreenArray_;
     var invSub = 1.0 / (this.farClipDist_ - this.nearClipDist_);
 
-    cameraToScreenArray[0] = this.focalLength_ * 2.0 / this.width_;
-    cameraToScreenArray[4] = 0.0;
-    cameraToScreenArray[8] = 0.0;
-    cameraToScreenArray[12] = 0.0;
+    array[0] = this.focalLength_ * 2.0 / this.width_;
+    array[4] = 0.0;
+    array[8] = 0.0;
+    array[12] = 0.0;
 
-    cameraToScreenArray[1] = 0.0;
-    cameraToScreenArray[5] = this.focalLength_ * 2.0 / this.height_;
-    cameraToScreenArray[9] = 0.0;
-    cameraToScreenArray[13] = 0.0;
+    array[1] = 0.0;
+    array[5] = this.focalLength_ * 2.0 / this.height_;
+    array[9] = 0.0;
+    array[13] = 0.0;
 
-    cameraToScreenArray[2] = 0.0;
-    cameraToScreenArray[6] = 0.0;
-    cameraToScreenArray[10] = (this.farClipDist_ + this.nearClipDist_) * invSub;
-    cameraToScreenArray[14] = 2.0 * this.farClipDist_ * this.nearClipDist_ * invSub;
+    array[2] = 0.0;
+    array[6] = 0.0;
+    array[10] = (this.farClipDist_ + this.nearClipDist_) * invSub;
+    array[14] = 2.0 * this.farClipDist_ * this.nearClipDist_ * invSub;
 
-    cameraToScreenArray[3] = 0.0;
-    cameraToScreenArray[7] = 0.0;
-    cameraToScreenArray[11] = -1.0;
-    cameraToScreenArray[15] = 0.0;
+    array[3] = 0.0;
+    array[7] = 0.0;
+    array[11] = -1.0;
+    array[15] = 0.0;
 };
 
 b9.Screen.sortList_ = function(sortList, start, end) {
@@ -375,21 +378,27 @@ b9.Screen.sortList_ = function(sortList, start, end) {
 
 /**
  * The flags which specify how to draw a screen.
- * @enum {number}
+ * @enum {Number}
  */
 b9.Screen.ScreenFlag = {
     /**
      * TODO
+     * @const
+     * @type {Number}
      */
     VISIBLE: 0x8000,
 
     /**
      * TODO
+     * @const
+     * @type {Number}
      */
     CLEAR_COLOR: 0x4000,
 
     /**
      * TODO
+     * @const
+     * @type {Number}
      */
     CLEAR_DEPTH: 0x2000
 };

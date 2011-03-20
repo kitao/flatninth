@@ -59,7 +59,7 @@ b9.Task.prototype.getName = function() {
 
 /**
  * Sets the name of this task.
- * @param {string} name A name.
+ * @param {String} name A name.
  */
 b9.Task.prototype.setName = function(name) {
     this.name_ = name;
@@ -67,7 +67,7 @@ b9.Task.prototype.setName = function(name) {
 
 /**
  * Returns whether this task is active. If active, the update method is called by the task list.
- * @return {boolean} true if this task is active; false otherwise.
+ * @return {Boolean} true if this task is active; false otherwise.
  */
 b9.Task.prototype.isActive = function() {
     return this.isActive_;
@@ -75,7 +75,7 @@ b9.Task.prototype.isActive = function() {
 
 /**
  * Sets whether this task is active.
- * @param {boolean} isActive Whether this task is active.
+ * @param {Boolean} isActive Whether this task is active.
  */
 b9.Task.prototype.setActive = function(isActive) {
     this.isActive_ = isActive;

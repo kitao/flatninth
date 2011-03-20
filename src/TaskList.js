@@ -46,7 +46,7 @@ b9.TaskList.prototype.finalize = function() {
 /**
  * Returns whether this task list is active.
  * If active, calls the update method of each task when the update method of this task list is called.
- * @return {boolean} true if this task list is active; false otherwise.
+ * @return {Boolean} true if this task list is active; false otherwise.
  */
 b9.TaskList.prototype.isActive = function() {
     return this.isActive_;
@@ -54,7 +54,7 @@ b9.TaskList.prototype.isActive = function() {
 
 /**
  * Sets whether this task list is active.
- * @param {boolean} isActive Whether this task list is active.
+ * @param {Boolean} isActive Whether this task list is active.
  */
 b9.TaskList.prototype.setActive = function(isActive) {
     this.isActive_ = isActive;

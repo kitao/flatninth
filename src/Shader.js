@@ -39,7 +39,7 @@ b9.Shader = b9.createClass();
  */
 b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_count, tex_count) {
     this._glprog = null;
-    this._buf_stat = new b9.BufferState();
+    this.glBufStat_ = new b9.GLBufferState();
     this._vert_code = vert_code;
     this._frag_code = frag_code;
     this._uni_count = uni_count;
@@ -98,7 +98,7 @@ b9.Shader.prototype._setup = function() {
     var vert_glshd, frag_glshd;
     var gl = b9.System.getGLContext();
 
-    if (this._buf_stat.checkUpdate()) {
+    if (this.glBufStat_.checkUpdate()) {
         gl = b9.System.getGLContext();
 
         this._glprog = gl.createProgram();
@@ -163,7 +163,7 @@ b9.Debug.trace("b9_texture_" + i + "=" + this._tex_loc_array[i]);
             }
         }
 
-        this._buf_stat.finishUpdate();
+        this.glBufStat_.finishUpdate();
     }
 
     gl.useProgram(this._glprog);
