@@ -181,7 +181,7 @@ b9.Primitive.prototype.setPrimitiveMode = function(prim_mode) {
     this._prim_mode = prim_mode;
 };
 
-b9.Primitive.prototype._render = function(world_to_screen) {
+b9.Primitive.prototype.draw_ = function(world_to_screen) {
     var i;
     var tex;
     var gl = b9.System.getGLContext();
@@ -189,15 +189,18 @@ b9.Primitive.prototype._render = function(world_to_screen) {
     var final_color_array = this._final_color.getArray();
     var tex_count = this._tex_count;
 
-    var local_to_screen = b9.Primitive._mat1;
+    var local_to_screen = [];
+
+    var worldArray = [];
+    this._world.toArray(worldArray);
 
     this._setup();
 
     shader._setup();
-    this._prim_buf._setup(shader);
+    this._prim_buf.bind_(shader);
 
-    b9.Matrix3D.mulArrayAs4x4(world_to_screen.getArray(), this._world.getArray(), local_to_screen.getArray());
-    gl.uniformMatrix4fv(shader._local_to_screen_loc, false, local_to_screen.getArray()); // TODO
+    b9.Matrix3D.mulArray(world_to_screen, worldArray, local_to_screen);
+    gl.uniformMatrix4fv(shader._local_to_screen_loc, false, local_to_screen); // TODO
 
     gl.uniform4f(shader._node_color_loc,
             final_color_array[0], final_color_array[1], final_color_array[2], final_color_array[3]); // TODO
@@ -212,7 +215,7 @@ b9.Primitive.prototype._render = function(world_to_screen) {
 
     gl.drawElements(this._prim_mode, this._prim_buf._elem_count, gl.UNSIGNED_SHORT, 0);
 
-    this._prim_buf._teardown(shader);
+    this._prim_buf.unbind_(shader);
 };
 
 /**

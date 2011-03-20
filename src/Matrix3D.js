@@ -30,17 +30,17 @@
  *
  * @class A 4x4 matrix which is represented by four vectors.
  *
- * @param {b9.Matrix3D|b9.Vector3D} [arg1] A matrix to be cloned or an x-axis.
- * @param {b9.Vector3D} [arg2] A y-axis.
- * @param {b9.Vector3D} [arg3] A z-axis.
- * @param {b9.Vector3D} [arg4] A translation.
+ * @param {b9.Matrix3D|b9.Vector3D} [matOrXAxis] A matrix to be cloned or an x-axis.
+ * @param {b9.Vector3D} [yAxis] A y-axis.
+ * @param {b9.Vector3D} [zAxis] A z-axis.
+ * @param {b9.Vector3D} [trans] A translation.
  */
 b9.Matrix3D = b9.createClass();
 
 /**
  * @ignore
  */
-b9.Matrix3D.prototype.initialize = function(arg1, arg2, arg3, arg4) {
+b9.Matrix3D.prototype.initialize = function(matOrXAxis, yAxis, zAxis, trans) {
     /**
      * The x-axis of this matrix.
      * @type {b9.Vector3D}
@@ -66,15 +66,15 @@ b9.Matrix3D.prototype.initialize = function(arg1, arg2, arg3, arg4) {
     this.trans = new b9.Vector3D();
 
     if (arguments.length === 1) {
-        this.xAxis.set(arg1.xAxis);
-        this.yAxis.set(arg1.yAxis);
-        this.zAxis.set(arg1.zAxis);
-        this.trans.set(arg1.trans);
+        this.xAxis.set(matOrXAxis.xAxis);
+        this.yAxis.set(matOrXAxis.yAxis);
+        this.zAxis.set(matOrXAxis.zAxis);
+        this.trans.set(matOrXAxis.trans);
     } else if (arguments.length === 4) {
-        this.xAxis.set(arg1);
-        this.yAxis.set(arg2);
-        this.zAxis.set(arg3);
-        this.trans.set(arg4);
+        this.xAxis.set(matOrXAxis);
+        this.yAxis.set(yAxis);
+        this.zAxis.set(zAxis);
+        this.trans.set(trans);
     }
 };
 
@@ -84,23 +84,23 @@ b9.Matrix3D.prototype.initialize = function(arg1, arg2, arg3, arg4) {
  * <li>set(b9.Matrix3D matrixToBeCloned)</li>
  * <li>set(b9.Vector3D xAxis, b9.Vector3D yAxis, b9.Vector3D zAxis, b9.Vector3D trans)</li>
  * </ul>
- * @param {b9.Matrix3D|b9.Vector3D} [arg1] A matrix to be cloned or an x-axis.
- * @param {b9.Vector3D} [arg2] A y-axis.
- * @param {b9.Vector3D} [arg3] A z-axis.
- * @param {b9.Vector3D} [arg4] A translation.
+ * @param {b9.Matrix3D|b9.Vector3D} [matOrXAxis] A matrix to be cloned or an x-axis.
+ * @param {b9.Vector3D} [yAxis] A y-axis.
+ * @param {b9.Vector3D} [zAxis] A z-axis.
+ * @param {b9.Vector3D} [trans] A translation.
  * @return This matrix.
  */
-b9.Matrix3D.prototype.set = function(arg1, arg2, arg3, arg4) {
+b9.Matrix3D.prototype.set = function(matOrXAxis, yAxis, zAxis, trans) {
     if (arguments.length === 1) {
-        this.xAxis.set(arg1.xAxis);
-        this.yAxis.set(arg1.yAxis);
-        this.zAxis.set(arg1.zAxis);
-        this.trans.set(arg1.trans);
+        this.xAxis.set(matOrXAxis.xAxis);
+        this.yAxis.set(matOrXAxis.yAxis);
+        this.zAxis.set(matOrXAxis.zAxis);
+        this.trans.set(matOrXAxis.trans);
     } else if (arguments.length === 4) {
-        this.xAxis.set(arg1);
-        this.yAxis.set(arg2);
-        this.zAxis.set(arg3);
-        this.trans.set(arg4);
+        this.xAxis.set(matOrXAxis);
+        this.yAxis.set(yAxis);
+        this.zAxis.set(zAxis);
+        this.trans.set(trans);
     }
 
     return this;
@@ -157,7 +157,7 @@ b9.Matrix3D.prototype.orthonormalize = function() {
 
 /**
  * Rotates this matrix around its x-axis.
- * @param {number} deg A float angle in degrees.
+ * @param {Number} deg A float angle in degrees.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateX_float = function(deg) {
@@ -176,7 +176,7 @@ b9.Matrix3D.prototype.rotateX_float = function(deg) {
 
 /**
  * Rotates this matrix around its y-axis.
- * @param {number} deg A float angle in degrees.
+ * @param {Number} deg A float angle in degrees.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateY_float = function(deg) {
@@ -195,7 +195,7 @@ b9.Matrix3D.prototype.rotateY_float = function(deg) {
 
 /**
  * Rotates this matrix around its z-axis.
- * @param {number} deg A float angle in degrees.
+ * @param {Number} deg A float angle in degrees.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateZ_float = function(deg) {
@@ -215,7 +215,7 @@ b9.Matrix3D.prototype.rotateZ_float = function(deg) {
 /**
  * Rotates this matrix around its x-axis.
  * This method allows only an integer angle, but is faster than the rotateX_float method.
- * @param {number} deg An integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateX_int = function(deg) {
@@ -235,7 +235,7 @@ b9.Matrix3D.prototype.rotateX_int = function(deg) {
 /**
  * Rotates this matrix around its y-axis.
  * This method allows only an integer angle, but is faster than the rotateY_float method.
- * @param {number} deg An integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateY_int = function(deg) {
@@ -255,7 +255,7 @@ b9.Matrix3D.prototype.rotateY_int = function(deg) {
 /**
  * Rotates this matrix around its z-axis.
  * This method allows only an integer angle, but is faster than the rotateZ_float method.
- * @param {number} deg An integer angle in degrees.
+ * @param {Number} deg An integer angle in degrees.
  * @return {b9.Vector3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateZ_int = function(deg) {
@@ -274,9 +274,9 @@ b9.Matrix3D.prototype.rotateZ_int = function(deg) {
 
 /**
  * Scales this matrix.
- * @param {number} scaleX An x-axis scale factor.
- * @param {number} scaleY A y-axis scale factor.
- * @param {number} scaleZ A z-axis scale factor.
+ * @param {Number} scaleX An x-axis scale factor.
+ * @param {Number} scaleY A y-axis scale factor.
+ * @param {Number} scaleZ A z-axis scale factor.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.scale = function(scaleX, scaleY, scaleZ) {
@@ -289,9 +289,9 @@ b9.Matrix3D.prototype.scale = function(scaleX, scaleY, scaleZ) {
 
 /**
  * Translates this matrix along its axes.
- * @param {number} offsetX A length of translation along the x-axis.
- * @param {number} offsetY A length of translation along the y-axis.
- * @param {number} offsetZ A length of translation along the z-axis.
+ * @param {Number} offsetX A length of translation along the x-axis.
+ * @param {Number} offsetY A length of translation along the y-axis.
+ * @param {Number} offsetZ A length of translation along the z-axis.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.translate = function(offsetX, offsetY, offsetZ) {
@@ -310,8 +310,8 @@ b9.Matrix3D.prototype.translate = function(offsetX, offsetY, offsetZ) {
 
 /**
  * Interpolates this matrix to a matrix by a ratio, using spherical linear interpolation.
- * @param {number} to A destination matrix.
- * @param {number} ratio The value which indicates how far to interpolate between the two matrices.
+ * @param {Number} to A destination matrix.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.slerp = function(to, ratio) {
@@ -339,8 +339,8 @@ b9.Matrix3D.prototype.slerp = function(to, ratio) {
 /**
  * Interpolates this matrix to a matrix by a ratio, using spherical linear interpolation.
  * However, unlike the slerp method, the translation of this matrix is regarded as the zero vector.
- * @param {number} to A destination matrix.
- * @param {number} ratio The value which indicates how far to interpolate between the two matrices.
+ * @param {Number} to A destination matrix.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two matrices.
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.slerp_noTrans = function(to, ratio) {
@@ -479,12 +479,43 @@ b9.Matrix3D.prototype.lookAt = function(from, to, up) {
 };
 
 /**
- * Multiplies a 16-element float array, as a 4x4 matrix, with an another array.
- * @param {Float32Array} left A float array.
- * @param {Float32Array} right An another float array.
- * @param {b9.Matrix3D} result The product of two arrays.
+ * Converts this matrix into the 16-element array.
+ * @param {array} array The destination of the array.
  */
-b9.Matrix3D.mulArrayAs4x4 = function(left, right, result) {
+b9.Matrix3D.prototype.toArray = function(array) {
+    var xAxis = this.xAxis;
+    var yAxis = this.yAxis;
+    var zAxis = this.zAxis;
+    var trans = this.trans;
+
+    array[0] = xAxis.x;
+    array[1] = xAxis.y;
+    array[2] = xAxis.z;
+    array[3] = 0.0;
+
+    array[4] = yAxis.x;
+    array[5] = yAxis.y;
+    array[6] = yAxis.z;
+    array[7] = 0.0;
+
+    array[8] = zAxis.x;
+    array[9] = zAxis.y;
+    array[10] = zAxis.z;
+    array[11] = 0.0;
+
+    array[12] = trans.x;
+    array[13] = trans.y;
+    array[14] = trans.z;
+    array[15] = 1.0;
+};
+
+/**
+ * Multiplies a 16-element array, as a 4x4 matrix, with an another array.
+ * @param {array} left A array.
+ * @param {array} right An another array.
+ * @param {array} result The destination of the product of two arrays.
+ */
+b9.Matrix3D.mulArray = function(left, right, result) {
     var i;
     var array = b9.Matrix3D.array1_;
 
@@ -516,18 +547,18 @@ b9.Matrix3D.mulArrayAs4x4 = function(left, right, result) {
 /**
  * Returns whether this matrix equals a matrix.
  * @param {b9.Matrix3D} vec A matrix.
- * @return {boolean} true if the two matrices are equal; false otherwise.
+ * @return {Boolean} true if the two matrices are equal; false otherwise.
  */
 b9.Matrix3D.prototype.equals = function(mat) {
     return (this.xAxis.equals(mat.xAxis) &&
             this.yAxis.equals(mat.yAxis) &&
             this.zAxis.equals(mat.zAxis) &&
-            this.trans.equals(mat.trans)) ? true : false;
+            this.trans.equals(mat.trans));
 };
 
 /**
  * Returns a string representation of this matrix.
- * @return {string} A string representation of this matrix.
+ * @return {String} A string representation of this matrix.
  */
 b9.Matrix3D.prototype.toString = function() {
     var i;

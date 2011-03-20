@@ -27,7 +27,7 @@ b9.Resource = {};
 
 /**
  *
- * @param {string} resName
+ * @param {String} resName
  */
 b9.Resource.get= function(resName) {
     return this.resTable_[resName];
@@ -35,8 +35,8 @@ b9.Resource.get= function(resName) {
 
 /**
  *
- * @param {string} resName
- * @param {object} obj
+ * @param {String} resName
+ * @param {Object} obj
  */
 b9.Resource.add = function(resName, obj) {
     this.resTable_[resName] = obj;
@@ -44,7 +44,7 @@ b9.Resource.add = function(resName, obj) {
 
 /**
  *
- * @param {string} resName
+ * @param {String} resName
  */
 b9.Resource.remove = function(resName) {
     delete this.resTable_[resName];

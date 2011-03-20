@@ -31,9 +31,9 @@
  * @class A quaternion which is represented by xyzw coordinates.
  *
  * @param {b9.Quaternion|number} [quatOrX] A quaternion to be cloned or an x-coordinate.
- * @param {number} [y] A y-coordinate.
- * @param {number} [z] A z-coordinate.
- * @param {number} [w] A w-coordinate.
+ * @param {Number} [y] A y-coordinate.
+ * @param {Number} [z] A z-coordinate.
+ * @param {Number} [w] A w-coordinate.
  */
 b9.Quaternion = b9.createClass();
 
@@ -43,25 +43,25 @@ b9.Quaternion = b9.createClass();
 b9.Quaternion.prototype.initialize = function(quatOrX, y, z, w) {
     /**
      * The x-coordinate of this quaternion.
-     * @type {number}
+     * @type {Number}
      */
     this.x = 0.0;
 
     /**
      * The y-coordinate of this quaternion.
-     * @type {number}
+     * @type {Number}
      */
     this.y = 0.0;
 
     /**
      * The z-coordinate of this quaternion.
-     * @type {number}
+     * @type {Number}
      */
     this.z = 0.0;
 
     /**
      * The w-coordinate of this quaternion.
-     * @type {number}
+     * @type {Number}
      */
     this.w = 0.0;
 
@@ -85,9 +85,9 @@ b9.Quaternion.prototype.initialize = function(quatOrX, y, z, w) {
  * <li>b9.Quaternion(float x, float y, float z, float w)</li>
  * </ul>
  * @param {b9.Quaternion|number} [quatOrX] A quaternion to be cloned or an x-coordinate.
- * @param {number} [y] A y-coordinate.
- * @param {number} [z] A z-coordinate.
- * @param {number} [w] A w-coordinate.
+ * @param {Number} [y] A y-coordinate.
+ * @param {Number} [z] A z-coordinate.
+ * @param {Number} [w] A w-coordinate.
  * @return {b9.Quaternion} This quaternion.
  */
 b9.Quaternion.prototype.set = function(quatOrX, y, z, w) {
@@ -166,8 +166,8 @@ b9.Quaternion.prototype.fromMatrix3D = function(mat) {
 
 /**
  * Interpolates this quaternion to a quaternion by a ratio, using spherical linear interpolation.
- * @param {number} to A destination quaternion.
- * @param {number} ratio The value which indicates how far to interpolate between the two quaternions.
+ * @param {Number} to A destination quaternion.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two quaternions.
  * @return {b9.Matrix3D} This quaternion.
  */
 b9.Quaternion.prototype.slerp = function(to, ratio) {
@@ -212,7 +212,7 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
 /**
  * Returns whether this quaternion equals a quaternion.
  * @param {b9.Quaternion} quat A quaternion.
- * @return {boolean} true if the two quaternions are equal; false otherwise.
+ * @return {Boolean} true if the two quaternions are equal; false otherwise.
  */
 b9.Quaternion.prototype.equals = function(quat) {
     return (b9.Math.equals_float(this.x, quat.x) &&
@@ -223,7 +223,7 @@ b9.Quaternion.prototype.equals = function(quat) {
 
 /**
  * Returns a string representation of this quaternion.
- * @return {string} A string representation of this quaternion.
+ * @return {String} A string representation of this quaternion.
  */
 b9.Quaternion.prototype.toString = function() {
     var str;

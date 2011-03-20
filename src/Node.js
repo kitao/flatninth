@@ -32,21 +32,21 @@ b9.Node = b9.createClass();
  */
 b9.Node.prototype.initialize = function() {
     this._node_flag =
-        b9.Node.FLAG_VISIBLE |
-        b9.Node.FLAG_DEPTH_TEST |
-        b9.Node.FLAG_WRITE_RGB |
-        b9.Node.FLAG_WRITE_DEPTH |
-        b9.Node.FLAG_BILINEAR;
+        b9.Node.NodeFlag.VISIBLE |
+        b9.Node.NodeFlag.DEPTH_TEST |
+        b9.Node.NodeFlag.WRITE_RGB |
+        b9.Node.NodeFlag.WRITE_DEPTH |
+        b9.Node.NodeFlag.BILINEAR;
 
     this._local = new b9.Matrix3D(b9.Matrix3D.UNIT);
     this._color = new b9.Color(255, 255, 255, 255);
-    this._blend_mode = b9.Node.BLEND_OFF;
+    this._blend_mode = b9.Node.BlendMode.OFF;
 
     this._tree = new b9.LinkedTree(this);
     this._world = new b9.Matrix3D();
     this._final_color = new b9.Color();
-    this._sort_value = 0.0;
-    this._sort_next = null;
+    this.sortValue_ = 0.0;
+    this.sortNext_ = null;
 };
 
 /**
@@ -106,25 +106,25 @@ b9.Node.prototype.getBlendMode = function() {
 /**
  * Sets the blend mode of this node.
  * @param {Number} blend_mode A blend mode.
- * @param {Boolean} with_preset_setting If true, FLAG_Z_SORT and FLAG_WRITE_DEPTH are set automatically,
+ * @param {Boolean} with_preset_setting If true, Z_SORT and WRITE_DEPTH are set automatically,
  * such as the following:
  * <ul>
- * <li>BLEND_OFF -> FLAG_Z_SORT: off, FLAG_WRITE_DEPTH: on</li>
- * <li>BLEND_HALF -> FLAG_Z_SORT: on, FLAG_WRITE_DEPTH: off</li>
- * <li>BLEND_ADD -> FLAG_Z_SORT: on, FLAG_WRITE_DEPTH: off</li>
- * <li>BLEND_DEST_ALPHA -> FLAG_Z_SORT: off, FLAG_WRITE_DEPTH: on</li>
+ * <li>BLEND_OFF -> Z_SORT: off, WRITE_DEPTH: on</li>
+ * <li>BLEND_HALF -> Z_SORT: on, WRITE_DEPTH: off</li>
+ * <li>BLEND_ADD -> Z_SORT: on, WRITE_DEPTH: off</li>
+ * <li>BLEND_DEST_ALPHA -> Z_SORT: off, WRITE_DEPTH: on</li>
  * </ul>
  */
 b9.Node.prototype.setBlendMode = function(blend_mode, with_preset_setting) {
     this._blend_mode = blend_mode;
 
     if (with_preset_setting) {
-        if (blend_mode === b9.Node.BLEND_OFF || blend_mode === b9.Node.BLEND_DEST_ALPHA) {
-            this._node_flag &= ~b9.Node.FLAG_Z_SORT;
-            this._node_flag |= b9.Node.FLAG_WRITE_DEPTH;
+        if (blend_mode === b9.Node.BlendMode.OFF || blend_mode === b9.Node.BlendMode.DEST_ALPHA) {
+            this._node_flag &= ~b9.Node.NodeFlag.Z_SORT;
+            this._node_flag |= b9.Node.NodeFlag.WRITE_DEPTH;
         } else {
-            this._node_flag |= b9.Node.FLAG_Z_SORT;
-            this._node_flag &= ~b9.Node.FLAG_WRITE_DEPTH;
+            this._node_flag |= b9.Node.NodeFlag.Z_SORT;
+            this._node_flag &= ~b9.Node.NodeFlag.WRITE_DEPTH;
         }
     }
 };
@@ -265,113 +265,112 @@ b9.Node.prototype._calcFinal = function() {
 b9.Node.prototype._setup = function() {
     var gl = b9.System.getGLContext();
     var node_flag = this._node_flag;
-    var write_rgb = (node_flag & b9.Node.FLAG_WRITE_RGB) ? true : false;
+    var write_rgb = (node_flag & b9.Node.NodeFlag.WRITE_RGB) ? true : false;
     var blend_mode = this._blend_mode;
 
     this._calcFinal();
 
-    gl.depthFunc((node_flag & b9.Node.FLAG_DEPTH_TEST) ? gl.GEQUAL : gl.ALWAYS);
-    gl.colorMask(write_rgb, write_rgb, write_rgb, (node_flag & b9.Node.FLAG_WRITE_ALPHA) ? true : false);
-    gl.depthMask((node_flag & b9.Node.FLAG_WRITE_DEPTH) ? true : false);
+    gl.depthFunc((node_flag & b9.Node.NodeFlag.DEPTH_TEST) ? gl.GEQUAL : gl.ALWAYS);
+    gl.colorMask(write_rgb, write_rgb, write_rgb, (node_flag & b9.Node.NodeFlag.WRITE_ALPHA) ? true : false);
+    gl.depthMask((node_flag & b9.Node.NodeFlag.WRITE_DEPTH) ? true : false);
 
-    if (node_flag & b9.Node.FLAG_CULL_FACE) {
+    if (node_flag & b9.Node.NodeFlag.CULL_FACE) {
         gl.enable(gl.CULL_FACE);
     } else {
         gl.disable(gl.CULL_FACE);
     }
 
-    if (blend_mode === b9.Node.BLEND_OFF) {
+    if (blend_mode === b9.Node.BlendMode.OFF) {
         gl.disable(gl.BLEND);
-    } else if (blend_mode === b9.Node.BLEND_HALF) {
+    } else if (blend_mode === b9.Node.BlendMode.HALF) {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    } else if (blend_mode === b9.Node.BLEND_ADD) {
+    } else if (blend_mode === b9.Node.BlendMode.ADD) {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-    } else if (blend_mode === b9.Node.BLEND_DEST_ALPHA) {
+    } else if (blend_mode === b9.Node.BlendMode.DEST_ALPHA) {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.DST_ALPHA, gl.ONE_MINUS_DST_ALPHA);
     }
 };
 
-b9.Node.prototype._render = function() {
+b9.Node.prototype.draw_ = function() {
     this._calcFinal();
 };
 
 /**
- * hoge
- * @return {Number}
+ * The flags which specify how to draw a node.
+ * @enum {Number}
  */
-b9.Node.FLAG_VISIBLE = 0x8000;
+b9.Node.NodeFlag = {
+    /**
+     * TODO
+     */
+    VISIBLE: 0x8000,
 
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.FLAG_Z_SORT = 0x4000;
+    /**
+     * TODO
+     */
+    Z_SORT: 0x4000,
+
+    /**
+     * TODO
+     */
+    DEPTH_TEST: 0x2000,
+
+    /**
+     * TODO
+     */
+    WRITE_RGB: 0x1000,
+
+    /**
+     * TODO
+     */
+    WRITE_ALPHA: 0x0800,
+
+    /**
+     * TODO
+     */
+    WRITE_DEPTH: 0x0400,
+
+    /**
+     * TODO
+     */
+    CULL_FACE: 0x0200,
+
+    /**
+     * TODO
+     */
+    BILLBOARD: 0x0100,
+
+    /**
+     * TODO
+     */
+    BILINEAR: 0x0080
+};
 
 /**
  *
- * @return {Number}
+ * @enum {Number}
  */
-b9.Node.FLAG_DEPTH_TEST = 0x2000;
+b9.Node.BlendMode = {
+    /**
+     *
+     */
+    OFF: 0,
 
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.FLAG_WRITE_RGB = 0x1000;
+    /**
+     *
+     */
+    HALF: 1,
 
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.FLAG_WRITE_ALPHA = 0x0800;
+    /**
+     *
+     */
+    ADD: 2,
 
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.FLAG_WRITE_DEPTH = 0x0400;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.FLAG_CULL_FACE = 0x0200;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.FLAG_BILLBOARD = 0x0100;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.FLAG_BILINEAR = 0x0080;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.BLEND_OFF = 0;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.BLEND_HALF = 1;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.BLEND_ADD = 2;
-
-/**
- * hoge
- * @return {Number}
- */
-b9.Node.BLEND_DEST_ALPHA = 3;
+    /**
+     *
+     */
+    DEST_ALPHA: 3
+};
