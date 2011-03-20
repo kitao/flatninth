@@ -41,37 +41,37 @@ b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCoun
 
     /**
      * The number of vertices.
-     * @type {Number}
+     * @return {Number}
      */
     this.vertexCount = vertCount;
 
     /**
      * The number of elements.
-     * @type {Number}
+     * @return {Number}
      */
     this.elementCount = elemCount;
 
     /**
      * The number of attributes.
-     * @type {Number}
+     * @return {Number}
      */
     this.attributeCount = attCount || 0;
 
     /**
      * The array of the positions.
-     * @type {Float32Array}
+     * @return {Float32Array}
      */
     posArray = this.posArray = new Float32Array(vertCount * 3);
 
     /**
      * The array of the colors.
-     * @type {Uint8Array}
+     * @return {Uint8Array}
      */
     colorArray = this.colorArray = new Uint8Array(vertCount * 4);
 
     /**
      * The array of the texture coordinates.
-     * @type {Float32Array}
+     * @return {Float32Array}
      */
     texCoordArray = this.texCoordArray = new Float32Array(vertCount * 2);
 
@@ -79,7 +79,7 @@ b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCoun
 
     /**
      * The array of the elements.
-     * @type {Uint16Array}
+     * @return {Uint16Array}
      */
     this.elementArray = new Uint16Array(elemCount);
 

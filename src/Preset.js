@@ -185,42 +185,42 @@ b9.Preset.finalize_ = function() {
 
 /**
  *
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Preset.MIN_TASK_LIST_NO = -3;
 
 /**
  *
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Preset.MAX_TASK_LIST_NO = 3;
 
 /**
  *
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Preset.TASK_LIST_COUNT = b9.Preset.MAX_TASK_LIST_NO - b9.Preset.MIN_TASK_LIST_NO + 1;
 
 /**
  *
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Preset.MIN_SCREEN_NO = -3;
 
 /**
  *
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Preset.MAX_SCREEN_NO = 3;
 
 /**
  *
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Preset.SCREEN_COUNT = b9.Preset.MAX_SCREEN_NO - b9.Preset.MIN_SCREEN_NO + 1;

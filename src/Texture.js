@@ -37,19 +37,19 @@ b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
 
     /**
      *
-     * @type {Boolean}
+     * @return {Boolean}
      */
     this.isLoaded = false;
 
     /**
      *
-     * @type {Number}
+     * @return {Number}
      */
     this.width = 0.0;
 
     /**
      *
-     * @type {Number}
+     * @return {Number}
      */
     this.height = 0.0;
 
@@ -125,22 +125,22 @@ b9.Texture.prototype._setup = function(shader) {
 b9.Texture.Format = {
     /**
      *
-     * @const
-     * @type {Number}
+     * @constant
+     * @return {Number}
      */
     RGB: 0,
 
     /**
      *
-     * @const
-     * @type {Number}
+     * @constant
+     * @return {Number}
      */
     RGBA: 1,
 
     /**
      *
-     * @const
-     * @type {Number}
+     * @constant
+     * @return {Number}
      */
     ALPHA: 2
 };

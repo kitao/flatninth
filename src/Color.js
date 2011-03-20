@@ -45,25 +45,25 @@ b9.Color = b9.createClass();
 b9.Color.prototype.initialize = function(colorOrR, g, b, a) {
     /**
      * The red component of this color.
-     * @type {Number}
+     * @return {Number}
      */
     this.r = 0;
 
     /**
      * The green component of this color.
-     * @type {Number}
+     * @return {Number}
      */
     this.g = 0;
 
     /**
      * The blue component of this color.
-     * @type {Number}
+     * @return {Number}
      */
     this.b = 0;
 
     /**
      * The alpha component of this color.
-     * @type {Number}
+     * @return {Number}
      */
     this.a = 0;
 
@@ -237,7 +237,7 @@ b9.Color.prototype.toString = function() {
 
 /**
  * The color whose components are all 0.
- * @const
+ * @constant
  * @return {b9.Color}
  */
 b9.Color.ZERO = new b9.Color(0, 0, 0, 0);

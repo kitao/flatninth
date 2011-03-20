@@ -235,29 +235,29 @@ b9.Math.equals_float = function(a, b) {
 /**
  * An extremely small positive quantity.
  * If the difference of two numbers is less than this value, two numbers are considered equal.
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Math.EPSILON = 0.0001;
 
 /**
  * Pi.
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Math.PI = Math.PI;
 
 /**
  * Pi/180.
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
 
 /**
  * 180/Pi.
- * @const
- * @type {Number}
+ * @constant
+ * @return {Number}
  */
 b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 

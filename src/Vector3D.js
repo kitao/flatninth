@@ -42,19 +42,19 @@ b9.Vector3D = b9.createClass();
 b9.Vector3D.prototype.initialize = function(vecOrX, y, z) {
     /**
      * The x-coordinate of this vector.
-     * @type {Number}
+     * @return {Number}
      */
     this.x = 0.0;
 
     /**
      * The y-coordinate of this vector.
-     * @type {Number}
+     * @return {Number}
      */
     this.y = 0.0;
 
     /**
      * The z-coordinate of this vector.
-     * @type {Number}
+     * @return {Number}
      */
     this.z = 0.0;
 
@@ -468,29 +468,29 @@ b9.Vector3D.prototype.toString = function() {
 
 /**
  * The zero vector.
- * @const
- * @type {b9.Vector3D}
+ * @constant
+ * @return {b9.Vector3D}
  */
 b9.Vector3D.ZERO = new b9.Vector3D(0.0, 0.0, 0.0);
 
 /**
  * The orthonormal x-axis.
- * @const
- * @type {b9.Vector3D}
+ * @constant
+ * @return {b9.Vector3D}
  */
 b9.Vector3D.X_UNIT = new b9.Vector3D(1.0, 0.0, 0.0);
 
 /**
  * The orthonormal y-axis.
- * @const
- * @type {b9.Vector3D}
+ * @constant
+ * @return {b9.Vector3D}
  */
 b9.Vector3D.Y_UNIT = new b9.Vector3D(0.0, 1.0, 0.0);
 
 /**
  * The orthonormal z-axis.
- * @const
- * @type {b9.Vector3D}
+ * @constant
+ * @return {b9.Vector3D}
  */
 b9.Vector3D.Z_UNIT = new b9.Vector3D(0.0, 0.0, 1.0);
 

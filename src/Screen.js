@@ -383,22 +383,22 @@ b9.Screen.sortList_ = function(sortList, start, end) {
 b9.Screen.ScreenFlag = {
     /**
      * TODO
-     * @const
-     * @type {Number}
+     * @constant
+     * @return {Number}
      */
     VISIBLE: 0x8000,
 
     /**
      * TODO
-     * @const
-     * @type {Number}
+     * @constant
+     * @return {Number}
      */
     CLEAR_COLOR: 0x4000,
 
     /**
      * TODO
-     * @const
-     * @type {Number}
+     * @constant
+     * @return {Number}
      */
     CLEAR_DEPTH: 0x2000
 };

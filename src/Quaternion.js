@@ -43,25 +43,25 @@ b9.Quaternion = b9.createClass();
 b9.Quaternion.prototype.initialize = function(quatOrX, y, z, w) {
     /**
      * The x-coordinate of this quaternion.
-     * @type {Number}
+     * @return {Number}
      */
     this.x = 0.0;
 
     /**
      * The y-coordinate of this quaternion.
-     * @type {Number}
+     * @return {Number}
      */
     this.y = 0.0;
 
     /**
      * The z-coordinate of this quaternion.
-     * @type {Number}
+     * @return {Number}
      */
     this.z = 0.0;
 
     /**
      * The w-coordinate of this quaternion.
-     * @type {Number}
+     * @return {Number}
      */
     this.w = 0.0;
 

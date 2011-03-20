@@ -43,25 +43,25 @@ b9.Matrix3D = b9.createClass();
 b9.Matrix3D.prototype.initialize = function(matOrXAxis, yAxis, zAxis, trans) {
     /**
      * The x-axis of this matrix.
-     * @type {b9.Vector3D}
+     * @return {b9.Vector3D}
      */
     this.xAxis = new b9.Vector3D();
 
     /**
      * The y-axis of this matrix.
-     * @type {b9.Vector3D}
+     * @return {b9.Vector3D}
      */
     this.yAxis = new b9.Vector3D();
 
     /**
      * The z-axis of this matrix.
-     * @type {b9.Vector3D}
+     * @return {b9.Vector3D}
      */
     this.zAxis = new b9.Vector3D();
 
     /**
      * The translation of this matrix.
-     * @type {b9.Vector3D}
+     * @return {b9.Vector3D}
      */
     this.trans = new b9.Vector3D();
 
@@ -480,7 +480,7 @@ b9.Matrix3D.prototype.lookAt = function(from, to, up) {
 
 /**
  * Converts this matrix into the 16-element array.
- * @param {array} array The destination of the array.
+ * @param {Array} array The destination of the array.
  */
 b9.Matrix3D.prototype.toArray = function(array) {
     var xAxis = this.xAxis;
@@ -511,9 +511,9 @@ b9.Matrix3D.prototype.toArray = function(array) {
 
 /**
  * Multiplies a 16-element array, as a 4x4 matrix, with an another array.
- * @param {array} left A array.
- * @param {array} right An another array.
- * @param {array} result The destination of the product of two arrays.
+ * @param {Array} left A array.
+ * @param {Array} right An another array.
+ * @param {Array} result The destination of the product of two arrays.
  */
 b9.Matrix3D.mulArray = function(left, right, result) {
     var i;
@@ -581,8 +581,8 @@ b9.Matrix3D.prototype.toString = function() {
 
 /**
  * The unit matrix.
- * @const
- * @type {b9.Matrix3D}
+ * @constant
+ * @return {b9.Matrix3D}
  */
 b9.Matrix3D.UNIT = new b9.Matrix3D(b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT, b9.Vector3D.ZERO);
 
