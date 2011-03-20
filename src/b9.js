@@ -26,8 +26,9 @@
 var b9 = {};
 
 /**
- * The string of the version number of Flatninth.
- * @return {String}
+ * The version number of Flatninth.
+ * @const
+ * @type {number}
  */
 b9.VERSION = 0.01;
 
@@ -35,57 +36,57 @@ b9.VERSION = 0.01;
  * Creates a new class which provides constructor/destructor mechanism.<br>
  * The method named initialize is called when an instance is created,
  * and the method named finalize is called when an instance is deleted by calling the finalize method.<br>
- * If the created class has a base class, it also provides the initializeSuper method and the finalizeSuper method.
- * The constructor and destructor of the base class can be called with these methods respectively.
- * @param {Object} [super_class] A base class.
- * @return {Object} A class object.
+ * If the created class has a base class, the initializeSuper method and the finalizeSuper method are also provided.
+ * These methods can call the constructor and destructor of the base class respectively.
+ * @param {object} [baseClass] A base class.
+ * @return {object} A class object.
  */
-b9.createClass = function(super_class) {
-    var temp_class;
-    var sub_class = function() {
-        if (sub_class.prototype.initialize) {
-            sub_class.prototype.initialize.apply(this, arguments);
+b9.createClass = function(baseClass) {
+    var tempClass;
+    var derivedClass = function() {
+        if (derivedClass.prototype.initialize) {
+            derivedClass.prototype.initialize.apply(this, arguments);
         }
     };
 
-    if (super_class) {
-        temp_class = function() {};
-        temp_class.prototype = super_class.prototype;
-        sub_class.prototype = new temp_class();
-        sub_class.prototype.constructor = sub_class;
+    if (baseClass) {
+        tempClass = function() {};
+        tempClass.prototype = baseClass.prototype;
+        derivedClass.prototype = new tempClass();
+        derivedClass.prototype.constructor = derivedClass;
 
-        if (super_class.prototype.initialize) {
+        if (baseClass.prototype.initialize) {
             /** @ignore */
-            sub_class.prototype.initializeSuper = function() {
-                var temp_method = this.initializeSuper;
-                this.initializeSuper = super_class.prototype.initializeSuper || null;
+            derivedClass.prototype.initializeSuper = function() {
+                var tempMethod = this.initializeSuper;
+                this.initializeSuper = baseClass.prototype.initializeSuper || null;
 
-                super_class.prototype.initialize.apply(this, arguments);
+                baseClass.prototype.initialize.apply(this, arguments);
 
-                if (this.constructor === sub_class) {
+                if (this.constructor === derivedClass) {
                     delete this.initializeSuper;
                 } else {
-                    this.initializeSuper = temp_method;
+                    this.initializeSuper = tempMethod;
                 }
             };
         }
 
-        if (super_class.prototype.finalize) {
+        if (baseClass.prototype.finalize) {
             /** @ignore */
-            sub_class.prototype.finalizeSuper = function() {
-                var temp_method = this.finalizeSuper;
-                this.finalizeSuper = super_class.prototype.finalizeSuper || null;
+            derivedClass.prototype.finalizeSuper = function() {
+                var tempMethod = this.finalizeSuper;
+                this.finalizeSuper = baseClass.prototype.finalizeSuper || null;
 
-                super_class.prototype.finalize.apply(this, arguments);
+                baseClass.prototype.finalize.apply(this, arguments);
 
-                if (this.constructor === sub_class) {
+                if (this.constructor === derivedClass) {
                     delete this.finalizeSuper;
                 } else {
-                    this.finalizeSuper = temp_method;
+                    this.finalizeSuper = tempMethod;
                 }
             };
         }
     }
 
-    return sub_class;
+    return derivedClass;
 };
