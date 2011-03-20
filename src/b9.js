@@ -37,7 +37,7 @@ b9.VERSION = 0.01;
  * The method named initialize is called when an instance is created,
  * and the method named finalize is called when an instance is deleted by calling the finalize method.<br>
  * If the created class has a base class, the initializeSuper method and the finalizeSuper method are also provided.
- * These methods can call the constructor and destructor of the base class respectively.
+ * The constructor and the destructor of the base class can be called with these methods respectively.
  * @param {Object} [baseClass] A base class.
  * @return {Object} A class object.
  */

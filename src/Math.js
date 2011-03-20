@@ -113,7 +113,7 @@ b9.Math.sin_int = function(deg) {
         deg %= 360;
     }
 
-    return this.sinTable_[deg];
+    return this._sinTable[deg];
 };
 
 /**
@@ -132,7 +132,7 @@ b9.Math.cos_int = function(deg) {
         deg %= 360;
     }
 
-    return this.sinTable_[deg];
+    return this._sinTable[deg];
 };
 
 /**
@@ -261,11 +261,11 @@ b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
  */
 b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 
-b9.Math.sinTable_ = [];
+b9.Math._sinTable = [];
 (function() {
     var i;
 
     for (i = 0; i < 360; i++) {
-        b9.Math.sinTable_[i] = b9.Math.sin_float(i);
+        b9.Math._sinTable[i] = b9.Math.sin_float(i);
     }
 })();
