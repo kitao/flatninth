@@ -27,15 +27,15 @@ b9.Math = {};
 
 /**
  * Returns the integer value that is less than or equal to the argument.
- * @param {number} x A value.
- * @return {number} The integer value.
+ * @param {Number} x A value.
+ * @return {Number} The integer value.
  */
 b9.Math.floor = Math.floor;
 
 /**
  * Returns the absolute value of the argument.
- * @param {number} x A value.
- * @return {number} The absolute value.
+ * @param {Number} x A value.
+ * @return {Number} The absolute value.
  */
 b9.Math.abs = function(x) {
     return (x >= 0.0) ? x : -x;
@@ -43,9 +43,9 @@ b9.Math.abs = function(x) {
 
 /**
  * Returns the smaller of the two values.
- * @param {number} a A value.
- * @param {number} b An another value.
- * @return {number} The smaller value.
+ * @param {Number} a A value.
+ * @param {Number} b An another value.
+ * @return {Number} The smaller value.
  */
 b9.Math.min = function(a, b) {
     return (a < b) ? a : b;
@@ -53,9 +53,9 @@ b9.Math.min = function(a, b) {
 
 /**
  * Returns the greater of the two values.
- * @param {number} a A value.
- * @param {number} b An another value.
- * @return {number} The greater value.
+ * @param {Number} a A value.
+ * @param {Number} b An another value.
+ * @return {Number} The greater value.
  */
 b9.Math.max = function(a, b) {
     return (a > b) ? a : b;
@@ -63,10 +63,10 @@ b9.Math.max = function(a, b) {
 
 /**
  * Clamps a value within an inclusive range.
- * @param {number} x A value to be clamped.
- * @param {number} min The minimum value of the range.
- * @param {number} max The maximum value of the range.
- * @return {number} A clamped value.
+ * @param {Number} x A value to be clamped.
+ * @param {Number} min The minimum value of the range.
+ * @param {Number} max The maximum value of the range.
+ * @return {Number} A clamped value.
  */
 b9.Math.clamp = function(x, min, max) {
     return (x < min) ? min : ((x > max) ? max : x);
@@ -74,15 +74,15 @@ b9.Math.clamp = function(x, min, max) {
 
 /**
  * Returns the square root of a value.
- * @param {number} x A value.
- * @return {number} The positive square root of the value.
+ * @param {Number} x A value.
+ * @return {Number} The positive square root of the value.
  */
 b9.Math.sqrt = Math.sqrt;
 
 /**
  * Returns the trigonometric sine of a float angle.
- * @param {number} deg A float angle in degrees.
- * @return {number} The sine of the angle.
+ * @param {Number} deg A float angle in degrees.
+ * @return {Number} The sine of the angle.
  */
 b9.Math.sin_float = function(deg) {
     return Math.sin(deg * this.DEG_TO_RAD);
@@ -90,8 +90,8 @@ b9.Math.sin_float = function(deg) {
 
 /**
  * Returns the trigonometric cosine of a float angle.
- * @param {number} deg A float angle in degrees.
- * @return {number} The cosine of the angle.
+ * @param {Number} deg A float angle in degrees.
+ * @return {Number} The cosine of the angle.
  */
 b9.Math.cos_float = function(deg) {
     return Math.cos(deg * this.DEG_TO_RAD);
@@ -100,8 +100,8 @@ b9.Math.cos_float = function(deg) {
 /**
  * Returns the trigonometric sine of an integer angle.
  * This function allows only an integer angle, but is faster than the sin_float function.
- * @param {number} deg An integer angle in degrees.
- * @return {number} The sine of an angle.
+ * @param {Number} deg An integer angle in degrees.
+ * @return {Number} The sine of an angle.
  */
 b9.Math.sin_int = function(deg) {
     deg = this.floor(deg);
@@ -119,8 +119,8 @@ b9.Math.sin_int = function(deg) {
 /**
  * Returns the trigonometric cosine of an integer angle.
  * This function allows only an integer angle, but is faster than the cos_float function.
- * @param {number} deg An integer angle in degrees.
- * @return {number} The cosine of an angle.
+ * @param {Number} deg An integer angle in degrees.
+ * @return {Number} The cosine of an angle.
  */
 b9.Math.cos_int = function(deg) {
     deg = this.floor(deg) + 90;
@@ -137,8 +137,8 @@ b9.Math.cos_int = function(deg) {
 
 /**
  * Returns the arc sine of a value.
- * @param {number} x A value.
- * @return {number} The arc sine of a value.
+ * @param {Number} x A value.
+ * @return {Number} The arc sine of a value.
  */
 b9.Math.asin = function(x) {
     return Math.asin(x) * this.RAD_TO_DEG;
@@ -146,8 +146,8 @@ b9.Math.asin = function(x) {
 
 /**
  * Returns the arc cosine of a value.
- * @param {number} x A value.
- * @return {number} The arc cosine of a value.
+ * @param {Number} x A value.
+ * @return {Number} The arc cosine of a value.
  */
 b9.Math.acos = function(x) {
     return Math.acos(x) * this.RAD_TO_DEG;
@@ -155,9 +155,9 @@ b9.Math.acos = function(x) {
 
 /**
  * Returns the arc tangent of an x, y coordinate.
- * @param {number} y A y-coordinate.
- * @param {number} x An x-coordinate.
- * @return {number} The arc tangent of y/x.
+ * @param {Number} y A y-coordinate.
+ * @param {Number} x An x-coordinate.
+ * @return {Number} The arc tangent of y/x.
  */
 b9.Math.atan2 = function(y, x) {
     return Math.atan2(y, x) * this.RAD_TO_DEG;
@@ -165,9 +165,9 @@ b9.Math.atan2 = function(y, x) {
 
 /**
  * Returns a random integer value within an inclusive range.
- * @param {number} from The beginning of the range.
- * @param {number} to The end of the range.
- * @return {number} A random integer value.
+ * @param {Number} from The beginning of the range.
+ * @param {Number} to The end of the range.
+ * @return {Number} A random integer value.
  */
 b9.Math.random_int = function(from, to) {
     var range;
@@ -186,10 +186,10 @@ b9.Math.random_int = function(from, to) {
 
 /**
  * Returns a random float value within an inclusive range.
- * @param {number} from The beginning of the range.
- * @param {number} to The end of the range.
- * @param {number} interval The interval of the random values.
- * @return {number} A random float value.
+ * @param {Number} from The beginning of the range.
+ * @param {Number} to The end of the range.
+ * @param {Number} interval The interval of the random values.
+ * @return {Number} A random float value.
  */
 b9.Math.random_float = function(from, to, interval) {
     var range;
@@ -207,10 +207,10 @@ b9.Math.random_float = function(from, to, interval) {
 
 /**
  * Returns the interporated value between the two values by a ratio.
- * @param {number} from A source value.
- * @param {number} to A destination value.
- * @param {number} ratio The value which indicates how far to interpolate between the two values.
- * @return {number} The interpolated value between the two values.
+ * @param {Number} from A source value.
+ * @param {Number} to A destination value.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two values.
+ * @return {Number} The interpolated value between the two values.
  */
 b9.Math.lerp = function(from, to, ratio) {
     if (ratio < this.EPSILON) {
@@ -224,9 +224,9 @@ b9.Math.lerp = function(from, to, ratio) {
 
 /**
  * Returns whether the two values are almost equal.
- * @param {number} a A value.
- * @param {number} b An another value.
- * @return {boolean} true if the two values are almost equal; false otherwise.
+ * @param {Number} a A value.
+ * @param {Number} b An another value.
+ * @return {Boolean} true if the two values are almost equal; false otherwise.
  */
 b9.Math.equals_float = function(a, b) {
     return (this.abs(a - b) < this.EPSILON);
@@ -236,28 +236,28 @@ b9.Math.equals_float = function(a, b) {
  * An extremely small positive quantity.
  * If the difference of two numbers is less than this value, two numbers are considered equal.
  * @const
- * @type {number}
+ * @type {Number}
  */
 b9.Math.EPSILON = 0.0001;
 
 /**
  * Pi.
  * @const
- * @type {number}
+ * @type {Number}
  */
 b9.Math.PI = Math.PI;
 
 /**
  * Pi/180.
  * @const
- * @type {number}
+ * @type {Number}
  */
 b9.Math.DEG_TO_RAD = b9.Math.PI / 180.0;
 
 /**
  * 180/Pi.
  * @const
- * @type {number}
+ * @type {Number}
  */
 b9.Math.RAD_TO_DEG = 180.0 / b9.Math.PI;
 

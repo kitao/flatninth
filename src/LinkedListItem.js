@@ -25,7 +25,7 @@
  *
  * @class An element of the b9.LinkedList class.
  *
- * @param {object} self An object to be associated.
+ * @param {Object} self An object to be associated.
  */
 b9.LinkedListItem = b9.createClass();
 
@@ -52,7 +52,7 @@ b9.LinkedListItem.prototype.finalize = function() {
 
 /**
  * Returns the object associated with this item.
- * @return {object} The associated object.
+ * @return {Object} The associated object.
  */
 b9.LinkedListItem.prototype.getSelf = function() {
     return this.self_;

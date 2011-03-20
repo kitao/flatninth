@@ -25,7 +25,7 @@
  *
  * @class A tree container which can have a parent and children.
  *
- * @param {object} self An object to be associated.
+ * @param {Object} self An object to be associated.
  */
 b9.LinkedTree = b9.createClass();
 
@@ -56,7 +56,7 @@ b9.LinkedTree.prototype.finalize = function() {
 
 /**
  * Returns the object associated with this item.
- * @return {object} The associated object.
+ * @return {Object} The associated object.
  */
 b9.LinkedTree.prototype.getSelf = function() {
     return this.self_;

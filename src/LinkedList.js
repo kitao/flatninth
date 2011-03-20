@@ -52,7 +52,7 @@ b9.LinkedList.prototype.finalize = function() {
 
 /**
  * Returns the number of the items belong to this list.
- * @return {number} The number of the items.
+ * @return {Number} The number of the items.
  */
 b9.LinkedList.prototype.getCount = function() {
     return this.itemCount_;

@@ -27,8 +27,8 @@ var b9 = {};
 
 /**
  * The version number of Flatninth.
- * @const
- * @type {number}
+ * @constant
+ * @return {Number}
  */
 b9.VERSION = 0.01;
 
@@ -38,8 +38,8 @@ b9.VERSION = 0.01;
  * and the method named finalize is called when an instance is deleted by calling the finalize method.<br>
  * If the created class has a base class, the initializeSuper method and the finalizeSuper method are also provided.
  * These methods can call the constructor and destructor of the base class respectively.
- * @param {object} [baseClass] A base class.
- * @return {object} A class object.
+ * @param {Object} [baseClass] A base class.
+ * @return {Object} A class object.
  */
 b9.createClass = function(baseClass) {
     var tempClass;

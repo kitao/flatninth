@@ -32,10 +32,10 @@
  * Each component ranges between 0..255 with 0 meaning no contribution for that component,
  * and 255 meaning 100% contribution.
  *
- * @param {b9.Color|number} [colorOrR] A color to be cloned or a red component.
- * @param {number} [g] A green component.
- * @param {number} [b] A blue component.
- * @param {number} [a] An alpha component. If not specified, 255 is used.
+ * @param {b9.Color|Number} [colorOrR] A color to be cloned or a red component.
+ * @param {Number} [g] A green component.
+ * @param {Number} [b] A blue component.
+ * @param {Number} [a] An alpha component. If not specified, 255 is used.
  */
 b9.Color = b9.createClass();
 
@@ -45,25 +45,25 @@ b9.Color = b9.createClass();
 b9.Color.prototype.initialize = function(colorOrR, g, b, a) {
     /**
      * The red component of this color.
-     * @type {number}
+     * @type {Number}
      */
     this.r = 0;
 
     /**
      * The green component of this color.
-     * @type {number}
+     * @type {Number}
      */
     this.g = 0;
 
     /**
      * The blue component of this color.
-     * @type {number}
+     * @type {Number}
      */
     this.b = 0;
 
     /**
      * The alpha component of this color.
-     * @type {number}
+     * @type {Number}
      */
     this.a = 0;
 
@@ -91,10 +91,10 @@ b9.Color.prototype.initialize = function(colorOrR, g, b, a) {
  * <li>b9.Color(b9.Color colorToBeCloned)</li>
  * <li>b9.Color(int r, int g, int b, int a = 255)</li>
  * </ul>
- * @param {b9.Color|number} [colorOrR] A color to be cloned or a red component.
- * @param {number} [g] A green component.
- * @param {number} [b] A blue component.
- * @param {number} [a] An alpha component. If not specified, 255 is used.
+ * @param {b9.Color|Number} [colorOrR] A color to be cloned or a red component.
+ * @param {Number} [g] A green component.
+ * @param {Number} [b] A blue component.
+ * @param {Number} [a] An alpha component. If not specified, 255 is used.
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.set = function(colorOrR, g, b, a) {
@@ -148,7 +148,7 @@ b9.Color.prototype.sub = function(color) {
 
 /**
  * Multiplies this color with a color or a scalar value.
- * @param {b9.Color|number} colorOrScalar A color or a scalar value.
+ * @param {b9.Color|Number} colorOrScalar A color or a scalar value.
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.mul = function(colorOrScalar) {
@@ -169,7 +169,7 @@ b9.Color.prototype.mul = function(colorOrScalar) {
 
 /**
  * Divides this color by a scalar value.
- * @param {number} s A scalar value.
+ * @param {Number} s A scalar value.
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.div = function(s) {
@@ -186,7 +186,7 @@ b9.Color.prototype.div = function(s) {
 /**
  * Interpolates this color to a color by a ratio.
  * @param {b9.Color} to A destination color.
- * @param {number} ratio The value which indicates how far to interpolate between the two colors.
+ * @param {Number} ratio The value which indicates how far to interpolate between the two colors.
  * @return {b9.Color} This color.
  */
 b9.Color.prototype.lerp = function(to, ratio) {
@@ -209,7 +209,7 @@ b9.Color.prototype.lerp = function(to, ratio) {
 /**
  * Returns whether this color equals a color.
  * @param {b9.Color} vec A color.
- * @return {boolean} true if the two colors are equal; false otherwise.
+ * @return {Boolean} true if the two colors are equal; false otherwise.
  */
 b9.Color.prototype.equals = function(color) {
     return (this.r === color.r && this.g === color.g && this.b === color.b && this.a === color.a);
@@ -217,7 +217,7 @@ b9.Color.prototype.equals = function(color) {
 
 /**
  * Returns a string representation of this color.
- * @return {string} A string representation of this color.
+ * @return {String} A string representation of this color.
  */
 b9.Color.prototype.toString = function() {
     var str;
@@ -238,13 +238,13 @@ b9.Color.prototype.toString = function() {
 /**
  * The color whose components are all 0.
  * @const
- * @type {b9.Color}
+ * @return {b9.Color}
  */
 b9.Color.ZERO = new b9.Color(0, 0, 0, 0);
 
 /**
  * The color whose components are all 255.
- * @const
- * @type {b9.Color}
+ * @constant
+ * @return {b9.Color}
  */
 b9.Color.FULL = new b9.Color(255, 255, 255, 255);
