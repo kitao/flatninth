@@ -30,51 +30,51 @@
  *
  * @class A quaternion which is represented by xyzw coordinates.
  *
- * @param {b9.Quaternion|number} [arg1] A quaternion to be cloned or an x-coordinate.
- * @param {number} [arg2] A y-coordinate.
- * @param {number} [arg3] A z-coordinate.
- * @param {number} [arg4] A w-coordinate.
+ * @param {b9.Quaternion|number} [quatOrX] A quaternion to be cloned or an x-coordinate.
+ * @param {number} [y] A y-coordinate.
+ * @param {number} [z] A z-coordinate.
+ * @param {number} [w] A w-coordinate.
  */
 b9.Quaternion = b9.createClass();
 
 /**
  * @ignore
  */
-b9.Quaternion.prototype.initialize = function(arg1, arg2, arg3, arg4) {
+b9.Quaternion.prototype.initialize = function(quatOrX, y, z, w) {
     /**
      * The x-coordinate of this quaternion.
      * @type {number}
      */
-    this.x = 0.0;
+    this.x;
 
     /**
      * The y-coordinate of this quaternion.
      * @type {number}
      */
-    this.y = 0.0;
+    this.y;
 
     /**
      * The z-coordinate of this quaternion.
      * @type {number}
      */
-    this.z = 0.0;
+    this.z;
 
     /**
      * The w-coordinate of this quaternion.
      * @type {number}
      */
-    this.w = 0.0;
+    this.w;
 
     if (arguments.length === 1) {
-        this.x = arg1.x;
-        this.y = arg1.y;
-        this.z = arg1.z;
-        this.w = arg1.w;
+        this.x = quatOrX.x;
+        this.y = quatOrX.y;
+        this.z = quatOrX.z;
+        this.w = quatOrX.w;
     } else if (arguments.length === 4) {
-        this.x = arg1;
-        this.y = arg2;
-        this.z = arg3;
-        this.w = arg4;
+        this.x = quatOrX;
+        this.y = y;
+        this.z = z;
+        this.w = w;
     }
 };
 
@@ -84,23 +84,23 @@ b9.Quaternion.prototype.initialize = function(arg1, arg2, arg3, arg4) {
  * <li>b9.Quaternion(b9.Quaternion quaternionToBeCloned)</li>
  * <li>b9.Quaternion(float x, float y, float z, float w)</li>
  * </ul>
- * @param {b9.Quaternion|number} [arg1] A quaternion to be cloned or an x-coordinate.
- * @param {number} [arg2] A y-coordinate.
- * @param {number} [arg3] A z-coordinate.
- * @param {number} [arg4] A w-coordinate.
+ * @param {b9.Quaternion|number} [quatOrX] A quaternion to be cloned or an x-coordinate.
+ * @param {number} [y] A y-coordinate.
+ * @param {number} [z] A z-coordinate.
+ * @param {number} [w] A w-coordinate.
  * @return {b9.Quaternion} This quaternion.
  */
-b9.Quaternion.prototype.set = function(arg1, arg2, arg3, arg4) {
+b9.Quaternion.prototype.set = function(quatOrX, y, z, w) {
     if (arguments.length === 1) {
-        this.x = arg1.x;
-        this.y = arg1.y;
-        this.z = arg1.z;
-        this.w = arg1.w;
+        this.x = quatOrX.x;
+        this.y = quatOrX.y;
+        this.z = quatOrX.z;
+        this.w = quatOrX.w;
     } else if (arguments.length === 4) {
-        this.x = arg1;
-        this.y = arg2;
-        this.z = arg3;
-        this.w = arg4;
+        this.x = quatOrX;
+        this.y = y;
+        this.z = z;
+        this.w = w;
     }
 
     return this;
@@ -112,51 +112,56 @@ b9.Quaternion.prototype.set = function(arg1, arg2, arg3, arg4) {
  * @return This quaternion.
  */
 b9.Quaternion.prototype.fromMatrix3D = function(mat) {
-    var a;
-    var trace = mat.xAxis.x + mat.yAxis.y + mat.zAxis.z;
+    var k;
+    var matXAxis = matXAxis;
+    var matYAxis = matYAxis;
+    var matZAxis = matZAxis;
+    var trace = matXAxis.x + matYAxis.y + matZAxis.z;
     var root, scale;
 
     if (trace > 0.0) {
         root = b9.Math.sqrt(trace + 1.0);
         scale = 0.5 / root;
 
-        return this.set(
-                (mat.yAxis.z - mat.zAxis.y) * scale,
-                (mat.zAxis.x - mat.xAxis.z) * scale,
-                (mat.xAxis.y - mat.yAxis.x) * scale,
+        this.set(
+                (matYAxis.z - matZAxis.y) * scale,
+                (matZAxis.x - matXAxis.z) * scale,
+                (matXAxis.y - matYAxis.x) * scale,
                 root * 0.5);
     } else {
-        a = (mat.yAxis.y > mat.xAxis.x) ?
-            ((mat.zAxis.z > mat.yAxis.y) ? 2 : 1) : ((mat.zAxis.z > mat.xAxis.x) ? 2 : 0);
+        k = (matYAxis.y > matXAxis.x) ? ((matZAxis.z > matYAxis.y) ? 2 : 1) : ((matZAxis.z > matXAxis.x) ? 2 : 0);
 
-        if (a === 0) {
-            root = b9.Math.sqrt(mat.xAxis.x - (mat.yAxis.y + mat.zAxis.z) + 1.0);
+        if (k === 0) {
+            root = b9.Math.sqrt(matXAxis.x - (matYAxis.y + matZAxis.z) + 1.0);
             scale = (root !== 0.0) ? 0.5 / root : root;
 
-            this.x = root * 0.5;
-            this.y = (mat.xAxis.y + mat.yAxis.x) * scale;
-            this.z = (mat.zAxis.x + mat.xAxis.z) * scale;
-            this.w = (mat.yAxis.z - mat.zAxis.y) * scale;
-        } else if (a === 1) {
-            root = b9.Math.sqrt(mat.yAxis.y - (mat.zAxis.z + mat.xAxis.x) + 1.0);
+            this.set(
+                    root * 0.5,
+                    (matXAxis.y + matYAxis.x) * scale,
+                    (matZAxis.x + matXAxis.z) * scale,
+                    (matYAxis.z - matZAxis.y) * scale);
+        } else if (k === 1) {
+            root = b9.Math.sqrt(matYAxis.y - (matZAxis.z + matXAxis.x) + 1.0);
             scale = (root !== 0.0) ? 0.5 / root : root;
 
-            this.x = (mat.xAxis.y + mat.yAxis.x) * scale;
-            this.y = root * 0.5;
-            this.z = (mat.yAxis.z + mat.zAxis.y) * scale;
-            this.w = (mat.zAxis.x - mat.xAxis.z) * scale;
-        } else { // a == 2
-            root = b9.Math.sqrt(mat.zAxis.z - (mat.xAxis.x + mat.yAxis.y) + 1.0);
+            this.set(
+                    (matXAxis.y + matYAxis.x) * scale,
+                    root * 0.5,
+                    (matYAxis.z + matZAxis.y) * scale,
+                    (matZAxis.x - matXAxis.z) * scale);
+        } else { // k === 2
+            root = b9.Math.sqrt(matZAxis.z - (matXAxis.x + matYAxis.y) + 1.0);
             scale = (root !== 0.0) ? 0.5 / root : root;
 
-            this.x = (mat.zAxis.x + mat.xAxis.z) * scale;
-            this.y = (mat.yAxis.z + mat.zAxis.y) * scale;
-            this.z = root * 0.5;
-            this.w = (mat.xAxis.y - mat.yAxis.x) * scale;
+            this.set(
+                    (matZAxis.x + matXAxis.z) * scale,
+                    (matYAxis.z + matZAxis.y) * scale,
+                    root * 0.5,
+                    (matXAxis.y - matYAxis.x) * scale);
         }
-
-        return this;
     }
+
+    return this;
 };
 
 /**
@@ -213,7 +218,7 @@ b9.Quaternion.prototype.equals = function(quat) {
     return (b9.Math.equals_float(this.x, quat.x) &&
             b9.Math.equals_float(this.y, quat.y) &&
             b9.Math.equals_float(this.z, quat.z) &&
-            b9.Math.equals_float(this.w, quat.w)) ? true : false;
+            b9.Math.equals_float(this.w, quat.w));
 };
 
 /**
