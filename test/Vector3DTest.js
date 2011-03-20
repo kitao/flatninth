@@ -21,7 +21,7 @@
  */
 
 function testVector3D() {
-    var vec1, vec2, vec3, vec4;
+    var vec1, vec2, vec3;
     var mat;
 
     /* initialize */
@@ -34,8 +34,8 @@ function testVector3D() {
     assertTrue(vec3.x === 1.0 && vec3.y === 2.0 && vec3.z === 3.0);
 
     /* set */
-    assertEquals_object(vec1, vec2.set(vec1));
     assertEquals_object(new b9.Vector3D(4.0, 5.0, 6.0), vec1.set(4.0, 5.0, 6.0));
+    assertEquals_object(vec1, vec2.set(vec1));
 
     /* neg */
     vec1.set(10.0, -20.0, 30.0);

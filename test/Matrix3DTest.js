@@ -22,7 +22,8 @@
 
 function testMatrix3D() {
     var i;
-    var mat1, mat2, mat3, mat4;
+    var mat1, mat2, mat3;
+    var array1, array2, array3, array4, array5;
     var ratio;
 
     /* initialize */
@@ -43,10 +44,10 @@ function testMatrix3D() {
             mat3.trans.equals(b9.Vector3D.Z_UNIT));
 
     /* set */
-    assertEquals_object(mat1, mat2.set(mat1));
     assertEquals_object(
             new b9.Matrix3D(b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT, b9.Vector3D.X_UNIT),
             mat1.set(b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT, b9.Vector3D.X_UNIT));
+    assertEquals_object(mat1, mat2.set(mat1));
 
     /* fromQuaternion */
     assertEquals_object(b9.Matrix3D.UNIT, mat1.fromQuaternion(new b9.Quaternion(0.0, 0.0, 0.0, 1.0)));
@@ -280,25 +281,30 @@ function testMatrix3D() {
             mat1.lookAt(
                 new b9.Vector3D(5.0, 2.0, -3.0), new b9.Vector3D(-5.0, 2.0, -3.0), new b9.Vector3D(1.0, 0.0, 10.0)));
 
-    /* mulArrayAs4x4 */
-    array1 = new Float32Array([
-            1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0]);
+    /* toArray */
+    array1 = [];
+    array2 = [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0];
 
-    array2 = new Float32Array([
-            2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 1.0]);
+    mat1 = new b9.Matrix3D(b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT, b9.Vector3D.X_UNIT);
+    mat1.toArray(array1);
 
-    array3 = new Float32Array(16);
+    for (i = 0; i < 16; i++) {
+        assertEquals_float(array2[i], array1[i]);
+    }
 
-    b9.Matrix3D.mulArrayAs4x4(array1, array2, array3);
-    b9.Matrix3D.mulArrayAs4x4(array1, array1, array1);
+    /* mulArray */
+    array1 = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0];
+    array2 = [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 1.0];
+    array3 = [];
 
-    array4 = new Float32Array([
-            118.0, 132.0, 146.0, 160.0, 230.0, 260.0, 290.0, 320.0,
-            342.0, 388.0, 434.0, 480.0, 246.0, 292.0, 338.0, 384.0]);
+    b9.Matrix3D.mulArray(array1, array2, array3);
+    b9.Matrix3D.mulArray(array1, array1, array1);
 
-    array5 = new Float32Array([
-            90.0, 100.0, 110.0, 120.0, 202.0, 228.0, 254.0, 280.0,
-            314.0, 356.0, 398.0, 440.0, 426.0, 484.0, 542.0, 600.0]);
+    array4 = [118.0, 132.0, 146.0, 160.0, 230.0, 260.0, 290.0, 320.0,
+           342.0, 388.0, 434.0, 480.0, 246.0, 292.0, 338.0, 384.0];
+
+    array5 = [90.0, 100.0, 110.0, 120.0, 202.0, 228.0, 254.0, 280.0,
+           314.0, 356.0, 398.0, 440.0, 426.0, 484.0, 542.0, 600.0];
 
     for (i = 0; i < 16; i++) {
         assertEquals_float(array4[i], array3[i]);
