@@ -33,37 +33,31 @@ b9.LinkedListItem = b9.createClass();
  * @ignore
  */
 b9.LinkedListItem.prototype.initialize = function(self) {
-    this.self_ = self;
-    this.list_ = null;
-    this.prev_ = null;
-    this.next_ = null;
+    /**
+     * The object associated with this item.
+     * @return {Object}
+     */
+    this.self = self;
+
+    /**
+     * The list to which this item belongs. This property is read-only.
+     * @return {b9.LinkedList}
+     */
+    this.list = null;
+
+    this._prev = null;
+    this._next = null;
 };
 
 /**
  * Destructs this item. If this item belongs to a list, this item gets unlinked from it.
  */
 b9.LinkedListItem.prototype.finalize = function() {
-    if (this.list_) {
-        this.list_.remove(this);
+    if (this.list) {
+        this.list.remove(this);
     }
 
-    this.self_ = null;
-};
-
-/**
- * Returns the object associated with this item.
- * @return {Object} The associated object.
- */
-b9.LinkedListItem.prototype.getSelf = function() {
-    return this.self_;
-};
-
-/**
- * Returns the list to which this item belongs. If no such list exists, returns null.
- * @return {b9.LinkedList} The list this item belongs to.
- */
-b9.LinkedListItem.prototype.getList = function() {
-    return this.list_;
+    this.self = null;
 };
 
 /**
@@ -71,7 +65,7 @@ b9.LinkedListItem.prototype.getList = function() {
  * @return {b9.LinkedListItem} The previous item.
  */
 b9.LinkedListItem.prototype.getPrev = function() {
-    return (this.list_ && this.prev_ === this.list_.start_) ? null : this.prev_;
+    return (this.list && this._prev === this.list._start) ? null : this._prev;
 };
 
 /**
@@ -79,5 +73,5 @@ b9.LinkedListItem.prototype.getPrev = function() {
  * @return {b9.LinkedListItem} The next item.
  */
 b9.LinkedListItem.prototype.getNext = function() {
-    return (this.list_ && this.next_ === this.list_.end_) ? null : this.next_;
+    return (this.list && this._next === this.list._end) ? null : this._next;
 };

@@ -30,7 +30,7 @@
  *
  * @class A quaternion which is represented by xyzw coordinates.
  *
- * @param {b9.Quaternion|number} [quatOrX] A quaternion to be cloned or an x-coordinate.
+ * @param {b9.Quaternion|Number} [quatOrX] A quaternion to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @param {Number} [w] A w-coordinate.
@@ -84,7 +84,7 @@ b9.Quaternion.prototype.initialize = function(quatOrX, y, z, w) {
  * <li>b9.Quaternion(b9.Quaternion quaternionToBeCloned)</li>
  * <li>b9.Quaternion(float x, float y, float z, float w)</li>
  * </ul>
- * @param {b9.Quaternion|number} [quatOrX] A quaternion to be cloned or an x-coordinate.
+ * @param {b9.Quaternion|Number} [quatOrX] A quaternion to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @param {Number} [w] A w-coordinate.
