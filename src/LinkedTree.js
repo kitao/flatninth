@@ -25,19 +25,43 @@
  *
  * @class A tree container which can have a parent and children.
  *
- * @param {Object} self An object to be associated.
+ * @param {Object} object An object to be associated.
  */
 b9.LinkedTree = b9.createClass();
 
 /**
  * @ignore
  */
-b9.LinkedTree.prototype.initialize = function(self) {
-    this.self_ = self;
-    this.parent_ = null;
-    this.lastChild_ = null;
-    this.prev_ = null;
-    this.next_ = null;
+b9.LinkedTree.prototype.initialize = function(object) {
+    /**
+     * The object associated with this item.
+     * @return {Object}
+     */
+    this.object = object;
+
+    /**
+     * The parent of this tree. This property is read-only.
+     * @return {b9.LinkedTree}
+     */
+    this.parent = null;
+
+    /**
+     * The last child of this tree. This property is read-only.
+     * @return {b9.LinkedTree} The last child.
+     */
+    this.lastChild = null;
+
+    /**
+     * The previous tree, regarding the whole tree as a list. This property is read-only.
+     * @return {b9.LinkedTree}
+     */
+    this.prevAsList = null;
+
+    /**
+     * The next tree, regarding the whole tree as a list. This property is real-only.
+     * @return {b9.LinkedTree}
+     */
+    this.nextAsList = null;
 };
 
 /**
@@ -47,43 +71,11 @@ b9.LinkedTree.prototype.initialize = function(self) {
 b9.LinkedTree.prototype.finalize = function() {
     this.clear();
 
-    if (this.parent_) {
-        this.parent_.removeChild(this);
+    if (this.parent) {
+        this.parent.removeChild(this);
     }
 
-    this.self_ = null;
-};
-
-/**
- * Returns the object associated with this item.
- * @return {Object} The associated object.
- */
-b9.LinkedTree.prototype.getSelf = function() {
-    return this.self_;
-};
-
-/**
- * Returns the previous tree, regarding the whole tree as a list. If no such tree exists, returns null.
- * @return {b9.LinkedTree} The previous tree.
- */
-b9.LinkedTree.prototype.getPrevAsList = function() {
-    return this.prev_;
-};
-
-/**
- * Returns the next tree, regarding the whole tree as a list. If no such tree exists, returns null.
- * @return {b9.LinkedTree} The next tree.
- */
-b9.LinkedTree.prototype.getNextAsList = function() {
-    return this.next_;
-};
-
-/**
- * Returns the parent of this tree. If no such tree exists, returns null.
- * @return {b9.LinkedTree} The parent.
- */
-b9.LinkedTree.prototype.getParent = function() {
-    return this.parent_;
+    this.object = null;
 };
 
 /**
@@ -93,11 +85,11 @@ b9.LinkedTree.prototype.getParent = function() {
 b9.LinkedTree.prototype.getPrevSibling = function() {
     var prev;
 
-    if (this.parent_ && this.prev_ !== this.parent_) {
-        prev = this.prev_;
+    if (this.parent && this.prevAsList !== this.parent) {
+        prev = this.prevAsList;
 
-        while (prev.parent_ !== this.parent_) {
-            prev = prev.parent_;
+        while (prev.parent !== this.parent) {
+            prev = prev.parent;
         }
 
         return prev;
@@ -113,10 +105,10 @@ b9.LinkedTree.prototype.getPrevSibling = function() {
 b9.LinkedTree.prototype.getNextSibling = function() {
     var next;
 
-    if (this.parent_) {
-        next = this.getLastDescendant().next_;
+    if (this.parent) {
+        next = this.getLastDescendant().nextAsList;
 
-        if (next && next.parent_ === this.parent_) {
+        if (next && next.parent === this.parent) {
             return next;
         }
     }
@@ -129,15 +121,7 @@ b9.LinkedTree.prototype.getNextSibling = function() {
  * @return {b9.LinkedTree} The first child.
  */
 b9.LinkedTree.prototype.getFirstChild = function() {
-    return this.lastChild_ ? this.next_ : null;
-};
-
-/**
- * Returns the last child of this tree. If no such tree exists, returns null.
- * @return {b9.LinkedTree} The last child.
- */
-b9.LinkedTree.prototype.getLastChild = function() {
-    return this.lastChild_;
+    return this.lastChild ? this.nextAsList : null;
 };
 
 /**
@@ -148,8 +132,8 @@ b9.LinkedTree.prototype.getLastChild = function() {
 b9.LinkedTree.prototype.getLastDescendant = function() {
     var desc = this;
 
-    while (desc.lastChild_) {
-        desc = desc.lastChild_;
+    while (desc.lastChild) {
+        desc = desc.lastChild;
     }
 
     return desc;
@@ -163,24 +147,24 @@ b9.LinkedTree.prototype.getLastDescendant = function() {
 b9.LinkedTree.prototype.addChildFirst = function(child) {
     var childDesc;
 
-    if (child.parent_) {
-        child.parent_.removeChild(child);
+    if (child.parent) {
+        child.parent.removeChild(child);
     }
 
     childDesc = child.getLastDescendant();
 
-    child.parent_ = this;
-    child.prev_ = this;
-    childDesc.next_ = this.next_;
+    child.parent = this;
+    child.prevAsList = this;
+    childDesc.nextAsList = this.nextAsList;
 
-    child.prev_.next_ = child;
+    child.prevAsList.nextAsList = child;
 
-    if (childDesc.next_) {
-        childDesc.next_.prev_ = childDesc;
+    if (childDesc.nextAsList) {
+        childDesc.nextAsList.prevAsList = childDesc;
     }
 
-    if (!this.lastChild_) {
-        this.lastChild_ = child;
+    if (!this.lastChild) {
+        this.lastChild = child;
     }
 };
 
@@ -192,24 +176,24 @@ b9.LinkedTree.prototype.addChildFirst = function(child) {
 b9.LinkedTree.prototype.addChildLast = function(child) {
     var thisDesc, childDesc;
 
-    if (child.parent_) {
-        child.parent_.removeChild(child);
+    if (child.parent) {
+        child.parent.removeChild(child);
     }
 
     thisDesc = this.getLastDescendant();
     childDesc = child.getLastDescendant();
 
-    child.parent_ = this;
-    child.prev_ = thisDesc;
-    childDesc.next_ = thisDesc.next_;
+    child.parent = this;
+    child.prevAsList = thisDesc;
+    childDesc.nextAsList = thisDesc.nextAsList;
 
-    child.prev_.next_ = child;
+    child.prevAsList.nextAsList = child;
 
-    if (childDesc.next_) {
-        childDesc.next_.prev_ = childDesc;
+    if (childDesc.nextAsList) {
+        childDesc.nextAsList.prevAsList = childDesc;
     }
 
-    this.lastChild_ = child;
+    this.lastChild = child;
 };
 
 /**
@@ -221,19 +205,19 @@ b9.LinkedTree.prototype.addChildLast = function(child) {
 b9.LinkedTree.prototype.insertChildBefore = function(child, nextChild) {
     var childDesc;
 
-    if (nextChild.parent_ === this) {
-        if (child.parent_) {
-            child.parent_.removeChild(child);
+    if (nextChild.parent === this) {
+        if (child.parent) {
+            child.parent.removeChild(child);
         }
 
         childDesc = child.getLastDescendant();
 
-        child.parent_ = this;
-        child.prev_ = nextChild.prev_;
-        childDesc.next_ = nextChild;
+        child.parent = this;
+        child.prevAsList = nextChild.prevAsList;
+        childDesc.nextAsList = nextChild;
 
-        child.prev_.next_ = child;
-        childDesc.next_.prev_ = childDesc;
+        child.prevAsList.nextAsList = child;
+        childDesc.nextAsList.prevAsList = childDesc;
     }
 };
 
@@ -247,26 +231,26 @@ b9.LinkedTree.prototype.insertChildAfter = function(child, prevChild)
 {
     var childDesc, prevChildDesc;
 
-    if (prevChild.parent_ === this) {
-        if (child.parent_) {
-            child.parent_.removeChild(child);
+    if (prevChild.parent === this) {
+        if (child.parent) {
+            child.parent.removeChild(child);
         }
 
         childDesc = child.getLastDescendant();
         prevChildDesc = prevChild.getLastDescendant();
 
-        child.parent_ = this;
-        child.prev_ = prevChildDesc;
-        childDesc.next_ = prevChildDesc.next_;
+        child.parent = this;
+        child.prevAsList = prevChildDesc;
+        childDesc.nextAsList = prevChildDesc.nextAsList;
 
-        child.prev_.next_ = child;
+        child.prevAsList.nextAsList = child;
 
-        if (childDesc.next_) {
-            childDesc.next_.prev_ = childDesc;
+        if (childDesc.nextAsList) {
+            childDesc.nextAsList.prevAsList = childDesc;
         }
 
-        if (this.lastChild_ === prevChild) {
-            this.lastChild_ = child;
+        if (this.lastChild === prevChild) {
+            this.lastChild = child;
         }
     }
 };
@@ -278,22 +262,22 @@ b9.LinkedTree.prototype.insertChildAfter = function(child, prevChild)
 b9.LinkedTree.prototype.removeChild = function(child) {
     var childDesc;
 
-    if (child.parent_ === this) {
+    if (child.parent === this) {
         childDesc = child.getLastDescendant();
 
-        if (this.lastChild_ === child) {
-            this.lastChild_ = child.getPrevSibling();
+        if (this.lastChild === child) {
+            this.lastChild = child.getPrevSibling();
         }
 
-        child.prev_.next_ = childDesc.next_;
+        child.prevAsList.nextAsList = childDesc.nextAsList;
 
-        if (childDesc.next_) {
-            childDesc.next_.prev_ = child.prev_;
+        if (childDesc.nextAsList) {
+            childDesc.nextAsList.prevAsList = child.prevAsList;
         }
 
-        child.parent_ = null;
-        child.prev_ = null;
-        childDesc.next_ = null;
+        child.parent = null;
+        child.prevAsList = null;
+        childDesc.nextAsList = null;
     }
 };
 
@@ -302,7 +286,7 @@ b9.LinkedTree.prototype.removeChild = function(child) {
  * Note that this method only unlinks the children of this tree, so the descendants of the children doesn't change.
  */
 b9.LinkedTree.prototype.clear = function() {
-    while (this.lastChild_) {
-        this.removeChild(this.lastChild_);
+    while (this.lastChild) {
+        this.removeChild(this.lastChild);
     }
 };
