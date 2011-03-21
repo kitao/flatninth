@@ -27,6 +27,10 @@ function testMatrix3D() {
     var ratio;
 
     /* initialize */
+    /* xAxis */
+    /* yAxis */
+    /* zAxis */
+    /* trans */
     mat1 = new b9.Matrix3D();
 
     mat2 = new b9.Matrix3D(b9.Vector3D.ZERO, b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT);

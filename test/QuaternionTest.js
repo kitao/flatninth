@@ -25,6 +25,10 @@ function testQuaternion() {
     var ratio;
 
     /* initialize */
+    /* x */
+    /* y */
+    /* z */
+    /* w */
     quat1 = new b9.Quaternion();
 
     quat2 = new b9.Quaternion(1.0, 2.0, 3.0, 4.0);

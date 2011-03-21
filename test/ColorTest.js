@@ -24,6 +24,10 @@ function testColor() {
     var color1, color2, color3, color4;
 
     /* initialize */
+    /* r */
+    /* g */
+    /* b */
+    /* a */
     color1 = new b9.Color();
 
     color2 = new b9.Color(1, 2, 3, 4);

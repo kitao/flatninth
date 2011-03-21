@@ -25,6 +25,9 @@ function testVector3D() {
     var mat;
 
     /* initialize */
+    /* x */
+    /* y */
+    /* z */
     vec1 = new b9.Vector3D();
 
     vec2 = new b9.Vector3D(1.0, 2.0, 3.0);
