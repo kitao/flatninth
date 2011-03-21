@@ -31,33 +31,22 @@ b9.TaskList = b9.createClass();
  * @ignore
  */
 b9.TaskList.prototype.initialize = function() {
-    this.isActive_ = true;
-    this.list_ = new b9.LinkedList();
-    this.nextTask_ = null;
+    /**
+     * Whether this task list is active.
+     * If active, calls the update method of each task when the update method of this task list is called.
+     * @return {Boolean}
+     */
+    this.isActive = true;
+
+    this._list = new b9.LinkedList();
+    this._nextTask = null;
 };
 
 /**
  * Destructs this task list. All of the tasks belong to this task list get unlinked.
  */
 b9.TaskList.prototype.finalize = function() {
-    this.list_.finalize();
-};
-
-/**
- * Returns whether this task list is active.
- * If active, calls the update method of each task when the update method of this task list is called.
- * @return {Boolean} true if this task list is active; false otherwise.
- */
-b9.TaskList.prototype.isActive = function() {
-    return this.isActive_;
-};
-
-/**
- * Sets whether this task list is active.
- * @param {Boolean} isActive Whether this task list is active.
- */
-b9.TaskList.prototype.setActive = function(isActive) {
-    this.isActive_ = isActive;
+    this._list.finalize();
 };
 
 /**
@@ -65,7 +54,7 @@ b9.TaskList.prototype.setActive = function(isActive) {
  * @return {b9.Task} The first task.
  */
 b9.TaskList.prototype.getFirst = function() {
-    var task = this.list_.getFirst();
+    var task = this._list.getFirst();
     return task ? task.getSelf() : null;
 };
 
@@ -74,7 +63,7 @@ b9.TaskList.prototype.getFirst = function() {
  * @return {b9.Task} The last task.
  */
 b9.TaskList.prototype.getLast = function() {
-    var task = this.list_.getLast();
+    var task = this._list.getLast();
     return task ? task.getSelf() : null;
 };
 
@@ -84,7 +73,7 @@ b9.TaskList.prototype.getLast = function() {
  * the task gets unlinked with it before the operation automatically.
  */
 b9.TaskList.prototype.addFirst = function(task) {
-    this.list_.addFirst(task.item_);
+    this._list.addFirst(task.item_);
 };
 
 /**
@@ -93,7 +82,7 @@ b9.TaskList.prototype.addFirst = function(task) {
  * the task gets unlinked with it before the operation automatically.
  */
 b9.TaskList.prototype.addLast = function(task) {
-    this.list_.addLast(task.item_);
+    this._list.addLast(task.item_);
 };
 
 /**
@@ -103,7 +92,7 @@ b9.TaskList.prototype.addLast = function(task) {
  * @param {b9.Task} nextTask The task to be the next. This task must belong to this task list.
  */
 b9.TaskList.prototype.insertBefore = function(task, nextTask) {
-    this.list_.insertBefore(task.item_, nextTask.item_);
+    this._list.insertBefore(task.item_, nextTask.item_);
 };
 
 /**
@@ -113,7 +102,7 @@ b9.TaskList.prototype.insertBefore = function(task, nextTask) {
  * @param {b9.Task} prevTask The task to be the previous. This task must belong to this task list.
  */
 b9.TaskList.prototype.insertAfter = function(task, prevTask) {
-    this.list_.insertAfter(task.item_, prevTask.item_);
+    this._list.insertAfter(task.item_, prevTask.item_);
 };
 
 /**
@@ -121,14 +110,14 @@ b9.TaskList.prototype.insertAfter = function(task, prevTask) {
  * @param {b9.Task} task A task to be unlinked. This task must belong to this task list.
  */
 b9.TaskList.prototype.remove = function(task) {
-    this.list_.remove(task.item_);
+    this._list.remove(task.item_);
 };
 
 /**
  * Unlinks all of the task from this task list.
  */
 b9.TaskList.prototype.clear = function() {
-    this.list_.clear();
+    this._list.clear();
 };
 
 /**
@@ -137,10 +126,10 @@ b9.TaskList.prototype.clear = function() {
 b9.TaskList.prototype.update = function() {
     var task;
 
-    for (task = this.getFirst(); task; task = this.nextTask_) {
-        this.nextTask_ = task.getNext();
+    for (task = this.getFirst(); task; task = this._nextTask) {
+        this._nextTask = task.getNext();
 
-        if (task.isActive_) {
+        if (task.isActive) {
             task.update();
         }
     }

@@ -31,13 +31,23 @@ b9.Task = b9.createClass();
  * @ignore
  */
 b9.Task.prototype.initialize = function() {
-    this.name_ = "noname";
-    this.isActive_ = true;
-    this.item_ = new b9.LinkedListItem(this);
+    /**
+     * The name of this task.
+     * @return {String}
+     */
+    this.name = "noname";
+
+    /**
+     * Whether this task is active. If active, the update method is called by the task list.
+     * @return {Boolean}
+     */
+    this.isActive = true;
+
+    this._listItem = new b9.LinkedListItem(this);
 };
 
 /**
- * Destructs this task.
+ * Destructs this task. If this task belongs to a task list, this task gets unlinked from it.
  */
 b9.Task.prototype.finalize = function() {
     var list = this.getTaskList();
@@ -46,39 +56,7 @@ b9.Task.prototype.finalize = function() {
         list.nextTask_ = this.getNext();
     }
 
-    this.item_.finalize();
-};
-
-/**
- * Returns the name of this task.
- * @return The name of this task.
- */
-b9.Task.prototype.getName = function() {
-    return this.name_;
-};
-
-/**
- * Sets the name of this task.
- * @param {String} name A name.
- */
-b9.Task.prototype.setName = function(name) {
-    this.name_ = name;
-};
-
-/**
- * Returns whether this task is active. If active, the update method is called by the task list.
- * @return {Boolean} true if this task is active; false otherwise.
- */
-b9.Task.prototype.isActive = function() {
-    return this.isActive_;
-};
-
-/**
- * Sets whether this task is active.
- * @param {Boolean} isActive Whether this task is active.
- */
-b9.Task.prototype.setActive = function(isActive) {
-    this.isActive_ = isActive;
+    this._listItem.finalize();
 };
 
 /**
@@ -86,7 +64,7 @@ b9.Task.prototype.setActive = function(isActive) {
  * @return {b9.TaskList} The task list this task belongs to.
  */
 b9.Task.prototype.getTaskList = function() {
-    var list = this.item_.getList();
+    var list = this._listItem.getList();
     return list ? list.getSelf() : null;
 };
 
@@ -95,7 +73,7 @@ b9.Task.prototype.getTaskList = function() {
  * @return {b9.Task} The previous task.
  */
 b9.Task.prototype.getPrev = function() {
-    var prev = this.item_.getPrev();
+    var prev = this._listItem.getPrev();
     return prev ? prev.getSelf() : null;
 };
 
@@ -104,7 +82,7 @@ b9.Task.prototype.getPrev = function() {
  * @return {b9.Task} The next task.
  */
 b9.Task.prototype.getNext = function() {
-    var next = this.item_.getNext();
+    var next = this._listItem.getNext();
     return next ? next.getSelf() : null;
 };
 
