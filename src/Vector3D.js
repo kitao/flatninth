@@ -30,7 +30,7 @@
  *
  * @class A 3-element vector which is represented by xyz coordinates.
  *
- * @param {b9.Vector3D|number} [vecOrX] A vector to be cloned or an x-coordinate.
+ * @param {b9.Vector3D|Number} [vecOrX] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  */
@@ -75,7 +75,7 @@ b9.Vector3D.prototype.initialize = function(vecOrX, y, z) {
  * <li>set(b9.Vector3D vectorToBeCloned)</li>
  * <li>set(float x, float y, float z)</li>
  * </ul>
- * @param {b9.Vector3D|number} [vecOrX] A vector to be cloned or an x-coordinate.
+ * @param {b9.Vector3D|Number} [vecOrX] A vector to be cloned or an x-coordinate.
  * @param {Number} [y] A y-coordinate.
  * @param {Number} [z] A z-coordinate.
  * @return {b9.Vector3D} This vector.
