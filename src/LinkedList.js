@@ -32,19 +32,16 @@ b9.LinkedList = b9.createClass();
  */
 b9.LinkedList.prototype.initialize = function() {
     /**
-     * The number of the items belong to this list. This property is read-only.
-     * @return {Number}
+     * The first item of this list. This property is read-only.
+     * @return {b9.LinkedListItem}
      */
-    this.itemCount = 0;
+    this.first = null;
 
-    this._start = new b9.LinkedListItem(null);
-    this._start.list = this;
-
-    this._end = new b9.LinkedListItem(null);
-    this._end.list = this;
-
-    this._start._next = this._end;
-    this._end._prev = this._start;
+    /**
+     * The last item of this list. This property is read-only.
+     * @return {b9.LinkedListItem}
+     */
+    this.last = null;
 };
 
 /**
@@ -55,28 +52,29 @@ b9.LinkedList.prototype.finalize = function() {
 };
 
 /**
- * Returns the first item of this list. If no such item exists, returns null.
- * @return {b9.LinkedListItem} The first item.
- */
-b9.LinkedList.prototype.getFirst = function() {
-    return (this.itemCount > 0) ? this._start._next : null;
-};
-
-/**
- * Returns the last item of this list. If no such item exists, returns null.
- * @return {b9.LinkedListItem} The last item.
- */
-b9.LinkedList.prototype.getLast = function() {
-    return (this.itemCount > 0) ? this._end._prev : null;
-};
-
-/**
  * Links an item as the first item with this list.
  * @param {b9.LinkedListItem} item An item. If the item already belongs to some list,
  * the item gets unlinked with it before the operation automatically.
  */
 b9.LinkedList.prototype.addFirst = function(item) {
-    this.insertAfter(item, this._start);
+    if (item.list) {
+        item.list.remove(item);
+    }
+
+    if (!this.first) {
+        item.list = this;
+        item.prev = item.next = null;
+
+        this.first = this.last = item;
+    } else {
+        item.list = this;
+        item.prev = null;
+        item.next = this.first;
+
+        item.next.prev = item;
+
+        this.first = item;
+    }
 };
 
 /**
@@ -85,7 +83,24 @@ b9.LinkedList.prototype.addFirst = function(item) {
  * the item gets unlinked with it before the operation automatically.
  */
 b9.LinkedList.prototype.addLast = function(item) {
-    this.insertBefore(item, this._end);
+    if (item.list) {
+        item.list.remove(item);
+    }
+
+    if (!this.first) {
+        item.list = this;
+        item.prev = item.next = null;
+
+        this.first = this.last = item;
+    } else {
+        item.list = this;
+        item.prev = this.last;
+        item.next = null;
+
+        item.prev.next = item;
+
+        this.last = item;
+    }
 };
 
 /**
@@ -101,13 +116,18 @@ b9.LinkedList.prototype.insertBefore = function(item, nextItem) {
         }
 
         item.list = this;
-        item._prev = nextItem._prev;
-        item._next = nextItem;
+        item.prev = nextItem.prev;
+        item.next = nextItem;
 
-        item._prev._next = item;
-        item._next._prev = item;
+        if (item.prev) {
+            item.prev.next = item;
+        }
 
-        this.itemCount++;
+        nextItem.prev = item;
+
+        if (this.first === nextItem) {
+            this.first = item;
+        }
     }
 };
 
@@ -124,13 +144,18 @@ b9.LinkedList.prototype.insertAfter = function(item, prevItem) {
         }
 
         item.list = this;
-        item._prev = prevItem;
-        item._next = prevItem._next;
+        item.prev = prevItem;
+        item.next = prevItem.next;
 
-        item._prev._next = item;
-        item._next._prev = item;
+        prevItem.next = item;
 
-        this.itemCount++;
+        if (item.next) {
+            item.next.prev = item;
+        }
+
+        if (this.last === prevItem) {
+            this.last = item;
+        }
     }
 };
 
@@ -140,14 +165,20 @@ b9.LinkedList.prototype.insertAfter = function(item, prevItem) {
  */
 b9.LinkedList.prototype.remove = function(item) {
     if (item.list === this) {
-        item._prev._next = item._next;
-        item._next._prev = item._prev;
+        if (item.prev) {
+            item.prev.next = item.next;
+        } else {
+            this.first = item.next;
+        }
+
+        if (item.next) {
+            item.next.prev = item.prev;
+        } else {
+            this.last = item.prev;
+        }
 
         item.list = null;
-        item._prev = null;
-        item._next = null;
-
-        this.itemCount--;
+        item.prev = item.next = null;
     }
 };
 
@@ -155,7 +186,14 @@ b9.LinkedList.prototype.remove = function(item) {
  * Unlinks all of the items from this list.
  */
 b9.LinkedList.prototype.clear = function() {
-    while (this.itemCount > 0) {
-        this.remove(this._start._next);
+    var item, nextItem;
+
+    for (item = this.first; item; item = nextItem) {
+        nextItem = item.next;
+
+        item.list = null;
+        item.prev = item.next = null;
     }
+
+    this.first = this.last = null;
 };
