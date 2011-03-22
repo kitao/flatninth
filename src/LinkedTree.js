@@ -21,24 +21,16 @@
  */
 
 /**
- * Constructs a tree and associates an object with it.
+ * Constructs a tree.
  *
  * @class A tree container which can have a parent and children.
- *
- * @param {Object} obj An object to be associated.
  */
 b9.LinkedTree = b9.createClass();
 
 /**
  * @ignore
  */
-b9.LinkedTree.prototype.initialize = function(obj) {
-    /**
-     * The object associated with this item.
-     * @return {Object}
-     */
-    this.object = obj;
-
+b9.LinkedTree.prototype.initialize = function() {
     /**
      * The parent of this tree. This property is read-only.
      * @return {b9.LinkedTree}
@@ -70,8 +62,6 @@ b9.LinkedTree.prototype.finalize = function() {
     }
 
     this.clear();
-
-    this.object = null;
 };
 
 /**

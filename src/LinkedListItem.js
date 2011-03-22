@@ -21,24 +21,16 @@
  */
 
 /**
- * Constructs an item and associates an object with it.
+ * Constructs an item.
  *
  * @class An element of the b9.LinkedList class.
- *
- * @param {Object} obj An object to be associated.
  */
 b9.LinkedListItem = b9.createClass();
 
 /**
  * @ignore
  */
-b9.LinkedListItem.prototype.initialize = function(obj) {
-    /**
-     * The object associated with this item.
-     * @return {Object}
-     */
-    this.object = obj;
-
+b9.LinkedListItem.prototype.initialize = function() {
     /**
      * The list to which this item belongs. This property is read-only.
      * @return {b9.LinkedList}
@@ -65,6 +57,4 @@ b9.LinkedListItem.prototype.finalize = function() {
     if (this.list) {
         this.list.remove(this);
     }
-
-    this.object = null;
 };
