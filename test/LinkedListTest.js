@@ -25,157 +25,145 @@ function testLinkedList() {
     var item1, item2;
 
     /* initialize */
-    /* itemCount */
-    /* getFirst */
-    /* getLast */
+    /* first */
+    /* last */
     list = new b9.LinkedList();
 
-    assertEquals(0, list.itemCount);
-    assertEquals(null, list.getFirst());
-    assertEquals(null, list.getLast());
+    assertEquals(null, list.first);
+    assertEquals(null, list.last);
 
     /* addFirst */
     item1 = new b9.LinkedListItem(null);
     list.addFirst(item1);
 
-    assertEquals(1, list.itemCount);
-    assertEquals(item1, list.getFirst());
-    assertEquals(item1, list.getLast());
+    assertEquals(item1, list.first);
+    assertEquals(item1, list.last);
 
     assertEquals(list, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(null, item1.next);
 
     item2 = new b9.LinkedListItem(null);
     list.addFirst(item2);
 
-    assertEquals(2, list.itemCount);
-    assertEquals(item2, list.getFirst());
-    assertEquals(item1, list.getLast());
+    assertEquals(item2, list.first);
+    assertEquals(item1, list.last);
 
     assertEquals(list, item1.list);
-    assertEquals(item2, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(item2, item1.prev);
+    assertEquals(null, item1.next);
 
     assertEquals(list, item2.list);
-    assertEquals(null, item2.getPrev());
-    assertEquals(item1, item2.getNext());
+    assertEquals(null, item2.prev);
+    assertEquals(item1, item2.next);
 
-    list.addFirst(item1, list);
+    list.addFirst(item1);
 
-    assertEquals(2, list.itemCount);
-    assertEquals(item1, list.getFirst());
-    assertEquals(item2, list.getLast());
+    assertEquals(item1, list.first);
+    assertEquals(item2, list.last);
 
     assertEquals(list, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(item2, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(item2, item1.next);
 
     assertEquals(list, item2.list);
-    assertEquals(item1, item2.getPrev());
-    assertEquals(null, item2.getNext());
+    assertEquals(item1, item2.prev);
+    assertEquals(null, item2.next);
 
     /* addLast */
-    list.addLast(item1, list);
+    list.addLast(item1);
 
-    assertEquals(2, list.itemCount);
-    assertEquals(item2, list.getFirst());
-    assertEquals(item1, list.getLast());
+    assertEquals(item2, list.first);
+    assertEquals(item1, list.last);
 
     assertEquals(list, item1.list);
-    assertEquals(item2, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(item2, item1.prev);
+    assertEquals(null, item1.next);
 
     assertEquals(list, item2.list);
-    assertEquals(null, item2.getPrev());
-    assertEquals(item1, item2.getNext());
+    assertEquals(null, item2.prev);
+    assertEquals(item1, item2.next);
 
     /* insertBefore */
     list.insertBefore(item1, item2);
 
-    assertEquals(2, list.itemCount);
-    assertEquals(item1, list.getFirst());
-    assertEquals(item2, list.getLast());
+    assertEquals(item1, list.first);
+    assertEquals(item2, list.last);
 
     assertEquals(list, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(item2, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(item2, item1.next);
 
     assertEquals(list, item2.list);
-    assertEquals(item1, item2.getPrev());
-    assertEquals(null, item2.getNext());
+    assertEquals(item1, item2.prev);
+    assertEquals(null, item2.next);
 
     /* insertAfter */
     list.insertAfter(item1, item2);
 
-    assertEquals(2, list.itemCount);
-    assertEquals(item2, list.getFirst());
-    assertEquals(item1, list.getLast());
+    assertEquals(item2, list.first);
+    assertEquals(item1, list.last);
 
     assertEquals(list, item1.list);
-    assertEquals(item2, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(item2, item1.prev);
+    assertEquals(null, item1.next);
 
     assertEquals(list, item2.list);
-    assertEquals(null, item2.getPrev());
-    assertEquals(item1, item2.getNext());
+    assertEquals(null, item2.prev);
+    assertEquals(item1, item2.next);
 
     /* remove */
     list.remove(item1);
 
-    assertEquals(1, list.itemCount);
-    assertEquals(item2, list.getFirst());
-    assertEquals(item2, list.getLast());
+    assertEquals(item2, list.first);
+    assertEquals(item2, list.last);
 
     assertEquals(null, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(null, item1.next);
 
     assertEquals(list, item2.list);
-    assertEquals(null, item2.getPrev());
-    assertEquals(null, item2.getNext());
+    assertEquals(null, item2.prev);
+    assertEquals(null, item2.next);
 
     list.remove(item2);
 
-    assertEquals(0, list.itemCount);
-    assertEquals(null, list.getFirst());
-    assertEquals(null, list.getLast());
+    assertEquals(null, list.first);
+    assertEquals(null, list.last);
 
     assertEquals(null, item2.list);
-    assertEquals(null, item2.getPrev());
-    assertEquals(null, item2.getNext());
+    assertEquals(null, item2.prev);
+    assertEquals(null, item2.next);
 
     /* clear */
     list.addLast(item1);
     list.addLast(item2);
     list.clear();
 
-    assertEquals(0, list.itemCount);
-    assertEquals(null, list.getFirst());
-    assertEquals(null, list.getLast());
+    assertEquals(null, list.first);
+    assertEquals(null, list.last);
 
     assertEquals(null, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(null, item1.next);
 
     assertEquals(null, item2.list);
-    assertEquals(null, item2.getPrev());
-    assertEquals(null, item2.getNext());
+    assertEquals(null, item2.prev);
+    assertEquals(null, item2.next);
 
     /* finalize */
     list.addLast(item1);
     list.addLast(item2);
     list.finalize();
 
-    assertEquals(0, list.itemCount);
-    assertEquals(null, list.getFirst());
-    assertEquals(null, list.getLast());
+    assertEquals(null, list.first);
+    assertEquals(null, list.last);
 
     assertEquals(null, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(null, item1.next);
 
     assertEquals(null, item2.list);
-    assertEquals(null, item2.getPrev());
-    assertEquals(null, item2.getNext());
+    assertEquals(null, item2.prev);
+    assertEquals(null, item2.next);
 }

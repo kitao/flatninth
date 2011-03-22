@@ -28,23 +28,23 @@ function testLinkedListItem() {
     /* initialize */
     /* object */
     /* list */
-    /* getPrev */
-    /* getNext */
+    /* prev */
+    /* next */
     dummy1 = 123;
     item1 = new b9.LinkedListItem(dummy1);
 
     assertEquals(123, item1.object);
     assertEquals(null, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(null, item1.next);
 
     list = new b9.LinkedList();
     list.addFirst(item1);
 
     assertEquals(dummy1, item1.object);
     assertEquals(list, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(null, item1.next);
 
     dummy2 = 456;
     item2 = new b9.LinkedListItem(dummy2);
@@ -52,31 +52,31 @@ function testLinkedListItem() {
 
     assertEquals(dummy1, item1.object);
     assertEquals(list, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(item2, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(item2, item1.next);
 
     assertEquals(dummy2, item2.object);
     assertEquals(list, item2.list);
-    assertEquals(item1, item2.getPrev());
-    assertEquals(null, item2.getNext());
+    assertEquals(item1, item2.prev);
+    assertEquals(null, item2.next);
 
     /* finalize */
     item1.finalize();
 
     assertEquals(null, item1.object);
     assertEquals(null, item1.list);
-    assertEquals(null, item1.getPrev());
-    assertEquals(null, item1.getNext());
+    assertEquals(null, item1.prev);
+    assertEquals(null, item1.next);
 
     assertEquals(dummy2, item2.object);
     assertEquals(list, item2.list);
-    assertEquals(null, item2.getPrev());
-    assertEquals(null, item2.getNext());
+    assertEquals(null, item2.prev);
+    assertEquals(null, item2.next);
 
     item2.finalize();
 
     assertEquals(null, item2.object);
     assertEquals(null, item2.list);
-    assertEquals(null, item2.getPrev());
-    assertEquals(null, item2.getNext());
+    assertEquals(null, item2.prev);
+    assertEquals(null, item2.next);
 }

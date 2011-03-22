@@ -27,12 +27,12 @@ function testLinkedTree() {
     /* initialize */
     /* object */
     /* parent */
-    /* lastChild */
     /* prevAsList */
     /* nextAsLst */
     /* getPrevSibling */
     /* getNextSibling */
     /* getFirstChild */
+    /* getLastChild */
     /* getLastDescendant */
     dummy1 = 111;
     tree1 = new b9.LinkedTree(dummy1);
@@ -44,7 +44,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(null, tree1.getFirstChild());
-    assertEquals(null, tree1.lastChild);
+    assertEquals(null, tree1.getLastChild());
     assertEquals(tree1, tree1.getLastDescendant());
 
     /* addChildFirst */
@@ -59,7 +59,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(tree2, tree1.getFirstChild());
-    assertEquals(tree2, tree1.lastChild);
+    assertEquals(tree2, tree1.getLastChild());
     assertEquals(tree2, tree1.getLastDescendant());
 
     assertEquals(dummy2, tree2.object);
@@ -69,7 +69,7 @@ function testLinkedTree() {
     assertEquals(null, tree2.getPrevSibling());
     assertEquals(null, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.lastChild);
+    assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
     dummy3 = 333;
@@ -83,7 +83,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(tree3, tree1.getFirstChild());
-    assertEquals(tree2, tree1.lastChild);
+    assertEquals(tree2, tree1.getLastChild());
     assertEquals(tree2, tree1.getLastDescendant());
 
     assertEquals(dummy2, tree2.object);
@@ -93,7 +93,7 @@ function testLinkedTree() {
     assertEquals(tree3, tree2.getPrevSibling());
     assertEquals(null, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.lastChild);
+    assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
     assertEquals(dummy3, tree3.object);
@@ -103,7 +103,7 @@ function testLinkedTree() {
     assertEquals(null, tree3.getPrevSibling());
     assertEquals(tree2, tree3.getNextSibling());
     assertEquals(null, tree3.getFirstChild());
-    assertEquals(null, tree3.lastChild);
+    assertEquals(null, tree3.getLastChild());
     assertEquals(tree3, tree3.getLastDescendant());
 
     dummy4 = 444;
@@ -117,7 +117,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(tree3, tree1.getFirstChild());
-    assertEquals(tree2, tree1.lastChild);
+    assertEquals(tree2, tree1.getLastChild());
     assertEquals(tree2, tree1.getLastDescendant());
 
     assertEquals(dummy2, tree2.object);
@@ -127,7 +127,7 @@ function testLinkedTree() {
     assertEquals(tree3, tree2.getPrevSibling());
     assertEquals(null, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.lastChild);
+    assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
     assertEquals(dummy3, tree3.object);
@@ -137,7 +137,7 @@ function testLinkedTree() {
     assertEquals(null, tree3.getPrevSibling());
     assertEquals(tree2, tree3.getNextSibling());
     assertEquals(tree4, tree3.getFirstChild());
-    assertEquals(tree4, tree3.lastChild);
+    assertEquals(tree4, tree3.getLastChild());
     assertEquals(tree4, tree3.getLastDescendant());
 
     assertEquals(dummy4, tree4.object);
@@ -147,7 +147,7 @@ function testLinkedTree() {
     assertEquals(null, tree4.getPrevSibling());
     assertEquals(null, tree4.getNextSibling());
     assertEquals(null, tree4.getFirstChild());
-    assertEquals(null, tree4.lastChild);
+    assertEquals(null, tree4.getLastChild());
     assertEquals(tree4, tree4.getLastDescendant());
 
     /* addChildLast */
@@ -160,7 +160,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(tree2, tree1.getFirstChild());
-    assertEquals(tree3, tree1.lastChild);
+    assertEquals(tree3, tree1.getLastChild());
     assertEquals(tree4, tree1.getLastDescendant());
 
     assertEquals(dummy2, tree2.object);
@@ -170,7 +170,7 @@ function testLinkedTree() {
     assertEquals(null, tree2.getPrevSibling());
     assertEquals(tree3, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.lastChild);
+    assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
     assertEquals(dummy3, tree3.object);
@@ -180,7 +180,7 @@ function testLinkedTree() {
     assertEquals(tree2, tree3.getPrevSibling());
     assertEquals(null, tree3.getNextSibling());
     assertEquals(tree4, tree3.getFirstChild());
-    assertEquals(tree4, tree3.lastChild);
+    assertEquals(tree4, tree3.getLastChild());
     assertEquals(tree4, tree3.getLastDescendant());
 
     assertEquals(dummy4, tree4.object);
@@ -190,7 +190,7 @@ function testLinkedTree() {
     assertEquals(null, tree4.getPrevSibling());
     assertEquals(null, tree4.getNextSibling());
     assertEquals(null, tree4.getFirstChild());
-    assertEquals(null, tree4.lastChild);
+    assertEquals(null, tree4.getLastChild());
     assertEquals(tree4, tree4.getLastDescendant());
 
     /* insertChildBefore */
@@ -203,7 +203,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(tree3, tree1.getFirstChild());
-    assertEquals(tree2, tree1.lastChild);
+    assertEquals(tree2, tree1.getLastChild());
     assertEquals(tree2, tree1.getLastDescendant());
 
     assertEquals(dummy2, tree2.object);
@@ -213,7 +213,7 @@ function testLinkedTree() {
     assertEquals(tree3, tree2.getPrevSibling());
     assertEquals(null, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.lastChild);
+    assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
     assertEquals(dummy3, tree3.object);
@@ -223,7 +223,7 @@ function testLinkedTree() {
     assertEquals(null, tree3.getPrevSibling());
     assertEquals(tree2, tree3.getNextSibling());
     assertEquals(tree4, tree3.getFirstChild());
-    assertEquals(tree4, tree3.lastChild);
+    assertEquals(tree4, tree3.getLastChild());
     assertEquals(tree4, tree3.getLastDescendant());
 
     assertEquals(dummy4, tree4.object);
@@ -233,7 +233,7 @@ function testLinkedTree() {
     assertEquals(null, tree4.getPrevSibling());
     assertEquals(null, tree4.getNextSibling());
     assertEquals(null, tree4.getFirstChild());
-    assertEquals(null, tree4.lastChild);
+    assertEquals(null, tree4.getLastChild());
     assertEquals(tree4, tree4.getLastDescendant());
 
     /* insertChildAfter */
@@ -246,7 +246,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(tree2, tree1.getFirstChild());
-    assertEquals(tree3, tree1.lastChild);
+    assertEquals(tree3, tree1.getLastChild());
     assertEquals(tree4, tree1.getLastDescendant());
 
     assertEquals(dummy2, tree2.object);
@@ -256,7 +256,7 @@ function testLinkedTree() {
     assertEquals(null, tree2.getPrevSibling());
     assertEquals(tree3, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.lastChild);
+    assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
     assertEquals(dummy3, tree3.object);
@@ -266,7 +266,7 @@ function testLinkedTree() {
     assertEquals(tree2, tree3.getPrevSibling());
     assertEquals(null, tree3.getNextSibling());
     assertEquals(tree4, tree3.getFirstChild());
-    assertEquals(tree4, tree3.lastChild);
+    assertEquals(tree4, tree3.getLastChild());
     assertEquals(tree4, tree3.getLastDescendant());
 
     assertEquals(dummy4, tree4.object);
@@ -276,7 +276,7 @@ function testLinkedTree() {
     assertEquals(null, tree4.getPrevSibling());
     assertEquals(null, tree4.getNextSibling());
     assertEquals(null, tree4.getFirstChild());
-    assertEquals(null, tree4.lastChild);
+    assertEquals(null, tree4.getLastChild());
     assertEquals(tree4, tree4.getLastDescendant());
 
     /* removeChild */
@@ -289,7 +289,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(tree2, tree1.getFirstChild());
-    assertEquals(tree2, tree1.lastChild);
+    assertEquals(tree2, tree1.getLastChild());
     assertEquals(tree2, tree1.getLastDescendant());
 
     assertEquals(dummy2, tree2.object);
@@ -299,7 +299,7 @@ function testLinkedTree() {
     assertEquals(null, tree2.getPrevSibling());
     assertEquals(null, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.lastChild);
+    assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
     assertEquals(dummy3, tree3.object);
@@ -309,7 +309,7 @@ function testLinkedTree() {
     assertEquals(null, tree3.getPrevSibling());
     assertEquals(null, tree3.getNextSibling());
     assertEquals(tree4, tree3.getFirstChild());
-    assertEquals(tree4, tree3.lastChild);
+    assertEquals(tree4, tree3.getLastChild());
     assertEquals(tree4, tree3.getLastDescendant());
 
     assertEquals(dummy4, tree4.object);
@@ -319,7 +319,7 @@ function testLinkedTree() {
     assertEquals(null, tree4.getPrevSibling());
     assertEquals(null, tree4.getNextSibling());
     assertEquals(null, tree4.getFirstChild());
-    assertEquals(null, tree4.lastChild);
+    assertEquals(null, tree4.getLastChild());
     assertEquals(tree4, tree4.getLastDescendant());
 
     /* clear */
@@ -333,7 +333,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(null, tree1.getFirstChild());
-    assertEquals(null, tree1.lastChild);
+    assertEquals(null, tree1.getLastChild());
     assertEquals(tree1, tree1.getLastDescendant());
 
     assertEquals(dummy2, tree2.object);
@@ -343,7 +343,7 @@ function testLinkedTree() {
     assertEquals(null, tree2.getPrevSibling());
     assertEquals(null, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.lastChild);
+    assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
     assertEquals(dummy3, tree3.object);
@@ -353,7 +353,7 @@ function testLinkedTree() {
     assertEquals(null, tree3.getPrevSibling());
     assertEquals(null, tree3.getNextSibling());
     assertEquals(tree4, tree3.getFirstChild());
-    assertEquals(tree4, tree3.lastChild);
+    assertEquals(tree4, tree3.getLastChild());
     assertEquals(tree4, tree3.getLastDescendant());
 
     assertEquals(dummy4, tree4.object);
@@ -363,7 +363,7 @@ function testLinkedTree() {
     assertEquals(null, tree4.getPrevSibling());
     assertEquals(null, tree4.getNextSibling());
     assertEquals(null, tree4.getFirstChild());
-    assertEquals(null, tree4.lastChild);
+    assertEquals(null, tree4.getLastChild());
     assertEquals(tree4, tree4.getLastDescendant());
 
     /* finalize */
@@ -379,7 +379,7 @@ function testLinkedTree() {
     assertEquals(null, tree1.getPrevSibling());
     assertEquals(null, tree1.getNextSibling());
     assertEquals(null, tree1.getFirstChild());
-    assertEquals(null, tree1.lastChild);
+    assertEquals(null, tree1.getLastChild());
     assertEquals(tree1, tree1.getLastDescendant());
 
     assertEquals(null, tree2.object);
@@ -389,7 +389,7 @@ function testLinkedTree() {
     assertEquals(null, tree2.getPrevSibling());
     assertEquals(null, tree2.getNextSibling());
     assertEquals(null, tree2.getFirstChild());
-    assertEquals(null, tree2.lastChild);
+    assertEquals(null, tree2.getLastChild());
     assertEquals(tree2, tree2.getLastDescendant());
 
     assertEquals(dummy3, tree3.object);
@@ -399,7 +399,7 @@ function testLinkedTree() {
     assertEquals(null, tree3.getPrevSibling());
     assertEquals(null, tree3.getNextSibling());
     assertEquals(tree4, tree3.getFirstChild());
-    assertEquals(tree4, tree3.lastChild);
+    assertEquals(tree4, tree3.getLastChild());
     assertEquals(tree4, tree3.getLastDescendant());
 
     assertEquals(dummy4, tree4.object);
@@ -409,6 +409,6 @@ function testLinkedTree() {
     assertEquals(null, tree4.getPrevSibling());
     assertEquals(null, tree4.getNextSibling());
     assertEquals(null, tree4.getFirstChild());
-    assertEquals(null, tree4.lastChild);
+    assertEquals(null, tree4.getLastChild());
     assertEquals(tree4, tree4.getLastDescendant());
 }
