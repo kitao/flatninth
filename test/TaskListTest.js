@@ -21,5 +21,61 @@
  */
 
 function testTaskList() {
+    var updateCount1, updateCount2;
+    var TestTaskClass1, TestTaskClass2;
+    var taskList;
+    var task1, task2;
+
+    /* initialize */
+    /* isActive */
+    taskList = new b9.TaskList();
+
+    assertEquals(true, taskList.isActive);
+
+    /* update */
+    TestTaskClass1 = b9.createClass(b9.Task);
+    TestTaskClass1.prototype.update = function() { updateCount1++; };
+
+    TestTaskClass2 = b9.createClass(b9.Task);
+    TestTaskClass2.prototype.update = function() { updateCount2++; };
+
+    task1 = new TestTaskClass1();
+    task2 = new TestTaskClass2();
+
+    taskList.addLast(task1);
+    taskList.addLast(task2);
+
+    updateCount1 = 0;
+    updateCount2 = 0;
+
+    taskList.isActive = false;
+    taskList.update();
+
+    assertEquals(0, updateCount1);
+    assertEquals(0, updateCount2);
+
+    taskList.isActive = true;
+    taskList.update();
+
+    assertEquals(1, updateCount1);
+    assertEquals(1, updateCount2);
+
+    task1.isActive = false;
+    taskList.update();
+
+    assertEquals(1, updateCount1);
+    assertEquals(2, updateCount2);
+
+    /* dump */
+    taskList.dump();
     // TODO
+
+    /* finalize */
+    assertEquals(taskList, task1.list);
+    assertEquals(taskList, task2.list);
+
+    taskList.finalize();
+
+    assertEquals(null, task1.list);
+    assertEquals(null, task2.list);
 }

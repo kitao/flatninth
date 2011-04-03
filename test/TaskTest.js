@@ -21,5 +21,27 @@
  */
 
 function testTask() {
-    // TODO
+    var taskList;
+    var task;
+
+    /* initialize */
+    /* name */
+    /* isActive */
+    task = new b9.Task();
+
+    assertEquals("", task.name);
+    assertEquals(true, task.isActive);
+
+    /* update */
+    task.update();
+
+    /* finalize */
+    taskList = new b9.TaskList();
+    taskList.addLast(task);
+
+    assertEquals(taskList, task.list);
+
+    task.finalize();
+
+    assertEquals(null, task.list);
 }

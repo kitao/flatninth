@@ -23,36 +23,36 @@
 function testB9() {
     var ctorCount1, ctorCount2, ctorCount3;
     var dtorCount1, dtorCount2, dtorCount3;
-    var testClass0, testClass1, testClass2, testClass3;
+    var TestClass0, TestClass1, TestClass2, TestClass3;
     var testIns0, testIns1, testIns2, testIns3;
 
     /* VERSION */
     assertEquals(0.01, b9.VERSION);
 
     /* createClass */
-    testClass0 = b9.createClass();
+    TestClass0 = b9.createClass();
 
     ctorCount1 = 0;
     dtorCount1 = 0;
-    testClass1 = b9.createClass();
-    testClass1.prototype.initialize = function(param) { ctorCount1++; this.param = param; };
-    testClass1.prototype.finalize = function() { dtorCount1++; };
+    TestClass1 = b9.createClass();
+    TestClass1.prototype.initialize = function(param) { ctorCount1++; this.param = param; };
+    TestClass1.prototype.finalize = function() { dtorCount1++; };
 
     ctorCount2 = 0;
     dtorCount2 = 0;
-    testClass2 = b9.createClass(testClass1);
-    testClass2.prototype.initialize = function() { ctorCount2++; this.initializeSuper(456); };
-    testClass2.prototype.finalize = function() { dtorCount2++; this.finalizeSuper(); };
+    TestClass2 = b9.createClass(TestClass1);
+    TestClass2.prototype.initialize = function() { ctorCount2++; this.initializeSuper(456); };
+    TestClass2.prototype.finalize = function() { dtorCount2++; this.finalizeSuper(); };
 
     ctorCount3 = 0;
     dtorCount3 = 0;
-    testClass3 = b9.createClass(testClass2);
-    testClass3.prototype.initialize = function() { ctorCount3++; this.initializeSuper(); };
-    testClass3.prototype.finalize = function() { dtorCount3++; this.finalizeSuper(); };
+    TestClass3 = b9.createClass(TestClass2);
+    TestClass3.prototype.initialize = function() { ctorCount3++; this.initializeSuper(); };
+    TestClass3.prototype.finalize = function() { dtorCount3++; this.finalizeSuper(); };
 
-    testIns0 = new testClass0();
+    testIns0 = new TestClass0();
 
-    testIns1 = new testClass1(123);
+    testIns1 = new TestClass1(123);
 
     assertUndefined(testIns1.initializeSuper);
     assertUndefined(testIns1.finalizeSuper);
@@ -73,7 +73,7 @@ function testB9() {
     assertEquals(0, ctorCount3);
     assertEquals(0, dtorCount3);
 
-    testIns2 = new testClass2();
+    testIns2 = new TestClass2();
 
     assertNotUndefined(testIns2.initializeSuper);
     assertNotUndefined(testIns2.finalizeSuper);
@@ -94,7 +94,7 @@ function testB9() {
     assertEquals(0, ctorCount3);
     assertEquals(0, dtorCount3);
 
-    testIns3 = new testClass3();
+    testIns3 = new TestClass3();
 
     assertNotUndefined(testIns3.initializeSuper);
     assertNotUndefined(testIns3.finalizeSuper);
