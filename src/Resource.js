@@ -28,9 +28,10 @@ b9.Resource = {};
 /**
  *
  * @param {String} resName
+ * @return {Object}
  */
 b9.Resource.get= function(resName) {
-    return this.resTable_[resName];
+    return this._resTable[resName];
 };
 
 /**
@@ -39,7 +40,7 @@ b9.Resource.get= function(resName) {
  * @param {Object} obj
  */
 b9.Resource.add = function(resName, obj) {
-    this.resTable_[resName] = obj;
+    this._resTable[resName] = obj;
 };
 
 /**
@@ -47,7 +48,7 @@ b9.Resource.add = function(resName, obj) {
  * @param {String} resName
  */
 b9.Resource.remove = function(resName) {
-    delete this.resTable_[resName];
+    delete this._resTable[resName];
 };
 
 /**
@@ -57,10 +58,10 @@ b9.Resource.dump = function() {
     // TODO
 };
 
-b9.Resource.initialize_ = function() {
-    this.resTable_ = {};
+b9.Resource._initialize = function() {
+    this._resTable = {};
 };
 
-b9.Resource.finalize_ = function() {
+b9.Resource._finalize = function() {
     // TODO
 };

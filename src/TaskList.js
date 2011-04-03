@@ -24,13 +24,16 @@
  * Constructs a task list.
  *
  * @class A container which stores and updates instances of the b9.Task class.
+ * @extends b9.LinkedList
  */
-b9.TaskList = b9.createClass();
+b9.TaskList = b9.createClass(b9.LinkedList);
 
 /**
  * @ignore
  */
 b9.TaskList.prototype.initialize = function() {
+    this.initializeSuper();
+
     /**
      * Whether this task list is active.
      * If active, calls the update method of each task when the update method of this task list is called.
@@ -38,7 +41,6 @@ b9.TaskList.prototype.initialize = function() {
      */
     this.isActive = true;
 
-    this._list = new b9.LinkedList();
     this._nextTask = null;
 };
 
@@ -46,78 +48,7 @@ b9.TaskList.prototype.initialize = function() {
  * Destructs this task list. All of the tasks belong to this task list get unlinked.
  */
 b9.TaskList.prototype.finalize = function() {
-    this._list.finalize();
-};
-
-/**
- * Returns the first task of this task list. If no such task exists, returns null.
- * @return {b9.Task} The first task.
- */
-b9.TaskList.prototype.getFirst = function() {
-    var task = this._list.getFirst();
-    return task ? task.getSelf() : null;
-};
-
-/**
- * Returns the last task of this task list. If no such task exists, returns null.
- * @return {b9.Task} The last task.
- */
-b9.TaskList.prototype.getLast = function() {
-    var task = this._list.getLast();
-    return task ? task.getSelf() : null;
-};
-
-/**
- * Links a task as the first task with this task list.
- * @param {b9.Task} task A task. If the task already belongs to some task list,
- * the task gets unlinked with it before the operation automatically.
- */
-b9.TaskList.prototype.addFirst = function(task) {
-    this._list.addFirst(task._listItem);
-};
-
-/**
- * Links a task as the last task with this task list.
- * @param {b9.Task} task A task. If the task already belongs to some task list,
- * the task gets unlinked with it before the operation automatically.
- */
-b9.TaskList.prototype.addLast = function(task) {
-    this._list.addLast(task._listItem);
-};
-
-/**
- * Links a task as the previous of the specified task with this task list.
- * @param {b9.Task} task A task. If the task already belongs to some task list,
- * the task gets unlinked with it before the operation automatically.
- * @param {b9.Task} nextTask The task to be the next. This task must belong to this task list.
- */
-b9.TaskList.prototype.insertBefore = function(task, nextTask) {
-    this._list.insertBefore(task._listItem, nextTask._listItem);
-};
-
-/**
- * Links a task as the next of the specified task with this task list.
- * @param {b9.Task} task A task. If the task already belongs to some task list,
- * the task gets unlinked with it before the operation automatically.
- * @param {b9.Task} prevTask The task to be the previous. This task must belong to this task list.
- */
-b9.TaskList.prototype.insertAfter = function(task, prevTask) {
-    this._list.insertAfter(task._listItem, prevTask._listItem);
-};
-
-/**
- * Unlinks a task from this task list.
- * @param {b9.Task} task A task to be unlinked. This task must belong to this task list.
- */
-b9.TaskList.prototype.remove = function(task) {
-    this._list.remove(task._listItem);
-};
-
-/**
- * Unlinks all of the task from this task list.
- */
-b9.TaskList.prototype.clear = function() {
-    this._list.clear();
+    this.finalizeSuper();
 };
 
 /**
@@ -126,11 +57,13 @@ b9.TaskList.prototype.clear = function() {
 b9.TaskList.prototype.update = function() {
     var task;
 
-    for (task = this.getFirst(); task; task = this._nextTask) {
-        this._nextTask = task.getNext();
+    if (this.isActive) {
+        for (task = this.first; task; task = this._nextTask) {
+            this._nextTask = task.next;
 
-        if (task.isActive) {
-            task.update();
+            if (task.isActive) {
+                task.update();
+            }
         }
     }
 };
