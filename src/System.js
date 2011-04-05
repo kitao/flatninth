@@ -28,68 +28,105 @@ b9.System = {};
 /**
  *
  */
-b9.System.setup = function(canvas_id, target_fps) {
-    this._canvas = document.getElementById(canvas_id);
+b9.System.setup = function(canvasID, targetFps) {
+    /**
+     * @return {TODO}
+     */
+    b9.canvas = document.getElementById(canvasID);
 
-    if (!this._canvas) {
+    if (!b9.canvas) {
         this.error("can't find the specified canvas.");
     }
 
-    this._gl = this._canvas.getContext("experimental-webgl");
+    /**
+     *
+     * @return {TODO}
+     */
+    b9.gl = this.canvas.getContext("experimental-webgl");
 
-    if (!this._gl) {
+    if (!b9.gl) {
         this.error("can't initialize WebGL.");
     }
 
-    this._target_fps = b9.Math.max(target_fps, 1);
-    this._current_fps = 0;
-    this._update_func = b9.Preset.defaultUpdateFunction;
-    this._render_func = b9.Preset.defaultRenderFunction;
-    this._timer_id = null;
-    this._next_update_time = 0;
+    /**
+     * This property is read-only.
+     * @return {Number}
+     */
+    this.targetFps = b9.Math.max(targetFps, 1);
+
+    /**
+     * This property is read-only.
+     * @return {Number}
+     */
+    this.currentFps = 0;
+
+    /**
+     *
+     * @return {TODO}
+     */
+    this.updateFunc = b9.Preset.defaultUpdateFunc;
+
+    /**
+     *
+     * @return {TODO}
+     */
+    this.renderFunc = b9.Preset.defaultRenderFunc;
+
+    this._timerID = null;
+    this._nextUpdateTime = 0;
 
     this._initializeGL();
 
-    b9.Resource.initialize_();
-    b9.Input.initialize_();
-    b9.Debug.initialize_();
-    b9.Preset.initialize_();
+    b9.Resource._initialize();
+    b9.Input._initialize();
+    b9.Debug._initialize();
+    b9.Preset._initialize();
 };
 
 /**
- * hoge
+ *
+ */
+b9.System.teardown = function() {
+    b9.Preset._finalize();
+    b9.Debug._finalize();
+    b9.Input._finalize();
+    b9.Resource._finalize();
+};
+
+/**
+ *
  */
 b9.System.start = function() {
     var that = this;
 
-    this._next_update_time = this.getTime();
+    this._nextUpdateTime = this.getTime();
 
     function onTimer() {
         var i;
-        var update_count;
-        var cur_time, wait_time;
+        var updateCount;
+        var curTime, waitTime;
 
-        if (that._timer_id) {
-            clearTimeout(that._timer_id);
+        if (that._timerID) {
+            clearTimeout(that._timerID);
         }
 
-        cur_time = that.getTime();
-        update_count = (cur_time - that._next_update_time) * that._target_fps / 1000.0;
-        update_count = b9.Math.max(b9.Math.floor(update_count), 1);
+        curTime = that.getTime();
+        updateCount = (curTime - that._nextUpdateTime) * that.targetFps / 1000.0;
+        updateCount = b9.Math.max(b9.Math.floor(updateCount), 1);
 
-        that._next_update_time += (1000.0 / that._target_fps) * update_count;
+        that._nextUpdateTime += (1000.0 / that.targetFps) * updateCount;
 
-        for (i = 0; i < update_count; i++) {
-            that._update_func();
+        for (i = 0; i < updateCount; i++) {
+            that.updateFunc();
         }
 
-        that._render_func();
-        b9.Debug.render_();
+        that.renderFunc();
+        b9.Debug._render();
 
-        cur_time = that.getTime();
-        wait_time = b9.Math.max(that._next_update_time - cur_time, 0);
+        curTime = that.getTime();
+        waitTime = b9.Math.max(that._nextUpdateTime - curTime, 0);
 
-        that._timer_id = setTimeout(onTimer, wait_time);
+        that._timerID = setTimeout(onTimer, waitTime);
     }
 
     onTimer();
@@ -99,87 +136,9 @@ b9.System.start = function() {
  *
  */
 b9.System.stop = function() {
-    if (this._timer_id) {
-        clearTimeout(this._timer_id);
+    if (this._timerID) {
+        clearTimeout(this._timerID);
     }
-};
-
-/**
- *
- * @return {Canvas}
- */
-b9.System.getCanvas = function() {
-    return this._canvas;
-};
-
-/**
- *
- * @return {GL}
- */
-b9.System.getGLContext = function() {
-    return this._gl;
-};
-
-/**
- *
- * @return {Number}
- */
-b9.System.getFramebufferWidth = function() {
-    return this._canvas.width;
-};
-
-/**
- *
- * @return {Number}
- */
-b9.System.getFramebufferHeight = function() {
-    return this._canvas.height;
-};
-
-/**
- * hoge
- * @return {Number} hoge
- */
-b9.System.getTargetFPS = function() {
-    return this._target_fps;
-};
-
-/**
- *
- * @return {Number}
- */
-b9.System.getCurrentFPS = function() {
-    return this._current_fps;
-};
-
-/**
- *
- * @return {TODO}
- */
-b9.System.getUpdateFunction = function() {
-    return this._update_func;
-};
-
-/**
- *
- */
-b9.System.setUpdateFunction = function(update_func) {
-    this._update_func = update_func;
-};
-
-/**
- *
- * @return {TODO}
- */
-b9.System.getRenderFunction = function() {
-    return this._render_func;
-};
-
-/**
- *
- */
-b9.System.setRenderFunction = function(render_func) {
-    this._render_func = render_func;
 };
 
 /**
@@ -202,7 +161,7 @@ b9.System.error = function(msg) {
 };
 
 b9.System._initializeGL = function() {
-    var gl = this._gl;
+    var gl = b9.gl;
 
     gl.clearDepth(-1.0);
 };
