@@ -22,63 +22,69 @@
 
 var Sample = b9.createClass(b9.Task);
 
-Sample.prototype.initialize = function() {
+Sample.prototype.initialize = function(x, y, z) {
+    var vec = new b9.Vector3D();
+    var color = new b9.Color();
+
     this.initializeSuper();
 
-    b9.Preset.getTaskList(0).addLast(this);
+    b9.Preset.taskList_p0.addLast(this);
 
-    this._prim_buf = new b9.PrimitiveBuffer(3, 3);
-    this._prim = new b9.Primitive(this._prim_buf);
+    this._primBuf = new b9.PrimitiveBuffer(3, 3);
+    this._prim = new b9.Primitive(this._primBuf);
 
-    this._prim_buf.getPos(0).set(0.0, 50.0, 0.0);
-    this._prim_buf.getPos(1).set(-200.0, -100.0, 0.0);
-    this._prim_buf.getPos(2).set(200.0, -100.0, 0.0);
+    this._primBuf.setPos(0, vec.set(0.0, 50.0, 0.0));
+    this._primBuf.setPos(1, vec.set(-200.0, -100.0, 0.0));
+    this._primBuf.setPos(2, vec.set(200.0, -100.0, 0.0));
 
-    this._prim_buf.getColor(0).set(255, 0, 0);
-    this._prim_buf.getColor(1).set(0, 255, 0);
-    this._prim_buf.getColor(2).set(0, 0, 255);
+    this._primBuf.setColor(0, color.set(255, 0, 0));
+    this._primBuf.setColor(1, color.set(0, 255, 0));
+    this._primBuf.setColor(2, color.set(0, 0, 255));
 
-    this._prim_buf.setIndex(0, 0);
-    this._prim_buf.setIndex(1, 1);
-    this._prim_buf.setIndex(2, 2);
+    this._primBuf.setIndex(0, 0);
+    this._primBuf.setIndex(1, 1);
+    this._primBuf.setIndex(2, 2);
 
-    this._prim_buf.setTexCoord(0, 0.0, 0.0);
-    this._prim_buf.setTexCoord(1, 1.0, 0.0);
-    this._prim_buf.setTexCoord(2, 0.0, 1.0);
+    this._primBuf.setTexCoord(0, 0.0, 0.0);
+    this._primBuf.setTexCoord(1, 1.0, 0.0);
+    this._primBuf.setTexCoord(2, 0.0, 1.0);
 
-    this._prim.setTexture(0, b9.Resource.get("test_texture"));
+    this._prim.textureArray[0] = b9.Resource.get("test_texture");
+    this._prim.local.trans.set(x, y, z);
 
-    b9.Preset.getRootNode(0).addChildLast(this._prim);
+    b9.Preset.rootNode_p0.addChildLast(this._prim);
 
-    this._prim2 = new b9.Primitive(this._prim_buf);
-    this._prim2.getLocal().translate(100.0, 50.0, 0.0);
+    this._prim2 = new b9.Primitive(this._primBuf);
+    this._prim2.local.translate(100.0, 50.0, 0.0);
     this._prim.addChildLast(this._prim2);
 
-    this._prim2.setBlendMode(b9.Node.BLEND_HALF, true);
-    this._prim2.getColor().setA(32);
+    this._prim2.setBlendModeWithFlags(b9.BlendMode.HALF);
+    this._prim2.color.a = 128;
 
     b9.Debug.trace("ok!!!");
 };
 
 Sample.prototype.update = function() {
     // TODO
-    this._prim.getLocal().rotateX_int(1).rotateY_int(2);
-    this._prim2.getLocal().rotateZ_int(1);
+    this._prim.local.rotateX_int(1).rotateY_int(2);
+    this._prim2.local.rotateZ_int(1);
 };
 
 /**
  *
  */
 function main() {
+    var i;
+
     b9.System.setup("sample01_canvas", 60);
 
     b9.Resource.add("test_texture", new b9.Texture("../asset/test_texture_64x64.png"));
 
-    for (var i = 0; i < 3; i++) {
-        var dummy = new Sample();
+    for (i = 0; i < 10; i++) {
+        var dummy = new Sample(i * 30 - 200, i * 10, i * -20);
     }
 
-    b9.Preset.getScreen(0).getClearColor().set(0, 0, 128);
+    b9.Preset.screen_p0.clearColor.set(0, 0, 128);
 
     b9.System.start();
 }
