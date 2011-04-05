@@ -42,7 +42,6 @@ SRCS        = b9.js \
               LinkedTree.js \
               Task.js \
               TaskList.js \
-              GLBufferState.js \
               Texture.js \
               Shader.js \
               Node.js \
