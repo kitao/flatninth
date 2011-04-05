@@ -26,92 +26,150 @@
 b9.Preset = {};
 
 /**
- * Returns the specified task list.
- * @param {Number} The index number of an task list.
- * @return {b9.TaskList} The task list.
+ *
  */
-b9.Preset.getTaskList = function(task_list_no) {
-    return this._task_list_array[task_list_no - this.MIN_TASK_LIST_NO];
-};
-
-/**
- * Returns the specified screen.
- * @param {Number} The index number of a screen.
- * @return {b9.Screen} The screen.
- */
-b9.Preset.getScreen = function(scr_no) {
-    return this._scr_array[scr_no - this.MIN_SCREEN_NO];
-};
-
-/**
- * Returns the root node of the specified screen.
- * @param {Number} The index number of a screen.
- * @return {b9.Node} The root node.
- */
-b9.Preset.getRootNode = function(scr_no) {
-    return this._root_node_array[scr_no - this.MIN_SCREEN_NO];
+b9.Preset.defaultUpdateFunc = function() {
+    this.taskList_m3.update();
+    this.taskList_m2.update();
+    this.taskList_m1.update();
+    this.taskList_p0.update();
+    this.taskList_p1.update();
+    this.taskList_p2.update();
+    this.taskList_p3.update();
 };
 
 /**
  *
  */
-b9.Preset.defaultUpdateFunction = function() {
-    var i;
-
-    for (i = 0; i < b9.Preset.TASK_LIST_COUNT; i++) {
-        b9.Preset._task_list_array[i].update();
-    }
+b9.Preset.defaultRenderFunc = function() {
+    this.screen_m3.render(this.rootNode_m3);
+    this.screen_m2.render(this.rootNode_m2);
+    this.screen_m1.render(this.rootNode_m1);
+    this.screen_p0.render(this.rootNode_p0);
+    this.screen_p1.render(this.rootNode_p1);
+    this.screen_p2.render(this.rootNode_p2);
+    this.screen_p3.render(this.rootNode_p3);
 };
 
-/**
- *
- */
-b9.Preset.defaultRenderFunction = function() {
-    var i;
-
-    for (i = 0; i < b9.Preset.SCREEN_COUNT; i++) {
-        b9.Preset._scr_array[i].render(b9.Preset._root_node_array[i]);
-    }
-};
-
-b9.Preset.initialize_ = function() {
-    var i;
+b9.Preset._initialize = function() {
     var scr;
-    var width, height;
-    var vert_code, frag_code;
+    var vertCode, fragCode;
+    var width = b9.canvas.width;
+    var height = b9.canvas.height;
 
-    /*
-     * initialize the preset task list
+    /**
+     * @return {b9.TaskList}
      */
-    this._task_list_array = new Array(this.task_LIST_COUNT);
+    this.taskList_m3 = new b9.TaskList();
 
-    for (i = 0; i < this.TASK_LIST_COUNT; i++) {
-        this._task_list_array[i] = new b9.TaskList();
-    }
-
-    /*
-     * initialize the preset screens
+    /**
+     * @return {b9.TaskList}
      */
-    this._scr_array = new Array(this.SCREEN_COUNT);
-    this._root_node_array = new Array(this.SCREEN_COUNT);
+    this.taskList_m2 = new b9.TaskList();
 
-    width = b9.System.getFramebufferWidth();
-    height = b9.System.getFramebufferHeight();
+    /**
+     * @return {b9.TaskList}
+     */
+    this.taskList_m1 = new b9.TaskList();
 
-    for (i = 0; i < this.SCREEN_COUNT; i++) {
-        this._scr_array[i] = new b9.Screen(width, height);
-        this._root_node_array[i] = new b9.Node();
-    }
+    /**
+     * @return {b9.TaskList}
+     */
+    this.taskList_p0 = new b9.TaskList();
 
-    scr = this.getScreen(0);
-    scr.setScreenFlag(b9.Screen.ScreenFlag.CLEAR_COLOR, true);
-    scr.setScreenFlag(b9.Screen.ScreenFlag.CLEAR_DEPTH, true);
-    scr.getClearColor().set(0, 0, 0);
+    /**
+     * @return {b9.TaskList}
+     */
+    this.taskList_p1 = new b9.TaskList();
+
+    /**
+     * @return {b9.TaskList}
+     */
+    this.taskList_p2 = new b9.TaskList();
+
+    /**
+     * @return {b9.TaskList}
+     */
+    this.taskList_p3 = new b9.TaskList();
+
+    /**
+     * @return {b9.Screen}
+     */
+    this.screen_m3 = new b9.Screen(width, height);
+
+    /**
+     * @return {b9.Screen}
+     */
+    this.screen_m2 = new b9.Screen(width, height);
+
+    /**
+     * @return {b9.Screen}
+     */
+    this.screen_m1 = new b9.Screen(width, height);
+
+    /**
+     * @return {b9.Screen}
+     */
+    this.screen_p0 = new b9.Screen(width, height);
+
+    /**
+     * @return {b9.Screen}
+     */
+    this.screen_p1 = new b9.Screen(width, height);
+
+    /**
+     * @return {b9.Screen}
+     */
+    this.screen_p2 = new b9.Screen(width, height);
+
+    /**
+     * @return {b9.Screen}
+     */
+    this.screen_p3 = new b9.Screen(width, height);
+
+    /**
+     * @return {b9.Node}
+     */
+    this.rootNode_m3 = new b9.Node();
+
+    /**
+     * @return {b9.Node}
+     */
+    this.rootNode_m2 = new b9.Node();
+
+    /**
+     * @return {b9.Node}
+     */
+    this.rootNode_m1 = new b9.Node();
+
+    /**
+     * @return {b9.Node}
+     */
+    this.rootNode_p0 = new b9.Node();
+
+    /**
+     * @return {b9.Node}
+     */
+    this.rootNode_p1 = new b9.Node();
+
+    /**
+     * @return {b9.Node}
+     */
+    this.rootNode_p2 = new b9.Node();
+
+    /**
+     * @return {b9.Node}
+     */
+    this.rootNode_p3 = new b9.Node();
+
+    scr = this.screen_p0;
+    scr.screenFlag |= b9.ScreenFlag.CLEAR_COLOR | b9.ScreenFlag.CLEAR_DEPTH;
+    scr.clearColor.set(0, 0, 0);
 
     /*
      * initialize the preset shaders
      */
-    vert_code =
+    vertCode =
         "uniform mat4 b9_local_to_screen;" +
         "uniform vec4 b9_node_color;" +
         "" +
@@ -129,7 +187,7 @@ b9.Preset.initialize_ = function() {
         "    pixel_texcoord = b9_vertex_texcoord;" +
         "}";
 
-    frag_code =
+    fragCode =
         "precision mediump float;" +
         "" +
         "uniform sampler2D b9_texture_00;" +
@@ -142,9 +200,9 @@ b9.Preset.initialize_ = function() {
         "    gl_FragColor = texture2D(b9_texture_00, pixel_texcoord.st) * pixel_color;" +
         "}";
 
-    this._shader = new b9.Shader(vert_code, frag_code, 0, 0, 1);
+    this._defaultPrimitiveShader = new b9.Shader(vertCode, fragCode, 0, 0, 1);
 
-    vert_code =
+    vertCode =
         "uniform mat4 b9_local_to_screen;" +
         "uniform vec4 b9_node_color;" +
         "uniform vec4 b9_uniform_00;" +
@@ -163,7 +221,7 @@ b9.Preset.initialize_ = function() {
         "    pixel_texcoord = b9_vertex_texcoord;" +
         "}";
 
-    frag_code =
+    fragCode =
         "precision mediump float;" +
         "" +
         "uniform sampler2D b9_texture_00;" +
@@ -176,51 +234,9 @@ b9.Preset.initialize_ = function() {
         "    gl_FragColor = texture2D(b9_texture_00, pixel_texcoord.st) * pixel_color;" +
         "}";
 
-    this._sprite_shader = new b9.Shader(vert_code, frag_code, 2, 0, 1);
+    this._defaultSpriteShader = new b9.Shader(vertCode, fragCode, 2, 0, 1);
 };
 
-b9.Preset.finalize_ = function() {
+b9.Preset._finalize = function() {
     // TODO
 };
-
-/**
- *
- * @constant
- * @return {Number}
- */
-b9.Preset.MIN_TASK_LIST_NO = -3;
-
-/**
- *
- * @constant
- * @return {Number}
- */
-b9.Preset.MAX_TASK_LIST_NO = 3;
-
-/**
- *
- * @constant
- * @return {Number}
- */
-b9.Preset.TASK_LIST_COUNT = b9.Preset.MAX_TASK_LIST_NO - b9.Preset.MIN_TASK_LIST_NO + 1;
-
-/**
- *
- * @constant
- * @return {Number}
- */
-b9.Preset.MIN_SCREEN_NO = -3;
-
-/**
- *
- * @constant
- * @return {Number}
- */
-b9.Preset.MAX_SCREEN_NO = 3;
-
-/**
- *
- * @constant
- * @return {Number}
- */
-b9.Preset.SCREEN_COUNT = b9.Preset.MAX_SCREEN_NO - b9.Preset.MIN_SCREEN_NO + 1;
