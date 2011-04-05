@@ -29,26 +29,30 @@ b9.Preset = {};
  *
  */
 b9.Preset.defaultUpdateFunc = function() {
-    this.taskList_m3.update();
-    this.taskList_m2.update();
-    this.taskList_m1.update();
-    this.taskList_p0.update();
-    this.taskList_p1.update();
-    this.taskList_p2.update();
-    this.taskList_p3.update();
+    var Preset = b9.Preset;
+
+    Preset.taskList_m3.update();
+    Preset.taskList_m2.update();
+    Preset.taskList_m1.update();
+    Preset.taskList_p0.update();
+    Preset.taskList_p1.update();
+    Preset.taskList_p2.update();
+    Preset.taskList_p3.update();
 };
 
 /**
  *
  */
 b9.Preset.defaultRenderFunc = function() {
-    this.screen_m3.render(this.rootNode_m3);
-    this.screen_m2.render(this.rootNode_m2);
-    this.screen_m1.render(this.rootNode_m1);
-    this.screen_p0.render(this.rootNode_p0);
-    this.screen_p1.render(this.rootNode_p1);
-    this.screen_p2.render(this.rootNode_p2);
-    this.screen_p3.render(this.rootNode_p3);
+    var Preset = b9.Preset;
+
+    Preset.screen_m3.render(Preset.rootNode_m3);
+    Preset.screen_m2.render(Preset.rootNode_m2);
+    Preset.screen_m1.render(Preset.rootNode_m1);
+    Preset.screen_p0.render(Preset.rootNode_p0);
+    Preset.screen_p1.render(Preset.rootNode_p1);
+    Preset.screen_p2.render(Preset.rootNode_p2);
+    Preset.screen_p3.render(Preset.rootNode_p3);
 };
 
 b9.Preset._initialize = function() {
