@@ -113,11 +113,11 @@ b9.Quaternion.prototype.set = function(quatOrX, y, z, w) {
  */
 b9.Quaternion.prototype.fromMatrix3D = function(mat) {
     var k;
+    var root, scale;
     var matXAxis = mat.xAxis;
     var matYAxis = mat.yAxis;
     var matZAxis = mat.zAxis;
     var trace = matXAxis.x + matYAxis.y + matZAxis.z;
-    var root, scale;
 
     if (trace > 0.0) {
         root = b9.Math.sqrt(trace + 1.0);
@@ -178,7 +178,7 @@ b9.Quaternion.prototype.slerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        quat = b9.Quaternion.quat1_;
+        quat = b9.Quaternion._quat1;
 
         cosOmega = this.x * to.x + this.y * to.y + this.z * to.z + this.w * to.w;
 
@@ -241,7 +241,7 @@ b9.Quaternion.prototype.toString = function() {
     return str;
 };
 
-b9.Quaternion.quat1_ = new b9.Quaternion();
+b9.Quaternion._quat1 = new b9.Quaternion();
 
-b9.Matrix3D.quat1_ = new b9.Quaternion();
-b9.Matrix3D.quat2_ = new b9.Quaternion();
+b9.Matrix3D._quat1 = new b9.Quaternion();
+b9.Matrix3D._quat2 = new b9.Quaternion();
