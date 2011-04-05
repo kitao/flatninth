@@ -31,7 +31,7 @@ b9.GLBufferState = b9.createClass();
  * @ignore
  */
 b9.GLBufferState.prototype.initialize = function() {
-    this.isNeedToUpdate_ = true;
+    this._isNeedToUpdate = true;
 };
 
 /**
@@ -39,19 +39,19 @@ b9.GLBufferState.prototype.initialize = function() {
  * @return {Boolean} true if an OpenGL buffer needs to be updated; false otherwise.
  */
 b9.GLBufferState.prototype.checkUpdate = function() {
-    return this.isNeedToUpdate_;
+    return this._isNeedToUpdate;
 };
 
 /**
  * Declares that an OpenGL buffer needs to be updated.
  */
 b9.GLBufferState.prototype.requestUpdate = function() {
-    this.isNeedToUpdate_ = false;
+    this._isNeedToUpdate = false;
 };
 
 /**
  * Declares that an OpenGL buffer is updated.
  */
 b9.GLBufferState.prototype.finishUpdate = function() {
-    this.isNeedToUpdate_ = false;
+    this._isNeedToUpdate = false;
 };
