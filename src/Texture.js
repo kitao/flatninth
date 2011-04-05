@@ -25,7 +25,7 @@
  *
  * @param {Number} fileNameOrWidth A file name of a width.
  * @param {Number} [height] A height.
- * @param {b9.Texture.Format} [format] The format of a texture.
+ * @param {b9.TextureFormat} [format] The format of a texture.
  */
 b9.Texture = b9.createClass();
 
@@ -36,7 +36,7 @@ b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
     var that;
 
     /**
-     *
+     * This property is read-only.
      * @return {Boolean}
      */
     this.isLoaded = false;
@@ -53,20 +53,20 @@ b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
      */
     this.height = 0.0;
 
-    this.glBufStat_ = new b9.GLBufferState();
+    this._isNeedToUpdate = true;
 
     if (arguments.length === 1) {
-        this.glTex_ = null;
-        this.image_ = new Image();
-        this.image_.src = fileNameOrWidth;
+        this._gltex = null;
+        this._image = new Image();
+        this._image.src = fileNameOrWidth;
 
         that = this;
 
         /** @ignore */
-        this.image_.onload = function() {
+        this._image.onload = function() {
             that.isLoaded = true;
-            that.width = that.image_.width;
-            that.height = that.image_.height;
+            that.width = that._image.width;
+            that.height = that._image.height;
         };
     } else {
         // TODO
@@ -77,9 +77,9 @@ b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
  *
  */
 b9.Texture.prototype.finalize = function() {
-    if (this.glTex_) {
+    if (this._gltex) {
         // TODO
-        this.glTex_ = null;
+        this._gltex = null;
     }
 
     // TODO
@@ -97,32 +97,33 @@ b9.Texture.prototype.updateTexture = function(left, top, width, height) {
 };
 
 b9.Texture.prototype._setup = function(shader) {
-    var gl = b9.System._gl;
+    var gl;
 
     if (this.isLoaded) {
-        if (this.glBufStat_.checkUpdate()) {
-            this.glTex_ = gl.createTexture();
+        gl = b9.gl;
 
-            gl.bindTexture(gl.TEXTURE_2D, this.glTex_);
+        if (this._isNeedToUpdate) {
+            this._isNeedToUpdate = false;
+
+            this._gltex = gl.createTexture();
+
+            gl.bindTexture(gl.TEXTURE_2D, this._gltex);
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.image_);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this._image);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-
-            this.glBufStat_.finishUpdate();
         }
 
         gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, this.glTex_);
-        gl.uniform1i(shader._tex_loc_array[0], 0);
+        gl.bindTexture(gl.TEXTURE_2D, this._gltex);
+        gl.uniform1i(shader._texLocArray[0], 0);
     }
 };
 
 /**
- *
- * @enum
+ * @class
  */
-b9.Texture.Format = {
+b9.TextureFormat = {
     /**
      *
      * @constant
