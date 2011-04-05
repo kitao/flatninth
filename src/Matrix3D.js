@@ -144,9 +144,9 @@ b9.Matrix3D.prototype.fromQuaternion = function(quat) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.orthonormalize = function() {
-    var vec1 = b9.Matrix3D.vec1_;
-    var vec2 = b9.Matrix3D.vec2_;
-    var vec3 = b9.Matrix3D.vec3_;
+    var vec1 = b9.Matrix3D._vec1;
+    var vec2 = b9.Matrix3D._vec2;
+    var vec3 = b9.Matrix3D._vec3;
 
     vec3.set(this.zAxis).normalize();
     vec1.set(this.yAxis).cross(this.zAxis).normalize();
@@ -161,7 +161,7 @@ b9.Matrix3D.prototype.orthonormalize = function() {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateX_float = function(deg) {
-    var mat = b9.Matrix3D.mat1_;
+    var mat = b9.Matrix3D._mat1;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
@@ -180,7 +180,7 @@ b9.Matrix3D.prototype.rotateX_float = function(deg) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateY_float = function(deg) {
-    var mat = b9.Matrix3D.mat1_;
+    var mat = b9.Matrix3D._mat1;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
@@ -199,7 +199,7 @@ b9.Matrix3D.prototype.rotateY_float = function(deg) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateZ_float = function(deg) {
-    var mat = b9.Matrix3D.mat1_;
+    var mat = b9.Matrix3D._mat1;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
@@ -219,7 +219,7 @@ b9.Matrix3D.prototype.rotateZ_float = function(deg) {
  * @return {b9.Vector3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateX_int = function(deg) {
-    var mat = b9.Matrix3D.mat1_;
+    var mat = b9.Matrix3D._mat1;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
@@ -239,7 +239,7 @@ b9.Matrix3D.prototype.rotateX_int = function(deg) {
  * @return {b9.Vector3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateY_int = function(deg) {
-    var mat = b9.Matrix3D.mat1_;
+    var mat = b9.Matrix3D._mat1;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
@@ -259,7 +259,7 @@ b9.Matrix3D.prototype.rotateY_int = function(deg) {
  * @return {b9.Vector3D} This matrix.
  */
 b9.Matrix3D.prototype.rotateZ_int = function(deg) {
-    var mat = b9.Matrix3D.mat1_;
+    var mat = b9.Matrix3D._mat1;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
@@ -295,9 +295,9 @@ b9.Matrix3D.prototype.scale = function(scaleX, scaleY, scaleZ) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.translate = function(offsetX, offsetY, offsetZ) {
-    var vec1 = b9.Matrix3D.vec1_;
-    var vec2 = b9.Matrix3D.vec2_;
-    var vec3 = b9.Matrix3D.vec3_;
+    var vec1 = b9.Matrix3D._vec1;
+    var vec2 = b9.Matrix3D._vec2;
+    var vec3 = b9.Matrix3D._vec3;
 
     vec1.set(this.xAxis).mul(offsetX);
     vec2.set(this.yAxis).mul(offsetY);
@@ -321,9 +321,9 @@ b9.Matrix3D.prototype.slerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        vec = b9.Matrix3D.vec1_;
-        quat1 = b9.Matrix3D.quat1_;
-        quat2 = b9.Matrix3D.quat2_;
+        vec = b9.Matrix3D._vec1;
+        quat1 = b9.Matrix3D._quat1;
+        quat2 = b9.Matrix3D._quat2;
 
         quat1.fromMatrix3D(this);
         quat2.fromMatrix3D(to);
@@ -352,8 +352,8 @@ b9.Matrix3D.prototype.slerp_noTrans = function(to, ratio) {
         this.zAxis.set(to.zAxis);
         this.trans.set(b9.Vector3D.ZERO);
     } else if (ratio >= b9.Math.EPSILON) {
-        quat1 = b9.Matrix3D.quat1_;
-        quat2 = b9.Matrix3D.quat2_;
+        quat1 = b9.Matrix3D._quat1;
+        quat2 = b9.Matrix3D._quat2;
 
         quat1.fromMatrix3D(this);
         quat2.fromMatrix3D(to);
@@ -372,7 +372,7 @@ b9.Matrix3D.prototype.slerp_noTrans = function(to, ratio) {
  * @return {b9.Matrix3D} This matrix.
  */
 b9.Matrix3D.prototype.toLocal = function(mat) {
-    var vec = b9.Matrix3D.vec1_;
+    var vec = b9.Matrix3D._vec1;
     var rsqXA = 1.0 / mat.xAxis.sqNorm();
     var rsqYA = 1.0 / mat.yAxis.sqNorm();
     var rsqZA = 1.0 / mat.zAxis.sqNorm();
@@ -517,7 +517,7 @@ b9.Matrix3D.prototype.toArray = function(array) {
  */
 b9.Matrix3D.mulArray = function(left, right, result) {
     var i;
-    var array = b9.Matrix3D.array1_;
+    var array = b9.Matrix3D._array1;
 
     array[0] = left[0] * right[0] + left[4] * right[1] + left[8] * right[2] + left[12] * right[3];
     array[1] = left[1] * right[0] + left[5] * right[1] + left[9] * right[2] + left[13] * right[3];
@@ -562,9 +562,9 @@ b9.Matrix3D.prototype.equals = function(mat) {
  */
 b9.Matrix3D.prototype.toString = function() {
     var i;
+    var str;
     var array = this.array_;
     var index = this.index_;
-    var str;
 
     str = "(";
     str += this.xAxis.toString();
@@ -586,9 +586,9 @@ b9.Matrix3D.prototype.toString = function() {
  */
 b9.Matrix3D.UNIT = new b9.Matrix3D(b9.Vector3D.X_UNIT, b9.Vector3D.Y_UNIT, b9.Vector3D.Z_UNIT, b9.Vector3D.ZERO);
 
-b9.Matrix3D.vec1_ = new b9.Vector3D();
-b9.Matrix3D.vec2_ = new b9.Vector3D();
-b9.Matrix3D.vec3_ = new b9.Vector3D();
-b9.Matrix3D.mat1_ = new b9.Matrix3D();
-b9.Matrix3D.array1_ = new Float32Array(16);
-// quat1_ and quat2_ are defined in Quaternion.js
+b9.Matrix3D._vec1 = new b9.Vector3D();
+b9.Matrix3D._vec2 = new b9.Vector3D();
+b9.Matrix3D._vec3 = new b9.Vector3D();
+b9.Matrix3D._mat1 = new b9.Matrix3D();
+b9.Matrix3D._array1 = new Float32Array(16);
+// _quat1 and _quat2 are defined in Quaternion.js
