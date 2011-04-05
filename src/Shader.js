@@ -26,144 +26,133 @@
  * @class A programmable shader, consists of a vertex shader and a fragment shader,
  * which decides how the Primitive should be drawn.
  *
- * @param {String} vert_code A vertex shader code.
- * @param {String} frag_code A fragment shader code.
- * @param {Number} uni_count The number of the uniforms.
- * @param {Number} att_count The number of the attributes.
- * @param {Number} tex_count The number of the textures.
+ * @param {String} vertCode A vertex shader code.
+ * @param {String} fragCode A fragment shader code.
+ * @param {Number} uniCount The number of the uniforms.
+ * @param {Number} attCount The number of the attributes.
+ * @param {Number} texCount The number of the textures.
  */
 b9.Shader = b9.createClass();
 
 /**
  * @ignore
  */
-b9.Shader.prototype.initialize = function(vert_code, frag_code, uni_count, att_count, tex_count) {
-    this._glprog = null;
-    this.glBufStat_ = new b9.GLBufferState();
-    this._vert_code = vert_code;
-    this._frag_code = frag_code;
-    this._uni_count = uni_count;
-    this._att_count = att_count;
-    this._tex_count = tex_count;
+b9.Shader.prototype.initialize = function(vertCode, fragCode, uniCount, attCount, texCount) {
+    /**
+     * The number of the uniforms. This property is read-only.
+     * @return {Number}
+     */
+    this.uniformCount = uniCount;
 
-    this._local_to_screen_loc = 0;
-    this._node_color_loc = 0;
-    this._sprt_scale_loc = 0;
-    this._vert_pos_loc = 0;
-    this._vert_color_loc = 0;
-    this._vert_texcoord_loc = 0;
-    this._uni_loc_array = (uni_count > 0) ? new Array(uni_count) : null;
-    this._att_loc_array = (att_count > 0) ? new Array(att_count) : null;
-    this._tex_loc_array = (tex_count > 0) ? new Array(tex_count) : null;
+    /**
+     * The number of the attributes. This property is read-only.
+     * @return {Number}
+     */
+    this.attributeCount = attCount;
+
+    /**
+     * The number of the textures. This propery is read-only.
+     * @return {Number}
+     */
+    this.textureCount = texCount;
+
+    this._glprog = null;
+    this._vertCode = vertCode;
+    this._fragCode = fragCode;
+    this._isNeedToUpdate = true;
+    this._localToScreenLoc = 0;
+    this._nodeColorLoc = 0;
+    this._sprtScaleLoc = 0;
+    this._vertPosLoc = 0;
+    this._vertColorLoc = 0;
+    this._vertTexCoordLoc = 0;
+    this._uniLocArray = (uniCount > 0) ? [] : null;
+    this._attLocArray = (attCount > 0) ? [] : null;
+    this._texLocArray = (texCount > 0) ? [] : null;
 };
 
 /**
  * Destructs this shader.
  */
 b9.Shader.prototype.finalize = function() {
-    var gl = b9.System.getGLContext();
+    var gl;
 
     if (this._glprog) {
+        gl = b9.gl;
+
         gl.deleteProgram(this._glprog);
         this._glprog = null;
     }
 };
 
-/**
- * Returns the number of the uniforms this shader requires.
- * @return {Number} The number of the uniforms.
- */
-b9.Shader.prototype.getUniformCount = function() {
-    return this._uni_count;
-};
-
-/**
- * Returns the number of the attributes this shader requires.
- * @return {Number} The number of the attributes.
- */
-b9.Shader.prototype.getAttributeCount = function() {
-    return this._att_count;
-};
-
-/**
- * Returns the number of the textures this shader requires.
- * @return {Number} The number of the textures.
- */
-b9.Shader.prototype.getTextureCount = function() {
-    return this._tex_count;
-};
-
 b9.Shader.prototype._setup = function() {
     var i;
-    var vert_glshd, frag_glshd;
-    var gl = b9.System.getGLContext();
+    var vertGLShd, fragGLShd;
+    var gl = b9.gl;
 
-    if (this.glBufStat_.checkUpdate()) {
-        gl = b9.System.getGLContext();
-
+    if (this._isNeedToUpdate) {
+        this._isNeedToUpdate = false;
         this._glprog = gl.createProgram();
 
-        vert_glshd = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(vert_glshd, this._vert_code);
-        gl.compileShader(vert_glshd);
+        vertGLShd = gl.createShader(gl.VERTEX_SHADER);
+        gl.shaderSource(vertGLShd, this._vertCode);
+        gl.compileShader(vertGLShd);
 
-        if (!gl.getShaderParameter(vert_glshd, gl.COMPILE_STATUS)) {
-            b9.System.error("vertex shader compile error\n\n" + gl.getShaderInfoLog(vert_glshd));
+        if (!gl.getShaderParameter(vertGLShd, gl.COMPILE_STATUS)) {
+            b9.System.error("vertex shader compile error\n\n" + gl.getShaderInfoLog(vertGLShd));
         }
 
-        frag_glshd = gl.createShader(gl.FRAGMENT_SHADER);
-        gl.shaderSource(frag_glshd, this._frag_code);
-        gl.compileShader(frag_glshd);
+        fragGLShd = gl.createShader(gl.FRAGMENT_SHADER);
+        gl.shaderSource(fragGLShd, this._fragCode);
+        gl.compileShader(fragGLShd);
 
-        if (!gl.getShaderParameter(frag_glshd, gl.COMPILE_STATUS)) {
-            b9.System.error("fragment shader compile error\n\n" + gl.getShaderInfoLog(frag_glshd));
+        if (!gl.getShaderParameter(fragGLShd, gl.COMPILE_STATUS)) {
+            b9.System.error("fragment shader compile error\n\n" + gl.getShaderInfoLog(fragGLShd));
         }
 
-        gl.attachShader(this._glprog, vert_glshd);
-        gl.attachShader(this._glprog, frag_glshd);
+        gl.attachShader(this._glprog, vertGLShd);
+        gl.attachShader(this._glprog, fragGLShd);
         gl.linkProgram(this._glprog);
 
         if (!gl.getProgramParameter(this._glprog, gl.LINK_STATUS)) {
             b9.System.error("shader link error");
         }
 
-        gl.deleteShader(vert_glshd);
-        gl.deleteShader(frag_glshd);
+        gl.deleteShader(vertGLShd);
+        gl.deleteShader(fragGLShd);
 
-        this._local_to_screen_loc = gl.getUniformLocation(this._glprog, "b9_local_to_screen");
-b9.Debug.trace("b9_local_to_screen=" + this._local_to_screen_loc);
-        this._node_color_loc = gl.getUniformLocation(this._glprog, "b9_node_color");
-b9.Debug.trace("b9_node_color=" + this._node_color_loc);
-        this._sprt_scale_loc = gl.getUniformLocation(this._glprog, "b9_sprite_scale");
-b9.Debug.trace("b9_sprite_scale=" + this._sprt_scale_loc);
+        this._localToScreenLoc = gl.getUniformLocation(this._glprog, "b9_local_to_screen");
+b9.Debug.trace("b9_local_to_screen=" + this._localToScreenLoc);
+        this._nodeColorLoc = gl.getUniformLocation(this._glprog, "b9_node_color");
+b9.Debug.trace("b9_node_color=" + this._nodeColorLoc);
+        this._sprtScaleLoc = gl.getUniformLocation(this._glprog, "b9_sprite_scale");
+b9.Debug.trace("b9_sprite_scale=" + this._sprtScaleLoc);
 
-        this._vert_pos_loc = gl.getAttribLocation(this._glprog, "b9_vertex_pos");
-b9.Debug.trace("b9_vertex_pos=" + this._vert_pos_loc);
-        this._vert_color_loc = gl.getAttribLocation(this._glprog, "b9_vertex_color");
-b9.Debug.trace("b9_vertex_color=" + this._vert_color_loc);
-        this._vert_texcoord_loc = gl.getAttribLocation(this._glprog, "b9_vertex_texcoord");
-b9.Debug.trace("b9_vertex_texcoord=" + this._vert_texcoord_loc);
+        this._vertPosLoc = gl.getAttribLocation(this._glprog, "b9_vertex_pos");
+b9.Debug.trace("b9_vertex_pos=" + this._vertPosLoc);
+        this._vertColorLoc = gl.getAttribLocation(this._glprog, "b9_vertex_color");
+b9.Debug.trace("b9_vertex_color=" + this._vertColorLoc);
+        this._vertTexCoordLoc = gl.getAttribLocation(this._glprog, "b9_vertex_texcoord");
+b9.Debug.trace("b9_vertex_texcoord=" + this._vertTexCoordLoc);
 
-        if (this._uni_count > 0) {
-            for (i = 0; i < this._uni_count; i++) {
-                this._uni_loc_array[i] = gl.getUniformLocation(this._glprog, "b9_uniform_" + ("0" + i).substr(-2));
+        if (this.uniformCount > 0) {
+            for (i = 0; i < this.uniformCount; i++) {
+                this._uniLocArray[i] = gl.getUniformLocation(this._glprog, "b9_uniform_" + ("0" + i).substr(-2));
             }
         }
 
-        if (this._att_count > 0) {
-            for (i = 0; i < this._att_count; i++) {
-                this._att_loc_array[i] = gl.getAttribLocation(this._glprog, "b9_attrib_" + ("0" + i).substr(-2));
+        if (this.attributeCount > 0) {
+            for (i = 0; i < this.attributeCount; i++) {
+                this._attLocArray[i] = gl.getAttribLocation(this._glprog, "b9_attrib_" + ("0" + i).substr(-2));
             }
         }
 
-        if (this._tex_count > 0) {
-            for (i = 0; i < this._tex_count; i++) {
-                this._tex_loc_array[i] = gl.getUniformLocation(this._glprog, "b9_texture_" + ("0" + i).substr(-2));
-b9.Debug.trace("b9_texture_" + i + "=" + this._tex_loc_array[i]);
+        if (this.textureCount > 0) {
+            for (i = 0; i < this.textureCount; i++) {
+                this._texLocArray[i] = gl.getUniformLocation(this._glprog, "b9_texture_" + ("0" + i).substr(-2));
+b9.Debug.trace("b9_texture_" + i + "=" + this._texLocArray[i]);
             }
         }
-
-        this.glBufStat_.finishUpdate();
     }
 
     gl.useProgram(this._glprog);
