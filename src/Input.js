@@ -25,10 +25,10 @@
  */
 b9.Input = {};
 
-b9.Input.initialize_ = function() {
+b9.Input._initialize = function() {
     // TODO
 };
 
-b9.Input.finalize_ = function() {
+b9.Input._finalize = function() {
     // TODO
 };
