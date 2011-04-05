@@ -42,7 +42,7 @@ b9.System.setup = function(canvasID, targetFps) {
      *
      * @return {TODO}
      */
-    b9.gl = this.canvas.getContext("experimental-webgl");
+    b9.gl = b9.canvas.getContext("experimental-webgl");
 
     if (!b9.gl) {
         this.error("can't initialize WebGL.");
