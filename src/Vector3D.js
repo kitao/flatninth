@@ -183,7 +183,7 @@ b9.Vector3D.prototype.sqNorm = function() {
  * @return {Number} The distance between the two vectors.
  */
 b9.Vector3D.prototype.dist = function(vec) {
-    return b9.Vector3D.vec1_.set(this).sub(vec).norm();
+    return b9.Vector3D._vec1.set(this).sub(vec).norm();
 };
 
 /**
@@ -193,7 +193,7 @@ b9.Vector3D.prototype.dist = function(vec) {
  * @return {Number} The squared distance between the two vectors.
  */
 b9.Vector3D.prototype.sqDist = function(vec) {
-    return b9.Vector3D.vec1_.set(this).sub(vec).sqNorm();
+    return b9.Vector3D._vec1.set(this).sub(vec).sqNorm();
 };
 
 /**
@@ -239,7 +239,7 @@ b9.Vector3D.prototype.normalize = function() {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateX_float = function(deg) {
-    var vec = b9.Vector3D.vec1_;
+    var vec = b9.Vector3D._vec1;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
@@ -257,7 +257,7 @@ b9.Vector3D.prototype.rotateX_float = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateY_float = function(deg) {
-    var vec = b9.Vector3D.vec1_;
+    var vec = b9.Vector3D._vec1;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
@@ -275,9 +275,7 @@ b9.Vector3D.prototype.rotateY_float = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateZ_float = function(deg) {
-    var vec = b9.Vector3D.vec1_;
-    var array = this.array_;
-    var index = this.index_;
+    var vec = b9.Vector3D._vec1;
     var sin = b9.Math.sin_float(deg);
     var cos = b9.Math.cos_float(deg);
 
@@ -296,9 +294,7 @@ b9.Vector3D.prototype.rotateZ_float = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateX_int = function(deg) {
-    var vec = b9.Vector3D.vec1_;
-    var array = this.array_;
-    var index = this.index_;
+    var vec = b9.Vector3D._vec1;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
@@ -317,7 +313,7 @@ b9.Vector3D.prototype.rotateX_int = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateY_int = function(deg) {
-    var vec = b9.Vector3D.vec1_;
+    var vec = b9.Vector3D._vec1;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
@@ -336,7 +332,7 @@ b9.Vector3D.prototype.rotateY_int = function(deg) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.rotateZ_int = function(deg) {
-    var vec = b9.Vector3D.vec1_;
+    var vec = b9.Vector3D._vec1;
     var sin = b9.Math.sin_int(deg);
     var cos = b9.Math.cos_int(deg);
 
@@ -360,7 +356,7 @@ b9.Vector3D.prototype.lerp = function(to, ratio) {
     if (ratio > 1.0 - b9.Math.EPSILON) {
         this.set(to);
     } else if (ratio >= b9.Math.EPSILON) {
-        vec = b9.Vector3D.vec1_;
+        vec = b9.Vector3D._vec1;
 
         vec.set(to).mul(ratio);
         this.mul(1.0 - ratio).add(vec);
@@ -375,7 +371,7 @@ b9.Vector3D.prototype.lerp = function(to, ratio) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.toLocal = function(mat) {
-    var vec = b9.Vector3D.vec1_;
+    var vec = b9.Vector3D._vec1;
 
     vec.set(this).sub(mat.trans);
 
@@ -391,9 +387,9 @@ b9.Vector3D.prototype.toLocal = function(mat) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.toGlobal = function(mat) {
-    var vec1 = b9.Vector3D.vec1_;
-    var vec2 = b9.Vector3D.vec2_;
-    var vec3 = b9.Vector3D.vec3_;
+    var vec1 = b9.Vector3D._vec1;
+    var vec2 = b9.Vector3D._vec2;
+    var vec3 = b9.Vector3D._vec3;
 
     vec1.set(mat.xAxis).mul(this.x);
     vec2.set(mat.yAxis).mul(this.y);
@@ -409,7 +405,7 @@ b9.Vector3D.prototype.toGlobal = function(mat) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.toLocal_noTrans = function(mat) {
-    var vec = b9.Vector3D.vec1_;
+    var vec = b9.Vector3D._vec1;
 
     vec.set(
             this.dot(mat.xAxis) / mat.xAxis.sqNorm(),
@@ -426,9 +422,9 @@ b9.Vector3D.prototype.toLocal_noTrans = function(mat) {
  * @return {b9.Vector3D} This vector.
  */
 b9.Vector3D.prototype.toGlobal_noTrans = function(mat) {
-    var vec1 = b9.Vector3D.vec1_;
-    var vec2 = b9.Vector3D.vec2_;
-    var vec3 = b9.Vector3D.vec3_;
+    var vec1 = b9.Vector3D._vec1;
+    var vec2 = b9.Vector3D._vec2;
+    var vec3 = b9.Vector3D._vec3;
 
     vec1.set(mat.xAxis).mul(this.x);
     vec2.set(mat.yAxis).mul(this.y);
@@ -494,6 +490,6 @@ b9.Vector3D.Y_UNIT = new b9.Vector3D(0.0, 1.0, 0.0);
  */
 b9.Vector3D.Z_UNIT = new b9.Vector3D(0.0, 0.0, 1.0);
 
-b9.Vector3D.vec1_ = new b9.Vector3D();
-b9.Vector3D.vec2_ = new b9.Vector3D();
-b9.Vector3D.vec3_ = new b9.Vector3D();
+b9.Vector3D._vec1 = new b9.Vector3D();
+b9.Vector3D._vec2 = new b9.Vector3D();
+b9.Vector3D._vec3 = new b9.Vector3D();
