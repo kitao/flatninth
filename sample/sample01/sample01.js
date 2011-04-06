@@ -80,8 +80,8 @@ function main() {
 
     b9.Resource.add("test_texture", new b9.Texture("../asset/test_texture_64x64.png"));
 
-    for (i = 0; i < 10; i++) {
-        var dummy = new Sample(i * 30 - 200, i * 10, i * -20);
+    for (i = 0; i < 50; i++) {
+        var dummy = new Sample(i * 10 - 200, i * 10, i * -20);
     }
 
     b9.Preset.screen_p0.clearColor.set(0, 0, 128);
