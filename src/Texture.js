@@ -56,7 +56,7 @@ b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
     this._isNeedToUpdate = true;
 
     if (arguments.length === 1) {
-        this._gltex = null;
+        this._glTex = null;
         this._image = new Image();
         this._image.src = fileNameOrWidth;
 
@@ -77,9 +77,9 @@ b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
  *
  */
 b9.Texture.prototype.finalize = function() {
-    if (this._gltex) {
+    if (this._glTex) {
         // TODO
-        this._gltex = null;
+        this._glTex = null;
     }
 
     // TODO
@@ -96,7 +96,7 @@ b9.Texture.prototype.updateTexture = function(left, top, width, height) {
     // TODO
 };
 
-b9.Texture.prototype._setup = function(shader) {
+b9.Texture.prototype._bind = function(shader) {
     var gl;
 
     if (this.isLoaded) {
@@ -105,9 +105,9 @@ b9.Texture.prototype._setup = function(shader) {
         if (this._isNeedToUpdate) {
             this._isNeedToUpdate = false;
 
-            this._gltex = gl.createTexture();
+            this._glTex = gl.createTexture();
 
-            gl.bindTexture(gl.TEXTURE_2D, this._gltex);
+            gl.bindTexture(gl.TEXTURE_2D, this._glTex);
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this._image);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
@@ -115,7 +115,7 @@ b9.Texture.prototype._setup = function(shader) {
         }
 
         gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, this._gltex);
+        gl.bindTexture(gl.TEXTURE_2D, this._glTex);
         gl.uniform1i(shader._texLocArray[0], 0);
     }
 };

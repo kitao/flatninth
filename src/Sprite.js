@@ -26,8 +26,8 @@
  * @class A derived class of the b9.Node class, which draws TODO.
  * @extends b9.Node
  *
- * @param {Number} [uni_count] The number of the shader uniforms. If not specified, 0 is used.
- * @param {Number} [tex_count] The number of the textures. This number is must be equal to or more than 1.
+ * @param {Number} [uniCount] The number of the shader uniforms. If not specified, 0 is used.
+ * @param {Number} [texCount] The number of the textures. This number is must be equal to or more than 1.
  * If not specified, 1 is used.
  */
 b9.Sprite = b9.createClass(b9.Node);
@@ -35,35 +35,73 @@ b9.Sprite = b9.createClass(b9.Node);
 /**
  * @ignore
  */
-b9.Sprite.prototype.initialize = function(uni_count, tex_count) {
+b9.Sprite.prototype.initialize = function(uniCount, texCount) {
     var i;
 
     this.initializeSuper();
 
-    this.glBufStat_ = new b9.GLBufferState();
-    this._shader = null;
-    this._uni_count = uni_count;
-    this._tex_count = b9.Math.max(tex_count, 1);
-    this._pivot_type = b9.Sprite.PIVOT_CENTER;
-    this._width = b9.Sprite._DEFAULT_SPRITE_SIZE;
-    this._height = b9.Sprite._DEFAULT_SPRITE_SIZE;
-    this._color = new b9.Color(255, 255, 255, 255);
+    this._isNeedToUpdate = true;
 
-    this._tex_array = new Array(tex_count);
-    for (i = 0; i < tex_count; i++) {
-        this._tex_array[i] = null;
+    /**
+     * The shader of this sprite. If null is specified, the default shader is used.
+     * @return {b9.Shader}
+     */
+    this.shader = null;
+
+    /**
+     * The number of the shader uniforms. This property is read-only.
+     * @return {Number}
+     */
+    this.uniformCount = uniCount;
+
+    /**
+     * The number of the textures. This property is read-only.
+     * @return {Number}
+     */
+    this.textureCount = b9.Math.max(texCount, 1);
+
+    /**
+     *
+     */
+    this.pivotType = b9.Sprite.PIVOT_CENTER;
+
+    /**
+     *
+     */
+    this.width = b9.Sprite._DEFAULT_SPRITE_SIZE;
+
+    /**
+     *
+     */
+    this.height = b9.Sprite._DEFAULT_SPRITE_SIZE;
+
+    /**
+     *
+     */
+    this.color = new b9.Color(255, 255, 255, 255);
+
+    /**
+     *
+     * @return {Array}
+     */
+    this.textureArray = new Array(texCount);
+
+    for (i = 0; i < texCount; i++) {
+        this.textureArray[i] = null;
     }
 
-    this._texcoord_data = new Float32Array(4 * 2);
-    this._texcoord_glbuf = null;
+    /**
+     *
+     */
+    this.texCoordData = new Float32Array(4 * 2);
+
+    this._texCoordGLBuf = null;
 
     for (i = 0; i < 4; i++) {
-        this._pos_array[i] = new b9.Vector3D(this._pos_data, i * 3);
+//        this._posArray[i] = new b9.Vector3D(this._pos_data, i * 3);
     }
 
     this.setTexCoord(0.0, 0.0, 1.0, 1.0);
-
-    this._is_uploaded = false;
 };
 
 /**
@@ -76,138 +114,6 @@ b9.Sprite.prototype.finalize = function() {
 };
 
 /**
- * Returns the shader of this sprite. If the default shader is used, returns null.
- * @return {b9.Shader} The shader.
- */
-b9.Sprite.prototype.getShader = function() {
-    return this._shader;
-};
-
-/**
- * Sets the shader of this sprite. If null is specified, the default shader is used.
- * @param {b9.Shader} shader A shader.
- */
-b9.Sprite.prototype.setShader = function(shader) {
-    this._shader = shader;
-};
-
-/**
- * Returns the number of the shader uniforms of this primitive.
- * @return {Number} The number of the shader uniforms.
- */
-b9.Primitive.prototype.getUniformCount = function() {
-    return this._uni_count;
-};
-
-/**
- * Returns the number of the textures of this sprite.
- * @return {Number} The number of the textures.
- */
-b9.Sprite.prototype.getTextureCount = function() {
-    return this._tex_count;
-};
-
-/**
- * Returns the specified texture of this sprite.
- * @param {Number} tex_no A texture number.
- * @return {b9.Texture} The texture.
- */
-b9.Sprite.prototype.getTexture = function(tex_no) {
-    return this._tex_array[tex_no];
-};
-
-/**
- * Sets the specified texture of this sprite.
- * @param {Number} tex_no A texture number.
- * @param {b9.Texture} tex A texture.
- */
-b9.Sprite.prototype.setTexture = function(tex_no, tex) {
-    this._tex_array[tex_no] = tex;
-};
-
-/**
- *
- * @return {Number}
- */
-b9.Sprite.prototype.getPivotType = function() {
-    return this._pivot_type;
-};
-
-/**
- *
- * @param {Number} pivot_type
- */
-b9.Sprite.prototype.setPivotType = function(pivot_type) {
-    this._pivot_type = pivot_type;
-};
-
-/**
- *
- * @return {Number}
- */
-b9.Sprite.prototype.getWidth = function() {
-    return this._width;
-};
-
-/**
- *
- * @return {Number}
- */
-b9.Sprite.prototype.getHeight = function() {
-    return this._height;
-};
-
-/**
- *
- * @return {b9.Color}
- */
-b9.Sprite.prototype.getColor = function() {
-    return this._color;
-};
-
-/**
- *
- * @param {Number} width
- * @param {Number} height
- */
-b9.Sprite.prototype.setSize = function(width, height) {
-    this._width = width;
-    this._height = height;
-};
-
-/**
- *
- * @return {Number}
- */
-b9.Sprite.prototype.getTexCoordU1 = function() {
-    return this._texcoord_data[0];
-};
-
-/**
- *
- * @return {Number}
- */
-b9.Sprite.prototype.getTexCoordV1 = function() {
-    return this._texcoord_data[1];
-};
-
-/**
- *
- * @return {Number}
- */
-b9.Sprite.prototype.getTexCoordU2 = function() {
-    return this._texcoord_data[6];
-};
-
-/**
- *
- * @return {Number}
- */
-b9.Sprite.prototype.getTexCoordV2 = function() {
-    return this._texcoord_data[7];
-};
-
-/**
  *
  * @param {Number} u1
  * @param {Number} v1
@@ -215,35 +121,33 @@ b9.Sprite.prototype.getTexCoordV2 = function() {
  * @param {Number} v2
  */
 b9.Sprite.setTexCoord = function(u1, v1, u2, v2) {
-    this._texcoord_data[0] = u1;
-    this._texcoord_data[1] = v1;
+    this.texCoordData[0] = u1;
+    this.texCoordData[1] = v1;
 
-    this._texcoord_data[2] = u1;
-    this._texcoord_data[3] = v2;
+    this.texCoordData[2] = u1;
+    this.texCoordData[3] = v2;
 
-    this._texcoord_data[4] = u2;
-    this._texcoord_data[5] = v1;
+    this.texCoordData[4] = u2;
+    this.texCoordData[5] = v1;
 
-    this._texcoord_data[6] = u2;
-    this._texcoord_data[7] = v2;
-
-    this._is_uploaded = false;
+    this.texCoordData[6] = u2;
+    this.texCoordData[7] = v2;
 };
 
-b9.Sprite.prototype.draw_ = function(world_to_screen) {
-    var shader = b9.Preset._sprite_shader;
+b9.Sprite.prototype._draw = function(world_to_screen) {
+    var shader = b9.Preset._defaultSpriteShader;
 
     shader._setup();
 
-    b9.Sprite._setupCommonBuffer(this._pivot_type, shader);
+    b9.Sprite._setupCommonBuffer(this.pivotType, shader);
 
-    if (this.glBufStat_.checkUpdate()) {
-        this._texcoord_glbuf = gl.createBuffer();
+    if (this._isNeedToUpdate) {
+        this._isNeedToUpdate = false;
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._texcoord_glbuf);
-        gl.bufferData(gl.ARRAY_BUFFER, this._texcoord_data, gl.DYNAMIC_DRAW);
+        this._texCoordGLBuf = gl.createBuffer();
 
-        this.glBufStat_.finishUpdate();
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._texCoordGLBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, this.texCoordData, gl.DYNAMIC_DRAW);
     }
 
     gl.enableVertexAttribArray(shader._texcoord_loc);
@@ -252,13 +156,13 @@ b9.Sprite.prototype.draw_ = function(world_to_screen) {
     b9.Matrix3D.mulArrayAs4x4(world_to_screen.getArray(), this._world.getArray(), local_to_screen.getArray());
     gl.uniformMatrix4fv(shader._local_to_screen_loc, false, local_to_screen.getArray()); // TODO
 
-    gl.uniform4f(shader._node_color_loc,
-            final_color_array[0], final_color_array[1], final_color_array[2], final_color_array[3]); // TODO
+    gl.uniform4f(shader._nodeColorLoc,
+            finalColorArray[0], finalColorArray[1], finalColorArray[2], finalColorArray[3]); // TODO
 
-    gl.uniform2f(shader._sprite_scale_loc, this._width, this._height);
+    gl.uniform2f(shader._sprite_scale_loc, this.width, this.height);
 
-    for (i = 0; i < tex_count; i++) {
-        tex = this._tex_array[i];
+    for (i = 0; i < texCount; i++) {
+        tex = this.textureArray[i];
 
         if (tex) {
             tex._setup(shader);
@@ -268,101 +172,109 @@ b9.Sprite.prototype.draw_ = function(world_to_screen) {
     gl.drawArrays(gl.MODE_TRIANGLE_STRIP, 0, 4);
 
     // teardown
-    gl.disableVertexAttribArray(shader._pos_loc);
+    gl.disableVertexAttribArray(shader._posLoc);
     gl.disableVertexAttribArray(shader._texcoord_loc);
 };
 
-b9.Sprite.commonGLBufStat_ = new b9.GLBufferState();
-b9.Sprite._s_pos_glbuf = null;
-b9.Sprite._s_pos_array = new Array(5 * 4);
-b9.Sprite._s_pos_data = new Array(5 * 4 * 3);
+b9.Sprite._sIsNeedToUpdate = true;
+b9.Sprite._sPosGLBuf = null;
+b9.Sprite._sPosArray = new Array(5 * 4);
+b9.Sprite._sPosData = new Array(5 * 4 * 3);
 
 b9.Sprite._setupCommonBuffer = function(pivot_type, shader) {
     var i;
-    var gl;
-    var pos_array, pos_data;
+    var gl = b9.gl;
+    var posArray, posData;
 
-    if (!this.commonGLBufStat_ || this.commonGLBufStat_.checkUpdate()) {
-        gl = b9.System.getGLContext();
+    if (!b9.Sprite._sIsNeedToUpdate) {
+        b9.Sprite._sIsNeedToUpdate = false;
 
-        pos_array = this._s_pos_array;
-        pos_data = this._s_pos_data;
+        posArray = this._sPosArray;
+        posData = this._sPosData;
 
         for (i = 0; i < 20; i++) {
-            pos_array[i] = new b9.Vector3D(pos_data, i * 3);
+            posArray[i] = new b9.Vector3D(posData, i * 3);
         }
 
         // b9.Sprite.PIVOT_CENTER
-        pos_array[0].set(-0.5, 0.5, 0.0);
-        pos_array[1].set(-0.5, -0.5, 0.0);
-        pos_array[2].set(0.5, 0.5, 0.0);
-        pos_array[3].set(0.5, -0.5, 0.0);
+        posArray[0].set(-0.5, 0.5, 0.0);
+        posArray[1].set(-0.5, -0.5, 0.0);
+        posArray[2].set(0.5, 0.5, 0.0);
+        posArray[3].set(0.5, -0.5, 0.0);
 
         // b9.Sprite.PIVOT_LEFT_TOP
-        pos_array[4].set(0.0, 0.0, 0.0);
-        pos_array[5].set(0.0, -1.0, 0.0);
-        pos_array[6].set(1.0, 0.0, 0.0);
-        pos_array[7].set(1.0, -1.0, 0.0);
+        posArray[4].set(0.0, 0.0, 0.0);
+        posArray[5].set(0.0, -1.0, 0.0);
+        posArray[6].set(1.0, 0.0, 0.0);
+        posArray[7].set(1.0, -1.0, 0.0);
 
         // b9.Sprite.PIVOT_RIGHT_TOP
-        pos_array[8].set(-1.0, 0.0, 0.0);
-        pos_array[9].set(-1.0, -1.0, 0.0);
-        pos_array[10].set(0.0, 0.0, 0.0);
-        pos_array[11].set(0.0, -1.0, 0.0);
+        posArray[8].set(-1.0, 0.0, 0.0);
+        posArray[9].set(-1.0, -1.0, 0.0);
+        posArray[10].set(0.0, 0.0, 0.0);
+        posArray[11].set(0.0, -1.0, 0.0);
 
         // b9.Sprite.PIVOT_LEFT_BOTTOM
-        pos_array[12].set(0.0, 1.0, 0.0);
-        pos_array[13].set(0.0, 0.0, 0.0);
-        pos_array[14].set(1.0, 1.0, 0.0);
-        pos_array[15].set(1.0, 0.0, 0.0);
+        posArray[12].set(0.0, 1.0, 0.0);
+        posArray[13].set(0.0, 0.0, 0.0);
+        posArray[14].set(1.0, 1.0, 0.0);
+        posArray[15].set(1.0, 0.0, 0.0);
 
         // b9.Sprite.PIVOT_RIGHT_BOTTOM
-        pos_array[16].set(-1.0, 1.0, 0.0);
-        pos_array[17].set(-1.0, 0.0, 0.0);
-        pos_array[18].set(0.0, 1.0, 0.0);
-        pos_array[19].set(0.0, 0.0, 0.0);
+        posArray[16].set(-1.0, 1.0, 0.0);
+        posArray[17].set(-1.0, 0.0, 0.0);
+        posArray[18].set(0.0, 1.0, 0.0);
+        posArray[19].set(0.0, 0.0, 0.0);
 
-        this._s_pos_glbuf = gl.createBuffer();
+        this._sPosGLBuf = gl.createBuffer();
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._s_pos_glbuf);
-        gl.bufferData(gl.ARRAY_BUFFER, pos_data, gl.DYNAMIC_DRAW);
-
-        this.commonGLBufStat_.finishUpdate();
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._sPosGLBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, posData, gl.DYNAMIC_DRAW);
     }
 
-    //gl.bindBuffer(gl.ARRAY_BUFFER, this._s_pos_glbuf_array[pivot_type]);
-    gl.enableVertexAttribArray(shader._pos_loc);
-    gl.vertexAttribPointer(shader._pos_loc, 3, gl.FLOAT, false, 0, 0);
+    //gl.bindBuffer(gl.ARRAY_BUFFER, this._sPosGLBuf_array[pivot_type]);
+    gl.enableVertexAttribArray(shader._posLoc);
+    gl.vertexAttribPointer(shader._posLoc, 3, gl.FLOAT, false, 0, 0);
 };
 
 /**
- *
- * @return {Number}
+ * @class
  */
-b9.Sprite.PIVOT_CENTER = 0;
+b9.SpritePivot = {
+    /**
+     *
+     * @constant
+     * @return {Number}
+     */
+    CENTER: 0,
 
-/**
- *
- * @return {Number}
- */
-b9.Sprite.PIVOT_LEFT_TOP = 1;
+    /**
+     *
+     * @constant
+     * @return {Number}
+     */
+    LEFT_TOP: 1,
 
-/**
- *
- * @return {Number}
- */
-b9.Sprite.PIVOT_RIGHT_TOP = 2;
+    /**
+     *
+     * @constant
+     * @return {Number}
+     */
+    RIGHT_TOP: 2,
 
-/**
- *
- * @return {Number}
- */
-b9.Sprite.PIVOT_LEFT_BOTTOM = 3;
+    /**
+     *
+     * @constant
+     * @return {Number}
+     */
+    LEFT_BOTTOM: 3,
 
-/**
- *
- * @return {Number}
- */
-b9.Sprite.PIVOT_RIGHT_BOTTOM = 4;
+    /**
+     *
+     * @constant
+     * @return {Number}
+     */
+    RIGHT_BOTTOM: 4
+};
 
 b9.Sprite._DEFAULT_SPRITE_SIZE = 16.0;

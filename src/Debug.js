@@ -26,41 +26,11 @@
 b9.Debug = {};
 
 /**
- *
- */
-b9.Debug.isDebugEnabled = function() {
-    return this._is_debug_enabled;
-};
-
-/**
- *
- * @param {Boolean} is_debug_enabled
- */
-b9.Debug.setDebugEnabled = function(is_enabled) {
-    this._is_debug_enabled = is_enabled;
-};
-
-/**
- *
- */
-b9.Debug.isPerformanceMonitorEnabled = function() {
-    return this._is_perf_monitor_enabled;
-};
-
-/**
- *
- * @param {Boolean} is_perf_monitor_enabled
- */
-b9.Debug.setPerformanceMonitorEnabled = function(is_enabled) {
-    this._is_perf_monitor_enabled = is_enabled;
-};
-
-/**
  * Writes a message to the console.
  * @param {String} msg A message.
  */
 b9.Debug.trace = function(msg) {
-    if (this._is_debug_enabled) {
+    if (this.isDebugEnabled) {
         console.log(msg);
     }
 };
@@ -73,7 +43,7 @@ b9.Debug.trace = function(msg) {
  * @param {b9.Color} color
  */
 b9.Debug.drawString = function(x, y, str, color) {
-    if (this._is_debug_enabled) {
+    if (this.isDebugEnabled) {
         // TODO
     }
 };
@@ -87,12 +57,12 @@ b9.Debug.drawString = function(x, y, str, color) {
  * @param {b9.Color} color
  */
 b9.Debug.drawLine = function(x1, y1, x2, y2, color) {
-    if (this._is_debug_enabled) {
-        if (this._cur_prim_count < this._MAX_PRIMITIVE_COUNT && this._cur_vert_count + 1 < this._MAX_VERTEX_COUNT) {
+    if (this.isDebugEnabled) {
+        if (this._curPrimCount < this._MAX_PRIMITIVE_COUNT && this._curVertCount + 1 < this._MAX_VERTEX_COUNT) {
             // TODO
 
-            this._cur_prim_count += 1;
-            this._cur_vert_count += 2;
+            this._curPrimCount += 1;
+            this._curVertCount += 2;
         }
 
 
@@ -111,7 +81,7 @@ b9.Debug.drawLine = function(x1, y1, x2, y2, color) {
  * @param {b9.Color} color
  */
 b9.Debug.drawPolygon3 = function(x1, y1, x2, y2, x3, y3, color) {
-    if (this._is_debug_enabled) {
+    if (this.isDebugEnabled) {
         // TODO
     }
 };
@@ -129,7 +99,7 @@ b9.Debug.drawPolygon3 = function(x1, y1, x2, y2, x3, y3, color) {
  * @param {b9.Color} color
  */
 b9.Debug.drawPolygon4 = function(x1, y1, x2, y2, x3, y3, x4, y4, color) {
-    if (this._is_debug_enabled) {
+    if (this.isDebugEnabled) {
         // TODO
     }
 };
@@ -143,21 +113,21 @@ b9.Debug.drawPolygon4 = function(x1, y1, x2, y2, x3, y3, x4, y4, color) {
  * @param {b9.Color} color
  */
 b9.Debug.drawRectangle = function(x, y, width, height, color) {
-    if (this._is_debug_enabled) {
+    if (this.isDebugEnabled) {
         // TODO
     }
 };
 
-b9.Debug.render_ = function() {
-    if (this._is_debug_enabled) {
-        if (this._is_perf_monitor_enabled) {
+b9.Debug._render = function() {
+    if (this.isDebugEnabled) {
+        if (this.isPerfMonitorEnabled) {
             this._renderPerformanceMonitor();
         }
 
 
 
-        this._cur_prim_count = 0;
-        this._cur_vert_count = 0;
+        this._curPrimCount = 0;
+        this._curVertCount = 0;
     }
 };
 
@@ -165,24 +135,33 @@ b9.Debug._renderPerformanceMonitor = function() {
     // TODO
 };
 
-b9.Debug.initialize_ = function() {
+b9.Debug._initialize = function() {
     var i;
 
-    this._is_debug_enabled = true;
-    this._is_perf_monitor_enabled = false;
+    /**
+     *
+     * return {Boolean}
+     */
+    this.isDebugEnabled = true;
 
-    this._prim_buf = new b9.PrimitiveBuffer(this._MAX_VERTEX_COUNT, this._MAX_VERTEX_COUNT);
-    this._prim_array = new Array(this._MAX_PRIMITIVE_COUNT);
+    /**
+     *
+     * return {Boolean}
+     */
+    this.isPerfMonitorEnabled = false;
 
-    this._cur_prim_count = 0;
-    this._cur_vert_count = 0;
+    this._primBuf = new b9.PrimitiveBuffer(this._MAX_VERTEX_COUNT, this._MAX_VERTEX_COUNT);
+    this._primArray = new Array(this._MAX_PRIMITIVE_COUNT);
+
+    this._curPrimCount = 0;
+    this._curVertCount = 0;
 
     for (i = 0; i < this._MAX_PRIMITIVE_COUNT; i++) {
-        this._prim_array[i] = new b9.Primitive(this._prim_buf);
+        this._primArray[i] = new b9.Primitive(this._primBuf);
     }
 };
 
-b9.Debug.finalize_ = function() {
+b9.Debug._finalize = function() {
     // TODO
 };
 

@@ -104,7 +104,7 @@ b9.Screen.prototype.initialize = function(width, height) {
      * @return {b9.Matrix3D}
      */
     this.camera = new b9.Matrix3D(b9.Matrix3D.UNIT);
-    this.camera.trans.x = this.focalLength;
+    this.camera.trans.z = this.focalLength;
 
     this._cameraToScreenArray = [];
 };
@@ -163,14 +163,14 @@ b9.Screen.prototype.render = function(rootNode) {
 
     for (node = rootNode; node; node = node.nextAsList) {
         if (node.nodeFlag & NodeFlag.VISIBLE) {
-            if (node.nodeFlag & NodeFlag.Z_SORT) {
+/*TODO            if (node.nodeFlag & NodeFlag.Z_SORT) {
                 node._sortValue = b9.Screen._vec1.set(node._world.trans).sub(camera.trans).dot(camera.zAxis);
 
                 node._sortNext = sortList;
                 sortList = node;
-            } else {
+            } else {*/
                 node._draw(worldToScreenArray);
-            }
+//            }
         } else {
             node = node.getLastDescendant();
         }

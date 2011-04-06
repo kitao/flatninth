@@ -56,7 +56,7 @@ b9.Shader.prototype.initialize = function(vertCode, fragCode, uniCount, attCount
      */
     this.textureCount = texCount;
 
-    this._glprog = null;
+    this._glProg = null;
     this._vertCode = vertCode;
     this._fragCode = fragCode;
     this._isNeedToUpdate = true;
@@ -77,22 +77,22 @@ b9.Shader.prototype.initialize = function(vertCode, fragCode, uniCount, attCount
 b9.Shader.prototype.finalize = function() {
     var gl;
 
-    if (this._glprog) {
+    if (this._glProg) {
         gl = b9.gl;
 
-        gl.deleteProgram(this._glprog);
-        this._glprog = null;
+        gl.deleteProgram(this._glProg);
+        this._glProg = null;
     }
 };
 
-b9.Shader.prototype._setup = function() {
+b9.Shader.prototype._bind = function() {
     var i;
     var vertGLShd, fragGLShd;
     var gl = b9.gl;
 
     if (this._isNeedToUpdate) {
         this._isNeedToUpdate = false;
-        this._glprog = gl.createProgram();
+        this._glProg = gl.createProgram();
 
         vertGLShd = gl.createShader(gl.VERTEX_SHADER);
         gl.shaderSource(vertGLShd, this._vertCode);
@@ -110,50 +110,50 @@ b9.Shader.prototype._setup = function() {
             b9.System.error("fragment shader compile error\n\n" + gl.getShaderInfoLog(fragGLShd));
         }
 
-        gl.attachShader(this._glprog, vertGLShd);
-        gl.attachShader(this._glprog, fragGLShd);
-        gl.linkProgram(this._glprog);
+        gl.attachShader(this._glProg, vertGLShd);
+        gl.attachShader(this._glProg, fragGLShd);
+        gl.linkProgram(this._glProg);
 
-        if (!gl.getProgramParameter(this._glprog, gl.LINK_STATUS)) {
+        if (!gl.getProgramParameter(this._glProg, gl.LINK_STATUS)) {
             b9.System.error("shader link error");
         }
 
         gl.deleteShader(vertGLShd);
         gl.deleteShader(fragGLShd);
 
-        this._localToScreenLoc = gl.getUniformLocation(this._glprog, "b9_local_to_screen");
+        this._localToScreenLoc = gl.getUniformLocation(this._glProg, "b9_local_to_screen");
 b9.Debug.trace("b9_local_to_screen=" + this._localToScreenLoc);
-        this._nodeColorLoc = gl.getUniformLocation(this._glprog, "b9_node_color");
+        this._nodeColorLoc = gl.getUniformLocation(this._glProg, "b9_node_color");
 b9.Debug.trace("b9_node_color=" + this._nodeColorLoc);
-        this._sprtScaleLoc = gl.getUniformLocation(this._glprog, "b9_sprite_scale");
+        this._sprtScaleLoc = gl.getUniformLocation(this._glProg, "b9_sprite_scale");
 b9.Debug.trace("b9_sprite_scale=" + this._sprtScaleLoc);
 
-        this._vertPosLoc = gl.getAttribLocation(this._glprog, "b9_vertex_pos");
+        this._vertPosLoc = gl.getAttribLocation(this._glProg, "b9_vertex_pos");
 b9.Debug.trace("b9_vertex_pos=" + this._vertPosLoc);
-        this._vertColorLoc = gl.getAttribLocation(this._glprog, "b9_vertex_color");
+        this._vertColorLoc = gl.getAttribLocation(this._glProg, "b9_vertex_color");
 b9.Debug.trace("b9_vertex_color=" + this._vertColorLoc);
-        this._vertTexCoordLoc = gl.getAttribLocation(this._glprog, "b9_vertex_texcoord");
+        this._vertTexCoordLoc = gl.getAttribLocation(this._glProg, "b9_vertex_texcoord");
 b9.Debug.trace("b9_vertex_texcoord=" + this._vertTexCoordLoc);
 
         if (this.uniformCount > 0) {
             for (i = 0; i < this.uniformCount; i++) {
-                this._uniLocArray[i] = gl.getUniformLocation(this._glprog, "b9_uniform_" + ("0" + i).substr(-2));
+                this._uniLocArray[i] = gl.getUniformLocation(this._glProg, "b9_uniform_" + ("0" + i).substr(-2));
             }
         }
 
         if (this.attributeCount > 0) {
             for (i = 0; i < this.attributeCount; i++) {
-                this._attLocArray[i] = gl.getAttribLocation(this._glprog, "b9_attrib_" + ("0" + i).substr(-2));
+                this._attLocArray[i] = gl.getAttribLocation(this._glProg, "b9_attrib_" + ("0" + i).substr(-2));
             }
         }
 
         if (this.textureCount > 0) {
             for (i = 0; i < this.textureCount; i++) {
-                this._texLocArray[i] = gl.getUniformLocation(this._glprog, "b9_texture_" + ("0" + i).substr(-2));
+                this._texLocArray[i] = gl.getUniformLocation(this._glProg, "b9_texture_" + ("0" + i).substr(-2));
 b9.Debug.trace("b9_texture_" + i + "=" + this._texLocArray[i]);
             }
         }
     }
 
-    gl.useProgram(this._glprog);
+    gl.useProgram(this._glProg);
 };

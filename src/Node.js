@@ -24,29 +24,49 @@
  * Constructs a node.
  *
  * @class A node of a scene graph.
+ * @extends b9.LinkedTree
  */
-b9.Node = b9.createClass();
+b9.Node = b9.createClass(b9.LinkedTree);
 
 /**
  * @ignore
  */
 b9.Node.prototype.initialize = function() {
-    this._node_flag =
-        b9.Node.NodeFlag.VISIBLE |
-        b9.Node.NodeFlag.DEPTH_TEST |
-        b9.Node.NodeFlag.WRITE_RGB |
-        b9.Node.NodeFlag.WRITE_DEPTH |
-        b9.Node.NodeFlag.BILINEAR;
+    this.initializeSuper();
 
-    this._local = new b9.Matrix3D(b9.Matrix3D.UNIT);
-    this._color = new b9.Color(255, 255, 255, 255);
-    this._blend_mode = b9.Node.BlendMode.OFF;
+    /**
+     *
+     * @return {b9.NodeFlag}
+     */
+    this.nodeFlag =
+        b9.NodeFlag.VISIBLE |
+        b9.NodeFlag.DEPTH_TEST |
+        b9.NodeFlag.WRITE_RGB |
+        b9.NodeFlag.WRITE_DEPTH |
+        b9.NodeFlag.BILINEAR;
 
-    this._tree = new b9.LinkedTree(this);
+    /**
+     * The local matrix of this node.
+     * @return {b9.Matrix3D}
+     */
+    this.local = new b9.Matrix3D(b9.Matrix3D.UNIT);
+
+    /**
+     * The color of this node, which applies to the children of this node and the objects managed by this node.
+     * @return {b9.Color}
+     */
+    this.color = new b9.Color(255, 255, 255, 255);
+
+    /**
+     *
+     * @return {b9.BlendMode}
+     */
+    this.blendMode = b9.BlendMode.OFF;
+
     this._world = new b9.Matrix3D();
-    this._final_color = new b9.Color();
-    this.sortValue_ = 0.0;
-    this.sortNext_ = null;
+    this._finalColor = new b9.Color();
+    this._sortValue = 0.0;
+    this._sortNext = null;
 };
 
 /**
@@ -54,255 +74,89 @@ b9.Node.prototype.initialize = function() {
  * And all of the children of this node get unlinked.
  */
 b9.Node.prototype.finalize = function() {
-    this._tree.finalize();
+    this.finalizeSuper();
 };
 
 /**
- * Returns whether the specified node flag is enabled.
- * @param {Number} node_flag A node flag.
- * @return {Boolean} true the flag is enabled; false otherwise.
- */
-b9.Node.prototype.getNodeFlag = function(node_flag) {
-    return (this._node_flag & node_flag) ? true : false;
-};
-
-/**
- * Sets the specified node flag.
- * @param {Number} node_flag A node flag.
- * @param {Boolean} is_enabled Whether the flag is enabled.
- */
-b9.Node.prototype.setNodeFlag = function(node_flag, is_enabled) {
-    if (is_enabled) {
-        this._node_flag |= node_flag;
-    } else {
-        this._node_flag &= ~node_flag;
-    }
-};
-
-/**
- * Returns the local matrix of this node.
- * @return {b9.Matrix3D} The local matrix.
- */
-b9.Node.prototype.getLocal = function() {
-    return this._local;
-};
-
-/**
- * Returns the color of this node, which applies to the children of this node and the objects managed by this node.
- * @return {b9.Color} The color.
- */
-b9.Node.prototype.getColor = function() {
-    return this._color;
-};
-
-/**
- * Returns the blend mode of this node.
- * @return {Number} The blend mode.
- */
-b9.Node.prototype.getBlendMode = function() {
-    return this._blend_mode;
-};
-
-/**
- * Sets the blend mode of this node.
- * @param {Number} blend_mode A blend mode.
- * @param {Boolean} with_preset_setting If true, Z_SORT and WRITE_DEPTH are set automatically,
- * such as the following:
+ * Sets the blend mode and the flags of this node.
+ * @param {b9.BlendMode} blendMode A blend mode. The node flags are also set based on the blend mode as the following:
  * <ul>
- * <li>BLEND_OFF -> Z_SORT: off, WRITE_DEPTH: on</li>
- * <li>BLEND_HALF -> Z_SORT: on, WRITE_DEPTH: off</li>
- * <li>BLEND_ADD -> Z_SORT: on, WRITE_DEPTH: off</li>
- * <li>BLEND_DEST_ALPHA -> Z_SORT: off, WRITE_DEPTH: on</li>
+ * <li>BlendMode.OFF -> NodeFlag.Z_SORT: off, NodeFlag.WRITE_DEPTH: on</li>
+ * <li>BlendMode.HALF -> NodeFlag.Z_SORT: on, NodeFlag.WRITE_DEPTH: off</li>
+ * <li>BlendMode.ADD -> NodeFlag.Z_SORT: on, NodeFlag.WRITE_DEPTH: off</li>
+ * <li>BlendMode.DEST_ALPHA -> NodeFlag.Z_SORT: off, NodeFlag.WRITE_DEPTH: on</li>
  * </ul>
  */
-b9.Node.prototype.setBlendMode = function(blend_mode, with_preset_setting) {
-    this._blend_mode = blend_mode;
+b9.Node.prototype.setBlendModeWithFlags = function(blendMode) {
+    var NodeFlag = b9.NodeFlag;
+    var BlendMode = b9.BlendMode;
 
-    if (with_preset_setting) {
-        if (blend_mode === b9.Node.BlendMode.OFF || blend_mode === b9.Node.BlendMode.DEST_ALPHA) {
-            this._node_flag &= ~b9.Node.NodeFlag.Z_SORT;
-            this._node_flag |= b9.Node.NodeFlag.WRITE_DEPTH;
-        } else {
-            this._node_flag |= b9.Node.NodeFlag.Z_SORT;
-            this._node_flag &= ~b9.Node.NodeFlag.WRITE_DEPTH;
-        }
+    this.blendMode = blendMode;
+
+    if (blendMode === BlendMode.OFF || blendMode === BlendMode.DEST_ALPHA) {
+        this.nodeFlag &= ~NodeFlag.Z_SORT;
+        this.nodeFlag |= NodeFlag.WRITE_DEPTH;
+    } else {
+        this.nodeFlag |= NodeFlag.Z_SORT;
+        this.nodeFlag &= ~NodeFlag.WRITE_DEPTH;
     }
-};
-
-/**
- * Returns the previous node, regarding the whole tree as a list. If no such node exists, returns null.
- * @return {b9.Node} The previous node.
- */
-b9.Node.prototype.getPrevAsList = function() {
-    var tree = this._tree.getPrevAsList();
-    return tree ? tree.getSelf() : null;
-};
-
-/**
- * Returns the next node, regarding the whole tree as a list. If no such node exists, returns null.
- * @return {b9.Node} The next node.
- */
-b9.Node.prototype.getNextAsList = function() {
-    var tree = this._tree.getNextAsList();
-    return tree ? tree.getSelf() : null;
-};
-
-/**
- * Returns the parent of this node. If no such node exists, returns null.
- * @return {b9.Node} The parent.
- */
-b9.Node.prototype.getParent = function() {
-    var tree = this._tree.getParent();
-    return tree ? tree.getSelf() : null;
-};
-
-/**
- * Returns the previous sibling of this node. If no such node exists, returns null.
- * @return {b9.Node} The previous sibling.
- */
-b9.Node.prototype.getPrevSibling = function() {
-    var tree = this._tree.getPrevSibling();
-    return tree ? tree.getSelf() : null;
-};
-
-/**
- * Returns the next sibling of this node. If no such node exists, returns null.
- * @return {b9.Node} The next sibling.
- */
-b9.Node.prototype.getNextSibling = function() {
-    var tree = this._tree.getNextSibling();
-    return tree ? tree.getSelf() : null;
-};
-
-/**
- * Returns the first child of this node. If no such node exists, returns null.
- * @return {b9.Node} The first child.
- */
-b9.Node.prototype.getFirstChild = function() {
-    var tree = this._tree.getFirstChild();
-    return tree ? tree.getSelf() : null;
-};
-
-/**
- * Returns the last child of this node. If no such node exists, returns null.
- * @return {b9.Node} The last child.
- */
-b9.Node.prototype.getLastChild = function() {
-    var tree = this._tree.getLastChild();
-    return tree ? tree.getSelf() : null;
-};
-
-/**
- * Returns the last node of this tree, regarding this tree as a list.
- * If no such node exists, returns this tree.<br>
- * This method is mainly used to retrieve the terminator of the list
- * which consists of this node and its descendants.
- * @return {b9.Node} The last descendant.
- */
-b9.Node.prototype.getLastDescendant = function() {
-    var tree = this._tree.getLastDescendant();
-    return tree ? tree.getSelf() : null;
-};
-
-/**
- * Links a node as the first child with this node.
- * @param {b9.Node} child A node. If the node already belongs to some node,
- * the node gets automatically unlinked with it before the operation.
- */
-b9.Node.prototype.addChildFirst = function(cihld) {
-    this._tree.addChildFirst(child._tree);
-};
-
-/**
- * Links a node as the last child with this node.
- * @param {b9.Node} child A node. If the node already belongs to some node,
- * the node gets automatically unlinked with it before the operation.
- */
-b9.Node.prototype.addChildLast = function(child) {
-    this._tree.addChildLast(child._tree);
-};
-
-/**
- * Links a node as the previous of the specified node with this node.
- * @param {b9.Node} child A node. If the node already belongs to some node,
- * the node gets automatically unlinked with it before the operation.
- * @param {b9.Node} next_child The node to be the next. This node must be a child of this node.
- */
-b9.Node.prototype.insertChildBefore = function(child, next_child) {
-    this._tree.insertChildBefore(child._tree, next_child._tree);
-};
-
-/**
- * Links a node as the next of the specified node with this node.
- * @param {b9.Node} child A node. If the node already belongs to some node,
- * the node gets automatically unlinked with it before the operation.
- * @param {b9.Node} prev_child The node to be the previous. This node must be a child of this node.
- */
-b9.Node.prototype.insertChildAfter = function(child, prev_child) {
-    this._tree.insertChildAfter(child._tree, prev_child._tree);
-};
-
-/**
- * Unlinks a child from this node.
- * @param {b9.Node} child A child to be unlinked. This node must be a child of this node.
- */
-b9.Node.prototype.removeChild = function(child) {
-    this._tree.removeChild(child._tree);
 };
 
 b9.Node.prototype._calcFinal = function() {
-    var parent = this.getParent();
+    var parent = this.parent;
 
-    this._world.set(this._local);
-    this._final_color.set(this._color);
+    this._world.set(this.local);
+    this._finalColor.set(this.color);
 
     if (parent) {
-        this._world.toGlobal(parent._local);
-        this._final_color.mul(parent._final_color);
+        this._world.toGlobal(parent.local);
+        this._finalColor.mul(parent._finalColor);
     }
 };
 
 b9.Node.prototype._setup = function() {
-    var gl = b9.System.getGLContext();
-    var node_flag = this._node_flag;
-    var write_rgb = (node_flag & b9.Node.NodeFlag.WRITE_RGB) ? true : false;
-    var blend_mode = this._blend_mode;
+    var gl = b9.gl;
+    var NodeFlag = b9.NodeFlag;
+    var BlendMode = b9.BlendMode;
+
+    var nodeFlag = this.nodeFlag;
+    var writeRGB = (nodeFlag & NodeFlag.WRITE_RGB) ? true : false;
+    var blendMode = this.blendMode;
 
     this._calcFinal();
 
-    gl.depthFunc((node_flag & b9.Node.NodeFlag.DEPTH_TEST) ? gl.GEQUAL : gl.ALWAYS);
-    gl.colorMask(write_rgb, write_rgb, write_rgb, (node_flag & b9.Node.NodeFlag.WRITE_ALPHA) ? true : false);
-    gl.depthMask((node_flag & b9.Node.NodeFlag.WRITE_DEPTH) ? true : false);
+    gl.depthFunc((nodeFlag & NodeFlag.DEPTH_TEST) ? gl.GEQUAL : gl.ALWAYS);
+    gl.colorMask(writeRGB, writeRGB, writeRGB, (nodeFlag & NodeFlag.WRITE_ALPHA) ? true : false);
+    gl.depthMask((nodeFlag & NodeFlag.WRITE_DEPTH) ? true : false);
 
-    if (node_flag & b9.Node.NodeFlag.CULL_FACE) {
+    if (nodeFlag & NodeFlag.CULL_FACE) {
         gl.enable(gl.CULL_FACE);
     } else {
         gl.disable(gl.CULL_FACE);
     }
 
-    if (blend_mode === b9.Node.BlendMode.OFF) {
+    if (blendMode === BlendMode.OFF) {
         gl.disable(gl.BLEND);
-    } else if (blend_mode === b9.Node.BlendMode.HALF) {
+    } else if (blendMode === BlendMode.HALF) {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    } else if (blend_mode === b9.Node.BlendMode.ADD) {
+    } else if (blendMode === BlendMode.ADD) {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-    } else if (blend_mode === b9.Node.BlendMode.DEST_ALPHA) {
+    } else if (blendMode === BlendMode.DEST_ALPHA) {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.DST_ALPHA, gl.ONE_MINUS_DST_ALPHA);
     }
 };
 
-b9.Node.prototype.draw_ = function() {
+b9.Node.prototype._draw = function() {
     this._calcFinal();
 };
 
 /**
- * The flags which specify how to draw a node.
- * @enum {Number}
+ * @class The flags which specify how to draw a node.
  */
-b9.Node.NodeFlag = {
+b9.NodeFlag = {
     /**
      * TODO
      */
@@ -310,6 +164,8 @@ b9.Node.NodeFlag = {
 
     /**
      * TODO
+     * @constant
+     * @return {Number}
      */
     Z_SORT: 0x4000,
 
@@ -320,6 +176,8 @@ b9.Node.NodeFlag = {
 
     /**
      * TODO
+     * @constant
+     * @return {Number}
      */
     WRITE_RGB: 0x1000,
 
@@ -330,47 +188,62 @@ b9.Node.NodeFlag = {
 
     /**
      * TODO
+     * @constant
+     * @return {Number}
      */
     WRITE_DEPTH: 0x0400,
 
     /**
      * TODO
+     * @constant
+     * @return {Number}
      */
     CULL_FACE: 0x0200,
 
     /**
      * TODO
+     * @constant
+     * @return {Number}
      */
     BILLBOARD: 0x0100,
 
     /**
      * TODO
+     * @constant
+     * @return {Number}
      */
     BILINEAR: 0x0080
 };
 
 /**
- *
- * @enum {Number}
+ * @class
  */
-b9.Node.BlendMode = {
+b9.BlendMode = {
     /**
      *
+     * @constant
+     * @return {Number}
      */
     OFF: 0,
 
     /**
      *
+     * @constant
+     * @return {Number}
      */
     HALF: 1,
 
     /**
      *
+     * @constant
+     * @return {Number}
      */
     ADD: 2,
 
     /**
      *
+     * @constant
+     * @return {Number}
      */
     DEST_ALPHA: 3
 };

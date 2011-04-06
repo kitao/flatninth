@@ -38,21 +38,28 @@ b9.PrimitiveBuffer = b9.createClass();
  */
 b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCount) {
     var i;
+    var posData;
+    var colorData;
+    var texCoordData;
+    var elementData;
+    var posDataCount = vertCount * 3;
+    var colorDataCount = vertCount * 4;
+    var texCoordDataCount = vertCount * 2;
 
     /**
-     * The number of vertices.
+     * The number of vertices. This property is read-only.
      * @return {Number}
      */
     this.vertexCount = vertCount;
 
     /**
-     * The number of elements.
+     * The number of elements. This property is read-only.
      * @return {Number}
      */
     this.elementCount = elemCount;
 
     /**
-     * The number of attributes.
+     * The number of attributes. This property is read-only.
      * @return {Number}
      */
     this.attributeCount = attCount || 0;
@@ -61,19 +68,31 @@ b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCoun
      * The array of the positions.
      * @return {Float32Array}
      */
-    posArray = this.posArray = new Float32Array(vertCount * 3);
+    posData = this.posData = new Float32Array(posDataCount);
+
+    for (i = 0; i < posDataCount; i++) {
+        posData[i] = 0.0;
+    }
 
     /**
      * The array of the colors.
      * @return {Uint8Array}
      */
-    colorArray = this.colorArray = new Uint8Array(vertCount * 4);
+    colorData = this.colorData = new Uint8Array(colorDataCount);
+
+    for (i = 0; i < colorDataCount; i++) {
+        colorData[i] = 255;
+    }
 
     /**
      * The array of the texture coordinates.
      * @return {Float32Array}
      */
-    texCoordArray = this.texCoordArray = new Float32Array(vertCount * 2);
+    texCoordData = this.texCoordData = new Float32Array(texCoordDataCount);
+
+    for (i = 0; i < texCoordDataCount; i++) {
+        texCoordData[i] = 0.0;
+    }
 
     // TODO: initialize attributes
 
@@ -81,26 +100,30 @@ b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCoun
      * The array of the elements.
      * @return {Uint16Array}
      */
-    this.elementArray = new Uint16Array(elemCount);
+    elementData = this.elementData = new Uint16Array(elemCount);
 
-    this.glBufStat_ = new b9.GLBufferState();
-    this.posGLBuf_ = null;
-    this.colorGLBuf_ = null;
-    this.texCoordGLBuf_ = null;
-    this.elemGLBuf_ = null;
+    for (i = 0; i < elemCount; i++) {
+        elementData[i] = i;
+    }
+
+    this._isNeedToUpdate = true;
+    this._glPosBuf = null;
+    this._glColorBuf = null;
+    this._glTexCoordBuf = null;
+    this._glElemBuf = null;
 };
 
 /**
  * Destructs thie primitive buffer.
  */
 b9.PrimitiveBuffer.prototype.finalize = function() {
-    var gl = b9.System.getGLContext();
+    var gl = b9.gl;
 
-    gl.deleteBuffer(this.posGLBuf_);
-    gl.deleteBuffer(this.colorGLBuf_);
-    gl.deleteBuffer(this.texCoordGLBuf_);
+    gl.deleteBuffer(this._glPosBuf);
+    gl.deleteBuffer(this._glColorBuf);
+    gl.deleteBuffer(this._glTexCoordBuf);
     // TODO: delete attribute buffers
-    gl.deleteBuffer(this.elemGLBuf_);
+    gl.deleteBuffer(this._glElemBuf);
 };
 
 /**
@@ -110,11 +133,11 @@ b9.PrimitiveBuffer.prototype.finalize = function() {
  */
 b9.PrimitiveBuffer.prototype.getPos = function(vertIndex, pos) {
     var index = vertIndex * 3;
-    var posArray = this.posArray;
+    var posData = this.posData;
 
-    pos.x = posArray[index];
-    pos.y = posArray[index + 1];
-    pos.z = posArray[index + 2];
+    pos.x = posData[index];
+    pos.y = posData[index + 1];
+    pos.z = posData[index + 2];
 };
 
 /**
@@ -124,11 +147,11 @@ b9.PrimitiveBuffer.prototype.getPos = function(vertIndex, pos) {
  */
 b9.PrimitiveBuffer.prototype.setPos = function(vertIndex, pos) {
     var index = vertIndex * 3;
-    var posArray = this.posArray;
+    var posData = this.posData;
 
-    posArray[index] = pos.x;
-    posArray[index + 1] = pos.y;
-    posArray[index + 2] = pos.z;
+    posData[index] = pos.x;
+    posData[index + 1] = pos.y;
+    posData[index + 2] = pos.z;
 };
 
 /**
@@ -138,12 +161,12 @@ b9.PrimitiveBuffer.prototype.setPos = function(vertIndex, pos) {
  */
 b9.PrimitiveBuffer.prototype.getColor = function(vertIndex) {
     var index = vertIndex * 4;
-    var colorArray = this.colorArray;
+    var colorData = this.colorData;
 
-    color.r = colorArray[index];
-    color.g = colorArray[index + 1];
-    color.b = colorArray[index + 2];
-    color.a = colorArray[index + 3];
+    color.r = colorData[index];
+    color.g = colorData[index + 1];
+    color.b = colorData[index + 2];
+    color.a = colorData[index + 3];
 };
 
 /**
@@ -153,12 +176,12 @@ b9.PrimitiveBuffer.prototype.getColor = function(vertIndex) {
  */
 b9.PrimitiveBuffer.prototype.setColor = function(vertIndex, color) {
     var index = vertIndex * 4;
-    var colorArray = this.colorArray;
+    var colorData = this.colorData;
 
-    colorArray[index] = color.r;
-    colorArray[index + 1] = color.g;
-    colorArray[index + 2] = color.b;
-    colorArray[index + 3] = color.a;
+    colorData[index] = color.r;
+    colorData[index + 1] = color.g;
+    colorData[index + 2] = color.b;
+    colorData[index + 3] = color.a;
 };
 
 /**
@@ -167,7 +190,7 @@ b9.PrimitiveBuffer.prototype.setColor = function(vertIndex, color) {
  * @return {Number} The U texture coordinate.
  */
 b9.PrimitiveBuffer.prototype.getTexCoordU = function(vertIndex) {
-    return this.texCoordArray[vertIndex * 2];
+    return this.texCoordData[vertIndex * 2];
 };
 
 /**
@@ -176,7 +199,7 @@ b9.PrimitiveBuffer.prototype.getTexCoordU = function(vertIndex) {
  * @return {Number} The V texture coordinate.
  */
 b9.PrimitiveBuffer.prototype.getTexCoordV = function(vertIndex) {
-    return this.texCoordArray[vertIndex * 2 + 1];
+    return this.texCoordData[vertIndex * 2 + 1];
 };
 
 /**
@@ -187,10 +210,10 @@ b9.PrimitiveBuffer.prototype.getTexCoordV = function(vertIndex) {
  */
 b9.PrimitiveBuffer.prototype.setTexCoord = function(vertIndex, u, v) {
     var index = vertIndex * 2;
-    var texCoordArray = this.texCoordArray;
+    var texCoordData = this.texCoordData;
 
-    texCoordArray[vertIndex * 2] = u;
-    texCoordArray[vertIndex * 2 + 1] = v;
+    texCoordData[vertIndex * 2] = u;
+    texCoordData[vertIndex * 2 + 1] = v;
 };
 
 /**
@@ -198,7 +221,7 @@ b9.PrimitiveBuffer.prototype.setTexCoord = function(vertIndex, u, v) {
  * @param {Number} elemIndex An element index.
  */
 b9.PrimitiveBuffer.prototype.getIndex = function(elemIndex) {
-    return this.elementArray[elemIndex];
+    return this.elementData[elemIndex];
 };
 
 /**
@@ -207,7 +230,7 @@ b9.PrimitiveBuffer.prototype.getIndex = function(elemIndex) {
  * @param {Number} vertIndex A vertex index.
  */
 b9.PrimitiveBuffer.prototype.setIndex = function(elemIndex, vertIndex) {
-    this.elementArray[elemIndex] = vertIndex;
+    this.elementData[elemIndex] = vertIndex;
 };
 
 /**
@@ -230,57 +253,57 @@ b9.PrimitiveBuffer.prototype.updateElement = function(elemIndex) {
  *
  */
 b9.PrimitiveBuffer.prototype.updateAll = function() {
-    this.glBufStat_.requestUpdate();
+    this._isNeedToUpdate = true;
 };
 
 /**
  * @private
  */
-b9.PrimitiveBuffer.prototype.bind_ = function(shader) {
-    var gl = b9.System.getGLContext();
+b9.PrimitiveBuffer.prototype._bind = function(shader) {
+    var gl = b9.gl;
 
-    if (this.glBufStat_.checkUpdate()) {
-        this.posGLBuf_ = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.posGLBuf_);
-        gl.bufferData(gl.ARRAY_BUFFER, this.posArray, gl.DYNAMIC_DRAW);
+    if (this._isNeedToUpdate) {
+        this._isNeedToUpdate = false;
 
-        this.colorGLBuf_ = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.colorGLBuf_);
-        gl.bufferData(gl.ARRAY_BUFFER, this.colorArray, gl.DYNAMIC_DRAW);
+        this._glPosBuf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._glPosBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, this.posData, gl.DYNAMIC_DRAW);
 
-        this.texCoordGLBuf_ = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordGLBuf_);
-        gl.bufferData(gl.ARRAY_BUFFER, this.texCoordArray, gl.DYNAMIC_DRAW);
+        this._glColorBuf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._glColorBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, this.colorData, gl.DYNAMIC_DRAW);
 
-        this.elemGLBuf_ = gl.createBuffer();
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.elemGLBuf_);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.elementArray, gl.DYNAMIC_DRAW);
+        this._glTexCoordBuf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._glTexCoordBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, this.texCoordData, gl.DYNAMIC_DRAW);
 
-        this.glBufStat_.finishUpdate();
+        this._glElemBuf = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._glElemBuf);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.elementData, gl.DYNAMIC_DRAW);
     }
 
-    gl.enableVertexAttribArray(shader._vert_pos_loc);
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.posGLBuf_);
-    gl.vertexAttribPointer(shader._vert_pos_loc, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(shader._vertPosLoc);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._glPosBuf);
+    gl.vertexAttribPointer(shader._vertPosLoc, 3, gl.FLOAT, false, 0, 0);
 
-    gl.enableVertexAttribArray(shader._vert_color_loc);
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.colorGLBuf_);
-    gl.vertexAttribPointer(shader._vert_color_loc, 4, gl.UNSIGNED_BYTE, false, 0, 0);
+    gl.enableVertexAttribArray(shader._vertColorLoc);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._glColorBuf);
+    gl.vertexAttribPointer(shader._vertColorLoc, 4, gl.UNSIGNED_BYTE, false, 0, 0);
 
-    gl.enableVertexAttribArray(shader._vert_texcoord_loc);
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.texCoordGLBuf_);
-    gl.vertexAttribPointer(shader._vert_texcoord_loc, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(shader._vertTexCoordLoc);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._glTexCoordBuf);
+    gl.vertexAttribPointer(shader._vertTexCoordLoc, 2, gl.FLOAT, false, 0, 0);
 
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.elemGLBuf_);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._glElemBuf);
 };
 
 /**
  * @private
  */
-b9.PrimitiveBuffer.prototype.unbind_ = function(shader) {
-    var gl = b9.System.getGLContext();
+b9.PrimitiveBuffer.prototype._unbind = function(shader) {
+    var gl = b9.gl;
 
-    gl.disableVertexAttribArray(shader._vert_pos_loc);
-    gl.disableVertexAttribArray(shader._vert_color_loc);
-    gl.disableVertexAttribArray(shader._vert_texcoord_loc);
+    gl.disableVertexAttribArray(shader._vertPosLoc);
+    gl.disableVertexAttribArray(shader._vertColorLoc);
+    gl.disableVertexAttribArray(shader._vertTexCoordLoc);
 };
