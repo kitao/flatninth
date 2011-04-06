@@ -91,6 +91,7 @@ b9.Shader.prototype._bind = function() {
     var gl = b9.gl;
 
     if (this._isNeedToUpdate) {
+b9.Debug.trace("update shader");
         this._isNeedToUpdate = false;
         this._glProg = gl.createProgram();
 

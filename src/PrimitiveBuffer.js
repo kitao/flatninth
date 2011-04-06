@@ -263,6 +263,7 @@ b9.PrimitiveBuffer.prototype._bind = function(shader) {
     var gl = b9.gl;
 
     if (this._isNeedToUpdate) {
+b9.Debug.trace("update primitive buffer");
         this._isNeedToUpdate = false;
 
         this._glPosBuf = gl.createBuffer();

@@ -99,37 +99,35 @@ b9.System.teardown = function() {
 b9.System.start = function() {
     var that = this;
 
-    this._nextUpdateTime = this.getTime();
-
     function onTimer() {
         var i;
         var updateCount;
-        var curTime, waitTime;
+        var curTime = that.getTime();
+        var delayedTime = curTime - that._nextUpdateTime;
 
-        if (that._timerID) {
-            clearTimeout(that._timerID);
+        if (delayedTime >= 0.0) {
+            updateCount = (curTime - that._nextUpdateTime) * that.targetFps / 1000.0;
+            updateCount = b9.Math.max(b9.Math.floor(updateCount), 1);
+
+            if (delayedTime >= b9.System._MAX_DELAY_TIME) {
+                updateCount = 1;
+                that._nextUpdateTime = curTime + (1000.0 / that.targetFps);
+            } else {
+                that._nextUpdateTime += (1000.0 / that.targetFps) * updateCount;
+            }
+
+            for (i = 0; i < updateCount; i++) {
+                that.updateFunc();
+            }
+
+            that.renderFunc();
+            b9.Debug._render();
         }
-
-        curTime = that.getTime();
-        updateCount = (curTime - that._nextUpdateTime) * that.targetFps / 1000.0;
-        updateCount = b9.Math.max(b9.Math.floor(updateCount), 1);
-
-        that._nextUpdateTime += (1000.0 / that.targetFps) * updateCount;
-
-        for (i = 0; i < updateCount; i++) {
-            that.updateFunc();
-        }
-
-        that.renderFunc();
-        b9.Debug._render();
-
-        curTime = that.getTime();
-        waitTime = b9.Math.max(that._nextUpdateTime - curTime, 0);
-
-        that._timerID = setTimeout(onTimer, waitTime);
     }
 
-    onTimer();
+    this._nextUpdateTime = this.getTime();
+
+    setInterval(onTimer, 1000.0 / that.targetFps);
 };
 
 /**
@@ -165,3 +163,5 @@ b9.System._initializeGL = function() {
 
     gl.clearDepth(-1.0);
 };
+
+b9.System._MAX_DELAY_TIME = 100.0;

@@ -163,21 +163,21 @@ b9.Screen.prototype.render = function(rootNode) {
 
     for (node = rootNode; node; node = node.nextAsList) {
         if (node.nodeFlag & NodeFlag.VISIBLE) {
-/*TODO            if (node.nodeFlag & NodeFlag.Z_SORT) {
+            if (node.nodeFlag & NodeFlag.Z_SORT) {
                 node._sortValue = b9.Screen._vec1.set(node._world.trans).sub(camera.trans).dot(camera.zAxis);
 
                 node._sortNext = sortList;
                 sortList = node;
-            } else {*/
+            } else {
                 node._draw(worldToScreenArray);
-//            }
+            }
         } else {
             node = node.getLastDescendant();
         }
     }
 
     if (sortList) {
-        sortList = b9.Screen._sortList(sortList, null, null);
+//TODO        sortList = b9.Screen._sortList(sortList, null, null);
 
         for (node = sortList; node; node = node._sortNext) {
             node._draw(worldToScreenArray);

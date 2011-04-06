@@ -103,6 +103,7 @@ b9.Texture.prototype._bind = function(shader) {
         gl = b9.gl;
 
         if (this._isNeedToUpdate) {
+b9.Debug.trace("update texture");
             this._isNeedToUpdate = false;
 
             this._glTex = gl.createTexture();
