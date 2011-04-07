@@ -125,6 +125,7 @@ b9.Screen.prototype.render = function(rootNode) {
     var gl = b9.gl;
     var ScreenFlag = b9.ScreenFlag;
     var NodeFlag = b9.NodeFlag;
+    var vec1 = b9.Screen._vec1;
 
     var camera = this.camera;
     var clearFlag = 0;
@@ -151,10 +152,18 @@ b9.Screen.prototype.render = function(rootNode) {
                 this.clearColor.b / 255.0,
                 this.clearColor.a / 255.0);
         clearFlag = gl.COLOR_BUFFER_BIT;
+
+        gl.colorMask(true, true, true, true);
+    } else {
+        gl.colorMask(false, false, false, false);
     }
 
     if (this.screenFlag & ScreenFlag.CLEAR_DEPTH) {
         clearFlag |= gl.DEPTH_BUFFER_BIT;
+
+        gl.depthMask(true);
+    } else {
+        gl.depthMask(false);
     }
 
     if (clearFlag) {
@@ -164,8 +173,7 @@ b9.Screen.prototype.render = function(rootNode) {
     for (node = rootNode; node; node = node.nextAsList) {
         if (node.nodeFlag & NodeFlag.VISIBLE) {
             if (node.nodeFlag & NodeFlag.Z_SORT) {
-                node._sortValue = b9.Screen._vec1.set(node._world.trans).sub(camera.trans).dot(camera.zAxis);
-
+                node._sortValue = vec1.set(node._world.trans).sub(camera.trans).dot(camera.zAxis);
                 node._sortNext = sortList;
                 sortList = node;
             } else {
@@ -177,7 +185,7 @@ b9.Screen.prototype.render = function(rootNode) {
     }
 
     if (sortList) {
-//TODO        sortList = b9.Screen._sortList(sortList, null, null);
+        sortList = b9.Screen._sortNode(sortList, null, null);
 
         for (node = sortList; node; node = node._sortNext) {
             node._draw(worldToScreenArray);
@@ -217,7 +225,7 @@ b9.Screen.prototype._updateCameraToScreen = function() {
     array[15] = 0.0;
 };
 
-b9.Screen._sortList = function(sortList, start, end) {
+b9.Screen._sortNode = function(sortList, start, end) {
     var node, next;
     var center = sortList;
     var centerSortValue = center._sortValue;
@@ -254,7 +262,7 @@ b9.Screen._sortList = function(sortList, start, end) {
         }
 
         leftEnd._sortNext = center;
-        sortList = b9.Screen._sortList(left, start, center);
+        sortList = b9.Screen._sortNode(left, start, center);
     } else {
         if (start) {
             start._sortNext = center;
@@ -266,7 +274,7 @@ b9.Screen._sortList = function(sortList, start, end) {
     if (right) {
         center._sortNext = right;
         rightEnd._sortNext = end;
-        b9.Screen._sortList(right, center, end);
+        b9.Screen._sortNode(right, center, end);
     } else {
         center._sortNext = end;
     }
