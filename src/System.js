@@ -161,6 +161,9 @@ b9.System.error = function(msg) {
 b9.System._initializeGL = function() {
     var gl = b9.gl;
 
+    //gl.enable(SCISSOR_TEST);
+    gl.enable(gl.DEPTH_TEST);
+
     gl.clearDepth(-1.0);
 };
 

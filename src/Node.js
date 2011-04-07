@@ -135,17 +135,25 @@ b9.Node.prototype._setup = function() {
         gl.disable(gl.CULL_FACE);
     }
 
-    if (blendMode === BlendMode.OFF) {
-        gl.disable(gl.BLEND);
-    } else if (blendMode === BlendMode.HALF) {
-        gl.enable(gl.BLEND);
-        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    } else if (blendMode === BlendMode.ADD) {
-        gl.enable(gl.BLEND);
-        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-    } else if (blendMode === BlendMode.DEST_ALPHA) {
-        gl.enable(gl.BLEND);
-        gl.blendFunc(gl.DST_ALPHA, gl.ONE_MINUS_DST_ALPHA);
+    switch (blendMode) {
+        case BlendMode.HALF:
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+            break;
+
+        case BlendMode.ADD:
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+            break;
+
+        case BlendMode.DEST_ALPHA:
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.DST_ALPHA, gl.ONE_MINUS_DST_ALPHA);
+            break;
+
+        default: // BlendMode.OFF
+            gl.disable(gl.BLEND);
+            break;
     }
 };
 
