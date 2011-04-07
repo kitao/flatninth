@@ -174,21 +174,21 @@ b9.Preset._initialize = function() {
      * initialize the preset shaders
      */
     vertCode =
-        "uniform mat4 b9_local_to_screen;" +
-        "uniform vec4 b9_node_color;" +
+        "uniform mat4 b9_localToScreen;" +
+        "uniform vec4 b9_nodeColor;" +
         "" +
-        "attribute vec4 b9_vertex_pos;" +
-        "attribute vec4 b9_vertex_color;" +
-        "attribute vec2 b9_vertex_texcoord;" +
+        "attribute vec4 b9_vertexPos;" +
+        "attribute vec4 b9_vertexColor;" +
+        "attribute vec2 b9_vertexTexCoord;" +
         "" +
-        "varying vec4 pixel_color;" +
-        "varying vec2 pixel_texcoord;" +
+        "varying vec4 pixelColor;" +
+        "varying vec2 pixelTexCoord;" +
         "" +
         "void main()" +
         "{" +
-        "    gl_Position = b9_local_to_screen * b9_vertex_pos;" +
-        "    pixel_color = b9_vertex_color * b9_node_color / (255.0 * 255.0);" +
-        "    pixel_texcoord = b9_vertex_texcoord;" +
+        "    gl_Position = b9_localToScreen * b9_vertexPos;" +
+        "    pixelColor = b9_vertexColor * b9_nodeColor / (255.0 * 255.0);" +
+        "    pixelTexCoord = b9_vertexTexCoord;" +
         "}";
 
     fragCode =
@@ -196,33 +196,33 @@ b9.Preset._initialize = function() {
         "" +
         "uniform sampler2D b9_texture_00;" +
         "" +
-        "varying vec4 pixel_color;" +
-        "varying vec2 pixel_texcoord;" +
+        "varying vec4 pixelColor;" +
+        "varying vec2 pixelTexCoord;" +
         "" +
         "void main()" +
         "{" +
-        "    gl_FragColor = texture2D(b9_texture_00, pixel_texcoord.st) * pixel_color;" +
+        "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
         "}";
 
     this._defaultPrimitiveShader = new b9.Shader(vertCode, fragCode, 0, 0, 1);
 
     vertCode =
-        "uniform mat4 b9_local_to_screen;" +
-        "uniform vec4 b9_node_color;" +
+        "uniform mat4 b9_localToScreen;" +
+        "uniform vec4 b9_nodeColor;" +
         "uniform vec4 b9_uniform_00;" +
         "uniform vec4 b9_uniform_01;" +
         "" +
-        "attribute vec4 b9_vertex_pos;" +
-        "attribute vec2 b9_vertex_texcoord;" +
+        "attribute vec4 b9_vertexPos;" +
+        "attribute vec2 b9_vertexTexCoord;" +
         "" +
-        "varying vec4 pixel_color;" +
-        "varying vec2 pixel_texcoord;" +
+        "varying vec4 pixelColor;" +
+        "varying vec2 pixelTexCoord;" +
         "" +
         "void main()" +
         "{" +
-        "    gl_Position = b9_local_to_screen * (b9_vertex_pos * vec3(b9_uniform_00, b9_uniform_01, 1.0));" +
-        "    pixel_color = b9_node_color / 255.0;" +
-        "    pixel_texcoord = b9_vertex_texcoord;" +
+        "    gl_Position = b9_localToScreen * (b9_vertexPos * vec3(b9_uniform_00, b9_uniform_01, 1.0));" +
+        "    pixelColor = b9_nodeColor / 255.0;" +
+        "    pixelTexCoord = b9_vertexTexCoord;" +
         "}";
 
     fragCode =
@@ -230,12 +230,12 @@ b9.Preset._initialize = function() {
         "" +
         "uniform sampler2D b9_texture_00;" +
         "" +
-        "varying vec4 pixel_color;" +
-        "varying vec2 pixel_texcoord;" +
+        "varying vec4 pixelColor;" +
+        "varying vec2 pixelTexCoord;" +
         "" +
         "void main()" +
         "{" +
-        "    gl_FragColor = texture2D(b9_texture_00, pixel_texcoord.st) * pixel_color;" +
+        "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
         "}";
 
     this._defaultSpriteShader = new b9.Shader(vertCode, fragCode, 2, 0, 1);

@@ -122,19 +122,19 @@ b9.Debug.trace("update shader");
         gl.deleteShader(vertGLShd);
         gl.deleteShader(fragGLShd);
 
-        this._localToScreenLoc = gl.getUniformLocation(this._glProg, "b9_local_to_screen");
-b9.Debug.trace("b9_local_to_screen=" + this._localToScreenLoc);
-        this._nodeColorLoc = gl.getUniformLocation(this._glProg, "b9_node_color");
-b9.Debug.trace("b9_node_color=" + this._nodeColorLoc);
-        this._sprtScaleLoc = gl.getUniformLocation(this._glProg, "b9_sprite_scale");
-b9.Debug.trace("b9_sprite_scale=" + this._sprtScaleLoc);
+        this._localToScreenLoc = gl.getUniformLocation(this._glProg, "b9_localToScreen");
+b9.Debug.trace("b9_localToScreen=" + this._localToScreenLoc);
+        this._nodeColorLoc = gl.getUniformLocation(this._glProg, "b9_nodeColor");
+b9.Debug.trace("b9_nodeColor=" + this._nodeColorLoc);
+        this._sprtScaleLoc = gl.getUniformLocation(this._glProg, "b9_spriteScale");
+b9.Debug.trace("b9_spriteScale=" + this._sprtScaleLoc);
 
-        this._vertPosLoc = gl.getAttribLocation(this._glProg, "b9_vertex_pos");
-b9.Debug.trace("b9_vertex_pos=" + this._vertPosLoc);
-        this._vertColorLoc = gl.getAttribLocation(this._glProg, "b9_vertex_color");
-b9.Debug.trace("b9_vertex_color=" + this._vertColorLoc);
-        this._vertTexCoordLoc = gl.getAttribLocation(this._glProg, "b9_vertex_texcoord");
-b9.Debug.trace("b9_vertex_texcoord=" + this._vertTexCoordLoc);
+        this._vertPosLoc = gl.getAttribLocation(this._glProg, "b9_vertexPos");
+b9.Debug.trace("b9_vertexPos=" + this._vertPosLoc);
+        this._vertColorLoc = gl.getAttribLocation(this._glProg, "b9_vertexColor");
+b9.Debug.trace("b9_vertexColor=" + this._vertColorLoc);
+        this._vertTexCoordLoc = gl.getAttribLocation(this._glProg, "b9_vertexTecCoord");
+b9.Debug.trace("b9_vertexTexCoord=" + this._vertTexCoordLoc);
 
         if (this.uniformCount > 0) {
             for (i = 0; i < this.uniformCount; i++) {
