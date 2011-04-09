@@ -40,16 +40,16 @@ b9.Preset.defaultUpdateFunc = function() {
 };
 
 /**
- * The default render function.
+ * The default draw function.
  */
-b9.Preset.defaultRenderFunc = function() {
+b9.Preset.defaultDrawFunc = function() {
     var i;
 
     var Preset = b9.Preset;
     var screenCount = Preset.SCREEN_COUNT;
 
     for (i = 0; i < screenCount; i++) {
-        Preset.screens[i].render(Preset.rootNodes[i]);
+        Preset.screens[i].draw(Preset.rootNodes[i]);
     }
 };
 

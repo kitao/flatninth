@@ -70,7 +70,7 @@ b9.System.setup = function(canvasID, targetFps) {
      *
      * @return {TODO}
      */
-    this.renderFunc = b9.Preset.defaultRenderFunc;
+    this.drawFunc = b9.Preset.defaultDrawFunc;
 
     this._timerID = null;
     this._nextUpdateTime = 0;
@@ -120,8 +120,8 @@ b9.System.start = function() {
                 that.updateFunc();
             }
 
-            that.renderFunc();
-            b9.Debug._render();
+            that.drawFunc();
+            b9.Debug._draw();
         }
     }
 

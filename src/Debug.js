@@ -118,10 +118,10 @@ b9.Debug.drawRectangle = function(x, y, width, height, color) {
     }
 };
 
-b9.Debug._render = function() {
+b9.Debug._draw = function() {
     if (this.isDebugEnabled) {
         if (this.isPerfMonitorEnabled) {
-            this._renderPerformanceMonitor();
+            this._drawPerformanceMonitor();
         }
 
 
@@ -131,7 +131,7 @@ b9.Debug._render = function() {
     }
 };
 
-b9.Debug._renderPerformanceMonitor = function() {
+b9.Debug._drawPerformanceMonitor = function() {
     // TODO
 };
 

@@ -23,7 +23,7 @@
 /**
  * Constructs a screen.
  *
- * @class A rendering target of scene graph nodes. Each screen has a camera and manages its parameters.
+ * @class Draws scene graph nodes. Each screen has a camera and manages its parameters.
  *
  * @param {Number} width A width.
  * @param {Number} height A height.
@@ -35,6 +35,7 @@ b9.Screen = b9.createClass();
  */
 b9.Screen.prototype.initialize = function(width, height) {
     /**
+     * The attribute flags of this screen.
      * @return {b9.ScreenFlag}
      */
     this.screenFlag = b9.ScreenFlag.VISIBLE;
@@ -82,22 +83,22 @@ b9.Screen.prototype.initialize = function(width, height) {
     this.nearClipDist = 10.0;
 
     /**
-     * The far clip distance of thie screen.
+     * The far clip distance of this screen.
      * @return {Number}
      */
     this.farClipDist = 100000.0;
 
     /**
-     *
+     * TODO
      * @return {Number}
      */
-    this.innerScaleX = 1.0;
+    this.drawScaleX = 1.0;
 
     /**
-     *
+     * TODO
      * @return {Number}
      */
-    this.innerScaleY = 1.0;
+    this.drawScaleY = 1.0;
 
     /**
      * The camera matrix of this screen.
@@ -110,31 +111,31 @@ b9.Screen.prototype.initialize = function(width, height) {
 };
 
 /**
- *
+ * Destructs this screen.
  */
 b9.Screen.prototype.finalize = function() {
     // TODO
 };
 
 /**
- *
- * @param {b9.Node} rootNode
+ * Draws this screen to the canvas.
+ * @param {b9.Node} rootNode The root node of the nodes to be drawn.
  */
-b9.Screen.prototype.render = function(rootNode) {
+b9.Screen.prototype.draw = function(rootNode) {
     var node;
+
     var gl = b9.gl;
     var ScreenFlag = b9.ScreenFlag;
     var NodeFlag = b9.NodeFlag;
     var vec1 = b9.Screen._vec1;
 
     var camera = this.camera;
+    var worldToCamera = b9.Screen._mat1;
+    var worldToCameraArray = b9.Screen._array1;
+    var worldToScreenArray = b9.Screen._array2;
+
     var clearFlag = 0;
     var sortList = null;
-
-    var worldToCamera = b9.Screen._mat1;
-
-    var worldToCameraArray = [];
-    var worldToScreenArray = [];
 
     this._updateCameraToScreen(); // TODO
 
@@ -194,35 +195,35 @@ b9.Screen.prototype.render = function(rootNode) {
 };
 
 /**
- *
+ * TODO
  */
 b9.Screen.prototype.dump = function() {
     // TODO
 };
 
 b9.Screen.prototype._updateCameraToScreen = function() {
-    var array = this._cameraToScreenArray;
+    var c2s = this._cameraToScreenArray;
     var invSub = 1.0 / (this.farClipDist - this.nearClipDist);
 
-    array[0] = this.focalLength * 2.0 / this.width;
-    array[4] = 0.0;
-    array[8] = 0.0;
-    array[12] = 0.0;
+    c2s[0] = this.focalLength * 2.0 / this.width;
+    c2s[4] = 0.0;
+    c2s[8] = 0.0;
+    c2s[12] = 0.0;
 
-    array[1] = 0.0;
-    array[5] = this.focalLength * 2.0 / this.height;
-    array[9] = 0.0;
-    array[13] = 0.0;
+    c2s[1] = 0.0;
+    c2s[5] = this.focalLength * 2.0 / this.height;
+    c2s[9] = 0.0;
+    c2s[13] = 0.0;
 
-    array[2] = 0.0;
-    array[6] = 0.0;
-    array[10] = (this.farClipDist + this.nearClipDist) * invSub;
-    array[14] = 2.0 * this.farClipDist * this.nearClipDist * invSub;
+    c2s[2] = 0.0;
+    c2s[6] = 0.0;
+    c2s[10] = (this.farClipDist + this.nearClipDist) * invSub;
+    c2s[14] = 2.0 * this.farClipDist * this.nearClipDist * invSub;
 
-    array[3] = 0.0;
-    array[7] = 0.0;
-    array[11] = -1.0;
-    array[15] = 0.0;
+    c2s[3] = 0.0;
+    c2s[7] = 0.0;
+    c2s[11] = -1.0;
+    c2s[15] = 0.0;
 };
 
 b9.Screen._sortNode = function(sortList, prevSortList, nextSortList) {
@@ -314,3 +315,5 @@ b9.ScreenFlag = {
 
 b9.Screen._vec1 = new b9.Vector3D();
 b9.Screen._mat1 = new b9.Matrix3D();
+b9.Screen._array1 = [];
+b9.Screen._array2 = [];
