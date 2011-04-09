@@ -108,7 +108,7 @@ b9.Primitive.prototype._draw = function(worldToScreenArray) {
     var tex;
     var gl = b9.gl;
 
-    var shader = this.shader ? this.shader : b9.Preset.Shader.primitiveTextureRGBA; // TODO
+    var shader = this.shader ? this.shader : b9.Preset._defaultShader.primitiveTextureRGBA; // TODO
     var primBuf = this.primitiveBuffer;
     var finalColor = this._finalColor;
     var texCount = this.textureCount;
@@ -121,7 +121,7 @@ b9.Primitive.prototype._draw = function(worldToScreenArray) {
     this._setup();
 
     shader._bind();
-    primBuf._bind(shader);
+    primBuf._bind(shader._vertPosLoc, shader._vertColorLoc, shader._vertTexCoordLoc);
 
     b9.Matrix3D.mulArray(worldToScreenArray, worldArray, localToScreenArray);
     gl.uniformMatrix4fv(shader._localToScreenLoc, false, localToScreenArray); // TODO
@@ -132,7 +132,7 @@ b9.Primitive.prototype._draw = function(worldToScreenArray) {
         tex = this.textures[i];
 
         if (tex) {
-            tex._bind(shader);
+            tex._bind(shader._texLocArray);
         } else {
 //            gl.activeTexture(gl.TEXTURE0);
 //            gl.bindTexture(gl.TEXTURE_2D, null);
@@ -141,7 +141,7 @@ b9.Primitive.prototype._draw = function(worldToScreenArray) {
 
     gl.drawElements(this.primitiveMode, primBuf.elementCount, gl.UNSIGNED_SHORT, 0);
 
-    primBuf._unbind(shader);
+    primBuf._unbind(shader._vertPosLoc, shader._vertColorLoc, shader._vertTexCoordLoc);
 };
 
 /**

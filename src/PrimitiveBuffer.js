@@ -259,7 +259,7 @@ b9.PrimitiveBuffer.prototype.updateAll = function() {
 /**
  * @private
  */
-b9.PrimitiveBuffer.prototype._bind = function(shader) {
+b9.PrimitiveBuffer.prototype._bind = function(vertPosLoc, vertColorLoc, vertTexCoordLoc) {
     var gl = b9.gl;
 
     if (this._isNeedToUpdate) {
@@ -283,17 +283,17 @@ b9.Debug.trace("update primitive buffer");
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.elementData, gl.DYNAMIC_DRAW);
     }
 
-    gl.enableVertexAttribArray(shader._vertPosLoc);
+    gl.enableVertexAttribArray(vertPosLoc);
     gl.bindBuffer(gl.ARRAY_BUFFER, this._glPosBuf);
-    gl.vertexAttribPointer(shader._vertPosLoc, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(vertPosLoc, 3, gl.FLOAT, false, 0, 0);
 
-    gl.enableVertexAttribArray(shader._vertColorLoc);
+    gl.enableVertexAttribArray(vertColorLoc);
     gl.bindBuffer(gl.ARRAY_BUFFER, this._glColorBuf);
-    gl.vertexAttribPointer(shader._vertColorLoc, 4, gl.UNSIGNED_BYTE, false, 0, 0);
+    gl.vertexAttribPointer(vertColorLoc, 4, gl.UNSIGNED_BYTE, false, 0, 0);
 
-    gl.enableVertexAttribArray(shader._vertTexCoordLoc);
+    gl.enableVertexAttribArray(vertTexCoordLoc);
     gl.bindBuffer(gl.ARRAY_BUFFER, this._glTexCoordBuf);
-    gl.vertexAttribPointer(shader._vertTexCoordLoc, 2, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(vertTexCoordLoc, 2, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._glElemBuf);
 };
@@ -301,10 +301,10 @@ b9.Debug.trace("update primitive buffer");
 /**
  * @private
  */
-b9.PrimitiveBuffer.prototype._unbind = function(shader) {
+b9.PrimitiveBuffer.prototype._unbind = function(vertPosLoc, vertColorLoc, vertTexCoordLoc) {
     var gl = b9.gl;
 
-    gl.disableVertexAttribArray(shader._vertPosLoc);
-    gl.disableVertexAttribArray(shader._vertColorLoc);
-    gl.disableVertexAttribArray(shader._vertTexCoordLoc);
+    gl.disableVertexAttribArray(vertPosLoc);
+    gl.disableVertexAttribArray(vertColorLoc);
+    gl.disableVertexAttribArray(vertTexCoordLoc);
 };

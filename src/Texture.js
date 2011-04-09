@@ -96,7 +96,7 @@ b9.Texture.prototype.updateTexture = function(left, top, width, height) {
     // TODO
 };
 
-b9.Texture.prototype._bind = function(shader) {
+b9.Texture.prototype._bind = function(texLocArray) {
     var gl;
 
     if (this.isLoaded) {
@@ -117,7 +117,7 @@ b9.Debug.trace("update texture");
 
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this._glTex);
-        gl.uniform1i(shader._texLocArray[0], 0);
+        gl.uniform1i(texLocArray[0], 0);
     }
 };
 

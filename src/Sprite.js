@@ -135,7 +135,7 @@ b9.Sprite.setTexCoord = function(u1, v1, u2, v2) {
 };
 
 b9.Sprite.prototype._draw = function(world_to_screen) {
-    var shader = b9.Preset.Shader.spriteTextureRGBA;
+    var shader = b9.Preset._defaultShader.spriteTextureRGBA;
 
     shader._setup();
 

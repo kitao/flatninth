@@ -91,19 +91,16 @@ b9.Preset._initialize = function() {
     scr.screenFlag |= b9.ScreenFlag.CLEAR_COLOR | b9.ScreenFlag.CLEAR_DEPTH;
     scr.clearColor.set(0, 0, 0);
 
-    /**
-     * @class The preset shaders.
-     */
-    this.Shader = {};
+    this._defaultShader = {};
 
-    this._initializePresetShaders();
+    this._initializeDefaultShaders();
 };
 
 b9.Preset._finalize = function() {
     // TODO
 };
 
-b9.Preset._initializePresetShaders = function() {
+b9.Preset._initializeDefaultShaders = function() {
     var primitiveVertexShaderCode =
         "uniform mat4 b9_localToScreen;" +
         "uniform vec4 b9_nodeColor;" +
@@ -141,21 +138,7 @@ b9.Preset._initializePresetShaders = function() {
         "    pixelTexCoord = b9_vertexTexCoord;" +
         "}";
 
-    /**
-     *
-     */
-    this.Shader.primitiveNoTexture = new b9.Shader(primitiveVertexShaderCode, "", 0, 0, 0);
-
-    /**
-     *
-     */
-    this.Shader.primitiveTextureRGB = new b9.Shader(primitiveVertexShaderCode, "", 0, 0, 0);
-
-    /**
-     * TODO
-     * @return {b9.Shader}
-     */
-    this.Shader.primitiveTextureRGBA = new b9.Shader(
+    this._defaultShader.primitiveTextureRGBA = new b9.Shader(
             primitiveVertexShaderCode,
 
             "precision mediump float;" +
@@ -172,22 +155,7 @@ b9.Preset._initializePresetShaders = function() {
 
             0, 0, 1);
 
-    /**
-     *
-     */
-    this.Shader.primitiveTextureAlpha = new b9.Shader(spriteVertexShaderCode, "", 0, 0, 0);
-
-    /**
-     * TODO
-     * @return {b9.Shader}
-     */
-    this.Shader.spriteTextureRGB = new b9.Shader(spriteVertexShaderCode, "", 0, 0, 0);
-
-    /**
-     * TODO
-     * @return {b9.Shader}
-     */
-    this.Shader.spriteTextureRGBA = new b9.Shader(
+    this._defaultShader.spriteTextureRGBA = new b9.Shader(
             spriteVertexShaderCode,
 
             "precision mediump float;" +
@@ -203,12 +171,6 @@ b9.Preset._initializePresetShaders = function() {
             "}",
 
             2, 0, 1);
-
-    /**
-     * TODO
-     * @return {b9.Shader}
-     */
-    this.Shader.spriteTextureAlpha = new b9.Shader(spriteVertexShaderCode, "", 0, 0, 0);
 };
 
 /**
