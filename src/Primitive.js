@@ -89,10 +89,10 @@ b9.Primitive.prototype.initialize = function(primBuf, uniCount, texCount) {
      * The array of the textures.
      * @return {Array}
      */
-    this.textureArray = new Array(texCount);
+    this.textures = new Array(texCount);
 
     for (i = 0; i < texCount; i++) {
-        this.textureArray[i] = null;
+        this.textures[i] = null;
     }
 };
 
@@ -129,7 +129,7 @@ b9.Primitive.prototype._draw = function(worldToScreenArray) {
     gl.uniform4f(shader._nodeColorLoc, finalColor.r, finalColor.g, finalColor.b, finalColor.a);
 
     for (i = 0; i < texCount; i++) {
-        tex = this.textureArray[i];
+        tex = this.textures[i];
 
         if (tex) {
             tex._bind(shader);

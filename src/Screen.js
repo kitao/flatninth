@@ -225,58 +225,62 @@ b9.Screen.prototype._updateCameraToScreen = function() {
     array[15] = 0.0;
 };
 
-b9.Screen._sortNode = function(sortList, start, end) {
+b9.Screen._sortNode = function(sortList, prevSortList, nextSortList) {
     var node, next;
+
     var center = sortList;
     var centerSortValue = center._sortValue;
-    var left = null;
+
+    var leftList = null;
     var leftEnd = null;
-    var right = null;
+
+    var rightList = null;
     var rightEnd = null;
 
     sortList = sortList._sortNext;
 
-    for (node = sortList; node != end; node = next) {
+    for (node = sortList; node != nextSortList; node = next) {
         next = node._sortNext;
 
         if (node._sortValue <= centerSortValue) {
-            if (!left) {
-                leftEnd = node;
+            if (leftList) {
+                node._sortNext = leftList;
+                leftList = node;
+            } else {
+                node._sortNext = center;
+                leftList = leftEnd = node;
             }
-
-            node.sortList = left;
-            left = node;
         } else {
-            if (!right) {
-                rightEnd = node;
+            if (rightList) {
+                node._sortNext = rightList;
+                rightList = node;
+            } else {
+                node._sortNext = nextSortList;
+                rightList = rightEnd = node;
             }
-
-            node.sortList = right;
-            right = node;
         }
     }
 
-    if (left) {
-        if (start) {
-            start._sortNext = left;
+    if (leftList) {
+        if (prevSortList) {
+            prevSortList._sortNext = leftList;
         }
 
-        leftEnd._sortNext = center;
-        sortList = b9.Screen._sortNode(left, start, center);
+        sortList = b9.Screen._sortNode(leftList, prevSortList, center);
     } else {
-        if (start) {
-            start._sortNext = center;
+        if (prevSortList) {
+            prevSortList._sortNext = center;
         }
 
         sortList = center;
     }
 
-    if (right) {
-        center._sortNext = right;
-        rightEnd._sortNext = end;
-        b9.Screen._sortNode(right, center, end);
+    if (rightList) {
+        center._sortNext = rightList;
+
+        b9.Screen._sortNode(rightList, center, nextSortList);
     } else {
-        center._sortNext = end;
+        center._sortNext = nextSortList;
     }
 
     return sortList;

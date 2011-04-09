@@ -133,7 +133,7 @@ b9.Debug.trace("b9_spriteScale=" + this._sprtScaleLoc);
 b9.Debug.trace("b9_vertexPos=" + this._vertPosLoc);
         this._vertColorLoc = gl.getAttribLocation(this._glProg, "b9_vertexColor");
 b9.Debug.trace("b9_vertexColor=" + this._vertColorLoc);
-        this._vertTexCoordLoc = gl.getAttribLocation(this._glProg, "b9_vertexTecCoord");
+        this._vertTexCoordLoc = gl.getAttribLocation(this._glProg, "b9_vertexTexCoord");
 b9.Debug.trace("b9_vertexTexCoord=" + this._vertTexCoordLoc);
 
         if (this.uniformCount > 0) {

@@ -26,9 +26,20 @@
 b9.Input = {};
 
 b9.Input._initialize = function() {
+    document.body.addEventListener("keydown", this._onKeyDown);
+    document.body.addEventListener("keyup", this._onKeyUp);
+
     // TODO
 };
 
 b9.Input._finalize = function() {
     // TODO
+};
+
+b9.Input._onKeyDown = function() {
+    b9.Debug.trace("keydown");
+};
+
+b9.Input._onKeyUp = function() {
+    b9.Debug.trace("keyup");
 };
