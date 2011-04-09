@@ -183,7 +183,7 @@ b9.Preset._initializeDefaultShader = function() {
 b9.Preset.TASK_LIST_COUNT = 8;
 
 /**
- * The number of the preset screens and the root nodes.
+ * The number of the preset screens. The number of the root nodes is also equal to this number.
  * @constant
  * @return {Number}
  */
