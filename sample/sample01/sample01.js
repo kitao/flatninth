@@ -49,7 +49,7 @@ Sample.prototype.initialize = function(x, y, z) {
     this._primBuf.setTexCoord(1, 1.0, 0.0);
     this._primBuf.setTexCoord(2, 0.0, 1.0);
 
-    this._prim.textures[0] = null; //b9.Resource.get("test_texture");
+    this._prim.textures[0] = b9.Resource.get("test_texture");
     this._prim.local.trans.set(x, y, z);
 
     b9.Preset.rootNodes[0].addChildLast(this._prim);
