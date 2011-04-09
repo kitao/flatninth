@@ -91,20 +91,20 @@ b9.Preset._initialize = function() {
     scr.screenFlag |= b9.ScreenFlag.CLEAR_COLOR | b9.ScreenFlag.CLEAR_DEPTH;
     scr.clearColor.set(0, 0, 0);
 
-    this._initializeDefaultShader();
+    /**
+     * @class The preset shaders.
+     */
+    this.Shader = {};
+
+    this._initializePresetShaders();
 };
 
 b9.Preset._finalize = function() {
     // TODO
 };
 
-b9.Preset._initializeDefaultShader = function() {
-    var vertCode, fragCode;
-
-    /*
-     * initialize default primitive shader
-     */
-    vertCode =
+b9.Preset._initializePresetShaders = function() {
+    var primitiveVertexShaderCode =
         "uniform mat4 b9_localToScreen;" +
         "uniform vec4 b9_nodeColor;" +
         "" +
@@ -122,25 +122,7 @@ b9.Preset._initializeDefaultShader = function() {
         "    pixelTexCoord = b9_vertexTexCoord;" +
         "}";
 
-    fragCode =
-        "precision mediump float;" +
-        "" +
-        "uniform sampler2D b9_texture_00;" +
-        "" +
-        "varying vec4 pixelColor;" +
-        "varying vec2 pixelTexCoord;" +
-        "" +
-        "void main()" +
-        "{" +
-        "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
-        "}";
-
-    this._defaultPrimitiveShader = new b9.Shader(vertCode, fragCode, 0, 0, 1);
-
-    /*
-     * initialize default sprite shader
-     */
-    vertCode =
+    var spriteVertexShaderCode =
         "uniform mat4 b9_localToScreen;" +
         "uniform vec4 b9_nodeColor;" +
         "uniform vec4 b9_uniform_00;" +
@@ -159,20 +141,74 @@ b9.Preset._initializeDefaultShader = function() {
         "    pixelTexCoord = b9_vertexTexCoord;" +
         "}";
 
-    fragCode =
-        "precision mediump float;" +
-        "" +
-        "uniform sampler2D b9_texture_00;" +
-        "" +
-        "varying vec4 pixelColor;" +
-        "varying vec2 pixelTexCoord;" +
-        "" +
-        "void main()" +
-        "{" +
-        "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
-        "}";
+    /**
+     *
+     */
+    this.Shader.primitiveNoTexture = new b9.Shader(primitiveVertexShaderCode, "", 0, 0, 0);
 
-    this._defaultSpriteShader = new b9.Shader(vertCode, fragCode, 2, 0, 1);
+    /**
+     *
+     */
+    this.Shader.primitiveTextureRGB = new b9.Shader(primitiveVertexShaderCode, "", 0, 0, 0);
+
+    /**
+     * TODO
+     * @return {b9.Shader}
+     */
+    this.Shader.primitiveTextureRGBA = new b9.Shader(
+            primitiveVertexShaderCode,
+
+            "precision mediump float;" +
+            "" +
+            "uniform sampler2D b9_texture_00;" +
+            "" +
+            "varying vec4 pixelColor;" +
+            "varying vec2 pixelTexCoord;" +
+            "" +
+            "void main()" +
+            "{" +
+            "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
+            "}",
+
+            0, 0, 1);
+
+    /**
+     *
+     */
+    this.Shader.primitiveTextureAlpha = new b9.Shader(spriteVertexShaderCode, "", 0, 0, 0);
+
+    /**
+     * TODO
+     * @return {b9.Shader}
+     */
+    this.Shader.spriteTextureRGB = new b9.Shader(spriteVertexShaderCode, "", 0, 0, 0);
+
+    /**
+     * TODO
+     * @return {b9.Shader}
+     */
+    this.Shader.spriteTextureRGBA = new b9.Shader(
+            spriteVertexShaderCode,
+
+            "precision mediump float;" +
+            "" +
+            "uniform sampler2D b9_texture_00;" +
+            "" +
+            "varying vec4 pixelColor;" +
+            "varying vec2 pixelTexCoord;" +
+            "" +
+            "void main()" +
+            "{" +
+            "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
+            "}",
+
+            2, 0, 1);
+
+    /**
+     * TODO
+     * @return {b9.Shader}
+     */
+    this.Shader.spriteTextureAlpha = new b9.Shader(spriteVertexShaderCode, "", 0, 0, 0);
 };
 
 /**
