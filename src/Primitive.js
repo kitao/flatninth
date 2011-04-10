@@ -108,7 +108,9 @@ b9.Primitive.prototype._draw = function(worldToScreenArray) {
     var tex;
     var gl = b9.gl;
 
-    var shader = this.shader ? this.shader : b9.Preset._defaultShader.primitiveTextureRGBA; // TODO
+    var shader = this.shader ||
+        (this.textures[0] ? b9.Preset._defaultShader.primitiveTextureRGBA :
+         b9.Preset._defaultShader.primitiveNoTexture); // TODO
     var primBuf = this.primitiveBuffer;
     var finalColor = this._finalColor;
     var texCount = this.textureCount;

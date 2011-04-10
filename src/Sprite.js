@@ -135,106 +135,111 @@ b9.Sprite.setTexCoord = function(u1, v1, u2, v2) {
 };
 
 b9.Sprite.prototype._draw = function(world_to_screen) {
-    var shader = b9.Preset._defaultShader.spriteTextureRGBA;
+    var shader = this.shader ||
+        (this.texture[0] ? b9.Preset._defaultShader.spriteTextureRGBA :
+         b9.Preset._defaultShader.spriteNoTexture); // TODO
+
+    var localToScreenArray = [];
+    var worldArray = [];
+
+    this._world.toArray(worldArray);
 
     shader._setup();
 
-    b9.Sprite._setupCommonBuffer(this.pivotType, shader);
+    b9.Sprite._bindCommonBuffer(shader);
 
     if (this._isNeedToUpdate) {
         this._isNeedToUpdate = false;
 
-        this._texCoordGLBuf = gl.createBuffer();
+        this._glTexCoordBuf = gl.createBuffer();
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._texCoordGLBuf);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._glTexCoordBuf);
         gl.bufferData(gl.ARRAY_BUFFER, this.texCoordData, gl.DYNAMIC_DRAW);
     }
 
-    gl.enableVertexAttribArray(shader._texcoord_loc);
-    gl.vertexAttribPointer(shader._texcoord_loc, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(shader._vertTexCoordLoc);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._glTexCoordBuf);
+    gl.vertexAttribPointer(shader._vertTexCoordLoc, 2, gl.FLOAT, false, 0, 0);
 
-    b9.Matrix3D.mulArrayAs4x4(world_to_screen.getArray(), this._world.getArray(), local_to_screen.getArray());
-    gl.uniformMatrix4fv(shader._local_to_screen_loc, false, local_to_screen.getArray()); // TODO
+    b9.Matrix3D.mulArray(worldToScreenArray, worldArray, localToScreenArray);
+    gl.uniformMatrix4fv(shader._localToScreenLoc, false, localToScreenArray); // TODO
 
-    gl.uniform4f(shader._nodeColorLoc,
-            finalColorArray[0], finalColorArray[1], finalColorArray[2], finalColorArray[3]); // TODO
-
-    gl.uniform2f(shader._sprite_scale_loc, this.width, this.height);
+    gl.uniform4f(shader._nodeColorLoc, finalColor.r, finalColor.g, finalColor.b, finalColor.a);
+    gl.uniform2f(shader._sprtScaleLoc, this.width, this.height);
 
     for (i = 0; i < texCount; i++) {
         tex = this.textureArray[i];
 
         if (tex) {
             tex._setup(shader);
+        } else {
+            // TODO
         }
     }
 
-    gl.drawArrays(gl.MODE_TRIANGLE_STRIP, 0, 4);
+    gl.drawArrays(gl.MODE_TRIANGLE_STRIP, this.pivotType * 12, 4);
 
     // teardown
-    gl.disableVertexAttribArray(shader._posLoc);
-    gl.disableVertexAttribArray(shader._texcoord_loc);
+    gl.disableVertexAttribArray(shader._vertPosLoc);
+    gl.disableVertexAttribArray(shader._vertTexCoordLoc);
 };
 
 b9.Sprite._sIsNeedToUpdate = true;
-b9.Sprite._sPosGLBuf = null;
-b9.Sprite._sPosArray = new Array(5 * 4);
-b9.Sprite._sPosData = new Array(5 * 4 * 3);
+b9.Sprite._sGLPosBuf = null;
 
-b9.Sprite._setupCommonBuffer = function(pivot_type, shader) {
-    var i;
+b9.Sprite._bindCommonBuffer = function(vertPosLoc) {
+    var posData;
+    var setPosData;
+
     var gl = b9.gl;
-    var posArray, posData;
 
-    if (!b9.Sprite._sIsNeedToUpdate) {
-        b9.Sprite._sIsNeedToUpdate = false;
+    if (!this._sIsNeedToUpdate) {
+        this._sIsNeedToUpdate = false;
 
-        posArray = this._sPosArray;
-        posData = this._sPosData;
+        posData = new Float32Array(12 * 5);
 
-        for (i = 0; i < 20; i++) {
-            posArray[i] = new b9.Vector3D(posData, i * 3);
-        }
+        setPosData = function(index, offsetX, offsetY) {
+            posData[index + 0] = -0.5 + offsetX;
+            posData[index + 1] = 0.5 + offsetY;
+            posData[index + 2] = 0.0;
+
+            posData[index + 3] = -0.5 + offsetX;
+            posData[index + 4] = -0.5 + offsetY;
+            posData[index + 5] = 0.0;
+
+            posData[index + 6] = 0.5 + offsetX;
+            posData[index + 7] = 0.5 + offsetY;
+            posData[index + 8] = 0.0;
+
+            posData[index + 9] = 0.5 + offsetX;
+            posData[index + 10] = -0.5 + offsetY;
+            posData[index + 11] = 0.0;
+        };
 
         // b9.Sprite.PIVOT_CENTER
-        posArray[0].set(-0.5, 0.5, 0.0);
-        posArray[1].set(-0.5, -0.5, 0.0);
-        posArray[2].set(0.5, 0.5, 0.0);
-        posArray[3].set(0.5, -0.5, 0.0);
+        setPosData(0, 0.0, 0.0);
 
         // b9.Sprite.PIVOT_LEFT_TOP
-        posArray[4].set(0.0, 0.0, 0.0);
-        posArray[5].set(0.0, -1.0, 0.0);
-        posArray[6].set(1.0, 0.0, 0.0);
-        posArray[7].set(1.0, -1.0, 0.0);
+        setPosData(12, 0.5, -0.5);
 
         // b9.Sprite.PIVOT_RIGHT_TOP
-        posArray[8].set(-1.0, 0.0, 0.0);
-        posArray[9].set(-1.0, -1.0, 0.0);
-        posArray[10].set(0.0, 0.0, 0.0);
-        posArray[11].set(0.0, -1.0, 0.0);
+        setPosData(24, -0.5, -0.5);
 
         // b9.Sprite.PIVOT_LEFT_BOTTOM
-        posArray[12].set(0.0, 1.0, 0.0);
-        posArray[13].set(0.0, 0.0, 0.0);
-        posArray[14].set(1.0, 1.0, 0.0);
-        posArray[15].set(1.0, 0.0, 0.0);
+        setPosData(36, 0.5, 0.5);
 
         // b9.Sprite.PIVOT_RIGHT_BOTTOM
-        posArray[16].set(-1.0, 1.0, 0.0);
-        posArray[17].set(-1.0, 0.0, 0.0);
-        posArray[18].set(0.0, 1.0, 0.0);
-        posArray[19].set(0.0, 0.0, 0.0);
+        setPosData(48, -0.5, 0.5);
 
-        this._sPosGLBuf = gl.createBuffer();
+        this._sGLPosBuf = gl.createBuffer();
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._sPosGLBuf);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this._sGLPosBuf);
         gl.bufferData(gl.ARRAY_BUFFER, posData, gl.DYNAMIC_DRAW);
     }
 
-    //gl.bindBuffer(gl.ARRAY_BUFFER, this._sPosGLBuf_array[pivot_type]);
-    gl.enableVertexAttribArray(shader._posLoc);
-    gl.vertexAttribPointer(shader._posLoc, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vertPosLoc);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this._sGLPosBuf);
+    gl.vertexAttribPointer(vertPosLoc, 3, gl.FLOAT, false, 0, 0);
 };
 
 /**

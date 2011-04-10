@@ -122,8 +122,7 @@ b9.Preset._initializeDefaultShaders = function() {
     var spriteVertexShaderCode =
         "uniform mat4 b9_localToScreen;" +
         "uniform vec4 b9_nodeColor;" +
-        "uniform vec4 b9_uniform_00;" +
-        "uniform vec4 b9_uniform_01;" +
+        "unifrom vec2 b9_spriteScale;" +
         "" +
         "attribute vec4 b9_vertexPos;" +
         "attribute vec2 b9_vertexTexCoord;" +
@@ -133,10 +132,25 @@ b9.Preset._initializeDefaultShaders = function() {
         "" +
         "void main()" +
         "{" +
-        "    gl_Position = b9_localToScreen * (b9_vertexPos * vec3(b9_uniform_00, b9_uniform_01, 1.0));" +
+        "    gl_Position = b9_localToScreen * (b9_vertexPos * vec3(b9_spriteScale.x, b9_spriteScale.y, 1.0));" +
         "    pixelColor = b9_nodeColor / 255.0;" +
         "    pixelTexCoord = b9_vertexTexCoord;" +
         "}";
+
+    var noTextureFragmentShaderCode =
+        "precision mediump float;" +
+        "" +
+        "varying vec4 pixelColor;" +
+        "" +
+        "void main()" +
+        "{" +
+        "    gl_FragColor = pixelColor;" +
+        "}";
+
+    this._defaultShader.primitiveNoTexture = new b9.Shader(
+            primitiveVertexShaderCode,
+            noTextureFragmentShaderCode,
+            0, 0, 0);
 
     this._defaultShader.primitiveTextureRGBA = new b9.Shader(
             primitiveVertexShaderCode,
@@ -154,6 +168,11 @@ b9.Preset._initializeDefaultShaders = function() {
             "}",
 
             0, 0, 1);
+
+    this._defaultShader.spriteNoTexture = new b9.Shader(
+            spriteVertexShaderCode,
+            noTextureFragmentShaderCode,
+            2, 0, 1);
 
     this._defaultShader.spriteTextureRGBA = new b9.Shader(
             spriteVertexShaderCode,
