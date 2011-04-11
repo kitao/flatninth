@@ -28,7 +28,8 @@
  * Elements are the reference to vertices, with which a vertex can be used multiple times in a single drawing.
  *
  * @param {Number} vertCount The number of the vertices.
- * @param {Number} elemCount The number of the elements.
+ * @param {Number} [elemCount] The number of the elements.
+ * If not specified or zero, each vertex gets drawn in number order once.
  * @param {Number} [attCount] The number of the shader attributes.
  */
 b9.PrimitiveBuffer = b9.createClass();
@@ -38,44 +39,38 @@ b9.PrimitiveBuffer = b9.createClass();
  */
 b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCount) {
     var i;
-    var posData;
     var colorData;
-    var texCoordData;
-    var elementData;
+
     var posDataCount = vertCount * 3;
     var colorDataCount = vertCount * 4;
     var texCoordDataCount = vertCount * 2;
 
     /**
-     * The number of vertices. This property is read-only.
+     * The number of the vertices. This property is read-only.
      * @return {Number}
      */
     this.vertexCount = vertCount;
 
     /**
-     * The number of elements. This property is read-only.
+     * The number of the elements. This property is read-only.
      * @return {Number}
      */
-    this.elementCount = elemCount;
+    this.elementCount = elemCount || 0;
 
     /**
-     * The number of attributes. This property is read-only.
+     * The number of the shader attributes. This property is read-only.
      * @return {Number}
      */
     this.attributeCount = attCount || 0;
 
     /**
-     * The array of the positions.
+     * The array of the positions. Each vertex has three coordinates.
      * @return {Float32Array}
      */
-    posData = this.posData = new Float32Array(posDataCount);
-
-    for (i = 0; i < posDataCount; i++) {
-        posData[i] = 0.0;
-    }
+    this.posData = new Float32Array(posDataCount);
 
     /**
-     * The array of the colors.
+     * The array of the colors. Each vertex has four components.
      * @return {Uint8Array}
      */
     colorData = this.colorData = new Uint8Array(colorDataCount);
@@ -85,26 +80,18 @@ b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCoun
     }
 
     /**
-     * The array of the texture coordinates.
+     * The array of the texture coordinates. Each vertex has two coordinates.
      * @return {Float32Array}
      */
-    texCoordData = this.texCoordData = new Float32Array(texCoordDataCount);
-
-    for (i = 0; i < texCoordDataCount; i++) {
-        texCoordData[i] = 0.0;
-    }
+    this.texCoordData = new Float32Array(texCoordDataCount);
 
     // TODO: initialize attributes
 
     /**
-     * The array of the elements.
+     * The array of the elements. Each element has one vertex index.
      * @return {Uint16Array}
      */
-    elementData = this.elementData = new Uint16Array(elemCount);
-
-    for (i = 0; i < elemCount; i++) {
-        elementData[i] = i;
-    }
+    this.elementData = (elemCount > 0) ? new Uint16Array(elemCount) : null;
 
     this._isNeedToUpdate = true;
     this._glPosBuf = null;
@@ -185,24 +172,6 @@ b9.PrimitiveBuffer.prototype.setColor = function(vertIndex, color) {
 };
 
 /**
- * Returns the U texture coordinate of the specified vertex.
- * @param {Number} vertIndex A vertex index.
- * @return {Number} The U texture coordinate.
- */
-b9.PrimitiveBuffer.prototype.getTexCoordU = function(vertIndex) {
-    return this.texCoordData[vertIndex * 2];
-};
-
-/**
- * Returns the V texture coordinate of the specified vertex.
- * @param {Number} vertIndex A vertex index.
- * @return {Number} The V texture coordinate.
- */
-b9.PrimitiveBuffer.prototype.getTexCoordV = function(vertIndex) {
-    return this.texCoordData[vertIndex * 2 + 1];
-};
-
-/**
  * Sets the UV texture coordinates of the specified vertex.
  * @param {Number} vertIndex A vertex index.
  * @param {Number} u A U texture coordinate.
@@ -217,24 +186,7 @@ b9.PrimitiveBuffer.prototype.setTexCoord = function(vertIndex, u, v) {
 };
 
 /**
- * Returns the vertex index to which the specified element refers.
- * @param {Number} elemIndex An element index.
- */
-b9.PrimitiveBuffer.prototype.getIndex = function(elemIndex) {
-    return this.elementData[elemIndex];
-};
-
-/**
- * Sets the vertex index to which the specified element refers.
- * @param {Number} elemIndex An element index.
- * @param {Number} vertIndex A vertex index.
- */
-b9.PrimitiveBuffer.prototype.setIndex = function(elemIndex, vertIndex) {
-    this.elementData[elemIndex] = vertIndex;
-};
-
-/**
- *
+ * Updates only the specified vertex.
  * @param {Number} vertIndex A vertex index.
  */
 b9.PrimitiveBuffer.prototype.updateVertex = function(vertIndex) {
@@ -242,7 +194,7 @@ b9.PrimitiveBuffer.prototype.updateVertex = function(vertIndex) {
 };
 
 /**
- *
+ * Updates only the specified element.
  * @param {Number} elemIndex An element index.
  */
 b9.PrimitiveBuffer.prototype.updateElement = function(elemIndex) {
@@ -250,15 +202,12 @@ b9.PrimitiveBuffer.prototype.updateElement = function(elemIndex) {
 };
 
 /**
- *
+ * Updates all of the vertices and the elements.
  */
 b9.PrimitiveBuffer.prototype.updateAll = function() {
     this._isNeedToUpdate = true;
 };
 
-/**
- * @private
- */
 b9.PrimitiveBuffer.prototype._bind = function(vertPosLoc, vertColorLoc, vertTexCoordLoc) {
     var gl = b9.gl;
 
@@ -278,9 +227,11 @@ b9.Debug.trace("update primitive buffer");
         gl.bindBuffer(gl.ARRAY_BUFFER, this._glTexCoordBuf);
         gl.bufferData(gl.ARRAY_BUFFER, this.texCoordData, gl.DYNAMIC_DRAW);
 
-        this._glElemBuf = gl.createBuffer();
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._glElemBuf);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.elementData, gl.DYNAMIC_DRAW);
+        if (this.elementData) {
+            this._glElemBuf = gl.createBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._glElemBuf);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.elementData, gl.DYNAMIC_DRAW);
+        }
     }
 
     gl.enableVertexAttribArray(vertPosLoc);
@@ -295,12 +246,11 @@ b9.Debug.trace("update primitive buffer");
     gl.bindBuffer(gl.ARRAY_BUFFER, this._glTexCoordBuf);
     gl.vertexAttribPointer(vertTexCoordLoc, 2, gl.FLOAT, false, 0, 0);
 
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._glElemBuf);
+    if (this.elementData) {
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._glElemBuf);
+    }
 };
 
-/**
- * @private
- */
 b9.PrimitiveBuffer.prototype._unbind = function(vertPosLoc, vertColorLoc, vertTexCoordLoc) {
     var gl = b9.gl;
 
