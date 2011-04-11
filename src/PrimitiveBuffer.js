@@ -101,16 +101,32 @@ b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCoun
 };
 
 /**
- * Destructs thie primitive buffer.
+ * Destructs this primitive buffer.
  */
 b9.PrimitiveBuffer.prototype.finalize = function() {
     var gl = b9.gl;
 
-    gl.deleteBuffer(this._glPosBuf);
-    gl.deleteBuffer(this._glColorBuf);
-    gl.deleteBuffer(this._glTexCoordBuf);
+    if (this._glPosBuf) {
+        gl.deleteBuffer(this._glPosBuf);
+        this._glPosBuf = null;
+    }
+
+    if (this._glColorBuf) {
+        gl.deleteBuffer(this._glColorBuf);
+        this._glColorBuf = null;
+    }
+
+    if (this._glTexCoordBuf) {
+        gl.deleteBuffer(this._glTexCoordBuf);
+        this._glTexCoordBuf = null;
+    }
+
     // TODO: delete attribute buffers
-    gl.deleteBuffer(this._glElemBuf);
+
+    if (this._glElemBuf) {
+        gl.deleteBuffer(this._glElemBuf);
+        this._glElemBuf = null;
+    }
 };
 
 /**
