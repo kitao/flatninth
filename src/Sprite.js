@@ -97,10 +97,6 @@ b9.Sprite.prototype.initialize = function(uniCount, texCount) {
 
     this._texCoordGLBuf = null;
 
-    for (i = 0; i < 4; i++) {
-//        this._posArray[i] = new b9.Vector3D(this._pos_data, i * 3);
-    }
-
     this.setTexCoord(0.0, 0.0, 1.0, 1.0);
 };
 
