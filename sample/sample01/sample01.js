@@ -30,7 +30,8 @@ Sample.prototype.initialize = function(x, y, z) {
 
     b9.Preset.taskLists[0].addLast(this);
 
-    this._primBuf = new b9.PrimitiveBuffer(3, 3);
+    //this._primBuf = new b9.PrimitiveBuffer(3, 3);
+    this._primBuf = new b9.PrimitiveBuffer(3);
     this._prim = new b9.Primitive(this._primBuf);
 
     this._primBuf.setPos(0, vec.set(0.0, 50.0, 0.0));
@@ -41,14 +42,14 @@ Sample.prototype.initialize = function(x, y, z) {
     this._primBuf.setColor(1, color.set(0, 255, 0));
     this._primBuf.setColor(2, color.set(0, 0, 255));
 
-    this._primBuf.setIndex(0, 0);
-    this._primBuf.setIndex(1, 1);
-    this._primBuf.setIndex(2, 2);
-
     this._primBuf.setTexCoord(0, 0.0, 0.0);
     this._primBuf.setTexCoord(1, 1.0, 0.0);
     this._primBuf.setTexCoord(2, 0.0, 1.0);
 
+/*    this._primBuf.elementData[0] = 0;
+    this._primBuf.elementData[1] = 1;
+    this._primBuf.elementData[2] = 2;
+*/
     this._prim.textures[0] = b9.Resource.get("test_texture");
     this._prim.local.trans.set(x, y, z);
 
