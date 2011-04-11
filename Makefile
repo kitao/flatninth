@@ -47,6 +47,7 @@ SRCS        = b9.js \
               Node.js \
               PrimitiveBuffer.js \
               Primitive.js \
+              SpriteBuffer.js \
               Sprite.js \
               Screen.js \
               Resource.js \
