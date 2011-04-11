@@ -141,7 +141,11 @@ b9.Primitive.prototype._draw = function(worldToScreenArray) {
         }
     }
 
-    gl.drawElements(this.primitiveMode, primBuf.elementCount, gl.UNSIGNED_SHORT, 0);
+    if (primBuf.elementData) {
+        gl.drawElements(this.primitiveMode, primBuf.elementCount, gl.UNSIGNED_SHORT, 0);
+    } else {
+        gl.drawArrays(this.primitiveMode, 0, primBuf.vertexCount);
+    }
 
     primBuf._unbind(shader._vertPosLoc, shader._vertColorLoc, shader._vertTexCoordLoc);
 };
