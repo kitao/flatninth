@@ -202,18 +202,74 @@ b9.PrimitiveBuffer.prototype.setTexCoord = function(vertIndex, u, v) {
 };
 
 /**
+ * TODO
+ * @param {Number} vertIndex A vertex index.
+ * @param {Number} left
+ * @param {Number} top
+ * @param {Number} width
+ * @param {Number} height
+ */
+b9.PrimitiveBuffer.prototype.setRectanglePos = function(vertIndex, left, top, width, height) {
+    var posData = this.posData;
+
+    posData[vertIndex] = posData[vertIndex + 3] = left;
+    posData[vertIndex + 1] = posData[vertIndex + 7] = top;
+    posData[vertIndex + 6] = posData[vertIndex + 9] = left + width;
+    posData[vertIndex + 4] = posData[vertIndex + 10] = top - height;
+    posData[vertIndex + 2] = posData[vertIndex + 5] = posData[vertIndex + 8] = posData[vertIndex + 11] = 0.0;
+};
+
+/**
+ * TODO
+ * @param {Number} vertIndex A vertex index.
+ * @param {b9.Color} color
+ */
+b9.PrimitiveBuffer.prototype.setRectangleColor = function(vertIndex, color) {
+    var i;
+    var colorData = this.colorData;
+
+    for (i = 0; i < 4; i++) {
+        colorData[vertIndex] = color.r;
+        colorData[vertIndex + 1] = color.g;
+        colorData[vertIndex + 2] = color.b;
+        colorData[vertIndex + 3] = color.a;
+
+        vertIndex += 4;
+    }
+};
+
+/**
+ * TODO
+ * @param {Number} vertIndex A vertex index.
+ * @param {Number} u1
+ * @param {Number} v1
+ * @param {Number} u2
+ * @param {Number} v2
+ */
+b9.PrimitiveBuffer.prototype.setRectangleTexCoord = function(vertIndex, u1, v1, u2, v2) {
+    var texCoordData = this.texCoordData;
+
+    texCoordData[vertIndex] = texCoordData[vertIndex + 2] = u1;
+    texCoordData[vertIndex + 1] = texCoordData[vertIndex + 5] = v1;
+    texCoordData[vertIndex + 4] = texCoordData[vertIndex + 6] = u2;
+    texCoordData[vertIndex + 3] = texCoordData[vertIndex + 7] = v2;
+};
+
+/**
  * Updates only the specified vertex.
  * @param {Number} vertIndex A vertex index.
+ * @param {Number} [vertCount]
  */
-b9.PrimitiveBuffer.prototype.updateVertex = function(vertIndex) {
+b9.PrimitiveBuffer.prototype.updateVertex = function(vertIndex, vertCount) {
     // TODO
 };
 
 /**
  * Updates only the specified element.
  * @param {Number} elemIndex An element index.
+ * @param {Number} [elemCount]
  */
-b9.PrimitiveBuffer.prototype.updateElement = function(elemIndex) {
+b9.PrimitiveBuffer.prototype.updateElement = function(elemIndex, elemCount) {
     // TODO
 };
 

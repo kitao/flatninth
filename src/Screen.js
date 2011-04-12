@@ -122,7 +122,8 @@ b9.Screen.prototype.finalize = function() {
  * @param {b9.Node} rootNode The root node of the nodes to be drawn.
  */
 b9.Screen.prototype.draw = function(rootNode) {
-    var node;
+    var node1, node2;
+    var tail, end;
 
     var gl = b9.gl;
     var ScreenFlag = b9.ScreenFlag;
@@ -171,25 +172,45 @@ b9.Screen.prototype.draw = function(rootNode) {
         gl.clear(clearFlag);
     }
 
-    for (node = rootNode; node; node = node.nextAsList) {
-        if (node.nodeFlag & NodeFlag.VISIBLE) {
-            if (node.nodeFlag & NodeFlag.Z_SORT) {
-                node._sortValue = vec1.set(node._world.trans).sub(camera.trans).dot(camera.zAxis);
-                node._sortNext = sortList;
-                sortList = node;
+    for (node1 = rootNode; node1; node1 = node1.nextAsList) {
+        if (node1.nodeFlag & NodeFlag.VISIBLE) {
+            if (node1.nodeFlag & NodeFlag.Z_SORT) {
+                tail = node1.getTail();
+                end = tail.nextAsList;
+
+                for (node2 = node1; node2 != end; node2 = node2.nextAsList) {
+                    if (node2.nodeFlag & NodeFlag.Z_SORT) {
+                        node2._sortValue = vec1.set(node2._world.trans).sub(camera.trans).dot(camera.zAxis);
+                        node2._sortNext = sortList;
+                        sortList = node2;
+                    }
+                }
+
+                node1 = tail;
             } else {
-                node._draw(worldToScreenArray);
+                node1._draw(worldToScreenArray);
             }
         } else {
-            node = node.getLastDescendant();
+            node1 = node1.getTail();
         }
     }
 
     if (sortList) {
         sortList = b9.Screen._sortNode(sortList, null, null);
 
-        for (node = sortList; node; node = node._sortNext) {
-            node._draw(worldToScreenArray);
+        for (node1 = sortList; node1; node1 = node1._sortNext) {
+            node1._draw(worldToScreenArray);
+
+            end = node1.getTail().nextAsList;
+
+            for (node2 = node1.nextAsList; end != end; node2 = node2.nextAsList)
+            {
+                if (node2.nodeFlag & NodeFlag.Z_SORT) {
+                    node2 = node2.getTail();
+                } else {
+                    node2._draw(worldToScreenArray);
+                }
+            }
         }
     }
 };
@@ -233,10 +254,7 @@ b9.Screen._sortNode = function(sortList, prevSortList, nextSortList) {
     var centerSortValue = center._sortValue;
 
     var leftList = null;
-    var leftEnd = null;
-
     var rightList = null;
-    var rightEnd = null;
 
     sortList = sortList._sortNext;
 
@@ -244,21 +262,11 @@ b9.Screen._sortNode = function(sortList, prevSortList, nextSortList) {
         next = node._sortNext;
 
         if (node._sortValue <= centerSortValue) {
-            if (leftList) {
-                node._sortNext = leftList;
-                leftList = node;
-            } else {
-                node._sortNext = center;
-                leftList = leftEnd = node;
-            }
+            node._sortNext = leftList || center;
+            leftList = node;
         } else {
-            if (rightList) {
-                node._sortNext = rightList;
-                rightList = node;
-            } else {
-                node._sortNext = nextSortList;
-                rightList = rightEnd = node;
-            }
+            node._sortNext = rightList || nextSortList;
+            rightList = node;
         }
     }
 
