@@ -225,17 +225,19 @@ b9.PrimitiveBuffer.prototype.setRectanglePos = function(vertIndex, left, top, wi
  * @param {b9.Color} color
  */
 b9.PrimitiveBuffer.prototype.setRectangleColor = function(vertIndex, color) {
-    var i;
     var colorData = this.colorData;
 
-    for (i = 0; i < 4; i++) {
-        colorData[vertIndex] = color.r;
-        colorData[vertIndex + 1] = color.g;
-        colorData[vertIndex + 2] = color.b;
-        colorData[vertIndex + 3] = color.a;
+    colorData[vertIndex] = colorData[vertIndex + 4] =
+        colorData[vertIndex + 8] = colorData[vertIndex + 12] = color.r;
 
-        vertIndex += 4;
-    }
+    colorData[vertIndex + 1] = colorData[vertIndex + 5] =
+        colorData[vertIndex + 9] = colorData[vertIndex + 13] = color.g;
+
+    colorData[vertIndex + 2] = colorData[vertIndex + 6] =
+        colorData[vertIndex + 10] = colorData[vertIndex + 14] = color.b;
+
+    colorData[vertIndex + 3] = colorData[vertIndex + 7] =
+        colorData[vertIndex + 11] = colorData[vertIndex + 15] = color.a;
 };
 
 /**
