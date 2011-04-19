@@ -20,36 +20,30 @@
  * THE SOFTWARE.
  */
 
-void newCatcakeLogo(const char** cmd, u8 cmd_num);
-void newTriangle();
-void newAmeba(r32 x, r32 y, ckCol color);
-
-
-static const char* s_cmd[] =
+/*static const char* s_cmd[] =
 {
-    "P: CHANGE PRIM MODE", //
-    "F: TOGGLE FULLSCREEN", //
-    "Q: QUIT"
-};
+};*/
 
+function main() {
+    var color = new b9.Color();
+    var displayInfo = ["P: CHANGE PRIM MODE", "F: TOGGLE FULLSCREEN", "Q: QUIT"];
 
-ckMain()
-{
-    ckCreateCatcake("Sample02 - Primitive", 640, 480, 60);
+    b9.System.setup("sample_canvas", 60);
 
-    ckResMgr::loadResource("../data/catcake_logo_71x14.png", true);
-    ckResMgr::loadResource("../data/coin_400x200.png", true);
+    b9.Resource.add("flatninth_logo", new b9.Texture("../assets/flatninth_logo_71x14.png"));
+    b9.Resource.add("coin", new b9.Texture("../assets/coin_400x200.png"));
 
-    newCatcakeLogo(s_cmd, sizeof(s_cmd) / sizeof(char*));
-    newTriangle();
-    newAmeba(0.0f, 0.0f, ckCol(128, 128, 128));
-    newAmeba(-200.0f, 120.0f, ckCol(255, 128, 64));
-    newAmeba(0.0f, 240.0f, ckCol(64, 255, 128));
-    newAmeba(200.0f, 120.0f, ckCol(128, 64, 255));
-    newAmeba(-200.0f, -120.0f, ckCol(255, 64, 128));
-    newAmeba(0.0f, -240.0f, ckCol(128, 255, 64));
-    newAmeba(200.0f, -120.0f, ckCol(64, 128, 255));
+    //newFlatninthLogo();
+    //newTriangle();
+    newAmeba(0.0, 0.0, color.set(128, 128, 128));
+    newAmeba(-200.0, 120.0, color.set(255, 128, 64));
+    newAmeba(0.0, 240.0, color.set(64, 255, 128));
+    newAmeba(200.0, 120.0, color.set(128, 64, 255));
+    newAmeba(-200.0, -120.0, color.set(255, 64, 128));
+    newAmeba(0.0, -240.0, color.set(128, 255, 64));
+    newAmeba(200.0, -120.0, color.set(64, 128, 255));
 
-    ckStartCatcake();
-    ckDestroyCatcake();
+    b9.System.start();
 }
+
+main();

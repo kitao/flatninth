@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+/*
 #include "catcake.h"
 
 
@@ -47,9 +48,7 @@ Triangle::Triangle() : ckTask(ORDER_ZERO)
 {
     m_scr2d = ckDrawMgr::getScreen(ckDrawMgr::DEFAULT_2D_SCREEN_ID);
 
-    /*
-        set up m_tri_prim1
-    */
+//        set up m_tri_prim1
     m_tri_prim1.init(ckPrim::MODE_TRIANGLES, 3, ckDrawMgr::DEFAULT_3D_SCREEN_ID);
 
     m_tri_prim1.dataPos(0).set(0.0f, 100.0f, 0.0f);
@@ -62,9 +61,7 @@ Triangle::Triangle() : ckTask(ORDER_ZERO)
 
     m_tri_prim1.local().trans.set(-150.0f, 0.0f, 0.0f);
 
-    /*
-        set up m_tri_prim2
-    */
+//        set up m_tri_prim2
     m_tri_prim2.init(ckPrim::MODE_TRIANGLES, 6, ckDrawMgr::DEFAULT_3D_SCREEN_ID);
     m_tri_prim2.setTextureID(ckID_("coin_400x200.png"));
     m_tri_prim2.setDrawFlag(ckDraw::FLAG_BACKFACE_CULLING, true);
@@ -108,4 +105,4 @@ void Triangle::onUpdate()
     m_tri_prim1.local() = m_tri_prim1.local().rotateY_s32(2);
     m_tri_prim2.local() = m_tri_prim2.local().rotateY_s32(2);
 }
-
+*/

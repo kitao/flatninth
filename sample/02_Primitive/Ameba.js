@@ -20,70 +20,40 @@
  * THE SOFTWARE.
  */
 
+var Ameba = b9.createClass(b9.Task);
 
-#include "catcake.h"
+Ameba.prototype.initialize = function(x, y, color) {
+    var i;
+    var col = new b9.Color();
 
+    this.initializeSuper();
 
-class Ameba : public ckTask
-{
-public:
-    Ameba(r32 x, r32 y, ckCol color);
+    this._amebaPrimBuf = new b9.PrimitiveBuffer(Ameba._AMEBA_VERT_COUNT);
+    this._amebaPrim = new b9.Primitive(this._amebaPrimBuf);
 
-private:
-    static const u16 CIRCLE_VERT_NUM = 36;
-    static const u16 AMEBA_VERT_NUM = CIRCLE_VERT_NUM + 2;
-    static const u16 ONE_VERT_DEG = 360 / CIRCLE_VERT_NUM;
+    this._amebaPrim.primitiveMode = b9.PrimitiveMode.TRIANGLE_FAN;
 
-    void setAmebaPos(s32 phase);
-    virtual void onUpdate();
+    this._phase = 0;
 
-    ckPrim m_ameba_prim;
-    s32 m_phase;
+    b9.Preset.rootNodes[5].addChildLast(this._amebaPrim);
+
+    this._amebaPrim.setBlendModeWithFlags(b9.BlendMode.HALF);
+
+    this._setAmebaPos(this._phase);
+
+    this._amebaPrimBuf.setColor(0, col.set(color.r, color.g, color.b, 128));
+
+    for (i = 1; i < Ameba._AMEBA_VERT_COUNT; i++) {
+        this._amebaPrimBuf.setColor(i, col.set(color.r, color.g, color.b, 96));
+    }
+
+    this._amebaPrim.local.trans.set(x, y, 0.0);
+
+    b9.Preset.taskLists[5].addLast(this);
 };
 
-
-void newAmeba(r32 x, r32 y, ckCol color)
-{
-    ckNewTask(Ameba)(x, y, color);
-}
-
-
-Ameba::Ameba(r32 x, r32 y, ckCol color) : ckTask(ORDER_ZERO)
-{
-    m_ameba_prim.init(ckPrim::MODE_TRIANGLE_FAN, AMEBA_VERT_NUM, ckDrawMgr::DEFAULT_2D_SCREEN_ID);
-    m_ameba_prim.setBlendMode(ckDraw::BLEND_HALF, true);
-
-    setAmebaPos(m_phase);
-
-    m_ameba_prim.dataCol(0).set(color.r, color.g, color.b, 128);
-
-    for (s32 i = 1; i < AMEBA_VERT_NUM; i++)
-    {
-        m_ameba_prim.dataCol(i).set(color.r, color.g, color.b, 96);
-    }
-
-    m_ameba_prim.local().trans.set(x, y);
-
-    m_phase = 0;
-}
-
-
-void Ameba::setAmebaPos(s32 phase)
-{
-    m_ameba_prim.dataPos(0) = ckVec::ZERO;
-
-    for (s32 i = 1; i < AMEBA_VERT_NUM; i++)
-    {
-        ckVec dir(ckMath::cos_s32((i - 1) * ONE_VERT_DEG), ckMath::sin_s32((i - 1) * ONE_VERT_DEG));
-        r32 rad = ckMath::sin_s32((i - 1) * 60) * ckMath::sin_s32(phase) * 8.0f + 64.0f;
-
-        m_ameba_prim.dataPos(i) = dir * rad;
-    }
-}
-
-
-void Ameba::onUpdate()
-{
+Ameba.prototype.update = function() {
+    /*
     if (ckKeyMgr::isPressed(ckKeyMgr::KEY_P))
     {
         if (m_ameba_prim.getPrimMode() == ckPrim::MODE_TRIANGLE_FAN)
@@ -95,8 +65,37 @@ void Ameba::onUpdate()
             m_ameba_prim.setPrimMode(ckPrim::MODE_TRIANGLE_FAN);
         }
     }
+    */
 
-    m_phase += 4;
-    setAmebaPos(m_phase);
+    this._phase += 4;
+    this._setAmebaPos(this._phase);
+};
+
+Ameba.prototype._setAmebaPos = function(phase) {
+    this._amebaPrimBuf.setPos(0, b9.Vector3D.ZERO);
+
+    var i;
+    var rad;
+    var dir = new b9.Vector3D();
+
+    for (i = 1; i < Ameba._AMEBA_VERT_COUNT; i++) {
+        dir.set(
+                b9.Math.cos_int((i - 1) * Ameba._ONE_VERT_DIG),
+                b9.Math.sin_int((i - 1) * Ameba._ONE_VERT_DIG),
+                0.0);
+
+        rad = b9.Math.sin_int((i - 1) * 60) * b9.Math.sin_int(this._phase) * 8.0 + 64.0;
+
+        this._amebaPrimBuf.setPos(i, dir.mul(rad));
+    }
+
+    this._amebaPrimBuf.updateAll();
+};
+
+Ameba._CIRCLE_VERT_COUNT = 36;
+Ameba._AMEBA_VERT_COUNT = Ameba._CIRCLE_VERT_COUNT + 2;
+Ameba._ONE_VERT_DIG = 360 / Ameba._CIRCLE_VERT_COUNT;
+
+function newAmeba(x, y, color) {
+    return new Ameba(x, y, color);
 }
-
