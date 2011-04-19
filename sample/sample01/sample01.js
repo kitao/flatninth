@@ -79,7 +79,7 @@ function main() {
 
     b9.System.setup("sample01_canvas", 60);
 
-    b9.Resource.add("test_texture", new b9.Texture("../asset/test_texture_64x64.png"));
+    b9.Resource.add("test_texture", new b9.Texture("../assets/test_texture_64x64.png"));
 
     for (i = 0; i < 3; i++) {
         var dummy = new Sample(i * 10 - 200, i * 4, i * -50);
