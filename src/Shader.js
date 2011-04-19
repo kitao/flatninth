@@ -38,6 +38,8 @@ b9.Shader = b9.createClass();
  * @ignore
  */
 b9.Shader.prototype.initialize = function(vertCode, fragCode, uniCount, attCount, texCount) {
+    var gl = b9.gl;
+
     /**
      * The number of the uniforms. This property is read-only.
      * @return {Number}
@@ -56,7 +58,7 @@ b9.Shader.prototype.initialize = function(vertCode, fragCode, uniCount, attCount
      */
     this.textureCount = texCount;
 
-    this._glProg = null;
+    this._glProg = gl.createProgram();
     this._vertCode = vertCode;
     this._fragCode = fragCode;
     this._isNeedToUpdate = true;
@@ -87,40 +89,39 @@ b9.Shader.prototype.finalize = function() {
 
 b9.Shader.prototype._bind = function() {
     var i;
-    var vertGLShd, fragGLShd;
+    var glVertShd, glFragShd;
     var gl = b9.gl;
 
     if (this._isNeedToUpdate) {
-b9.Debug.trace("update shader");
         this._isNeedToUpdate = false;
-        this._glProg = gl.createProgram();
+b9.Debug.trace("update shader");
 
-        vertGLShd = gl.createShader(gl.VERTEX_SHADER);
-        gl.shaderSource(vertGLShd, this._vertCode);
-        gl.compileShader(vertGLShd);
+        glVertShd = gl.createShader(gl.VERTEX_SHADER);
+        gl.shaderSource(glVertShd, this._vertCode);
+        gl.compileShader(glVertShd);
 
-        if (!gl.getShaderParameter(vertGLShd, gl.COMPILE_STATUS)) {
-            b9.System.error("vertex shader compile error\n\n" + gl.getShaderInfoLog(vertGLShd));
+        if (!gl.getShaderParameter(glVertShd, gl.COMPILE_STATUS)) {
+            b9.System.error("vertex shader compile error\n\n" + gl.getShaderInfoLog(glVertShd));
         }
 
-        fragGLShd = gl.createShader(gl.FRAGMENT_SHADER);
-        gl.shaderSource(fragGLShd, this._fragCode);
-        gl.compileShader(fragGLShd);
+        glFragShd = gl.createShader(gl.FRAGMENT_SHADER);
+        gl.shaderSource(glFragShd, this._fragCode);
+        gl.compileShader(glFragShd);
 
-        if (!gl.getShaderParameter(fragGLShd, gl.COMPILE_STATUS)) {
-            b9.System.error("fragment shader compile error\n\n" + gl.getShaderInfoLog(fragGLShd));
+        if (!gl.getShaderParameter(glFragShd, gl.COMPILE_STATUS)) {
+            b9.System.error("fragment shader compile error\n\n" + gl.getShaderInfoLog(glFragShd));
         }
 
-        gl.attachShader(this._glProg, vertGLShd);
-        gl.attachShader(this._glProg, fragGLShd);
+        gl.attachShader(this._glProg, glVertShd);
+        gl.attachShader(this._glProg, glFragShd);
         gl.linkProgram(this._glProg);
 
         if (!gl.getProgramParameter(this._glProg, gl.LINK_STATUS)) {
             b9.System.error("shader link error");
         }
 
-        gl.deleteShader(vertGLShd);
-        gl.deleteShader(fragGLShd);
+        gl.deleteShader(glVertShd);
+        gl.deleteShader(glFragShd);
 
         this._localToScreenLoc = gl.getUniformLocation(this._glProg, "b9_localToScreen");
 b9.Debug.trace("b9_localToScreen=" + this._localToScreenLoc);

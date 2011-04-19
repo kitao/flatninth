@@ -34,6 +34,7 @@ b9.Texture = b9.createClass();
  */
 b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
     var that;
+    var gl = b9.gl;
 
     /**
      * This property is read-only.
@@ -54,9 +55,9 @@ b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
     this.height = 0.0;
 
     this._isNeedToUpdate = true;
+    this._glTex = gl.createTexture();
 
     if (arguments.length === 1) {
-        this._glTex = null;
         this._image = new Image();
         this._image.src = fileNameOrWidth;
 
@@ -77,8 +78,12 @@ b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
  *
  */
 b9.Texture.prototype.finalize = function() {
+    var gl;
+
     if (this._glTex) {
-        // TODO
+        gl = b9.gl;
+
+        gl.deleteTexture(this._glTex);
         this._glTex = null;
     }
 
@@ -103,10 +108,8 @@ b9.Texture.prototype._bind = function(texLocArray) {
         gl = b9.gl;
 
         if (this._isNeedToUpdate) {
-b9.Debug.trace("update texture");
             this._isNeedToUpdate = false;
-
-            this._glTex = gl.createTexture();
+b9.Debug.trace("update texture");
 
             gl.bindTexture(gl.TEXTURE_2D, this._glTex);
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);

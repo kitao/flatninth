@@ -39,8 +39,9 @@ b9.PrimitiveBuffer = b9.createClass();
  */
 b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCount) {
     var i;
-    var colorData;
+    var gl = b9.gl;
 
+    var colorData;
     var posDataCount = vertCount * 3;
     var colorDataCount = vertCount * 4;
     var texCoordDataCount = vertCount * 2;
@@ -94,10 +95,10 @@ b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCoun
     this.elementData = (elemCount > 0) ? new Uint16Array(elemCount) : null;
 
     this._isNeedToUpdate = true;
-    this._glPosBuf = null;
-    this._glColorBuf = null;
-    this._glTexCoordBuf = null;
-    this._glElemBuf = null;
+    this._glPosBuf = gl.createBuffer();
+    this._glColorBuf = gl.createBuffer();
+    this._glTexCoordBuf = gl.createBuffer();
+    this._glElemBuf = gl.createBuffer();
 };
 
 /**
@@ -289,20 +290,16 @@ b9.PrimitiveBuffer.prototype._bind = function(vertPosLoc, vertColorLoc, vertTexC
 b9.Debug.trace("update primitive buffer");
         this._isNeedToUpdate = false;
 
-        this._glPosBuf = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this._glPosBuf);
         gl.bufferData(gl.ARRAY_BUFFER, this.posData, gl.DYNAMIC_DRAW);
 
-        this._glColorBuf = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this._glColorBuf);
         gl.bufferData(gl.ARRAY_BUFFER, this.colorData, gl.DYNAMIC_DRAW);
 
-        this._glTexCoordBuf = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this._glTexCoordBuf);
         gl.bufferData(gl.ARRAY_BUFFER, this.texCoordData, gl.DYNAMIC_DRAW);
 
         if (this.elementData) {
-            this._glElemBuf = gl.createBuffer();
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this._glElemBuf);
             gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.elementData, gl.DYNAMIC_DRAW);
         }
