@@ -20,10 +20,6 @@
  * THE SOFTWARE.
  */
 
-/*static const char* s_cmd[] =
-{
-};*/
-
 function main() {
     var color = new b9.Color();
     var displayInfo = ["P: CHANGE PRIM MODE", "F: TOGGLE FULLSCREEN", "Q: QUIT"];
