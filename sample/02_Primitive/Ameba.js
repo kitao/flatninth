@@ -35,7 +35,7 @@ Ameba.prototype.initialize = function(x, y, color) {
 
     this._phase = 0;
 
-    b9.Preset.rootNodes[5].addChildLast(this._amebaPrim);
+    b9.Preset.rootNode3D.addChildLast(this._amebaPrim);
 
     this._amebaPrim.setBlendModeWithFlags(b9.BlendMode.HALF);
 
@@ -49,7 +49,7 @@ Ameba.prototype.initialize = function(x, y, color) {
 
     this._amebaPrim.local.trans.set(x, y, 0.0);
 
-    b9.Preset.taskLists[5].addLast(this);
+    b9.Preset.taskList.addLast(this);
 };
 
 Ameba.prototype.update = function() {
