@@ -29,9 +29,7 @@ Ameba.prototype.initialize = function(x, y, color) {
     this.initializeSuper();
 
     this._amebaPrimBuf = new b9.PrimitiveBuffer(Ameba._AMEBA_VERT_COUNT);
-    this._amebaPrim = new b9.Primitive(this._amebaPrimBuf);
-
-    this._amebaPrim.primitiveMode = b9.PrimitiveMode.TRIANGLE_FAN;
+    this._amebaPrim = new b9.Primitive(b9.PrimitiveMode.TRIANGLE_FAN, this._amebaPrimBuf);
 
     this._phase = 0;
 
