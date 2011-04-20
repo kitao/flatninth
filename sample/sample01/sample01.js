@@ -28,7 +28,7 @@ Sample.prototype.initialize = function(x, y, z) {
 
     this.initializeSuper();
 
-    b9.Preset.taskLists[0].addLast(this);
+    b9.Preset.taskList.addLast(this);
 
     //this._primBuf = new b9.PrimitiveBuffer(3, 3);
     this._primBuf = new b9.PrimitiveBuffer(3);
@@ -53,7 +53,7 @@ Sample.prototype.initialize = function(x, y, z) {
     this._prim.textures[0] = b9.Resource.get("test_texture");
     this._prim.local.trans.set(x, y, z);
 
-    b9.Preset.rootNodes[0].addChildLast(this._prim);
+    b9.Preset.rootNode3D.addChildLast(this._prim);
 
     this._prim2 = new b9.Primitive(this._primBuf);
     this._prim2.local.translate(100.0, 50.0, 10.0);
@@ -85,7 +85,7 @@ function main() {
         var dummy = new Sample(i * 10 - 200, i * 4, i * -50);
     }
 
-    b9.Preset.screens[0].clearColor.set(0, 0, 128);
+    b9.Preset.screen3D.clearColor.set(0, 0, 128);
 
     b9.System.start();
 }
