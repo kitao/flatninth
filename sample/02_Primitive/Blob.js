@@ -20,80 +20,80 @@
  * THE SOFTWARE.
  */
 
-var Ameba = b9.createClass(b9.Task);
+var Blob = b9.createClass(b9.Task);
 
-Ameba.prototype.initialize = function(x, y, color) {
+Blob.prototype.initialize = function(x, y, color) {
     var i;
     var col = new b9.Color();
 
     this.initializeSuper();
 
-    this._amebaPrimBuf = new b9.PrimitiveBuffer(Ameba._AMEBA_VERT_COUNT);
-    this._amebaPrim = new b9.Primitive(b9.PrimitiveMode.TRIANGLE_FAN, this._amebaPrimBuf);
+    this._blobPrimBuf = new b9.PrimitiveBuffer(Blob._BLOB_VERT_COUNT);
+    this._blobPrim = new b9.Primitive(b9.PrimitiveMode.TRIANGLE_FAN, this._blobPrimBuf);
 
     this._phase = 0;
 
-    b9.Preset.rootNode3D.addChildLast(this._amebaPrim);
+    b9.Preset.rootNode3D.addChildLast(this._blobPrim);
 
-    this._amebaPrim.setBlendModeWithFlags(b9.BlendMode.HALF);
+    this._blobPrim.setBlendModeWithFlags(b9.BlendMode.HALF);
 
-    this._setAmebaPos(this._phase);
+    this._setBlobPos(this._phase);
 
-    this._amebaPrimBuf.setColor(0, col.set(color.r, color.g, color.b, 128));
+    this._blobPrimBuf.setColor(0, col.set(color.r, color.g, color.b, 128));
 
-    for (i = 1; i < Ameba._AMEBA_VERT_COUNT; i++) {
-        this._amebaPrimBuf.setColor(i, col.set(color.r, color.g, color.b, 96));
+    for (i = 1; i < Blob._BLOB_VERT_COUNT; i++) {
+        this._blobPrimBuf.setColor(i, col.set(color.r, color.g, color.b, 96));
     }
 
-    this._amebaPrim.local.trans.set(x, y, 0.0);
+    this._blobPrim.local.trans.set(x, y, 0.0);
 
     b9.Preset.taskList.addLast(this);
 };
 
-Ameba.prototype.update = function() {
+Blob.prototype.update = function() {
     /*
     if (ckKeyMgr::isPressed(ckKeyMgr::KEY_P))
     {
-        if (m_ameba_prim.getPrimMode() == ckPrim::MODE_TRIANGLE_FAN)
+        if (m_blob_prim.getPrimMode() == ckPrim::MODE_TRIANGLE_FAN)
         {
-            m_ameba_prim.setPrimMode(ckPrim::MODE_LINE_STRIP);
+            m_blob_prim.setPrimMode(ckPrim::MODE_LINE_STRIP);
         }
         else
         {
-            m_ameba_prim.setPrimMode(ckPrim::MODE_TRIANGLE_FAN);
+            m_blob_prim.setPrimMode(ckPrim::MODE_TRIANGLE_FAN);
         }
     }
     */
 
     this._phase += 4;
-    this._setAmebaPos(this._phase);
+    this._setBlobPos(this._phase);
 };
 
-Ameba.prototype._setAmebaPos = function(phase) {
-    this._amebaPrimBuf.setPos(0, b9.Vector3D.ZERO);
+Blob.prototype._setBlobPos = function(phase) {
+    this._blobPrimBuf.setPos(0, b9.Vector3D.ZERO);
 
     var i;
     var rad;
     var dir = new b9.Vector3D();
 
-    for (i = 1; i < Ameba._AMEBA_VERT_COUNT; i++) {
+    for (i = 1; i < Blob._BLOB_VERT_COUNT; i++) {
         dir.set(
-                b9.Math.cos_int((i - 1) * Ameba._ONE_VERT_DIG),
-                b9.Math.sin_int((i - 1) * Ameba._ONE_VERT_DIG),
+                b9.Math.cos_int((i - 1) * Blob._ONE_VERT_DIG),
+                b9.Math.sin_int((i - 1) * Blob._ONE_VERT_DIG),
                 0.0);
 
         rad = b9.Math.sin_int((i - 1) * 60) * b9.Math.sin_int(this._phase) * 8.0 + 64.0;
 
-        this._amebaPrimBuf.setPos(i, dir.mul(rad));
+        this._blobPrimBuf.setPos(i, dir.mul(rad));
     }
 
-    this._amebaPrimBuf.updateAll();
+    this._blobPrimBuf.updateAll();
 };
 
-Ameba._CIRCLE_VERT_COUNT = 36;
-Ameba._AMEBA_VERT_COUNT = Ameba._CIRCLE_VERT_COUNT + 2;
-Ameba._ONE_VERT_DIG = 360 / Ameba._CIRCLE_VERT_COUNT;
+Blob._CIRCLE_VERT_COUNT = 36;
+Blob._BLOB_VERT_COUNT = Blob._CIRCLE_VERT_COUNT + 2;
+Blob._ONE_VERT_DIG = 360 / Blob._CIRCLE_VERT_COUNT;
 
-function newAmeba(x, y, color) {
-    return new Ameba(x, y, color);
+function newBlob(x, y, color) {
+    return new Blob(x, y, color);
 }
