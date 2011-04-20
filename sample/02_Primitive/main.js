@@ -32,13 +32,13 @@ function main() {
 
     //newFlatninthLogo();
     newTriangle();
-    newAmeba(0.0, 0.0, color.set(128, 128, 128));
-    newAmeba(-200.0, 120.0, color.set(255, 128, 64));
-    newAmeba(0.0, 240.0, color.set(64, 255, 128));
-    newAmeba(200.0, 120.0, color.set(128, 64, 255));
-    newAmeba(-200.0, -120.0, color.set(255, 64, 128));
-    newAmeba(0.0, -240.0, color.set(128, 255, 64));
-    newAmeba(200.0, -120.0, color.set(64, 128, 255));
+    newBlob(0.0, 0.0, color.set(128, 128, 128));
+    newBlob(-200.0, 120.0, color.set(255, 128, 64));
+    newBlob(0.0, 240.0, color.set(64, 255, 128));
+    newBlob(200.0, 120.0, color.set(128, 64, 255));
+    newBlob(-200.0, -120.0, color.set(255, 64, 128));
+    newBlob(0.0, -240.0, color.set(128, 255, 64));
+    newBlob(200.0, -120.0, color.set(64, 128, 255));
 
     b9.System.start();
 }
