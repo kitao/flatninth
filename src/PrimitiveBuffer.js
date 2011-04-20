@@ -287,7 +287,6 @@ b9.PrimitiveBuffer.prototype._bind = function(vertPosLoc, vertColorLoc, vertTexC
     var gl = b9.gl;
 
     if (this._isNeedToUpdate) {
-b9.Debug.trace("update primitive buffer");
         this._isNeedToUpdate = false;
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this._glPosBuf);

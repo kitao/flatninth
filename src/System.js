@@ -64,18 +64,19 @@ b9.System.setup = function(canvasID, targetFps) {
      *
      * @return {TODO}
      */
-    this.updateFunc = b9.Preset.defaultUpdateFunc;
+    this.updateFunc = b9.Preset.updateFunc;
 
     /**
      *
      * @return {TODO}
      */
-    this.drawFunc = b9.Preset.defaultDrawFunc;
+    this.drawFunc = b9.Preset.drawFunc;
 
     this._timerID = null;
     this._nextUpdateTime = 0;
 
-    this._initializeGL();
+    this._initializeOpenGL();
+    this._initializeBuiltinShaders();
 
     b9.Resource._initialize();
     b9.Input._initialize();
@@ -158,13 +159,76 @@ b9.System.error = function(msg) {
     throw new Error(msg2);
 };
 
-b9.System._initializeGL = function() {
+b9.System._initializeOpenGL = function() {
     var gl = b9.gl;
 
     //gl.enable(SCISSOR_TEST);
     gl.enable(gl.DEPTH_TEST);
 
     gl.clearDepth(-1.0);
+};
+
+b9.System._initializeBuiltinShaders = function() {
+    b9.System._builtinShader_noTexture = new b9.Shader(
+            "uniform mat4 b9_localToScreen;" +
+            "uniform vec4 b9_nodeColor;" +
+            "" +
+            "attribute vec4 b9_vertexPos;" +
+            "attribute vec4 b9_vertexColor;" +
+            "attribute vec2 b9_vertexTexCoord;" +
+            "" +
+            "varying vec4 pixelColor;" +
+            "varying vec2 pixelTexCoord;" +
+            "" +
+            "void main()" +
+            "{" +
+            "    gl_Position = b9_localToScreen * b9_vertexPos;" +
+            "    pixelColor = b9_vertexColor * b9_nodeColor / (255.0 * 255.0);" +
+            "    pixelTexCoord = b9_vertexTexCoord;" +
+            "}",
+
+            "precision mediump float;" +
+            "" +
+            "varying vec4 pixelColor;" +
+            "" +
+            "void main()" +
+            "{" +
+            "    gl_FragColor = pixelColor;" +
+            "}",
+
+            0, 0, 0);
+
+    b9.System._builtinShader_textureRGBA = new b9.Shader(
+            "uniform mat4 b9_localToScreen;" +
+            "uniform vec4 b9_nodeColor;" +
+            "" +
+            "attribute vec4 b9_vertexPos;" +
+            "attribute vec4 b9_vertexColor;" +
+            "attribute vec2 b9_vertexTexCoord;" +
+            "" +
+            "varying vec4 pixelColor;" +
+            "varying vec2 pixelTexCoord;" +
+            "" +
+            "void main()" +
+            "{" +
+            "    gl_Position = b9_localToScreen * b9_vertexPos;" +
+            "    pixelColor = b9_vertexColor * b9_nodeColor / (255.0 * 255.0);" +
+            "    pixelTexCoord = b9_vertexTexCoord;" +
+            "}",
+
+            "precision mediump float;" +
+            "" +
+            "uniform sampler2D b9_texture_00;" +
+            "" +
+            "varying vec4 pixelColor;" +
+            "varying vec2 pixelTexCoord;" +
+            "" +
+            "void main()" +
+            "{" +
+            "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
+            "}",
+
+            0, 0, 1);
 };
 
 b9.System._MAX_DELAY_TIME = 100.0;

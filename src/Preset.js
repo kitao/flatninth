@@ -26,178 +26,61 @@
 b9.Preset = {};
 
 /**
- * The default update function.
+ * The preset update function.
  */
-b9.Preset.defaultUpdateFunc = function() {
-    var i;
-
-    var Preset = b9.Preset;
-    var taskListCount = Preset.TASK_LIST_COUNT;
-
-    for (i = 0; i < taskListCount; i++) {
-        Preset.taskLists[i].update();
-    }
+b9.Preset.updateFunc = function() {
+    b9.Preset.taskList.update();
 };
 
 /**
- * The default draw function.
+ * The preset draw function.
  */
-b9.Preset.defaultDrawFunc = function() {
-    var i;
-
-    var Preset = b9.Preset;
-    var screenCount = Preset.SCREEN_COUNT;
-
-    for (i = 0; i < screenCount; i++) {
-        Preset.screens[i].draw(Preset.rootNodes[i]);
-    }
+b9.Preset.drawFunc = function() {
+    b9.Preset.screen3D.draw(b9.Preset.rootNode3D);
+    b9.Preset.screen2D.draw(b9.Preset.rootNode2D);
 };
 
 b9.Preset._initialize = function() {
-    var i;
-    var scr;
-
     var width = b9.canvas.width;
     var height = b9.canvas.height;
 
     /**
-     * The array of the preset task lists.
-     * @return {Array}
+     * The preset task list
+     * @return {b9.TaskList}
      */
-    this.taskLists = [];
+    this.taskList = new b9.TaskList();
 
     /**
-     * The array of the preset screens.
-     * @return {Array}
+     * The preset 3D screen.
+     * @return {b9.Screen}
      */
-    this.screens = [];
+    this.screen3D = new b9.Screen(width, height);
+
+    this.screen3D.screenFlag |= b9.ScreenFlag.CLEAR_COLOR | b9.ScreenFlag.CLEAR_DEPTH;
+    this.screen3D.clearColor.set(0, 0, 0);
 
     /**
-     * The array of the preset root nodes.
-     * @return {Array}
+     * The preset 2D screen.
+     * @return {b9.Screen}
      */
-    this.rootNodes = [];
+    this.screen2D = new b9.Screen(width, height);
 
-    for (i = 0; i < this.TASK_LIST_COUNT; i++) {
-        this.taskLists[i] = new b9.TaskList();
-    }
+    /**
+     * The root node of the preset 3D screen.
+     * @return {b9.Node}
+     */
+    this.rootNode3D = new b9.Node();
 
-    for (i = 0; i < this.SCREEN_COUNT; i++) {
-        this.screens[i] = new b9.Screen(width, height);
-        this.rootNodes[i] = new b9.Node();
-    }
-
-    scr = this.screens[0];
-    scr.screenFlag |= b9.ScreenFlag.CLEAR_COLOR | b9.ScreenFlag.CLEAR_DEPTH;
-    scr.clearColor.set(0, 0, 0);
-
-    this._defaultShader = {};
-
-    this._initializeDefaultShaders();
+    /**
+     * The root node of the preset 2D screen.
+     * @return {b9.Node}
+     */
+    this.rootNode2D = new b9.Node();
 };
 
 b9.Preset._finalize = function() {
     // TODO
 };
-
-b9.Preset._initializeDefaultShaders = function() {
-    var primitiveVertexShaderCode =
-        "uniform mat4 b9_localToScreen;" +
-        "uniform vec4 b9_nodeColor;" +
-        "" +
-        "attribute vec4 b9_vertexPos;" +
-        "attribute vec4 b9_vertexColor;" +
-        "attribute vec2 b9_vertexTexCoord;" +
-        "" +
-        "varying vec4 pixelColor;" +
-        "varying vec2 pixelTexCoord;" +
-        "" +
-        "void main()" +
-        "{" +
-        "    gl_Position = b9_localToScreen * b9_vertexPos;" +
-        "    pixelColor = b9_vertexColor * b9_nodeColor / (255.0 * 255.0);" +
-        "    pixelTexCoord = b9_vertexTexCoord;" +
-        "}";
-
-    var spriteVertexShaderCode =
-        "uniform mat4 b9_localToScreen;" +
-        "uniform vec4 b9_nodeColor;" +
-        "unifrom vec2 b9_spriteScale;" +
-        "" +
-        "attribute vec4 b9_vertexPos;" +
-        "attribute vec2 b9_vertexTexCoord;" +
-        "" +
-        "varying vec4 pixelColor;" +
-        "varying vec2 pixelTexCoord;" +
-        "" +
-        "void main()" +
-        "{" +
-        "    gl_Position = b9_localToScreen * (b9_vertexPos * vec3(b9_spriteScale.x, b9_spriteScale.y, 1.0));" +
-        "    pixelColor = b9_nodeColor / 255.0;" +
-        "    pixelTexCoord = b9_vertexTexCoord;" +
-        "}";
-
-    var noTextureFragmentShaderCode =
-        "precision mediump float;" +
-        "" +
-        "varying vec4 pixelColor;" +
-        "" +
-        "void main()" +
-        "{" +
-        "    gl_FragColor = pixelColor;" +
-        "}";
-
-    this._defaultShader.primitiveNoTexture = new b9.Shader(
-            primitiveVertexShaderCode,
-            noTextureFragmentShaderCode,
-            0, 0, 0);
-
-    this._defaultShader.primitiveTextureRGBA = new b9.Shader(
-            primitiveVertexShaderCode,
-
-            "precision mediump float;" +
-            "" +
-            "uniform sampler2D b9_texture_00;" +
-            "" +
-            "varying vec4 pixelColor;" +
-            "varying vec2 pixelTexCoord;" +
-            "" +
-            "void main()" +
-            "{" +
-            "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
-            "}",
-
-            0, 0, 1);
-
-    this._defaultShader.spriteNoTexture = new b9.Shader(
-            spriteVertexShaderCode,
-            noTextureFragmentShaderCode,
-            2, 0, 1);
-
-    this._defaultShader.spriteTextureRGBA = new b9.Shader(
-            spriteVertexShaderCode,
-
-            "precision mediump float;" +
-            "" +
-            "uniform sampler2D b9_texture_00;" +
-            "" +
-            "varying vec4 pixelColor;" +
-            "varying vec2 pixelTexCoord;" +
-            "" +
-            "void main()" +
-            "{" +
-            "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
-            "}",
-
-            2, 0, 1);
-};
-
-/**
- * The number of the preset task lists.
- * @constant
- * @return {Number}
- */
-b9.Preset.TASK_LIST_COUNT = 10;
 
 /**
  * The number of the preset screens. The number of the root nodes is also equal to this number.
