@@ -26,11 +26,12 @@ function main() {
 
     b9.System.setup("sample_canvas", 60);
 
-    b9.Resource.add("flatninth_logo", new b9.Texture("../assets/flatninth_logo_71x14.png"));
-    b9.Resource.add("coin", new b9.Texture("../assets/coin_400x200.png"));
+    b9.Resource.add("flatninth_logo", new b9.Texture("../assets/catcake_logo_71x14.png"));
+//    b9.Resource.add("coin", new b9.Texture("../assets/coin_400x200.png"));
+    b9.Resource.add("coin", new b9.Texture("../assets/test_texture_64x64.png"));
 
     //newFlatninthLogo();
-    //newTriangle();
+    newTriangle();
     newAmeba(0.0, 0.0, color.set(128, 128, 128));
     newAmeba(-200.0, 120.0, color.set(255, 128, 64));
     newAmeba(0.0, 240.0, color.set(64, 255, 128));

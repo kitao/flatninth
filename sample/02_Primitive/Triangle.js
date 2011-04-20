@@ -20,89 +20,84 @@
  * THE SOFTWARE.
  */
 
+var Triangle = b9.createClass(b9.Task);
+
+Triangle.prototype.initialize = function() {
+    var vec = new b9.Vector3D();
+    var color = new b9.Color();
+
+    this.initializeSuper();
+
+    /*
+     * setup _triPrim1
+     */
+    this._triPrimBuf1 = new b9.PrimitiveBuffer(3);
+
+    this._triPrimBuf1.setPos(0, vec.set(0.0, 100.0, 0.0));
+    this._triPrimBuf1.setPos(1, vec.set(-110.0, -100.0, 0.0));
+    this._triPrimBuf1.setPos(2, vec.set(110.0, -100.0, 0.0));
+
+    this._triPrimBuf1.setColor(0, color.set(255, 0, 0));
+    this._triPrimBuf1.setColor(1, color.set(0, 255, 0));
+    this._triPrimBuf1.setColor(2, color.set(0, 0, 255));
+
+    this._triPrim1 = new b9.Primitive(b9.PrimitiveMode.TRIANGLES, this._triPrimBuf1);
+    this._triPrim1.local.trans.set(-150.0, 0.0, 0.0);
+
+    b9.Preset.rootNode2D.addChildLast(this._triPrim1);
+
+    b9.Preset.taskList.addLast(this);
+
+    /*
+     * setup _triPrim2
+     */
+    this._triPrimBuf2 = new b9.PrimitiveBuffer(6);
+
+    this._triPrimBuf2.setPos(0, vec.set(0.0, 100.0, 0.0));
+    this._triPrimBuf2.setPos(1, vec.set(-110.0, -100.0, 0.0));
+    this._triPrimBuf2.setPos(2, vec.set(110.0, -100.0, 0.0));
+
+    this._triPrimBuf2.setPos(3, vec.set(0.0, 100.0, 0.0));
+    this._triPrimBuf2.setPos(4, vec.set(110.0, -100.0, 0.0));
+    this._triPrimBuf2.setPos(5, vec.set(-110.0, -100.0, 0.0));
+
+    this._triPrimBuf2.setTexCoord(0, 0.25, 0.0);
+    this._triPrimBuf2.setTexCoord(1, 0.035, 0.75);
+    this._triPrimBuf2.setTexCoord(2, 0.465, 0.75);
+
+    this._triPrimBuf2.setTexCoord(3, 0.75, 0.0);
+    this._triPrimBuf2.setTexCoord(4, 0.535, 0.75);
+    this._triPrimBuf2.setTexCoord(5, 0.965, 0.75);
+
+    this._triPrim2 = new b9.Primitive(b9.PrimitiveMode.TRIANGLES, this._triPrimBuf2);
+    this._triPrim2.textures[0] = b9.Resource.get("coin");
+    this._triPrim2.local.trans.set(150.0, 0.0, 0.0);
+
+    b9.Preset.rootNode2D.addChildLast(this._triPrim2);
 /*
-#include "catcake.h"
 
-
-class Triangle : public ckTask
-{
-public:
-    Triangle();
-
-private:
-    virtual void onUpdate();
-
-    ckScr* m_scr2d;
-    ckPrim m_tri_prim1;
-    ckPrim m_tri_prim2;
-};
-
-
-void newTriangle()
-{
-    ckNewTask(Triangle);
-}
-
-
-Triangle::Triangle() : ckTask(ORDER_ZERO)
-{
-    m_scr2d = ckDrawMgr::getScreen(ckDrawMgr::DEFAULT_2D_SCREEN_ID);
-
-//        set up m_tri_prim1
-    m_tri_prim1.init(ckPrim::MODE_TRIANGLES, 3, ckDrawMgr::DEFAULT_3D_SCREEN_ID);
-
-    m_tri_prim1.dataPos(0).set(0.0f, 100.0f, 0.0f);
-    m_tri_prim1.dataPos(1).set(-110.0f, -100.0f, 0.0f);
-    m_tri_prim1.dataPos(2).set(110.0f, -100.0f, 0.0f);
-
-    m_tri_prim1.dataCol(0).set(255, 0, 0);
-    m_tri_prim1.dataCol(1).set(0, 255, 0);
-    m_tri_prim1.dataCol(2).set(0, 0, 255);
-
-    m_tri_prim1.local().trans.set(-150.0f, 0.0f, 0.0f);
-
-//        set up m_tri_prim2
-    m_tri_prim2.init(ckPrim::MODE_TRIANGLES, 6, ckDrawMgr::DEFAULT_3D_SCREEN_ID);
-    m_tri_prim2.setTextureID(ckID_("coin_400x200.png"));
     m_tri_prim2.setDrawFlag(ckDraw::FLAG_BACKFACE_CULLING, true);
 
-    m_tri_prim2.dataPos(0).set(0.0f, 100.0f, 0.0f);
-    m_tri_prim2.dataPos(1).set(-110.0f, -100.0f, 0.0f);
-    m_tri_prim2.dataPos(2).set(110.0f, -100.0f, 0.0f);
 
-    m_tri_prim2.dataPos(3).set(0.0f, 100.0f, 0.0f);
-    m_tri_prim2.dataPos(4).set(110.0f, -100.0f, 0.0f);
-    m_tri_prim2.dataPos(5).set(-110.0f, -100.0f, 0.0f);
+*/
+};
 
-    m_tri_prim2.setDataUV(0, 0.25f, 0.0f);
-    m_tri_prim2.setDataUV(1, 0.035f, 0.75f);
-    m_tri_prim2.setDataUV(2, 0.465f, 0.75f);
-
-    m_tri_prim2.setDataUV(3, 0.75f, 0.0f);
-    m_tri_prim2.setDataUV(4, 0.535f, 0.75f);
-    m_tri_prim2.setDataUV(5, 0.965f, 0.75f);
-
-    m_tri_prim2.local().trans.set(150.0f, 0.0f, 0.0f);
-}
-
-
-void Triangle::onUpdate()
-{
-    if (ckKeyMgr::isPressed(ckKeyMgr::KEY_F))
-    {
-        ckSysMgr::toggleFullScreen(640, 480);
-    }
-
+Triangle.prototype.update = function() {
+    /*
     if (ckKeyMgr::isPressed(ckKeyMgr::KEY_Q))
     {
         ckEndCatcake();
     }
+    */
 
-    ckDbgMgr::drawBox(ckMat::UNIT, ckVec(400.0f, 400.0f, 400.0f), ckCol::ZERO, ckCol(128, 128, 128), ckDrawMgr::DEFAULT_3D_SCREEN_ID);
+    //ckDbgMgr::drawBox(ckMat::UNIT, ckVec(400.0f, 400.0f, 400.0f), ckCol::ZERO, ckCol(128, 128, 128), ckDrawMgr::DEFAULT_3D_SCREEN_ID);
 
-    m_scr2d->view() = m_scr2d->view().rotateZ_r32(-0.1f);
+    b9.Preset.screen3D.camera.rotateZ_float(-0.1);
 
-    m_tri_prim1.local() = m_tri_prim1.local().rotateY_s32(2);
-    m_tri_prim2.local() = m_tri_prim2.local().rotateY_s32(2);
+    this._triPrim1.local.rotateY_int(2);
+    this._triPrim2.local.rotateY_int(2);
+};
+
+function newTriangle() {
+    return new Triangle();
 }
-*/
