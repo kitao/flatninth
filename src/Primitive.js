@@ -26,6 +26,7 @@
  * @class A derived class of the b9.Node class, which draws points, lines, and polygons.
  * @extends b9.Node
  *
+ * @param {b9.primitiveMode} primMode A primitive mode.
  * @param {b9.PrimitiveBuffer} primBuf A primitive buffer this primitive refers to.
  * @param {Number} [uniCount] The number of the shader uniforms. If not specified, 0 is used.
  * @param {Number} [texCount] The number of the textures. This number is must be equal to or more than 1.
@@ -36,7 +37,7 @@ b9.Primitive = b9.createClass(b9.Node);
 /**
  * @ignore
  */
-b9.Primitive.prototype.initialize = function(primBuf, uniCount, texCount) {
+b9.Primitive.prototype.initialize = function(primMode, primBuf, uniCount, texCount) {
     var i;
 
     this.initializeSuper();
@@ -83,7 +84,7 @@ b9.Primitive.prototype.initialize = function(primBuf, uniCount, texCount) {
      * @return {b9.primitiveMode} The primitive mode.
      * TODO
      */
-    this.primitiveMode = b9.PrimitiveMode.TRIANGLES;
+    this.primitiveMode = primMode;
 
     /**
      * The array of the textures.

@@ -157,7 +157,7 @@ b9.Debug._initialize = function() {
     this._curVertCount = 0;
 
     for (i = 0; i < this._MAX_PRIMITIVE_COUNT; i++) {
-        this._primArray[i] = new b9.Primitive(this._primBuf);
+        this._primArray[i] = new b9.Primitive(b9.PrimitiveMode.TRIANGLES, this._primBuf);
     }
 };
 

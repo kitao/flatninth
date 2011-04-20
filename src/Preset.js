@@ -25,21 +25,6 @@
  */
 b9.Preset = {};
 
-/**
- * The preset update function.
- */
-b9.Preset.updateFunc = function() {
-    b9.Preset.taskList.update();
-};
-
-/**
- * The preset draw function.
- */
-b9.Preset.drawFunc = function() {
-    b9.Preset.screen3D.draw(b9.Preset.rootNode3D);
-    b9.Preset.screen2D.draw(b9.Preset.rootNode2D);
-};
-
 b9.Preset._initialize = function() {
     var width = b9.canvas.width;
     var height = b9.canvas.height;
@@ -76,15 +61,23 @@ b9.Preset._initialize = function() {
      * @return {b9.Node}
      */
     this.rootNode2D = new b9.Node();
+
+    /**
+     * The preset update function.
+     */
+    this.updateFunc = function() {
+        b9.Preset.taskList.update();
+    };
+
+    /**
+     * The preset draw function.
+     */
+    this.drawFunc = function() {
+        b9.Preset.screen3D.draw(b9.Preset.rootNode3D);
+        b9.Preset.screen2D.draw(b9.Preset.rootNode2D);
+    };
 };
 
 b9.Preset._finalize = function() {
     // TODO
 };
-
-/**
- * The number of the preset screens. The number of the root nodes is also equal to this number.
- * @constant
- * @return {Number}
- */
-b9.Preset.SCREEN_COUNT = 10;

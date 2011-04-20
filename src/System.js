@@ -60,6 +60,17 @@ b9.System.setup = function(canvasID, targetFps) {
      */
     this.currentFps = 0;
 
+    this._timerID = null;
+    this._nextUpdateTime = 0;
+
+    this._initializeOpenGL();
+    this._initializeBuiltinShaders();
+
+    b9.Resource._initialize();
+    b9.Input._initialize();
+    b9.Debug._initialize();
+    b9.Preset._initialize();
+
     /**
      *
      * @return {TODO}
@@ -71,17 +82,6 @@ b9.System.setup = function(canvasID, targetFps) {
      * @return {TODO}
      */
     this.drawFunc = b9.Preset.drawFunc;
-
-    this._timerID = null;
-    this._nextUpdateTime = 0;
-
-    this._initializeOpenGL();
-    this._initializeBuiltinShaders();
-
-    b9.Resource._initialize();
-    b9.Input._initialize();
-    b9.Debug._initialize();
-    b9.Preset._initialize();
 };
 
 /**
