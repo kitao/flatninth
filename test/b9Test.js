@@ -27,7 +27,7 @@ function testB9() {
     var testIns0, testIns1, testIns2, testIns3;
 
     /* VERSION */
-    assertEquals(0.01, b9.VERSION);
+    assertEquals(0.10, b9.VERSION);
 
     /* createClass */
     TestClass0 = b9.createClass();

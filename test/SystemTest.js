@@ -29,34 +29,21 @@ function testSystem() {
     }
 
     /* setup */
-    b9.System.setup("test_canvas", updateFunc, renderFunc, 60);
-
+    /* canvas */
+    /* gl */
+    /* targetFps */
+    /* currentFps */
+    /* updateFunc */
+    /* drawFunc */
+    /* teardown */
     /* start */
-    b9.System.start();
-
     /* stop */
-    b9.System.stop();
-
-    /* getCanvas */
-    assertEquals(document.getElementById("test_canvas"), b9.System.getCanvas());
-
-    /* getGLContext */
-    assertNotUndefined(b9.System.getGLContext());
-
-    /* getUpdatFunction */
-    assertEquals(updateFunc, b9.System.getUpdateFunction());
-
-    /* getRenderFunction */
-    assertEquals(renderFunc, b9.System.getRenderFunction());
-
-    /* getTargetFPS */
-    assertEquals(60, b9.System.getTargetFPS());
-
-    /* getCurrentFPS */
-    b9.System.getCurrentFPS();
-
+    /* generateID */
     /* getTime */
-    b9.System.getTime();
+    /* error */
+
+    assertEquals(document.getElementById("test_canvas"), b9.System.getCanvas());
+    //assertNotUndefined(b9.System.getGLContext());
 
     /* error */
     try {
