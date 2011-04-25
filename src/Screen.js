@@ -125,7 +125,7 @@ b9.Screen.prototype.draw = function(rootNode) {
     var node1, node2;
     var tail, end;
 
-    var gl = b9.gl;
+    var gl = b9.System.gl;
     var ScreenFlag = b9.ScreenFlag;
     var NodeFlag = b9.NodeFlag;
     var vec1 = b9.Screen._vec1;

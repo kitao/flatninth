@@ -34,7 +34,7 @@ b9.Texture = b9.createClass();
  */
 b9.Texture.prototype.initialize = function(fileNameOrWidth, height, format) {
     var that;
-    var gl = b9.gl;
+    var gl = b9.System.gl;
 
     /**
      * This property is read-only.
@@ -81,7 +81,7 @@ b9.Texture.prototype.finalize = function() {
     var gl;
 
     if (this._glTex) {
-        gl = b9.gl;
+        gl = b9.System.gl;
 
         gl.deleteTexture(this._glTex);
         this._glTex = null;
@@ -105,7 +105,7 @@ b9.Texture.prototype._bind = function(texLocArray) {
     var gl;
 
     if (this.isLoaded) {
-        gl = b9.gl;
+        gl = b9.System.gl;
 
         if (this._isNeedToUpdate) {
             this._isNeedToUpdate = false;

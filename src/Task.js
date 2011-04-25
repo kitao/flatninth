@@ -35,6 +35,12 @@ b9.Task.prototype.initialize = function() {
     this.initializeSuper();
 
     /**
+     * The ID of this task. This property is read-only.
+     * @return {Number}
+     */
+    this.id = b9.System.generateID();
+
+    /**
      * The name of this task.
      * @return {String}
      */

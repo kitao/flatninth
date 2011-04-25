@@ -115,7 +115,7 @@ b9.Node.prototype._calcFinal = function() {
 };
 
 b9.Node.prototype._setup = function() {
-    var gl = b9.gl;
+    var gl = b9.System.gl;
     var NodeFlag = b9.NodeFlag;
     var BlendMode = b9.BlendMode;
 

@@ -39,7 +39,7 @@ b9.PrimitiveBuffer = b9.createClass();
  */
 b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCount) {
     var i;
-    var gl = b9.gl;
+    var gl = b9.System.gl;
 
     var colorData;
     var posDataCount = vertCount * 3;
@@ -105,7 +105,7 @@ b9.PrimitiveBuffer.prototype.initialize = function(vertCount, elemCount, attCoun
  * Destructs this primitive buffer.
  */
 b9.PrimitiveBuffer.prototype.finalize = function() {
-    var gl = b9.gl;
+    var gl = b9.System.gl;
 
     if (this._glPosBuf) {
         gl.deleteBuffer(this._glPosBuf);
@@ -284,7 +284,7 @@ b9.PrimitiveBuffer.prototype.updateAll = function() {
 };
 
 b9.PrimitiveBuffer.prototype._bind = function(vertPosLoc, vertColorLoc, vertTexCoordLoc) {
-    var gl = b9.gl;
+    var gl = b9.System.gl;
 
     if (this._isNeedToUpdate) {
         this._isNeedToUpdate = false;
@@ -322,7 +322,7 @@ b9.PrimitiveBuffer.prototype._bind = function(vertPosLoc, vertColorLoc, vertTexC
 };
 
 b9.PrimitiveBuffer.prototype._unbind = function(vertPosLoc, vertColorLoc, vertTexCoordLoc) {
-    var gl = b9.gl;
+    var gl = b9.System.gl;
 
     gl.disableVertexAttribArray(vertPosLoc);
     gl.disableVertexAttribArray(vertColorLoc);

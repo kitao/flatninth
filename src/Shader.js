@@ -38,7 +38,7 @@ b9.Shader = b9.createClass();
  * @ignore
  */
 b9.Shader.prototype.initialize = function(vertCode, fragCode, uniCount, attCount, texCount) {
-    var gl = b9.gl;
+    var gl = b9.System.gl;
 
     /**
      * The number of the uniforms. This property is read-only.
@@ -80,7 +80,7 @@ b9.Shader.prototype.finalize = function() {
     var gl;
 
     if (this._glProg) {
-        gl = b9.gl;
+        gl = b9.System.gl;
 
         gl.deleteProgram(this._glProg);
         this._glProg = null;
@@ -90,7 +90,7 @@ b9.Shader.prototype.finalize = function() {
 b9.Shader.prototype._bind = function() {
     var i;
     var glVertShd, glFragShd;
-    var gl = b9.gl;
+    var gl = b9.System.gl;
 
     if (this._isNeedToUpdate) {
         this._isNeedToUpdate = false;

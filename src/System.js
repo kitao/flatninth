@@ -32,9 +32,9 @@ b9.System.setup = function(canvasID, targetFps) {
     /**
      * @return {TODO}
      */
-    b9.canvas = document.getElementById(canvasID);
+    this.canvas = document.getElementById(canvasID);
 
-    if (!b9.canvas) {
+    if (!this.canvas) {
         this.error("can't find the specified canvas.");
     }
 
@@ -42,9 +42,9 @@ b9.System.setup = function(canvasID, targetFps) {
      *
      * @return {TODO}
      */
-    b9.gl = b9.canvas.getContext("experimental-webgl");
+    this.gl = this.canvas.getContext("experimental-webgl");
 
-    if (!b9.gl) {
+    if (!this.gl) {
         this.error("can't initialize WebGL.");
     }
 
@@ -141,7 +141,16 @@ b9.System.stop = function() {
 };
 
 /**
- * hoge
+ * Returns the new ID. This method can be used any time.
+ * @return {Number}
+ */
+b9.System.generateID = function() {
+    this._currentID--;
+    return this._currentID;
+};
+
+/**
+ * Returns the current time in millisecond. This method can be used any time.
  * @return {Number} hoge
  */
 b9.System.getTime = function() {
@@ -149,7 +158,7 @@ b9.System.getTime = function() {
 };
 
 /**
- * Notifies an error and throws the Error exception.
+ * Notifies an error and throws the Error exception. This method can be used any time.
  * @param {String} msg An error message.
  */
 b9.System.error = function(msg) {
@@ -160,7 +169,7 @@ b9.System.error = function(msg) {
 };
 
 b9.System._initializeOpenGL = function() {
-    var gl = b9.gl;
+    var gl = this.gl;
 
     //gl.enable(SCISSOR_TEST);
     gl.enable(gl.DEPTH_TEST);
@@ -232,3 +241,5 @@ b9.System._initializeBuiltinShaders = function() {
 };
 
 b9.System._MAX_DELAY_TIME = 100.0;
+
+b9.System._currentID = 0;

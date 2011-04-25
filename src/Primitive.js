@@ -107,7 +107,7 @@ b9.Primitive.prototype.finalize = function() {
 b9.Primitive.prototype._draw = function(worldToScreenArray) {
     var i;
     var tex;
-    var gl = b9.gl;
+    var gl = b9.System.gl;
 
     var shader = this.shader ||
         (this.textures[0] ? b9.System._builtinShader_textureRGBA : b9.System._builtinShader_noTexture); // TODO

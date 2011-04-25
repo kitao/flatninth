@@ -30,7 +30,7 @@ var b9 = {};
  * @constant
  * @return {Number}
  */
-b9.VERSION = 0.01;
+b9.VERSION = 0.10;
 
 /**
  * Creates a new class which provides constructor/destructor mechanism.<br>

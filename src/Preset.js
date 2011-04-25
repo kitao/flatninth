@@ -26,8 +26,8 @@
 b9.Preset = {};
 
 b9.Preset._initialize = function() {
-    var width = b9.canvas.width;
-    var height = b9.canvas.height;
+    var width = b9.System.canvas.width;
+    var height = b9.System.canvas.height;
 
     /**
      * The preset task list
