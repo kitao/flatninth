@@ -25,12 +25,10 @@ function testTask() {
     var task;
 
     /* initialize */
-    /* id */
     /* name */
     /* isActive */
     task = new b9.Task();
 
-    assertTrue(task.id < 0);
     assertEquals("", task.name);
     assertEquals(true, task.isActive);
 

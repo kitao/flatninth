@@ -141,15 +141,6 @@ b9.System.stop = function() {
 };
 
 /**
- * Returns the new ID. This method can be used any time.
- * @return {Number}
- */
-b9.System.generateID = function() {
-    this._currentID--;
-    return this._currentID;
-};
-
-/**
  * Returns the current time in millisecond. This method can be used any time.
  * @return {Number} hoge
  */
@@ -241,5 +232,3 @@ b9.System._initializeBuiltinShaders = function() {
 };
 
 b9.System._MAX_DELAY_TIME = 100.0;
-
-b9.System._currentID = 0;

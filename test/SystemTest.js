@@ -38,7 +38,6 @@ function testSystem() {
     /* teardown */
     /* start */
     /* stop */
-    /* generateID */
     /* getTime */
     /* error */
 
