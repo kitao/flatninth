@@ -178,7 +178,7 @@ b9.Screen.prototype.draw = function(rootNode) {
                 tail = node1.getTail();
                 end = tail.nextAsList;
 
-                for (node2 = node1; node2 != end; node2 = node2.nextAsList) {
+                for (node2 = node1; node2 !== end; node2 = node2.nextAsList) {
                     if (node2.nodeFlag & NodeFlag.Z_SORT) {
                         node2._sortValue = vec1.set(node2._world.trans).sub(camera.trans).dot(camera.zAxis);
                         node2._sortNext = sortList;
@@ -203,7 +203,7 @@ b9.Screen.prototype.draw = function(rootNode) {
 
             end = node1.getTail().nextAsList;
 
-            for (node2 = node1.nextAsList; end != end; node2 = node2.nextAsList)
+            for (node2 = node1.nextAsList; node2 !== end; node2 = node2.nextAsList)
             {
                 if (node2.nodeFlag & NodeFlag.Z_SORT) {
                     node2 = node2.getTail();
@@ -258,7 +258,7 @@ b9.Screen._sortNode = function(sortList, prevSortList, nextSortList) {
 
     sortList = sortList._sortNext;
 
-    for (node = sortList; node != nextSortList; node = next) {
+    for (node = sortList; node !== nextSortList; node = next) {
         next = node._sortNext;
 
         if (node._sortValue <= centerSortValue) {

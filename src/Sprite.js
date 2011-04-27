@@ -35,7 +35,7 @@ b9.Sprite = b9.createClass(b9.Node);
 /**
  * @ignore
  */
-b9.Primitive.prototype.initialize = function(primMode, primBuf, uniCount, texCount) {
+b9.Sprite.prototype.initialize = function(primMode, primBuf, uniCount, texCount) {
     this.initializeSuper();
 
     // TODO

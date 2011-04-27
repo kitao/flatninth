@@ -172,14 +172,14 @@ b9.System._initializeBuiltinShaders = function() {
     b9.System._builtinShader_noTexture = new b9.Shader(
             "uniform mat4 b9_localToScreen;" +
             "uniform vec4 b9_nodeColor;" +
-            "" +
+
             "attribute vec4 b9_vertexPos;" +
             "attribute vec4 b9_vertexColor;" +
             "attribute vec2 b9_vertexTexCoord;" +
-            "" +
+
             "varying vec4 pixelColor;" +
             "varying vec2 pixelTexCoord;" +
-            "" +
+
             "void main()" +
             "{" +
             "    gl_Position = b9_localToScreen * b9_vertexPos;" +
@@ -188,9 +188,9 @@ b9.System._initializeBuiltinShaders = function() {
             "}",
 
             "precision mediump float;" +
-            "" +
+
             "varying vec4 pixelColor;" +
-            "" +
+
             "void main()" +
             "{" +
             "    gl_FragColor = pixelColor;" +
@@ -201,14 +201,14 @@ b9.System._initializeBuiltinShaders = function() {
     b9.System._builtinShader_textureRGBA = new b9.Shader(
             "uniform mat4 b9_localToScreen;" +
             "uniform vec4 b9_nodeColor;" +
-            "" +
+
             "attribute vec4 b9_vertexPos;" +
             "attribute vec4 b9_vertexColor;" +
             "attribute vec2 b9_vertexTexCoord;" +
-            "" +
+
             "varying vec4 pixelColor;" +
             "varying vec2 pixelTexCoord;" +
-            "" +
+
             "void main()" +
             "{" +
             "    gl_Position = b9_localToScreen * b9_vertexPos;" +
@@ -217,12 +217,12 @@ b9.System._initializeBuiltinShaders = function() {
             "}",
 
             "precision mediump float;" +
-            "" +
+
             "uniform sampler2D b9_texture_00;" +
-            "" +
+
             "varying vec4 pixelColor;" +
             "varying vec2 pixelTexCoord;" +
-            "" +
+
             "void main()" +
             "{" +
             "    gl_FragColor = texture2D(b9_texture_00, pixelTexCoord.st) * pixelColor;" +
