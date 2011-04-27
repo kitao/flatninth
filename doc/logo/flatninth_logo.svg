@@ -45,10 +45,10 @@
   </defs>
   <sodipodi:namedview
      inkscape:document-units="px"
-     pagecolor="#000000"
+     pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="1"
+     inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.66"
      inkscape:cx="435.78536"
@@ -60,7 +60,7 @@
      inkscape:window-height="720"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      units="mm" />
   <metadata
      id="metadata5582">
@@ -83,13 +83,13 @@
        transform="matrix(1.1004094,0,0,1.1004094,-53.559939,-286.13575)"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"
-       style="fill:#ffffff">
+       style="fill:#000000">
       <text
          sodipodi:linespacing="125%"
          id="text5585"
          y="442.90295"
          x="47.159832"
-         style="font-size:160px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Optima;-inkscape-font-specification:Optima"
+         style="font-size:160px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Optima;-inkscape-font-specification:Optima"
          xml:space="preserve"><tspan
            y="442.90295"
            x="47.159832"
@@ -97,15 +97,15 @@
            sodipodi:role="line">FLATNINTH</tspan></text>
       <g
          id="g7109"
-         style="fill:#ffffff">
+         style="fill:#000000">
         <text
            sodipodi:linespacing="125%"
            id="text6969"
            y="377.55469"
            x="950.04761"
-           style="font-size:90px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+           style="font-size:90px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
            xml:space="preserve"><tspan
-             style="font-size:85px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Optima;-inkscape-font-specification:Optima"
+             style="font-size:85px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;font-family:Optima;-inkscape-font-specification:Optima"
              y="377.55469"
              x="950.04761"
              id="tspan6971"
@@ -115,12 +115,12 @@
              x="950.04761"
              sodipodi:role="line" /></text>
         <g
-           style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+           style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
            id="text6939"
            transform="translate(77.952738,555.65448)">
           <path
              d="m 842.5274,-218.63347 c 4.69074,-6.58849 7.9365,-7.88276 13.73731,-7.88281 3.72392,5e-5 6.74964,1.18169 9.07715,3.54492 2.36324,2.32752 3.54488,4.88774 3.54492,7.68066 -4e-5,6.33793 -2.48865,12.31774 -7.46582,17.93946 -4.94144,5.58595 -13.19501,12.37143 -24.76074,20.35644 l 0,-19.96704 0,-19.96704 -0.0854,-21.96704 -0.35433,-17.96704 1.63217,0.26556 1.81032,0.11286 1.70852,-0.11286 1.58128,-0.26556 -0.5315,17.11474 0.10614,21.11475 m 0,32.92481 c 13.49932,-9.81118 18.24899,-16.94203 18.24903,-25.39258 -4e-5,-2.1484 -0.66247,-3.95667 -1.98731,-5.42481 -1.3249,-1.46805 -3.00784,-2.2021 -5.04882,-2.20215 -2.32751,5e-5 -4.42223,0.59087 -6.28418,1.77247 -1.862,1.14587 -2.17157,1.2764 -4.92872,4.3916 l 0,26.85547"
-             style="font-size:110px;fill:#ffffff"
+             style="font-size:110px;fill:#000000"
              id="path6961"
              inkscape:connector-curvature="0"
              sodipodi:nodetypes="ccccccccccccccccccccccc" />
