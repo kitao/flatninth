@@ -26,7 +26,7 @@ JSLINT_DIR  = $(BASE_DIR)/tool/jslint4java
 CLOSURE_DIR = $(BASE_DIR)/tool/closure
 JSDOC_DIR   = $(BASE_DIR)/tool/jsdoc-toolkit
 
-SRC_DIR     = $(BASE_DIR)/src
+SRC_DIR     = $(BASE_DIR)/source
 TEST_DIR    = $(BASE_DIR)/test
 SAMPLE_DIR  = $(BASE_DIR)/sample
 REF_DIR     = $(BASE_DIR)/doc/reference
