@@ -47,6 +47,7 @@ SRCS        = b9.js \
               Node.js \
               PrimitiveBuffer.js \
               Primitive.js \
+              Sprite.js \
               Screen.js \
               Resource.js \
               Input.js \
@@ -74,9 +75,9 @@ clean:
 	rm -rf $(REF_DIR)
 
 check:
-	java -jar $(JSLINT_DIR)/jslint4java.jar $(SRCS)
-	java -jar $(JSLINT_DIR)/jslint4java.jar $(TEST_SRCS)
-	java -jar $(JSLINT_DIR)/jslint4java.jar $(SAMPLE_SRCS)
+	java -jar $(JSLINT_DIR)/jslint4java-1.4.7.jar $(SRCS)
+	java -jar $(JSLINT_DIR)/jslint4java-1.4.7.jar $(TEST_SRCS)
+	java -jar $(JSLINT_DIR)/jslint4java-1.4.7.jar $(SAMPLE_SRCS)
 
 reference:
 	java -jar $(JSDOC_DIR)/jsrun.jar $(JSDOC_DIR)/app/run.js -a -r -t=$(JSDOC_DIR)/templates/jsdoc -d=$(REF_DIR) $(SRC_DIR)
