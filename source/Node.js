@@ -102,7 +102,7 @@ b9.Node.prototype.setBlendModeWithFlags = function(blendMode) {
     }
 };
 
-b9.Node.prototype._calcFinal = function() {
+b9.Node.prototype._calcWorldAndFinalColor = function() {
     var parent = this.parent;
 
     this._world.set(this.local);
@@ -122,8 +122,6 @@ b9.Node.prototype._setup = function() {
     var nodeFlag = this.nodeFlag;
     var writeRGB = (nodeFlag & NodeFlag.WRITE_RGB) ? true : false;
     var blendMode = this.blendMode;
-
-    this._calcFinal();
 
     gl.depthFunc((nodeFlag & NodeFlag.DEPTH_TEST) ? gl.GEQUAL : gl.ALWAYS);
     gl.colorMask(writeRGB, writeRGB, writeRGB, (nodeFlag & NodeFlag.WRITE_ALPHA) ? true : false);
@@ -157,9 +155,7 @@ b9.Node.prototype._setup = function() {
     }
 };
 
-b9.Node.prototype._draw = function() {
-    this._calcFinal();
-};
+b9.Node.prototype._draw = function() {};
 
 /**
  * @class The flags which specify how to draw a node.

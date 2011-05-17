@@ -174,6 +174,14 @@ b9.Screen.prototype.draw = function(rootNode) {
 
     for (node1 = rootNode; node1; node1 = node1.nextAsList) {
         if (node1.nodeFlag & NodeFlag.VISIBLE) {
+            node1._calcWorldAndFinalColor();
+        } else {
+            node1 = node1.getTail();
+        }
+    }
+
+    for (node1 = rootNode; node1; node1 = node1.nextAsList) {
+        if (node1.nodeFlag & NodeFlag.VISIBLE) {
             if (node1.nodeFlag & NodeFlag.Z_SORT) {
                 tail = node1.getTail();
                 end = tail.nextAsList;
